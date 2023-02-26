@@ -1,0 +1,98 @@
+<div class="card card-flush shadow-sm px-2">
+  <div class="card-header">
+      <h3 class="card-title">{{'menu.providers'|translate }}</h3>
+  </div>
+  <div class="card-body">
+    <div class="row mb-2">
+      <div class="col-md-6 col-sm-12 d-flex justify-content-between">
+        <button class="btn btn-sm btn-warning mt-1 px-2" (click)="openWindow('TrackingDeliveryProvider')">
+          {{ "provider.TrackingDeliveryProvider" | translate }}
+          </button>
+          <button class="btn btn-sm btn-dark mt-1 px-2" (click)="openWindow('TrackingTaxiProvider')">
+            {{ "provider.TrackingTaxiProvider" | translate }}
+            </button>
+            <button class="btn btn-sm btn-info mt-1 px-2" (click)="openWindow('TrackingTransportProvider')">
+              {{ "provider.TrackingTransportProvider" | translate }}
+              </button>
+              <a class="btn btn-sm btn-primary mt-1 px-2" [routerLink]="'/provider-subscription/create'">
+                {{ "action.providerSubscriptionCreate" | translate }}
+              </a>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="card bg-secondary p-0">
+        <div class="card-body">
+          <app-filter [filter]="filter"></app-filter>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <label class="mb-2"> {{ "global.type" | translate }}</label>
+          <select
+          (change)="filterProviders($event.target['value'])"
+          class="form-select form-select-solid"
+        >
+        <option [value]="''">
+          {{ "field.searchProviderType" | translate }}
+        </option>
+        <option [value]="shop.id" *ngFor="let shop of providerTypeList">
+          {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+        </option>
+        </select>
+      </div>
+    
+      
+    </div>
+    
+        <div class="row mt-4 d-flex justify-content-start mb-2">
+          <div class="col-4 text-right">
+            <button
+            type="button"
+            class="btn btn-dark btn-sm btn-block mx-2"
+            (click)="downloadExcelFile()"
+          >
+            <i class="fas fa-download"></i>
+            {{ "action.download" | translate }}
+          </button>
+            <button type="button" class="btn btn-primary btn-sm btn-block mx-2"
+            (click)="getProviderList()">
+              <i class="fas fa-search"></i>
+              {{'action.search'|translate }}
+            </button>
+            <button type="button" class="btn btn-danger btn-block btn-sm"
+            (click)="resetFilter()">
+              <i class="far fa-trash-alt"></i>
+          {{'action.reset'|translate }}
+            </button>
+          </div>
+         
+        </div>
+      
+      <app-table
+      [list]="providerList"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      [addActions]="true"
+      [actionList]="[
+      {title:'location',icon:'la-map',type:'location'},
+      {title:'provider.wallet',icon:'la-wallet',type:'wallet'},
+      {title:'menu.providerSubscription',icon:'fa-users-cog',type:'driverSubscription'},
+      {title:'provider.workTimeReport',icon:'fa-business-time',type:'workTimeReport'},
+      {title:'global.notes',icon:'fa-sticky-note',type:'providerNotes'}
+      ]"
+      (view)="navigate($event,formMode.View)"
+      (edit)="navigate($event,formMode.Edit)"
+      [showDelete]="false"
+      [showActivation]="true"
+      [showAnotherCheck]="true"
+      [AnotherCheckPropName]="'isApprovied'"
+      [AnotherCheckTitelName]="'field.approve'"
+      (changeActivation)="changeActivation($event)"
+      (changeAnotherCheck)="approveProvider($event)" 
+      (aciton)="navigateTO($event)">
+  </app-table>
+  </div>
+</div>

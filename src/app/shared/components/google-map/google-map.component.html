@@ -1,0 +1,17 @@
+<google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="addMarker($event)"
+	(mapMousemove)="move($event)" (mapRightclick)="removeLastMarker()">
+	<map-marker #marker *ngFor="let markerPosition of markerPositions;let i = index" [position]="markerPosition"
+	[title]="titleList[i]"
+		[options]="markerOptions" (mapClick)="openInfoWindow(marker)"></map-marker>
+		<map-marker
+    *ngFor="let marker of markers"
+    [position]="marker.position"
+    [label]="marker.label"
+    [title]="marker.title"
+    [options]="marker.options"
+    [icon]="marker.icon"
+  >
+  </map-marker>
+
+	<map-info-window>Info Window</map-info-window>
+</google-map>

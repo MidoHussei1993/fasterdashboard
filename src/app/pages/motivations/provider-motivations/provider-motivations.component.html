@@ -1,0 +1,20 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">{{'menu.motivations'|translate }}</h3>
+    </div>
+    <div class="card-body" *ngIf="motivationList.length>0">
+        <app-table
+        [list]="motivationList"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        [showDelete]="false"
+        [showDelete]="false"
+        [showEdit]="false"
+        [showPagination]="false"
+        (view)="navigateToView($event)"
+        >
+    </app-table>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">{{ "ShopBranchWorkTime.name" | translate }}</h3>
+    <div class="card-toolbar"></div>
+  </div>
+  <div class="card-body">
+    <a class="btn btn-sm btn-primary mb-3" (click)="openModal()">
+      {{ "action.create" | translate }}
+    </a>
+    <app-table-list
+      *ngIf="shopBranchWorkTimelist.length > 0"
+      [list]="shopBranchWorkTimelist"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      (view)="navigate($event, formMode.View)"
+      (edit)="navigate($event, formMode.Edit)"
+      (delete)="navigate($event, formMode.Delete)"
+    >
+    </app-table-list>
+  </div>
+</div>
+
+<ng-template #addToWallet let-modal>
+  <div class="modal-body card-flush">
+    <app-shop-branch-work-time-crud (created)="getWorkTime()"></app-shop-branch-work-time-crud>
+  </div>
+</ng-template>

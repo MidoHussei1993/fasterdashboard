@@ -1,0 +1,17 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">{{'menu.driversOpenRegistration'|translate }}</h3>
+    </div>
+    <div class="card-body" >
+        <app-table
+        [list]="list"
+        [titles]="titles"
+        [properties]="properties"
+        [showDelete]="false"
+        [showPagination]="false"
+        [showEdit]="false"
+        [showView]="false"
+        >
+    </app-table>
+    </div>
+</div>

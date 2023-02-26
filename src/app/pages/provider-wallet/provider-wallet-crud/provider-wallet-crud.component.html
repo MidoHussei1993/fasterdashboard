@@ -1,0 +1,272 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "provider.wallet" | translate }} </span>
+    </h3>
+    <div class="card-toolbar" *ngIf="providerInfo">
+      <h6>
+        {{ providerInfo.providerName }}
+      </h6>
+      <h6 class="mx-3">-</h6>
+      <h6>
+        {{ providerInfo.providerPhone }}
+      </h6>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 col-sm-12 text-center">
+        <label class="form-label d-block">{{
+          "field.moneyTransferImage" | translate
+        }}</label>
+        <!--begin::Image input-->
+        <div
+          class="image-input image-input-empty"
+          data-kt-image-input="true"
+          style="background-image: url(/assets/media/avatars/blank.png)"
+        >
+          <!--begin::Image preview wrapper-->
+          <img
+            [src]="form.get('moneyTransferImage').value"
+            class="image-input-wrapper w-125px h-125px"
+            (click)="viewImage(form.get('moneyTransferImage').value)"
+          />
+          <img-viewer
+            #imgViewer
+            [img]="form.get('moneyTransferImage').value"
+          ></img-viewer>
+          <!--end::Image preview wrapper-->
+          <label
+            *ngIf="mode != 'View'"
+            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+            data-kt-image-input-action="change"
+            data-bs-toggle="tooltip"
+            data-bs-dismiss="click"
+            title="Change avatar"
+          >
+            <i class="bi bi-pencil-fill fs-7"></i>
+            <input
+              type="file"
+              name="avatar"
+              (change)="handleInputChange($event)"
+              accept=".png, .jpg, .jpeg"
+            />
+          </label>
+        </div>
+        <!--end::Image input-->
+      </div>
+    </div>
+
+    <div class="row my-5">
+      <div class="col-md-6 col-sm-12">
+        <label class="form-label">{{ "field.orderId" | translate }}</label>
+        <input
+          type="number"
+          [(ngModel)]="orderNumber"
+          class="form-control form-control-solid"
+          placeholder="{{ 'field.orderId' | translate }}"
+        />
+      </div>
+      <div class="col-md-6 col-sm-12 pt-3">
+        <div class="row mt-3">
+          <div class="col-4 mx-auto">
+            <label class="form-check form-check-custom form-check-solid">
+              <input
+                class="form-check-input mx-2"
+                type="radio"
+                [value]="1"
+                name="type"
+                [(ngModel)]="orderType"
+              />
+              <span class="form-check-label">
+                {{ "field.delivery" | translate }}
+              </span>
+            </label>
+          </div>
+          <div class="col-4 mx-auto">
+            <label class="form-check form-check-custom form-check-solid">
+              <input
+                class="form-check-input mx-2"
+                type="radio"
+                [value]="2"
+                name="type"
+                [(ngModel)]="orderType"
+              />
+              <span class="form-check-label">
+                {{ "field.transport" | translate }}
+              </span>
+            </label>
+          </div>
+          <div class="col-4 mx-auto">
+            <label class="form-check form-check-custom form-check-solid">
+              <input
+                class="form-check-input mx-2"
+                type="radio"
+                [value]="3"
+                name="type"
+                [(ngModel)]="orderType"
+              />
+              <span class="form-check-label">
+                {{ "field.other" | translate }}
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="create()">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-primary">
+            <div class="d-flex flex-column">
+              <h6 class="mb-1 text-primary">
+                {{ "provider.amount" | translate }} :
+                {{ currentAvailableMoney }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "provider.amountPlaceholder" | translate
+          }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="amount"
+            class="form-control form-control-solid"
+            placeholder="{{ 'provider.amountPlaceholder' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('amount').valid &&
+              (form.get('amount').dirty || form.get('amount').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('amount').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "global.type" | translate }}</p>
+          <div class="row">
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="1"
+                  name="type"
+                  formControlName="type"
+                />
+                <span class="form-check-label">
+                  {{ "action.Withdrawal" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="2"
+                  name="type"
+                  formControlName="type"
+                />
+                <span class="form-check-label">
+                  {{ "action.deposit" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              !form.get('type').valid &&
+              (form.get('type').dirty || form.get('type').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('type').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-12 col-sm-12">
+          <label class="form-label">{{ "field.note" | translate }}</label>
+          <!-- <input
+            type="text"
+            formControlName="note"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.note' | translate }}"
+          /> -->
+          <select formControlName="note" class="form-select form-select-solid">
+            <option [value]="item" *ngFor="let item of walletNotes">
+              {{ item }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('note').valid &&
+              (form.get('note').dirty || form.get('note').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('note').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-md-11 col-sm-12 mx-auto">
+        <app-table
+          [list]="providerTransactionsList"
+          [titles]="titles"
+          [properties]="properties"
+          [busyLoading]="busyLoading"
+          [pagination]="pagination"
+          [showView]="true"
+          [showDelete]="false"
+          [showEdit]="false"
+          [pagination]="pagination"
+          (view)="navigateToOrder($event)"
+          (activetedPageSize)="setPageSize($event)"
+          (activetedPageNumber)="setPageNumber($event)"
+          [isdownloadAll]="true"
+          (export)="downloadAll()"
+          [addActions]="true"
+          [actionList]="[
+            {
+              title: 'field.moneyTransferImage',
+              icon: 'fa-image',
+              type: 'viewImage'
+            }
+          ]"
+          (aciton)="fireAction($event)"
+        ></app-table>
+      </div>
+    </div>
+  </div>
+</div>
+<img-viewer #imgViewer></img-viewer>

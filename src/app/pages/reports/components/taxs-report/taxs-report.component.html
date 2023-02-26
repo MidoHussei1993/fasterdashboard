@@ -1,0 +1,53 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">{{ "menu.taxs" | translate }}</h3>
+  </div>
+  <div class="card-body">
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="mb-2"> {{ "field.StartDate" | translate }}</label>
+              <p-calendar
+              class="d-block"
+                [(ngModel)]="filter.StartDate"
+                [showTime]="true"
+                inputId="time"
+              ></p-calendar>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="mb-2"> {{ "field.EndDate" | translate }}</label>
+              <p-calendar
+              class="d-block"
+                [(ngModel)]="filter.EndDate"
+                [showTime]="true"
+                inputId="time"
+              ></p-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-table
+      [list]="taxsReportList"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [showDelete]="false"
+      [showEdit]="false"
+      [showView]="false"
+      [showSearch]="true"
+      [isdownloadAll]="taxsReportList.length?true:false"
+      (export)="downloadAll()"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+    >
+    </app-table>
+  </div>
+</div>

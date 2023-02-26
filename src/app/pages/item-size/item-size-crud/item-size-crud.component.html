@@ -1,0 +1,74 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.itemSize" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "menu.itemSize" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="sizeName"
+            class="form-control form-control-solid"
+            placeholder="{{ 'menu.itemSize' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('sizeName').valid &&
+              (form.get('sizeName').dirty || form.get('sizeName').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('sizeName').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('sizeName').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"
+            >{{ "menu.itemSize" | translate }} ع</label
+          >
+          <input
+            type="text"
+            formControlName="sizeNameAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'menu.itemSize' | translate }} ع"
+          />
+          <div
+            *ngIf="
+              !form.get('sizeNameAr').valid &&
+              (form.get('sizeNameAr').dirty || form.get('sizeNameAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('sizeNameAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('sizeNameAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

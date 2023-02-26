@@ -1,0 +1,72 @@
+<div class="card">
+    <div class="card-body">
+      <div class="row">
+        <h3 class="card-title my-3">
+          {{ "product.productDetails" | translate }}
+        </h3>
+        <div class="col-md-3 col-sm-12">
+          <button
+            class="btn btn-sm btn-primary mb-3"
+            (click)="navigateToCreate()"
+          >
+          <i class="fas fa-plus"></i>
+            {{ "action.create" | translate }}
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table
+            class="table table-hover table-rounded table-striped border gy-7 gs-7
+            "
+          >
+            <thead>
+              <tr class="">
+                <th class="text-center" *ngFor="let title of titles">
+                  {{ title | translate }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of productComponentList; let i = index">
+                <td class="text-center" *ngFor="let prop of properties">
+                  {{ item[prop] }}
+                </td>
+                <td class="text-center">
+                  <label
+                    class="
+                      form-check form-check-sm form-check-custom form-check-solid
+                    "
+                  >
+                    <input
+                      class="form-check-input mx-auto"
+                      type="checkbox"
+                      :value="true"
+                      [(ngModel)]="item.isActive"
+                      (ngModelChange)="changeActivation(i)"
+                    />
+                  </label>
+                </td>
+                <td class="text-center">
+                  <i
+                    title="{{ 'View' | translate }}"
+                    class="lar la-eye fs-2x mx-1"
+                    (click)="navigateToView(item)"
+                  ></i>
+                  <i
+                    title="{{ 'Edit' | translate }}"
+                    class="las la-edit fs-2x mx-1"
+                    (click)="navigateToEdit(item)"
+                  ></i>
+                  <i
+                  title="{{ 'Delete' | translate }}"
+                  class="las la-trash-alt fs-2x mx-1"
+                  (click)="deleteComponent(item)"
+                ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  

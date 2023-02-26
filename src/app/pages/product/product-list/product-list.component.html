@@ -1,0 +1,83 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <h3 class="card-title my-3">{{ "menu.products" | translate }}</h3>
+      <div class="col-md-6 col-sm-12">
+        <div
+          class="btn-group"
+          role="group"
+          aria-label="Basic example"
+          style="direction: ltr"
+        >
+          <a
+            type="button"
+            class="btn btn-info"
+            [routerLink]="'/product/bundle-product'"
+          >
+            {{ "product.createBundleProduct" | translate }}
+          </a>
+
+          <a
+            type="button"
+            class="btn btn-primary"
+            [routerLink]="'/product/create'"
+          >
+            {{ "action.create" | translate }}
+          </a>
+        </div>
+      </div>
+      <div class="card bg-secondary mt-3">
+        <div class="card-body">
+          <app-filter [filter]="filter"></app-filter>
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <label class="mb-2"> {{ "field.CategoryId" | translate }}</label>
+              <select
+                [(ngModel)]="filter.CategoryId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="''">
+                  {{ "field.searchProviderType" | translate }}
+                </option>
+                <option [value]="shop.id" *ngFor="let shop of categoryList">
+                  {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-table
+        [list]="productlist"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+        (view)="navigate($event, formMode.View)"
+        (edit)="navigate($event, formMode.Edit)"
+        [showDelete]="false"
+        [showActivation]="true"
+        (changeActivation)="changeActivation($event)"
+        [showSearch]="true"
+        (search)="searchValue()"
+        (resetFilter)="resetfilter()"
+        [addActions]="true"
+        [actionList]="[
+          {
+            title: 'product.product_additional_options',
+            icon: 'fa-puzzle-piece',
+            type: 'additionalOptions'
+          },
+          {
+            title: 'product.productDetails',
+            icon: 'fa-info-circle',
+            type: 'productDetails'
+          }
+        ]"
+        (aciton)="navigateTO($event)"
+      ></app-table>
+    </div>
+  </div>
+</div>

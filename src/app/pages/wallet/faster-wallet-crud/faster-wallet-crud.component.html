@@ -1,0 +1,133 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "menu.FasterWallet" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+ 
+  
+        <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'provider.operation_amount'|translate }}</label>
+                <input type="number" formControlName="amount" class="form-control form-control-solid" placeholder="{{'provider.operation_amount'|translate }}"/>
+                <div *ngIf="!form.get('amount').valid && (form.get('amount').dirty ||   form.get('amount').touched)" class="text text-danger">
+                    <p *ngIf="form.get('amount').hasError('required')" >{{'_.required'|translate }}</p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.note'|translate }} </label>
+                <input type="text" formControlName="note" class="form-control form-control-solid" placeholder="{{'field.note'|translate }} "/>
+                <div *ngIf="!form.get('note').valid && (form.get('note').dirty ||  form.get('note').touched)" class="text text-danger">
+                    <p *ngIf="form.get('note').hasError('required')" >{{'_.required'|translate }}</p>
+                  </div>
+                </div>
+         </div>
+
+         <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.deliveryOrderId'|translate }}</label>
+                <input type="text" formControlName="deliveryOrderId" class="form-control form-control-solid" placeholder="{{'field.deliveryOrderId'|translate }}"/>
+                <div *ngIf="!form.get('deliveryOrderId').valid && (form.get('deliveryOrderId').dirty ||   form.get('deliveryOrderId').touched)" class="text text-danger">
+                    <p *ngIf="form.get('deliveryOrderId').hasError('required')" >{{'_.required'|translate }}</p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.TransportOrderId'|translate }} </label>
+                <input type="text" formControlName="transportOrderId" class="form-control form-control-solid" placeholder="{{'field.TransportOrderId'|translate }}"/>
+                <div *ngIf="!form.get('transportOrderId').valid && (form.get('transportOrderId').dirty ||  form.get('transportOrderId').touched)" class="text text-danger">
+                    <p *ngIf="form.get('transportOrderId').hasError('required')" >{{'_.required'|translate }}</p>
+                  </div>
+                </div>
+         </div>
+
+  
+         <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{
+                  "field.walletActionType" | translate
+                }}</label>
+                <select
+                  formControlName="walletActionType"
+                  class="form-select form-select-solid"
+                >
+                  <option [ngValue]="item.id" *ngFor="let item of walletActionType">
+                    {{ "field."+ item.name | translate }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    !form.get('walletActionType').valid &&
+                    (form.get('walletActionType').dirty ||
+                      form.get('walletActionType').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('walletActionType').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div>
+             <div class="col-md-6 col-sm-12">
+                <p>{{ "field.typeName" | translate }}</p>
+              <div class="row">
+                <div class="col-4 mx-auto">
+                  <label class="form-check form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input mx-2"
+                      type="radio"
+                      [value]="1"
+                      name="type"
+                      formControlName="type"
+                    />
+                    <span class="form-check-label">
+                      {{ "action.Withdrawal" | translate }}
+                    </span>
+                  </label>
+                </div>
+                <div class="col-4 mx-auto">
+                  <label class="form-check form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input mx-2"
+                      type="radio"
+                      [value]="2"
+                      name="type"
+                      formControlName="type"
+                    />
+                    <span class="form-check-label">
+                      {{ "action.deposit" | translate }}
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  !form.get('type').valid &&
+                  (form.get('type').dirty || form.get('type').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('type').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        
+
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

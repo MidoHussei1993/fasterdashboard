@@ -1,0 +1,159 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <h3 class="card-title my-3">
+        {{ "provider.workTimeReport" | translate }}
+      </h3>
+      <div class="col-md-6 col-sm-12" *ngIf="finalTotalMinutes">
+        <h5>
+          {{ "global.finalTotalMinutes" | translate }} : {{ finalTotalMinutes }}
+        </h5>
+      </div>
+      <form [formGroup]="form">
+        <div class="row mb-5 mt-2">
+          <div class="col-md-3 col-sm-12">
+            <label class="mb-2"> {{ "field.StartDate" | translate }}</label>
+            <p-calendar
+              class="d-block"
+              formControlName="CreateAtFrom"
+              [showTime]="true"
+              inputId="time"
+            ></p-calendar>
+          </div>
+          <div class="col-md-3 col-sm-12">
+            <label class="mb-2"> {{ "field.EndDate" | translate }}</label>
+            <p-calendar
+              class="d-block"
+              formControlName="CreateAtTo"
+              [showTime]="true"
+              inputId="time"
+            ></p-calendar>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm mt-1"
+              (click)="searchValue()"
+            >
+              <i class="fas fa-search"></i>
+              {{ "action.search" | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-warning btn-sm mt-1 mx-2"
+              (click)="resetSearch()"
+            >
+              <i class="far fa-trash-alt"></i>
+              {{ "action.reset" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive mt-3">
+        <table
+          class="table table-hover table-rounded table-striped border gy-7 gs-7"
+        >
+          <thead>
+            <tr class="">
+              <th class="text-center">
+                {{ "global.day" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "global.totalMinutes" | translate }}
+              </th>
+              <th class="text-center" colspan="2">
+                <p class="w-100">
+                  {{ "global.workingMinutesDetails" | translate }}
+                </p>
+                <div class="row">
+                  <div class="col-6">{{ "global.from" | translate }}</div>
+                  <div class="col-6">
+                    {{ "global.to" | translate }}
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of workTimeRportList; let i = index">
+              <td class="text-center">
+                {{ item.day | date: "MMM d, y" }}
+              </td>
+              <td class="text-center">
+                {{ item.totalMinutes }}
+              </td>
+              <td class="text-center">
+                <div
+                  class="row border-bottom border-warning"
+                  *ngFor="let time of item.workingMinutesDetails; let l = index"
+                >
+                  <div class="col-6">
+                    {{ time.from | date: "MMM d, y - h:mm a" }}
+                  </div>
+                  <div class="col-6">
+                    {{ time.to | date: "MMM d, y - h:mm a" }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row" *ngIf="workTimeRportList.length">
+      <div class="col-2 text-right">
+        <select
+          [disabled]="busyLoading"
+          class="form-select form-select-solid"
+          (input)="setPageSize($event.target['value'])"
+          [(ngModel)]="filter.PageSize"
+        >
+          <option [ngValue]="rowsNum" *ngFor="let rowsNum of rowsNumber">
+            {{ rowsNum }}
+          </option>
+        </select>
+
+        <!--end::Page Number-->
+      </div>
+      <div class="col-10">
+        <ul class="pagination">
+          <li
+            class="page-item previous disabled"
+            (click)="setPageNumber(active - 1)"
+            *ngIf="pagination.totalPagesCount > 1 && active > 1"
+          >
+            <span class="page-link text-dark font-weight-bolder">
+              {{ "global.previous" | translate }}
+            </span>
+          </li>
+          <li
+            class="page-item"
+            [ngClass]="{ active: item + 1 == active }"
+            *ngFor="
+              let item of pagination.totalPagesCount | demoNumber;
+              let i = index
+            "
+            (click)="setPageNumber(item + 1)"
+          >
+            <a class="page-link">
+              {{ item + 1 }}
+            </a>
+          </li>
+
+          <li
+            class="page-item next"
+            (click)="setPageNumber(active + 1)"
+            *ngIf="
+              pagination.totalPagesCount > 1 &&
+              active < pagination.totalPagesCount
+            "
+          >
+            <a class="page-link text-dark font-weight-bolder">
+              {{ "global.next" | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

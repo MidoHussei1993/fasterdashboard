@@ -1,0 +1,70 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "menu.productDetailsSize" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+       
+  
+  
+        <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.price'|translate }}</label>
+                <input type="number" formControlName="price" min="0" class="form-control form-control-solid" placeholder="{{'field.price'|translate }}"/>
+                <div *ngIf="!form.get('price').valid && (form.get('price').dirty ||   form.get('price').touched)" class="text text-danger">
+                    <p *ngIf="form.get('price').hasError('required')" >{{'_.required'|translate }}</p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.lastPrice'|translate }}</label>
+                <input type="number" formControlName="lastPrice" min="0" class="form-control form-control-solid" placeholder="{{'field.lastPrice'|translate }} ع"/>
+                <div *ngIf="!form.get('lastPrice').valid && (form.get('lastPrice').dirty ||  form.get('lastPrice').touched)" class="text text-danger">
+                    <p *ngIf="form.get('lastPrice').hasError('required')" >{{'_.required'|translate }}</p>
+                  </div>
+                </div>
+         </div>
+
+         <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'menu.itemSize'|translate }}</label>
+                <select
+                formControlName="itemSizeId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of itemSizeList">
+                  {{ currentLanguage == 'en'? item.name :item.nameAr }}
+                </option>
+              </select>
+                <div *ngIf="!form.get('itemSizeId').valid && (form.get('itemSizeId').dirty || form.get('itemSizeId').touched)" class="text text-danger">
+                    <p *ngIf="form.get('itemSizeId').hasError('required')" >{{'_.required'|translate }}</p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{'field.deliverectPLU'|translate }}</label>
+              <input type="text" formControlName="deliverectPLU" min="0" class="form-control form-control-solid" placeholder="{{'field.deliverectPLU'|translate }}"/>
+              <div *ngIf="!form.get('deliverectPLU').valid && (form.get('deliverectPLU').dirty ||   form.get('deliverectPLU').touched)" class="text text-danger">
+                  <p *ngIf="form.get('deliverectPLU').hasError('required')" >{{'_.required'|translate }}</p>
+                </div>
+          </div>
+         </div>
+
+   
+
+  
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

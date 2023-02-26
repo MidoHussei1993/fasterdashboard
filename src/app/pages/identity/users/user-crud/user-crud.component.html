@@ -1,0 +1,281 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.user" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="edit()">
+      <div class="row">
+        <div class="col-md-3 col-sm-12">
+          <label class="form-label  d-block">{{
+            "global.profileImage" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]=" this.form.get('profileImage').value"
+              class="image-input-wrapper w-125px h-125px"
+            />
+            <!--end::Image preview wrapper-->
+            <label
+            *ngIf="mode != 'View'"
+              class="
+                btn btn-icon btn-circle btn-active-color-primary
+                w-25px
+                h-25px
+                bg-white
+                shadow
+              "
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input type="file" name="avatar" (change)="handleInputChange($event)"  accept=".png, .jpg, .jpeg" />
+            </label>
+          </div>
+          <!--end::Image input-->
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "global.full_name" | translate }}</label>
+          <input
+            type="text"
+            formControlName="fullName"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.full_name' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('fullName').valid &&
+              (form.get('fullName').dirty || form.get('fullName').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('fullName').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{'global.userType'|translate }}</label>
+          <select
+          formControlName="userType"
+          class="form-select form-select-solid"
+        >
+          <option [value]="item.value" *ngFor="let item of userTypeDropDown">
+            {{ item.title }}
+          </option>
+        </select>
+          <div *ngIf="!form.get('userType').valid && (form.get('userType').dirty || form.get('userType').touched)" class="text text-danger">
+              <p *ngIf="form.get('userType').hasError('required')" >{{'_.required'|translate }}</p>
+            </div>
+      </div>
+        
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "global.phone_number" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="phone"
+            minlength="12"
+            maxlength="12"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.phone_number' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('phone').valid &&
+              (form.get('phone').dirty || form.get('phone').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('phone').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('phone').hasError('minlength')">
+              {{ "_.min12" | translate }}
+            </p>
+            <p *ngIf="form.get('phone').hasError('maxLength')">
+              {{ "_.max12" | translate }}
+            </p>
+          </div>
+        </div>
+       
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.email" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="email"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.email' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('email').valid &&
+              (form.get('email').dirty || form.get('email').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('email').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('email').hasError('email')">
+              {{ "_.email" | translate }}
+            </p>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="row my-5" *ngIf="this.mode === 'View'">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.favoriteLanguage" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="favoriteLanguage"
+            minlength="12"
+            maxlength="12"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.favoriteLanguage' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('favoriteLanguage').valid &&
+              (form.get('favoriteLanguage').dirty || form.get('favoriteLanguage').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('favoriteLanguage').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+       
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.frontEndDevice" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="frontEndDevice"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.frontEndDevice' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('frontEndDevice').valid &&
+              (form.get('frontEndDevice').dirty || form.get('frontEndDevice').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('frontEndDevice').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+         
+          </div>
+        </div>
+        
+      </div>
+
+
+     <div class="row my-5" *ngIf="mode == 'Create'">
+      <div class="col-md-6 col-sm-12">
+        <label class="form-label">{{
+          "global.identificationNumber" | translate
+        }}</label>
+        <input
+          type="text"
+          formControlName="identificationNumber"
+          class="form-control form-control-solid"
+          :placeholder="{{ 'global.identificationNumber' | translate }}"
+        />
+        <div
+          *ngIf="
+            !form.get('identificationNumber').valid &&
+            (form.get('identificationNumber').dirty ||
+              form.get('identificationNumber').touched)
+          "
+          class="text text-danger"
+        >
+          <p *ngIf="form.get('identificationNumber').hasError('required')">
+            {{ "_.required" | translate }}
+          </p>
+        </div>
+      </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.password" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="password"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.password' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('password').valid &&
+              (form.get('password').dirty || form.get('password').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('password').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('password').hasError('required')">{{'_.required'|translate }} </p>
+            <p *ngIf="form.get('password').hasError('minlength')">{{'_.minLength6'|translate }} </p>
+          </div>
+        </div>
+       
+      </div>
+
+      
+
+      <div class="row" *ngIf="mode == 'Create'">
+        <div class="col-md-6 col-sm-12" *ngFor="let item of existRoles; let i=index">
+          <div class="mb-10" >
+            <label class="form-check form-check-custom form-check-solid">
+              <input class="form-check-input border" type="checkbox"  [value]="item.id" [(ngModel)]="item.isSelected" [ngModelOptions]="{standalone: true}"/>
+              <span class="form-check-label mx-3">
+                  {{item.name}}
+              </span>
+          </label>
+  
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

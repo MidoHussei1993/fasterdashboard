@@ -1,0 +1,19 @@
+::ng-deep  .modal-content {
+    background-color: #181818e8;
+    color: white;
+  }
+  ::ng-deep .dark-modal .close {
+    color: rgb(48, 47, 47);
+  }
+  ::ng-deep .light-blue-backdrop {
+    background-color: #5cb3fd;
+  }
+  .modal-custom-lg .modal-dialog {
+    width: 100%;
+    height: 100%;
+}
+
+.modal-custom-lg .modal-content {
+    width: 100%;
+    height: 100%;
+}

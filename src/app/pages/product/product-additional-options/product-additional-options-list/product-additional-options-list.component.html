@@ -1,0 +1,25 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title"> {{ "product.product_additional_options" | translate }}</h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <div class="card-body" >
+        <a  class="btn btn-sm btn-primary mb-3 " (click)="navigateToCreate()">
+            {{'action.create'|translate }}
+            </a>
+        <app-table-list
+        *ngIf="productAdditionalOptionList.length>0"
+        [list]="productAdditionalOptionList"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [showEdit]="false"
+        [showView]="false"
+        [showDelete]="false"
+        [showActivation]="true"
+        (changeActivation)="changeActivation($event)"
+        >
+    </app-table-list>
+</div>
+</div>

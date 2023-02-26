@@ -1,0 +1,1027 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "app.name" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="pricesForm" (ngSubmit)="UpdatePrices()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "app.kmPrice" | translate }} </label>
+          <input
+            type="text"
+            formControlName="kmPrice"
+            class="form-control form-control-solid"
+            placeholder="kmPrice"
+          />
+          <div
+            *ngIf="
+              !pricesForm.get('kmPrice').valid &&
+              (pricesForm.get('kmPrice').dirty ||
+                pricesForm.get('kmPrice').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="pricesForm.get('kmPrice').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.counterPrice" | translate }}</label>
+          <input
+            type="text"
+            formControlName="counterPrice"
+            class="form-control form-control-solid"
+            placeholder="{{ 'app.counterPrice' | translate }}"
+          />
+          <div
+            *ngIf="
+              !pricesForm.get('counterPrice').valid &&
+              (pricesForm.get('counterPrice').dirty ||
+                pricesForm.get('counterPrice').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="pricesForm.get('counterPrice').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "app.transportKMPrice" | translate }} </label>
+          <input
+            type="text"
+            formControlName="transportKMPrice"
+            class="form-control form-control-solid"
+            placeholder="transportKMPrice"
+          />
+          <div
+            *ngIf="
+              !pricesForm.get('transportKMPrice').valid &&
+              (pricesForm.get('transportKMPrice').dirty ||
+                pricesForm.get('transportKMPrice').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="pricesForm.get('transportKMPrice').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.transportCounterPrice" | translate }}</label>
+          <input
+            type="text"
+            formControlName="transportCounterPrice"
+            class="form-control form-control-solid"
+            placeholder="{{ 'app.transportCounterPrice' | translate }}"
+          />
+          <div
+            *ngIf="
+              !pricesForm.get('transportCounterPrice').valid &&
+              (pricesForm.get('transportCounterPrice').dirty ||
+                pricesForm.get('transportCounterPrice').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="pricesForm.get('transportCounterPrice').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "app.deliveryRangePrice" | translate }} </label>
+          <input
+            type="number"
+            formControlName="deliveryRangePrice"
+            class="form-control form-control-solid"
+            placeholder="deliveryRangePrice"
+            min="4"
+          />
+          <div
+            *ngIf="
+              !pricesForm.get('deliveryRangePrice').valid &&
+              (pricesForm.get('deliveryRangePrice').dirty ||
+                pricesForm.get('deliveryRangePrice').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="pricesForm.get('deliveryRangePrice').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="pricesForm.get('deliveryRangePrice').hasError('min')">
+              {{ "_.min" | translate:{value:4} }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.transportRangePrice" | translate }}</label>
+          <input
+            type="number"
+            formControlName="transportRangePrice"
+            min="4"
+            class="form-control form-control-solid"
+            placeholder="{{ 'app.transportRangePrice' | translate }}"
+          />
+          <div
+            *ngIf="
+              !pricesForm.get('transportRangePrice').valid &&
+              (pricesForm.get('transportRangePrice').dirty ||
+                pricesForm.get('transportRangePrice').touched)
+            "
+            class="text text-danger"
+          >
+          <p *ngIf="pricesForm.get('transportRangePrice').hasError('required')">
+            {{ "_.required" | translate }}
+          </p>
+          <p *ngIf="pricesForm.get('transportRangePrice').hasError('min')">
+            {{ "_.min" | translate:{value:4} }}
+          </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "app.deliveryCancelFee" | translate }} </label>
+          <input
+            type="number"
+            formControlName="deliveryCancelFee"
+            class="form-control form-control-solid"
+            placeholder="deliveryCancelFee"
+          />
+          <div
+            *ngIf="
+              !pricesForm.get('deliveryCancelFee').valid &&
+              (pricesForm.get('deliveryCancelFee').dirty ||
+                pricesForm.get('deliveryCancelFee').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="pricesForm.get('deliveryCancelFee').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.transportCancelFee" | translate }}</label>
+          <input
+            type="number"
+            formControlName="transportCancelFee"
+            class="form-control form-control-solid"
+            placeholder="{{ 'app.transportCancelFee' | translate }}"
+          />
+          <div
+            *ngIf="
+              !pricesForm.get('transportCancelFee').valid &&
+              (pricesForm.get('transportCancelFee').dirty ||
+                pricesForm.get('transportCancelFee').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="pricesForm.get('transportCancelFee').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+     
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr />
+
+    <form [formGroup]="socialMediaForm" (ngSubmit)="UpdateSocialMedia()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "app.twitter" | translate }} </label>
+          <input
+            type="text"
+            formControlName="twitter"
+            class="form-control form-control-solid"
+            placeholder="kmPrice"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('twitter').valid &&
+              (socialMediaForm.get('twitter').dirty ||
+                socialMediaForm.get('twitter').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('twitter').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.instagram" | translate }}</label>
+          <input
+            type="text"
+            formControlName="instagram"
+            class="form-control form-control-solid"
+            placeholder="instagram"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('instagram').valid &&
+              (socialMediaForm.get('instagram').dirty ||
+                socialMediaForm.get('instagram').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('instagram').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.email" | translate }} </label>
+          <input
+            type="text"
+            formControlName="email"
+            class="form-control form-control-solid"
+            placeholder="kmPrice"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('email').valid &&
+              (socialMediaForm.get('email').dirty ||
+                socialMediaForm.get('email').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('email').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.snap" | translate }}</label>
+          <input
+            type="text"
+            formControlName="snap"
+            class="form-control form-control-solid"
+            placeholder="snap"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('snap').valid &&
+              (socialMediaForm.get('snap').dirty ||
+                socialMediaForm.get('snap').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('instagram').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">
+            {{ "global.phone_number" | translate }}
+          </label>
+          <input
+            type="text"
+            formControlName="phone"
+            class="form-control form-control-solid"
+            placeholder="kmPrice"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('phone').valid &&
+              (socialMediaForm.get('phone').dirty ||
+                socialMediaForm.get('phone').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('phone').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.facebook" | translate }}</label>
+          <input
+            type="text"
+            formControlName="facebook"
+            class="form-control form-control-solid"
+            placeholder="facebook"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('facebook').valid &&
+              (socialMediaForm.get('facebook').dirty ||
+                socialMediaForm.get('facebook').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('facebook').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+       <!-- ---------------------------------------------------------------- -->
+       <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.deliveryTrainingLink" | translate }} </label>
+          <input
+            type="text"
+            formControlName="deliveryTrainingLink"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.deliveryTrainingLink' | translate }}"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('deliveryTrainingLink').valid &&
+              (socialMediaForm.get('deliveryTrainingLink').dirty ||
+              socialMediaForm.get('deliveryTrainingLink').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('deliveryTrainingLink').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.deliveryTrainingLinkAr" | translate }}</label>
+          <input
+            type="text"
+            formControlName="deliveryTrainingLinkAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.deliveryTrainingLinkAr' | translate }}"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('deliveryTrainingLinkAr').valid &&
+              (socialMediaForm.get('deliveryTrainingLinkAr').dirty ||
+              socialMediaForm.get('deliveryTrainingLinkAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('deliveryTrainingLinkAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.transportTrainingLink" | translate }} </label>
+          <input
+            type="text"
+            formControlName="transportTrainingLink"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.transportTrainingLink' | translate }}"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('transportTrainingLink').valid &&
+              (socialMediaForm.get('transportTrainingLink').dirty ||
+              socialMediaForm.get('transportTrainingLink').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('transportTrainingLink').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.transportTrainingLinkAr" | translate }}</label>
+          <input
+            type="text"
+            formControlName="transportTrainingLinkAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.transportTrainingLinkAr' | translate }}"
+          />
+          <div
+            *ngIf="
+              !socialMediaForm.get('transportTrainingLinkAr').valid &&
+              (socialMediaForm.get('transportTrainingLinkAr').dirty ||
+              socialMediaForm.get('transportTrainingLinkAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="socialMediaForm.get('transportTrainingLinkAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr />
+
+    <form [formGroup]="termPoliciesForm" (ngSubmit)="UpdateTermsAndPolicies()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">
+            {{ "app.termsAndPolicies" | translate }}
+          </label>
+          <input
+            type="text"
+            formControlName="termsAndPolicies"
+            class="form-control form-control-solid"
+            placeholder="termsAndPolicies"
+          />
+          <div
+            *ngIf="
+              !termPoliciesForm.get('termsAndPolicies').valid &&
+              (termPoliciesForm.get('termsAndPolicies').dirty ||
+                termPoliciesForm.get('termsAndPolicies').touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="
+                termPoliciesForm
+                  .get('termsAndPolicies')
+                  .hasError('required')
+              "
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.about" | translate }}</label>
+          <input
+            type="text"
+            formControlName="about"
+            class="form-control form-control-solid"
+            placeholder="about"
+          />
+          <div
+            *ngIf="
+              !termPoliciesForm.get('about').valid &&
+              (termPoliciesForm.get('about').dirty ||
+                termPoliciesForm.get('about').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="termPoliciesForm.get('about').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr />
+
+    <form [formGroup]="radiusForm" (ngSubmit)="UpdateRadius()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">
+            {{ "app.deliveryRadius" | translate }}
+          </label>
+          <input
+            type="number"
+            min="0"
+            formControlName="deliveryRadius"
+            class="form-control form-control-solid"
+            placeholder=" {{ 'app.deliveryRadius' | translate }}"
+          />
+          <div
+            *ngIf="
+              !radiusForm.get('deliveryRadius').valid &&
+              (radiusForm.get('deliveryRadius').dirty ||
+                radiusForm.get('deliveryRadius').touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="
+                radiusForm.get('deliveryRadius').hasError('required')
+              "
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.transportRadius" | translate }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="transportRadius"
+            class="form-control form-control-solid"
+            placeholder="{{ 'app.transportRadius' | translate }}"
+          />
+          <div
+            *ngIf="
+              !radiusForm.get('transportRadius').valid &&
+              (radiusForm.get('transportRadius').dirty || radiusForm.get('transportRadius').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="radiusForm.get('transportRadius').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "app.distanceShopSearch" | translate }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="distanceShopSearch"
+            class="form-control form-control-solid"
+            placeholder="{{ 'app.distanceShopSearch' | translate }}"
+          />
+          <div
+            *ngIf="
+              !radiusForm.get('distanceShopSearch').valid &&
+              (radiusForm.get('distanceShopSearch').dirty || radiusForm.get('distanceShopSearch').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="radiusForm.get('distanceShopSearch').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+    <hr />
+
+    <form [formGroup]="versionForm" (ngSubmit)="UpdateVersion()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "app.version" | translate }} </label>
+          <input
+            type="text"
+            formControlName="version"
+            class="form-control form-control-solid"
+            placeholder="version"
+          />
+          <div
+            *ngIf="
+              !versionForm.get('version').valid &&
+              (versionForm.get('version').dirty ||
+                versionForm.get('version').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="versionForm.get('version').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "app.versionIos" | translate }} </label>
+          <input
+            type="text"
+            formControlName="versionIos"
+            class="form-control form-control-solid"
+            placeholder="versionIos"
+          />
+          <div
+            *ngIf="
+              !versionForm.get('versionIos').valid &&
+              (versionForm.get('versionIos').dirty ||
+                versionForm.get('versionIos').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="versionForm.get('versionIos').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12 mt-2">
+          <label class="form-label"> {{ "app.versionShop" | translate }} </label>
+          <input
+            type="text"
+            formControlName="versionShop"
+            class="form-control form-control-solid"
+            placeholder="versionShop"
+          />
+          <div
+            *ngIf="
+              !versionForm.get('versionShop').valid &&
+              (versionForm.get('versionShop').dirty ||
+                versionForm.get('versionShop').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="versionForm.get('versionShop').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr />
+
+    <form [formGroup]="vatForm" (ngSubmit)="UpdateVat()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "app.vat" | translate }} </label>
+          <input
+            type="text"
+            formControlName="vat"
+            class="form-control form-control-solid"
+            placeholder="vat"
+          />
+          <div
+            *ngIf="
+              !vatForm.get('vat').valid &&
+              (vatForm.get('vat').dirty ||
+              vatForm.get('vat').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="vatForm.get('vat').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr />
+
+    <form [formGroup]="schedulingform" (ngSubmit)="UpdateSchedulingInMinutes()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "app.schedulingInMinutes" | translate }} </label>
+          <input
+            type="text"
+            formControlName="schedulingInMinutes"
+            class="form-control form-control-solid"
+            placeholder="schedulingInMinutes"
+          />
+          <div
+            *ngIf="
+              !schedulingform.get('schedulingInMinutes').valid &&
+              (schedulingform.get('schedulingInMinutes').dirty ||
+              schedulingform.get('schedulingInMinutes').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="schedulingform.get('schedulingInMinutes').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+
+    <hr />
+
+    <form [formGroup]="bonusForm" (ngSubmit)="UpdateBonusData()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.providerRegistrationBonus" | translate }} </label>
+          <input
+            type="number"
+            formControlName="providerRegistrationBonus"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.providerRegistrationBonus' | translate }}"
+          />
+          <div
+            *ngIf="
+              !bonusForm.get('providerRegistrationBonus').valid &&
+              (bonusForm.get('providerRegistrationBonus').dirty ||
+              bonusForm.get('providerRegistrationBonus').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="bonusForm.get('providerRegistrationBonus').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.customerRegistrationBonus" | translate }} </label>
+          <input
+            type="number"
+            formControlName="customerRegistrationBonus"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.customerRegistrationBonus' | translate }}"
+          />
+          <div
+            *ngIf="
+              !bonusForm.get('customerRegistrationBonus').valid &&
+              (bonusForm.get('customerRegistrationBonus').dirty ||
+              bonusForm.get('customerRegistrationBonus').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="bonusForm.get('customerRegistrationBonus').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-4 col-sm-12">
+          <label class="form-label"> {{ "field.providerOrderBonus" | translate }} </label>
+          <input
+            type="number"
+            formControlName="providerOrderBonus"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.providerOrderBonus' | translate }}"
+          />
+          <div
+            *ngIf="
+              !bonusForm.get('providerOrderBonus').valid &&
+              (bonusForm.get('providerOrderBonus').dirty ||
+              bonusForm.get('providerOrderBonus').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="bonusForm.get('providerOrderBonus').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+
+    <hr />
+
+    <form [formGroup]="providerReciveOneOrder" (ngSubmit)="UpdateProviderReciveOneOrder()">
+      <div class="row my-5">
+      
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "field.isProviderReciveOneOrder" | translate }}</p>
+          <div class="row">
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="true"
+                  name="isProviderReciveOneOrder"
+                  formControlName="isProviderReciveOneOrder"
+                />
+                <span class="form-check-label">
+                  {{ "field.oneOrder" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="false"
+                  name="isProviderReciveOneOrder"
+                  formControlName="isProviderReciveOneOrder"
+                />
+                <span class="form-check-label">
+                  {{ "field.MultipleOrder" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              !providerReciveOneOrder.get('isProviderReciveOneOrder').valid &&
+              (providerReciveOneOrder.get('isProviderReciveOneOrder').dirty || providerReciveOneOrder.get('isProviderReciveOneOrder').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="providerReciveOneOrder.get('isProviderReciveOneOrder').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr />
+    
+    <form [formGroup]="LimitationOrderValue" (ngSubmit)="updateLimitationOrderValue()">
+     
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.minimumCashOrderValue" | translate }} </label>
+          <input
+            type="number"
+            formControlName="minimumCashOrderValue"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.minimumCashOrderValue' | translate }}"
+          />
+          <div
+            *ngIf="
+              !LimitationOrderValue.get('minimumCashOrderValue').valid &&
+              (LimitationOrderValue.get('minimumCashOrderValue').dirty ||
+              LimitationOrderValue.get('minimumCashOrderValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="LimitationOrderValue.get('minimumCashOrderValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.minimumCreditOrderValue" | translate }} </label>
+          <input
+            type="number"
+            formControlName="minimumCreditOrderValue"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.minimumCreditOrderValue' | translate }}"
+          />
+          <div
+            *ngIf="
+              !LimitationOrderValue.get('minimumCreditOrderValue').valid &&
+              (LimitationOrderValue.get('minimumCreditOrderValue').dirty ||
+              LimitationOrderValue.get('minimumCreditOrderValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="LimitationOrderValue.get('minimumCreditOrderValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.maximumCashOrderValue" | translate }} </label>
+          <input
+            type="number"
+            formControlName="maximumCashOrderValue"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.maximumCashOrderValue' | translate }}"
+          />
+          <div
+            *ngIf="
+              !LimitationOrderValue.get('maximumCashOrderValue').valid &&
+              (LimitationOrderValue.get('maximumCashOrderValue').dirty ||
+              LimitationOrderValue.get('maximumCashOrderValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="LimitationOrderValue.get('maximumCashOrderValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.maximumCreditOrderValue" | translate }} </label>
+          <input
+            type="number"
+            formControlName="maximumCreditOrderValue"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.maximumCreditOrderValue' | translate }}"
+          />
+          <div
+            *ngIf="
+              !LimitationOrderValue.get('maximumCreditOrderValue').valid &&
+              (LimitationOrderValue.get('maximumCreditOrderValue').dirty ||
+              LimitationOrderValue.get('maximumCreditOrderValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="LimitationOrderValue.get('maximumCreditOrderValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>

@@ -1,0 +1,10 @@
+@media print {
+    .noprint {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    table {
+        page-break-after: always !important;
+        border-style: inset;
+    }
+}

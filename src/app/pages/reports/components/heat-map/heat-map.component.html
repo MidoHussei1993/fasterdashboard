@@ -1,0 +1,92 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <h3 class="card-title my-3">{{ "menu.heatMap" | translate }}</h3>
+      <div class="card bg-secondary">
+        <div class="card-body">
+          <app-filter [filter]="filter"></app-filter>
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <label class="form-label">{{
+                "field.orderType" | translate
+              }}</label>
+              <select
+                [(ngModel)]="filter.OrderType"
+                (input)="filter.OrderStatus = null"
+                class="form-select form-select-solid"
+              >
+                <option [value]="1">
+                  {{ "field.delivery" | translate }}
+                </option>
+                <option [value]="3">
+                  {{ "field.transport" | translate }}
+                </option>
+                <option [value]="2">
+                  {{ "field.taxi" | translate }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4 col-sm-12" *ngIf="filter.OrderType">
+              <label class="form-label">{{
+                "cobone.status" | translate
+              }}</label>
+              <select
+                *ngIf="filter.OrderType == 1"
+                [(ngModel)]="filter.OrderStatus"
+                class="form-select form-select-solid"
+              >
+                <option
+                  [value]="state.id"
+                  *ngFor="let state of deliveryStatusList"
+                >
+                  {{ currentLanguage == "en" ? state.name : state.nameAr }}
+                </option>
+              </select>
+              <select
+                *ngIf="filter.OrderType == 2 || filter.OrderType == 3"
+                [(ngModel)]="filter.OrderStatus"
+                class="form-select form-select-solid"
+              >
+                <option
+                  [value]="state.id"
+                  *ngFor="let state of traansportStatusList"
+                >
+                  {{ currentLanguage == "en" ? state.name : state.nameAr }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-5 mt-2 d-flex justify-content-end">
+            <div class="col-md-3 col-sm-12 d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-primary btn-block btn-sm mt-1 mx-2"
+                (click)="searchValue()"
+              >
+                <i class="fas fa-search"></i>
+                {{ "action.search" | translate }}
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning btn-block btn-sm mt-1"
+                (click)="reset()"
+              >
+                <i class="far fa-trash-alt"></i>
+                {{ "action.reset" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row my-5">
+        <div class="col-md-12" style="height: 80vh">
+          <app-google-map
+            [disabled]="true"
+            [markers]="markers"
+          ></app-google-map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

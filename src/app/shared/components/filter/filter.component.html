@@ -1,0 +1,108 @@
+<div class="row">
+  <div
+    class="col-md-4 col-sm-12 mt-2"
+    *ngFor="let item of propertiesArray; let i = index"
+  >
+    <div class="form-group">
+      <label class="mb-2"> {{ "field." + item | translate }}</label>
+      <p-calendar
+        *ngIf="
+          item == 'CreateAtFrom' ||
+          item == 'CreateAtTo' ||
+          item == 'ExpiryDateFrom' ||
+          item == 'StartDate' ||
+          item == 'EndDate' ||
+          item == 'LastLoginFrom' ||
+          item == 'LastLoginTo' ||
+          item == 'ExpiryDateTo'
+        "
+        class="d-block"
+        [(ngModel)]="filter[item]"
+        [showTime]="true"
+        inputId="time"
+      ></p-calendar>
+      <input
+        *ngIf="
+          item != 'CreateAtFrom' &&
+          item != 'CreateAtTo' &&
+          item != 'ExpiryDateFrom' &&
+          item != 'StartDate' &&
+          item != 'EndDate' &&
+          item != 'LastLoginFrom' &&
+          item != 'LastLoginTo' &&
+          item != 'ExpiryDateTo'
+        "
+        type="text"
+        [(ngModel)]="filter[item]"
+        class="form-control"
+        placeholder="{{ 'field.' + item | translate }}"
+      />
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12 mt-2" *ngIf="isActiviationFilter">
+    <p>{{ "field.activation" | translate }}</p>
+    <select [(ngModel)]="filter.IsActive" class="form-select form-select-solid">
+      <option [ngValue]="null">
+        {{ "field.all" | translate }}
+      </option>
+      <option [ngValue]="'true'">
+        {{ "field.active" | translate }}
+      </option>
+      <option [ngValue]="'false'">
+        {{ "field.not_active" | translate }}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-md-4 col-sm-12 mt-2" *ngIf="isgGenderFilter">
+    <p>{{ "global.gender" | translate }}</p>
+    <select [(ngModel)]="filter.Gender" class="form-select form-select-solid">
+      <option [ngValue]="null">
+        {{ "field.all" | translate }}
+      </option>
+      <option [ngValue]="0">
+        {{ "field.undefined" | translate }}
+      </option>
+      <option [ngValue]="1">
+        {{ "global.male" | translate }}
+      </option>
+      <option [ngValue]="2">
+        {{ "global.female" | translate }}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-md-4 col-sm-12 mt-2" *ngIf="isOfferFilter">
+    <div class="row">
+      <p>{{ "product.offer" | translate }}</p>
+      <div class="col-6 mx-auto">
+        <label class="form-check form-check-custom form-check-solid">
+          <input
+            class="form-check-input mx-2"
+            type="radio"
+            [value]="1"
+            name="isActive"
+            [(ngModel)]="filter.IsOffer"
+          />
+          <span class="form-check-label">
+            {{ "action.yes" | translate }}
+          </span>
+        </label>
+      </div>
+      <div class="col-6 mx-auto">
+        <label class="form-check form-check-custom form-check-solid">
+          <input
+            class="form-check-input mx-2"
+            type="radio"
+            [value]="2"
+            name="isActive"
+            [(ngModel)]="filter.IsOffer"
+          />
+          <span class="form-check-label">
+            {{ "action.no" | translate }}
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

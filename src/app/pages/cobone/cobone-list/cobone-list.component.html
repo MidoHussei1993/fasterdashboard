@@ -1,0 +1,57 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">{{ "menu.Cobone" | translate }}</h3>
+    
+  </div>
+  <div
+    class="card-body"
+  >
+    <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/cobone/create'">
+      <i class="fas fa-plus"></i>
+      {{ "action.create" | translate }}
+    </a>
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+        <div class="col-md-4 col-sm-12 mt-2">
+          <p>{{ "field.coboneStatus" | translate }}</p>
+          <select [(ngModel)]="filter.IsActive" class="form-select form-select-solid">
+            <option [ngValue]="null">
+              {{ "field.all" | translate }}
+            </option>
+            <option [ngValue]="'true'">
+              {{ "field.active" | translate }}
+            </option>
+            <option [ngValue]="'false'">
+              {{ "field.not_active" | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <app-table
+      [list]="Cobonelist"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      (view)="navigate($event, formMode.View)"
+      (edit)="navigate($event, formMode.Edit)"
+      [showDelete]="false"
+      [showSearch]="true"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [addActions]="true"
+      [showActivation]="true"
+      (changeActivation)="changeActivation($event)"
+      [actionList]="[
+        { title: 'reports.CoponeDeliveryDetailsReport', icon: 'fa-truck', type: 'product' }
+        ]"
+        (aciton)="navigateTO($event)"
+
+    ></app-table>
+  </div>
+</div>

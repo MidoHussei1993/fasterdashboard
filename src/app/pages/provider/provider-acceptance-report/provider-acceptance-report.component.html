@@ -1,0 +1,43 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      {{ "menu.DriversAcceptanceRateReport" | translate }}
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <label class="form-label">{{ "field.VendorId" | translate }}</label>
+            <select
+              [(ngModel)]="vendorId"
+              class="form-select form-select-solid"
+            >
+              <option [value]="type.id" *ngFor="let type of vendorList">
+                {{ currentLanguage == "en" ? type.name : type.nameAr }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-table
+      [list]="providerAcceptanceReportList"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [showDelete]="false"
+      [showEdit]="false"
+      [showView]="false"
+      [showSearch]="true"
+      [isdownloadAll]="providerAcceptanceReportList.length ? true : false"
+      (export)="downloadAll()"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [showPagination]="false"
+    >
+    </app-table>
+  </div>
+</div>

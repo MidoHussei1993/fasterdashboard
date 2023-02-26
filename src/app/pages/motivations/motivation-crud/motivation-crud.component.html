@@ -1,0 +1,530 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span *ngIf="!isEvaluate"> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.motivations" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <a
+      *ngIf="!isEvaluate"
+      class="btn btn-sm btn-success mt-1 mx-2 shadow"
+      href="https://api.faster.sa:5001/api/Motivations/DownloadExcelSample"
+      download
+    >
+      {{ "action.downloadshop" | translate }}
+    </a>
+
+    <a
+      *ngIf="mode === 'View'"
+      class="btn btn-sm btn-dark mt-1 mx-2 shadow"
+      (click)="downloadMotivationData()"
+    >
+      {{ "action.download" | translate }}
+    </a>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!isEvaluate">
+      <div class="row my-5" *ngIf="form.get('isDaily').value == false">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label d-block">{{
+            "field.StartDate" | translate
+          }}</label>
+          <p-calendar
+            formControlName="startAt"
+            [showTime]="true"
+            dateFormat="dd.mm.yy"
+            hourFormat="12"
+          ></p-calendar>
+          <div
+            *ngIf="
+              !form.get('startAt').valid &&
+              (form.get('startAt').dirty || form.get('startAt').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('startAt').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label d-block">{{
+            "field.EndDate" | translate
+          }}</label>
+          <p-calendar
+            formControlName="endAt"
+            [showTime]="true"
+            inputId="time"
+            dateFormat="dd.mm.yy"
+            hourFormat="12"
+          ></p-calendar>
+          <div
+            *ngIf="
+              !form.get('endAt').valid &&
+              (form.get('endAt').dirty || form.get('endAt').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('endAt').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="form.get('isDaily').value == true">
+        <div class="col-md-3 col-sm-12">
+          <label class="form-label d-block">{{
+            "field.dateFrom" | translate
+          }}</label>
+          <input
+            formControlName="dateFrom"
+            type="date"
+            class="form-control form-control-solid"
+          />
+          <div
+            *ngIf="
+              !form.get('dateFrom').valid &&
+              (form.get('dateFrom').dirty || form.get('dateFrom').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('dateFrom').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+          <label class="form-label d-block">{{
+            "field.timeFrom" | translate
+          }}</label>
+          <input
+            formControlName="timeFrom"
+            type="time"
+            class="form-control form-control-solid"
+          />
+          <div
+            *ngIf="
+              !form.get('timeFrom').valid &&
+              (form.get('timeFrom').dirty || form.get('timeFrom').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('timeFrom').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+          <label class="form-label d-block">{{
+            "field.dateTo" | translate
+          }}</label>
+          <input
+            formControlName="dateTo"
+            type="date"
+            class="form-control form-control-solid"
+          />
+          <div
+            *ngIf="
+              !form.get('dateTo').valid &&
+              (form.get('dateTo').dirty || form.get('dateTo').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('dateTo').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+          <label class="form-label d-block">{{
+            "field.timeTo" | translate
+          }}</label>
+          <input
+            formControlName="timeTo"
+            type="time"
+            class="form-control form-control-solid"
+          />
+          <div
+            *ngIf="
+              !form.get('timeTo').valid &&
+              (form.get('timeTo').dirty || form.get('timeTo').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('timeTo').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-3 col-sm-6">
+          <div class="form-check form-check-custom form-check-solid pt-4">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              formControlName="isForEach"
+              [value]="true"
+            />
+            <label class="form-check-label mx-2" for="flexCheckDefault">
+              {{ "field.offerForAll" | translate }}
+            </label>
+            <div
+              *ngIf="
+                !form.get('isForEach').valid &&
+                (form.get('isForEach').dirty || form.get('isForEach').touched)
+              "
+              class="text text-danger"
+            >
+              <p *ngIf="form.get('isForEach').hasError('required')">
+                {{ "_.required" | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="form-check form-check-custom form-check-solid pt-4">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              formControlName="isDaily"
+              [value]="true"
+            />
+            <label class="form-check-label mx-2" for="flexCheckDefault">
+              {{ "field.isDaily" | translate }}
+            </label>
+            <div
+              *ngIf="
+                !form.get('isDaily').valid &&
+                (form.get('isDaily').dirty || form.get('isDaily').touched)
+              "
+              class="text text-danger"
+            >
+              <p *ngIf="form.get('isDaily').hasError('required')">
+                {{ "_.required" | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "field.motivationType" | translate }}</p>
+          <div class="row">
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="1"
+                  name="motivationType"
+                  formControlName="motivationType"
+                />
+                <span class="form-check-label">
+                  {{ "field.bonus" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="2"
+                  name="motivationType"
+                  formControlName="motivationType"
+                />
+                <span class="form-check-label">
+                  {{ "field.guarantee" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              !form.get('motivationType').valid &&
+              (form.get('motivationType').dirty ||
+                form.get('motivationType').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('motivationType').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.description" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="description"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.description' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('description').valid &&
+              (form.get('description').dirty || form.get('description').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('description').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('description').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"
+            >{{ "field.description" | translate }} ع</label
+          >
+          <input
+            type="text"
+            formControlName="descriptionAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.description' | translate }} ع"
+          />
+          <div
+            *ngIf="
+              !form.get('descriptionAr').valid &&
+              (form.get('descriptionAr').dirty ||
+                form.get('descriptionAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('descriptionAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('descriptionAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.orderTarget" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="orderTarget"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.orderTarget' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('orderTarget').valid &&
+              (form.get('orderTarget').dirty || form.get('orderTarget').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('orderTarget').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"
+            >{{ "field.motivationAmount" | translate }}
+          </label>
+          <input
+            type="number"
+            formControlName="motivationAmount"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.motivationAmount' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('motivationAmount').valid &&
+              (form.get('motivationAmount').dirty ||
+                form.get('motivationAmount').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('motivationAmount').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="form.get('isForEach').value == false">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.AcceptanceRate" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="acceptancPercentageTarget"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.AcceptanceRate' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('acceptancPercentageTarget').valid &&
+              (form.get('acceptancPercentageTarget').dirty ||
+                form.get('acceptancPercentageTarget').touched)
+            "
+            class="text text-danger"
+          >
+            <!-- <p
+          *ngIf="form.get('acceptancPercentageTarget').hasError('required')"
+        >
+          {{ "_.required" | translate }}
+        </p> -->
+            <p *ngIf="form.get('acceptancPercentageTarget').hasError('max')">
+              {{ "_.max" | translate: { value: 100 } }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"
+            >{{ "field.onLineMinutesTarget" | translate }}
+          </label>
+          <input
+            type="number"
+            formControlName="onLineMinutesTarget"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.onLineMinutesTarget' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('onLineMinutesTarget').valid &&
+              (form.get('onLineMinutesTarget').dirty ||
+                form.get('onLineMinutesTarget').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('onLineMinutesTarget').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">
+            {{ "action.downloadshop" | translate }}
+          </label>
+          <input
+            type="file"
+            (change)="uploadShopBranchesFile($event)"
+            class="form-control form-control-solid"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            placeholder="{{ 'action.downloadshop' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('providerIds').valid &&
+              (form.get('providerIds').dirty || form.get('providerIds').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('providerIds').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="col-md-6 col-sm-12"
+          *ngIf="
+            form.get('isForEach').value == false &&
+            this.uploadedProvider.length &&
+            form.get('motivationAmount').value
+          "
+        >
+          <p class="font-weight-bold">
+            {{ "field.budget" | translate }}
+          </p>
+          <p class="font-weight-bolder mx-3">
+            {{
+              this.uploadedProvider.length * form.get("motivationAmount").value
+            }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="row" *ngIf="uploadedProvider.length">
+      <div class="table-responsive">
+        <table
+          class="table table-hover table-rounded table-striped border gy-7 gs-7"
+        >
+          <thead>
+            <tr class="">
+              <th class="text-center">
+                {{ "field.ProviderId" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.ProviderFullName" | translate }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of uploadedProvider; let i = index"
+              class="slideDown"
+            >
+              <td class="text-center">
+                {{ item.id }}
+              </td>
+              <td class="text-center">
+                {{ item.name }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row mt-5" *ngIf="motivationReportResult.length">
+      <div class="col-3">
+        <a
+          *ngIf="mode === 'View'"
+          class="btn btn-sm btn-dark mt-1 mx-2 shadow mb-2"
+          (click)="downloadMotivationReportResult()"
+        >
+          {{ "action.download" | translate }}
+        </a>
+      </div>
+      <app-table
+        [list]="motivationReportResult"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        [showView]="false"
+        [showDelete]="false"
+        [showEdit]="false"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+      ></app-table>
+    </div>
+  </div>
+</div>

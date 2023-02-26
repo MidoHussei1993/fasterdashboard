@@ -1,0 +1,65 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "menu.TransportOrderNotification" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+ 
+  
+        <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.title_en'|translate }}</label>
+                <input type="text" formControlName="title" class="form-control form-control-solid" placeholder="{{'field.title_en'|translate }}"/>
+                <div *ngIf="!form.get('title').valid && (form.get('title').dirty ||   form.get('title').touched)" class="text text-danger">
+                    <p *ngIf="form.get('title').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('title').hasError('pattern')">{{'_.only_en'|translate }} </p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.titleAr'|translate }}</label>
+                <input type="text" formControlName="titleAr" class="form-control form-control-solid" placeholder="{{'field.titleAr'|translate }} ع"/>
+                <div *ngIf="!form.get('titleAr').valid && (form.get('titleAr').dirty ||  form.get('titleAr').touched)" class="text text-danger">
+                    <p *ngIf="form.get('titleAr').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('titleAr').hasError('pattern')">{{'_.only_ar'|translate }} </p>
+                  </div>
+                </div>
+         </div>
+
+         <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.message'|translate }}</label>
+                <input type="text" formControlName="message" class="form-control form-control-solid" placeholder="{{'field.message'|translate }}"/>
+                <div *ngIf="!form.get('message').valid && (form.get('message').dirty ||   form.get('message').touched)" class="text text-danger">
+                    <p *ngIf="form.get('message').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('message').hasError('pattern')">{{'_.only_en'|translate }} </p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.messageAr'|translate }}</label>
+                <input type="text" formControlName="messageAr" class="form-control form-control-solid" placeholder="{{'field.messageAr'|translate }} ع"/>
+                <div *ngIf="!form.get('messageAr').valid && (form.get('messageAr').dirty ||  form.get('messageAr').touched)" class="text text-danger">
+                    <p *ngIf="form.get('messageAr').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('messageAr').hasError('pattern')">{{'_.only_ar'|translate }} </p>
+                  </div>
+                </div>
+         </div>
+
+  
+  
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

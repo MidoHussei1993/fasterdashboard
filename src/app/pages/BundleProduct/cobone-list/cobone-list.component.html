@@ -1,0 +1,24 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Cobone</h3>
+        <div class="card-toolbar">
+            <button type="button" class="btn btn-sm " (click)="activeTab = 'created'" [ngClass]="{'btn-dark': activeTab == 'created','btn-light': activeTab != 'created'}">
+                    Created List
+                </button>
+            <button type="button" class="btn btn-sm btn-light mx-2" (click)="activeTab = 'deleted'" [ngClass]="{'btn-dark': activeTab == 'deleted','btn-light': activeTab != 'deleted'}">
+                Deleted List
+                </button>
+        </div>
+    </div>
+    <div class="card-body" *ngIf="Cobonelist.length>0 && activeTab == 'created'">
+        <a class="btn btn-sm btn-primary mb-3 " [routerLink]="'/cobone/create'">
+                    Create
+                </a>
+        <app-table [list]="Cobonelist" [titles]="titles" [properties]="properties" [busyLoading]="busyLoading" [pagination]="pagination" (activetedPageSize)="setPageSize($event)" (activetedPageNumber)="setPageNumber($event)" (view)="navigate($event,formMode.View)"
+            (edit)="navigate($event,formMode.Edit)" [showDelete]="false"></app-table>
+    </div>
+    <div class="card-body" *ngIf="Cobonelist.length>0 && activeTab == 'deleted'">
+        <app-table [list]="Cobonelist" [titles]="['name', 'nameAr']" [properties]="['name', 'nameAr']" [busyLoading]="busyLoading" [pagination]="pagination" (activetedPageSize)="setPageSize($event)" (activetedPageNumber)="setPageNumber($event)" [showDelete]="false"
+            [showEdit]="false" [showView]="false"></app-table>
+    </div>
+</div>

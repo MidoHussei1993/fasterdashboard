@@ -1,0 +1,31 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "identity.update_user_roles" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6 col-sm-12" *ngFor="let item of existRoles; let i=index">
+        <div class="mb-10" >
+          <label class="form-check form-check-custom form-check-solid">
+            <input class="form-check-input" type="checkbox" [value]="item.id" [(ngModel)]="item.isSelected"/>
+            <span class="form-check-label mx-3">
+                {{item.name}}
+            </span>
+        </label>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-md-4 col-sm-12 mx-auto text-center">
+         <button type="button" class="btn btn-primary btn-block  btn-hover-scale" (click)="updateUserRoles()">
+             {{'action.save'|translate }}
+         </button>
+      </div>
+  </div>
+
+  </div>
+</div>

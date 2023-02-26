@@ -1,0 +1,316 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "product.productDetails" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md-3 col-sm-12 text-center">
+          <label class="form-label d-block">{{
+            "product.coverImage" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="form.get('coverImage').value"
+              class="image-input-wrapper w-125px h-125px"
+            />
+            <!--end::Image preview wrapper-->
+            <label
+            *ngIf="mode != 'View'"
+              class="
+                btn btn-icon btn-circle btn-active-color-primary
+                w-25px
+                h-25px
+                bg-white
+                shadow
+              "
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event)"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+          <div
+            *ngIf="
+              !form.get('coverImage').valid &&
+              (form.get('coverImage').dirty ||
+                form.get('coverImage').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('coverImage').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.title" | translate }}</label>
+          <input
+            type="text"
+            formControlName="title"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.title' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('title').valid &&
+              (form.get('title').dirty || form.get('title').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('title').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('title').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.title" | translate }} ع</label>
+          <input
+            type="text"
+            formControlName="titleAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.title' | translate }} ع"
+          />
+          <div
+            *ngIf="
+              !form.get('titleAr').valid &&
+              (form.get('titleAr').dirty || form.get('titleAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('titleAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <!-- <p *ngIf="form.get('titleAr').hasError('pattern')">{{'_.only_ar'|translate }} </p> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "product.healthInformation" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="healthInformation"
+            class="form-control form-control-solid"
+            placeholder="{{ 'product.healthInformation' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('healthInformation').valid &&
+              (form.get('healthInformation').dirty ||
+                form.get('healthInformation').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('healthInformation').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('healthInformation').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"
+            >{{ "product.healthInformation" | translate }} ع</label
+          >
+          <input
+            type="text"
+            formControlName="healthInformationAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'product.healthInformation' | translate }} ع"
+          />
+          <div
+            *ngIf="
+              !form.get('healthInformationAr').valid &&
+              (form.get('healthInformationAr').dirty ||
+                form.get('healthInformationAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('healthInformationAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('healthInformationAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.note" | translate }}</label>
+          <input
+            type="text"
+            formControlName="note"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.note' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('note').valid &&
+              (form.get('note').dirty || form.get('note').touched)
+            "
+            class="text text-danger"
+          >
+           
+            <p *ngIf="form.get('note').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.note" | translate }} ع</label>
+          <input
+            type="text"
+            formControlName="noteAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.note' | translate }} ع"
+          />
+          <div
+            *ngIf="
+              !form.get('noteAr').valid &&
+              (form.get('noteAr').dirty || form.get('noteAr').touched)
+            "
+            class="text text-danger"
+          >
+            
+            <p *ngIf="form.get('noteAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.price" | translate }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="price"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.price' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('price').valid &&
+              (form.get('price').dirty || form.get('price').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('price').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.lastPrice" | translate }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="lastPrice"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.lastPrice' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('lastPrice').valid &&
+              (form.get('lastPrice').dirty || form.get('lastPrice').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('lastPrice').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.availableFromHour" | translate }}</label>
+          <input
+            type="time"
+            min="0"
+            formControlName="availableFromHour"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.availableFromHour' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('availableFromHour').valid &&
+              (form.get('availableFromHour').dirty || form.get('availableFromHour').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('availableFromHour').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.availableToHour" | translate }}</label>
+          <input
+            type="time"
+            min="0"
+            formControlName="availableToHour"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.availableToHour' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('availableToHour').valid &&
+              (form.get('availableToHour').dirty || form.get('availableToHour').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('availableToHour').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

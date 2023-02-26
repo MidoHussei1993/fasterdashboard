@@ -1,0 +1,157 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">
+            <span>
+      {{mode|translate }} -
+    </span>
+            <span class="mx-2"> {{'menu.Addition_Option'|translate }} </span>
+        </h3>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="row my-5">
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+              "additionoption.name" | translate
+            }}</label>
+                    <input type="text" [(ngModel)]="additionoption.name" formControlName="name" class="form-control form-control-solid" :placeholder="{{ 'additionoption.name' | translate }}" />
+                    <div *ngIf="
+                !form.get('name').valid &&
+                (form.get('name').dirty ||
+                  form.get('name').touched)
+              " class="text text-danger">
+                        <p *ngIf="form.get('name').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+                      "additionoption.nameAr" | translate
+            }}</label>
+                    <input type="text" [(ngModel)]="additionoption.nameAr" formControlName="nameAr" class="form-control form-control-solid" :placeholder="{{ 'additionoption.nameAr' | translate }}" />
+                    <div *ngIf="
+                !form.get('nameAr').valid &&
+                (form.get('nameAr').dirty ||
+                  form.get('nameAr').touched)
+              " class="text text-danger">
+                        <p *ngIf="form.get('nameAr').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+                      "additionoption.note" | translate
+          }}</label>
+                    <input type="text" [(ngModel)]="additionoption.note" formControlName="note" class="form-control form-control-solid" :placeholder="{{ 'additionoption.note' | translate }}" />
+                    <div *ngIf="
+              !form.get('note').valid &&
+              (form.get('note').dirty ||
+                form.get('note').touched)
+            " class="text text-danger">
+                        <p *ngIf="form.get('note').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+          "additionoption.noteAr" | translate
+        }}</label>
+                    <input type="text" [(ngModel)]="additionoption.noteAr" formControlName="noteAr" class="form-control form-control-solid" :placeholder="{{ 'additionoption.noteAr' | translate }}" />
+                    <div *ngIf="
+            !form.get('noteAr').valid &&
+            (form.get('noteAr').dirty ||
+              form.get('noteAr').touched)
+          " class="text text-danger">
+                        <p *ngIf="form.get('noteAr').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+        "additionoption.price" | translate
+      }}</label>
+                    <input type="number" [(ngModel)]="additionoption.price" formControlName="price" class="form-control form-control-solid" :placeholder="{{ 'additionoption.price' | translate }}" />
+                    <div *ngIf="
+          !form.get('price').valid &&
+          (form.get('price').dirty ||
+            form.get('price').touched)
+        " class="text text-danger">
+                        <p *ngIf="form.get('price').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mt-5" *ngIf="mode == 'View' || mode == 'Edit' && additionoption">
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "additionoption.name" | translate }} : {{ additionoption.name }}
+                    </h4>
+
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "additionoption.nameAr" | translate }} : {{ additionoption.nameAr }}
+                    </h4>
+
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "additionoption.note" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2">
+                        {{ additionoption.note }}
+                    </h6>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "additionoption.noteAr" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2">
+                        {{ additionoption.noteAr }}
+                    </h6>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "additionoption.price" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2">
+                        {{ additionoption.price }}
+                    </h6>
+                </div>
+            </div>
+
+            <div class="row mt-5" *ngIf="mode == 'View' || mode == 'Edit' && additionoption">
+
+
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "category.Date" | translate }} :
+                    </h4>
+
+                    <h6 class="d-inline mx-2">
+                        {{ additionoption.createAt | date:"medium" }}
+                    </h6>
+                </div>
+
+
+            </div>
+
+
+            <div class="row my-5" *ngIf="mode != 'View'">
+                <div class="col-md-4 col-sm-12 mx-auto text-center">
+                    <button type="submit" class="btn btn-primary btn-block btn-hover-scale">
+          {{ "action.save" | translate }}
+        </button >
+              </div>
+          </div>
+      </form>
+  </div>
+</div>

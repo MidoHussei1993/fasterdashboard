@@ -1,0 +1,93 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">{{ "menu.vendor" | translate }}</h3>
+    </div>
+    <div class="card-body">
+      <a
+        class="btn btn-sm btn-primary mb-3"
+        [routerLink]="'/vendor/create'"
+      >
+      <i class="fas fa-plus"></i>
+        {{ "action.create" | translate }}
+      </a>
+      <div class="card bg-secondary">
+        <div class="card-body">
+          <app-filter [filter]="filter"></app-filter>
+        </div>
+      </div>
+      <app-table
+        [list]="VendorList"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+        (view)="navigateToView($event)"
+        (edit)="navigateToEdit($event)"
+        [showDelete]="false"
+        [showSearch]="true"
+        (search)="searchValue()"
+        (resetFilter)="resetfilter()"
+        [showActivation]="true"
+        (changeActivation)="changeActivation($event)"
+        [addActions]="true"
+        [actionList]="[
+        {title:'resetPassword.password',icon:'fa-lock',type:'resetPassword'} ]"
+        (aciton)="navigateTO($event)"
+      ></app-table>
+    </div>
+  </div>
+
+  <ng-template #resetPassword let-modal>
+    <div class="modal-body card-flush">
+      <div class="">
+        <h2 class="text-center text-white mb-4">
+          <span class="fs-3 fw-bolder me-2">{{
+            "resetPassword.name" | translate
+          }}</span>
+        </h2>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="create()">
+        <div class="row my-5">
+          <div class="col-md-6 col-sm-12">
+            <label class="form-label">{{
+              "resetPassword.password" | translate
+            }}</label>
+            <input
+              type="password"
+              formControlName="password"
+              class="form-control form-control-solid"
+              :placeholder="{{ 'resetPassword.password' | translate }}"
+            />
+            <div
+              *ngIf="
+                !form.get('password').valid &&
+                (form.get('password').dirty || form.get('password').touched)
+              "
+              class="text text-danger"
+            >
+              <p *ngIf="form.get('password').hasError('required')">
+                {{ "_.required" | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row my-5" >
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+  
+  
+    </div>
+  </ng-template>
+  

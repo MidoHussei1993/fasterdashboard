@@ -1,0 +1,66 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "menu.files" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <a
+      class="btn btn-sm btn-success mt-1 mx-2 shadow"
+      href="https://api.faster.sa:5001/api/ProvidersWallet/DownloadExcelSample"
+      download
+    >
+      {{ "action.downloadshop" | translate }}
+    </a>
+
+    <div class="row mt-5">
+      <div class="col-md-6 col-sm-12">
+        <label class="form-label ">
+          {{ "action.downloadshop" | translate }}
+        </label>
+        <input
+          type="file"
+          (change)="file = $event"
+          class="form-control form-control-solid"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          placeholder="{{ 'action.downloadshop' | translate }}"
+        />
+      </div>
+
+      <div class="col-md-6 col-sm-12">
+   
+            <label class="form-label ">
+              {{ "field.moneyTransferImage" | translate }}
+            </label>
+            <input
+              type="file"
+              (change)="image = $event; uploadTransferImage()"
+              class="form-control form-control-solid"
+              accept="image/png, image/gif, image/jpeg"
+              placeholder="{{ 'action.downloadshop' | translate }}"
+            />
+      </div>
+
+      <div class="text-center mt-5">
+        <button
+        type="button"
+        [disabled]="!file || !uploadedimage"
+        (click)="uploadToWalletDiscountByExcel()"
+        class="btn btn-primary btn-block btn-hover-scale"
+      >
+        {{ "action.save" | translate }}
+      </button>
+      </div>
+
+      <div class="row mt-5" *ngIf="uploadedimage">
+        <div class="col-md-6 col-sm-12 mx-auto text-center">
+          <div class="card">
+            <div class="card-body">
+              <img [src]="uploadedimage" width="400" height="400" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

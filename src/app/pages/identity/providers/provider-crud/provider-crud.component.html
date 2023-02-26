@@ -1,0 +1,1179 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.providers" | translate }} </span>
+    </h3>
+    <div class="card-toolbar" *ngIf="mode != 'Create'">
+      <a
+        type="button"
+        href="providers/notes/{{ route.snapshot.queryParams.providerId }}"
+        target="_blank"
+        class="btn btn-outline btn-outline-dashed btn-outline-success btn-active-light-success mx-2"
+      >
+        {{ "global.notes" | translate }}
+      </a>
+      <a
+        type="button"
+        href="provider-subscription/view/{{ route.snapshot.params.id }}"
+        target="_blank"
+        class="btn btn-outline btn-outline-dashed btn-outline-info btn-active-light-info mx-2"
+      >
+        {{ "menu.providerSubscription" | translate }}
+      </a>
+      <a
+        (click)="openSubscriptionModal()"
+        type="button"
+        class="btn btn-outline btn-outline-dashed btn-outline-danger btn-active-light-danger"
+      >
+        {{ "field.newSubscription" | translate }}
+      </a>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div
+        class="card bg-dark my-2 mb-5"
+        *ngIf="(mode == 'View' || mode == 'Edit') && viewObject.id"
+      >
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <h6 class="text-white">
+                {{ "field.frontEndDevice" | translate }} :
+                {{ viewObject.baseData.frontEndDevice }}
+              </h6>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+              <h6 class="text-white">
+                {{ "field.favoriteLanguage" | translate }} :
+                {{ viewObject.baseData.favoriteLanguage }}
+              </h6>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+              <div class="d-flex">
+                <div class="p-2">
+                  <h6 class="text-white">
+                    {{ "field.driverRating" | translate }} :
+                    {{ viewObject.providerRate }}
+                  </h6>
+                </div>
+                <div class="p-2">
+                  <h6 class="text-uppercase font-weight-bolder">
+                    <i
+                      [ngClass]="{
+                        'text-warning': viewObject.providerRate >= 1
+                      }"
+                      class="fas fa-star"
+                    ></i>
+                    <i
+                      [ngClass]="{
+                        'text-warning': viewObject.providerRate >= 2
+                      }"
+                      class="fas fa-star"
+                    ></i>
+                    <i
+                      [ngClass]="{
+                        'text-warning': viewObject.providerRate >= 3
+                      }"
+                      class="fas fa-star"
+                    ></i>
+                    <i
+                      [ngClass]="{
+                        'text-warning': viewObject.providerRate >= 4
+                      }"
+                      class="fas fa-star"
+                    ></i>
+                    <i
+                      [ngClass]="{
+                        'text-warning': viewObject.providerRate >= 5
+                      }"
+                      class="fas fa-star"
+                    ></i>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-4 col-sm-12">
+              <h6 class="text-white">
+                {{ "field.finishedDeliveryOrdersCount" | translate }} :
+                {{ viewObject.finishedDeliveryOrdersCount }}
+              </h6>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+              <h6 class="text-white">
+                {{ "field.finishedTaxiOrdersCount" | translate }} :
+                {{ viewObject.finishedTaxiOrdersCount }}
+              </h6>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+              <h6 class="text-white">
+                {{ "field.finishedTransportOrdersCount" | translate }} :
+                {{ viewObject.finishedTransportOrdersCount }}
+              </h6>
+            </div>
+
+            <div class="col-md-4 col-sm-12 mt-3">
+              <h6 class="text-white">
+                {{ "field.total" | translate }} :
+                {{
+                  viewObject.finishedTransportOrdersCount +
+                    viewObject.finishedTaxiOrdersCount +
+                    viewObject.finishedDeliveryOrdersCount
+                }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p-tabView [(activeIndex)]="currentActiveTab">
+        <p-tabPanel header="{{ 'field.providerData' | translate }}">
+          <div class="row">
+            <div class="col-md-4 col-sm-12 text-center">
+              <label class="form-label d-block">{{
+                "global.profileImage" | translate
+              }}</label>
+              <!--begin::Image input-->
+              <div
+                class="image-input image-input-empty"
+                data-kt-image-input="true"
+                style="background-image: url(/assets/media/avatars/blank.png)"
+              >
+                <!--begin::Image preview wrapper-->
+                <img
+                  [src]="mainObject.profileImage"
+                  class="image-input-wrapper w-125px h-125px"
+                  (click)="viewImage(mainObject.profileImage)"
+                />
+                <!--end::Image preview wrapper-->
+                <label
+                  *ngIf="mode != 'View'"
+                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                  data-kt-image-input-action="change"
+                  data-bs-toggle="tooltip"
+                  data-bs-dismiss="click"
+                  title="Change avatar"
+                >
+                  <i class="bi bi-pencil-fill fs-7"></i>
+                  <input
+                    type="file"
+                    name="avatar"
+                    (change)="handleInputChange($event, 'profileImage')"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                </label>
+              </div>
+              <!--end::Image input-->
+              <!-- <div
+                *ngIf="
+                  !form.get('profileImage').valid &&
+                  (form.get('profileImage').dirty ||
+                    form.get('profileImage').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('profileImage').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div> -->
+            </div>
+
+            <div class="col-md-4 col-sm-12 text-center">
+              <label class="form-label d-block">{{
+                "field.iqamaImage" | translate
+              }}</label>
+              <!--begin::Image input-->
+              <div
+                class="image-input image-input-empty"
+                data-kt-image-input="true"
+                style="background-image: url(/assets/media/avatars/blank.png)"
+              >
+                <!--begin::Image preview wrapper-->
+                <img
+                  [src]="mainObject.iqamaImage"
+                  class="image-input-wrapper w-125px h-125px"
+                  (click)="viewImage(mainObject.iqamaImage)"
+                />
+                <!--end::Image preview wrapper-->
+                <label
+                  *ngIf="mode != 'View'"
+                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                  data-kt-image-input-action="change"
+                  data-bs-toggle="tooltip"
+                  data-bs-dismiss="click"
+                  title="Change avatar"
+                >
+                  <i class="bi bi-pencil-fill fs-7"></i>
+                  <input
+                    type="file"
+                    name="avatar"
+                    (change)="handleInputChange($event, 'iqamaImage')"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                </label>
+              </div>
+              <!--end::Image input-->
+            </div>
+
+            <div class="col-md-4 col-sm-12 text-center">
+              <label class="form-label d-block">{{
+                "provider.driverLicense" | translate
+              }}</label>
+              <!--begin::Image input-->
+              <div
+                class="image-input image-input-empty"
+                data-kt-image-input="true"
+                style="background-image: url(/assets/media/avatars/blank.png)"
+              >
+                <!--begin::Image preview wrapper-->
+                <img
+                  [src]="mainObject.driverLicense"
+                  class="image-input-wrapper w-125px h-125px"
+                  (click)="viewImage(mainObject.driverLicense)"
+                />
+                <!--end::Image preview wrapper-->
+                <label
+                  *ngIf="mode != 'View'"
+                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                  data-kt-image-input-action="change"
+                  data-bs-toggle="tooltip"
+                  data-bs-dismiss="click"
+                  title="Change avatar"
+                >
+                  <i class="bi bi-pencil-fill fs-7"></i>
+                  <input
+                    type="file"
+                    name="avatar"
+                    (change)="handleInputChange($event, 'driverLicense')"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                </label>
+              </div>
+              <!--end::Image input-->
+              <div
+                *ngIf="
+                  !form.get('driverLicense').valid &&
+                  (form.get('driverLicense').dirty ||
+                    form.get('driverLicense').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('driverLicense').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{
+                "global.full_name" | translate
+              }}</label>
+              <input
+                type="text"
+                formControlName="fullName"
+                class="form-control form-control-solid"
+                :placeholder="{{ 'global.full_name' | translate }}"
+              />
+              <div
+                *ngIf="
+                  !form.get('fullName').valid &&
+                  (form.get('fullName').dirty || form.get('fullName').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('fullName').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="mainObject.phoneNumber">
+              <a
+                [href]="
+                  'https://web.whatsapp.com/send?phone=' +
+                  mainObject.phoneNumber +
+                  '&text&app_absent=0'
+                "
+                target="_blank"
+              >
+                <h1>
+                  <i class="fab fa-whatsapp display-4 text-success mt-3"></i>
+                </h1>
+              </a>
+            </div>
+            <!-- <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "global.userType" | translate }}</label>
+              <select
+                formControlName="userType"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.value" *ngFor="let item of userTypeDropDown">
+                  {{ item.title }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  !form.get('userType').valid &&
+                  (form.get('userType').dirty || form.get('userType').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('userType').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div> -->
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{
+                "global.phone_number" | translate
+              }}</label>
+              <input
+                type="text"
+                minlength="12"
+                maxlength="12"
+                formControlName="phoneNumber"
+                class="form-control form-control-solid"
+                :placeholder="{{ 'global.phone_number' | translate }}"
+              />
+              <div
+                *ngIf="
+                  !form.get('phoneNumber').valid &&
+                  (form.get('phoneNumber').dirty ||
+                    form.get('phoneNumber').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('phoneNumber').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+                <p *ngIf="form.get('phoneNumber').hasError('minlength')">
+                  {{ "_.min12" | translate }}
+                </p>
+                <p *ngIf="form.get('phoneNumber').hasError('maxLength')">
+                  {{ "_.max12" | translate }}
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <p>{{ "global.gender" | translate }}</p>
+              <div class="row">
+                <div class="col-4 mx-auto">
+                  <label class="form-check form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input mx-2"
+                      type="radio"
+                      [value]="0"
+                      name="gender"
+                      formControlName="gender"
+                    />
+                    <span class="form-check-label">
+                      {{ "field.undefined" | translate }}
+                    </span>
+                  </label>
+                </div>
+                <div class="col-4 mx-auto">
+                  <label class="form-check form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input mx-2"
+                      type="radio"
+                      [value]="1"
+                      name="gender"
+                      formControlName="gender"
+                    />
+                    <span class="form-check-label">
+                      {{ "global.male" | translate }}
+                    </span>
+                  </label>
+                </div>
+                <div class="col-4 mx-auto">
+                  <label class="form-check form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input mx-2"
+                      type="radio"
+                      [value]="2"
+                      name="gender"
+                      formControlName="gender"
+                    />
+                    <span class="form-check-label">
+                      {{ "global.female" | translate }}
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  !form.get('gender').valid &&
+                  (form.get('gender').dirty || form.get('gender').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('gender').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "city.name" | translate }}</label>
+              <select
+                formControlName="cityId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of cityList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+              <!-- <div
+                *ngIf="
+                  !form.get('shopId').valid &&
+                  (form.get('shopId').dirty || form.get('shopId').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('shopId').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div> -->
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{
+                "provider.registertype" | translate
+              }}</label>
+              <select
+                formControlName="registertype"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of providerTypeList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  !form.get('registertype').valid &&
+                  (form.get('registertype').dirty ||
+                    form.get('registertype').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('registertype').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{
+                "global.providerNationalityId" | translate
+              }}</label>
+              <select
+                formControlName="providerNationalityId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of nationalityList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "menu.vendor" | translate }}</label>
+              <select
+                formControlName="venderId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of venderList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+              <!-- <div
+                *ngIf="
+                  !form.get('shopId').valid &&
+                  (form.get('shopId').dirty || form.get('shopId').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('shopId').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "field.email" | translate }}</label>
+              <input
+                type="text"
+                formControlName="email"
+                class="form-control form-control-solid"
+                :placeholder="{{ 'field.email' | translate }}"
+              />
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{
+                "global.identificationNumber" | translate
+              }}</label>
+              <input
+                type="text"
+                formControlName="identificationNumber"
+                class="form-control form-control-solid"
+                :placeholder="{{ 'global.identificationNumber' | translate }}"
+              />
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{
+                "field.bankName" | translate
+              }}</label>
+              <select
+                formControlName="bankName"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of bankList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+              <!-- <input
+                type="text"
+                formControlName="bankName"
+                class="form-control form-control-solid"
+                placeholder="{{ 'field.bankName' | translate }}"
+              /> -->
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label"> stc Pay Phone Number </label>
+              <input
+                type="text"
+                formControlName="stcPayPhoneNumber"
+                class="form-control form-control-solid"
+                placeholder="stc Pay Phone Number"
+              />
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label"> IBAN </label>
+              <input
+                type="text"
+                formControlName="iBanNumber"
+                class="form-control form-control-solid"
+                placeholder="IBAN"
+              />
+            </div>
+
+            <!-- <div class="col-md-6 col-sm-12">
+              <label class="form-label">
+                {{ 'field.parentProviderId' | translate }}
+              </label>
+              <input
+                type="text"
+                formControlName="stcPayPhoneNumber"
+                class="form-control form-control-solid"
+                placeholder="{{ 'field.parentProviderId' | translate }}"
+              />
+            </div> -->
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12" *ngIf="this.mode == 'Create'">
+              <label class="form-label">{{
+                "field.password" | translate
+              }}</label>
+              <input
+                type="text"
+                formControlName="password"
+                class="form-control form-control-solid"
+                :placeholder="{{ 'field.password' | translate }}"
+              />
+              <div
+                *ngIf="
+                  !form.get('password').valid &&
+                  (form.get('password').dirty || form.get('password').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('password').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </p-tabPanel>
+
+        <p-tabPanel header="{{ 'field.carData' | translate }}">
+          <div class="row my-5">
+            <div class="col-md-3 col-sm-12 text-center">
+              <label class="form-label d-block">{{
+                "provider.carLicense" | translate
+              }}</label>
+              <!--begin::Image input-->
+              <div
+                class="image-input image-input-empty"
+                data-kt-image-input="true"
+                style="background-image: url(/assets/media/avatars/blank.png)"
+              >
+                <!--begin::Image preview wrapper-->
+                <img
+                  [src]="mainObject.carLicense"
+                  class="image-input-wrapper w-125px h-125px"
+                  (click)="viewImage(mainObject.carLicense)"
+                />
+                <!--end::Image preview wrapper-->
+                <label
+                  *ngIf="mode != 'View'"
+                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                  data-kt-image-input-action="change"
+                  data-bs-toggle="tooltip"
+                  data-bs-dismiss="click"
+                  title="Change avatar"
+                >
+                  <i class="bi bi-pencil-fill fs-7"></i>
+                  <input
+                    type="file"
+                    name="avatar"
+                    (change)="handleInputChange($event, 'carLicense')"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                </label>
+              </div>
+              <!--end::Image input-->
+              <div
+                *ngIf="
+                  !form.get('carLicense').valid &&
+                  (form.get('carLicense').dirty ||
+                    form.get('carLicense').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('carLicense').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-3 col-sm-12 text-center">
+              <label class="form-label d-block">{{
+                "provider.carFrontImage" | translate
+              }}</label>
+              <!--begin::Image input-->
+              <div
+                class="image-input image-input-empty"
+                data-kt-image-input="true"
+                style="background-image: url(/assets/media/avatars/blank.png)"
+              >
+                <!--begin::Image preview wrapper-->
+                <img
+                  [src]="mainObject.carFrontImage"
+                  class="image-input-wrapper w-125px h-125px"
+                  (click)="viewImage(mainObject.carFrontImage)"
+                />
+                <!--end::Image preview wrapper-->
+                <label
+                  *ngIf="mode != 'View'"
+                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                  data-kt-image-input-action="change"
+                  data-bs-toggle="tooltip"
+                  data-bs-dismiss="click"
+                  title="Change avatar"
+                >
+                  <i class="bi bi-pencil-fill fs-7"></i>
+                  <input
+                    type="file"
+                    name="avatar"
+                    (change)="handleInputChange($event, 'carFrontImage')"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                </label>
+              </div>
+              <!--end::Image input-->
+              <div
+                *ngIf="
+                  !form.get('carFrontImage').valid &&
+                  (form.get('carFrontImage').dirty ||
+                    form.get('carFrontImage').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('carFrontImage').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-3 col-sm-12 text-center">
+              <label class="form-label d-block">{{
+                "provider.carBackImage" | translate
+              }}</label>
+              <!--begin::Image input-->
+              <div
+                class="image-input image-input-empty"
+                data-kt-image-input="true"
+                style="background-image: url(/assets/media/avatars/blank.png)"
+              >
+                <!--begin::Image preview wrapper-->
+                <img
+                  [src]="mainObject.carBackImage"
+                  class="image-input-wrapper w-125px h-125px"
+                  (click)="viewImage(mainObject.carBackImage)"
+                />
+                <!--end::Image preview wrapper-->
+                <label
+                  *ngIf="mode != 'View'"
+                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                  data-kt-image-input-action="change"
+                  data-bs-toggle="tooltip"
+                  data-bs-dismiss="click"
+                  title="Change avatar"
+                >
+                  <i class="bi bi-pencil-fill fs-7"></i>
+                  <input
+                    type="file"
+                    name="avatar"
+                    (change)="handleInputChange($event, 'carBackImage')"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                </label>
+              </div>
+              <!--end::Image input-->
+              <div
+                *ngIf="
+                  !form.get('carBackImage').valid &&
+                  (form.get('carBackImage').dirty ||
+                    form.get('carBackImage').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('carBackImage').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-3 col-sm-12 text-center">
+              <label class="form-label d-block">{{
+                "field.carInsuranceImage" | translate
+              }}</label>
+              <!--begin::Image input-->
+              <div
+                class="image-input image-input-empty"
+                data-kt-image-input="true"
+                style="background-image: url(/assets/media/avatars/blank.png)"
+              >
+                <!--begin::Image preview wrapper-->
+                <img
+                  [src]="mainObject.carInsuranceImage"
+                  class="image-input-wrapper w-125px h-125px"
+                  (click)="viewImage(mainObject.carInsuranceImage)"
+                />
+                <!--end::Image preview wrapper-->
+                <label
+                  *ngIf="mode != 'View'"
+                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                  data-kt-image-input-action="change"
+                  data-bs-toggle="tooltip"
+                  data-bs-dismiss="click"
+                  title="Change avatar"
+                >
+                  <i class="bi bi-pencil-fill fs-7"></i>
+                  <input
+                    type="file"
+                    name="avatar"
+                    (change)="handleInputChange($event, 'carInsuranceImage')"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                </label>
+              </div>
+              <!--end::Image input-->
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "car.carModel" | translate }}</label>
+              <select
+                formControlName="carModelId"
+                class="form-select form-select-solid"
+                (change)="getCarNameList($event.target['value'])"
+              >
+                <option [value]="item.id" *ngFor="let item of carModalList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  !form.get('carModelId').valid &&
+                  (form.get('carModelId').dirty ||
+                    form.get('carModelId').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('carModelId').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "car.carClass" | translate }}</label>
+              <select
+                formControlName="carClassId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of carClassList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+              <!-- <div
+                *ngIf="
+                  !form.get('categoryId').valid &&
+                  (form.get('categoryId').dirty || form.get('categoryId').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('categoryId').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "car.carName" | translate }}</label>
+              <select
+                formControlName="carNameId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of carNameList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  !form.get('carNameId').valid &&
+                  (form.get('carNameId').dirty || form.get('carNameId').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('carNameId').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{
+                "car.manufacturingYear" | translate
+              }}</label>
+
+              <select
+                formControlName="manufacturingYearId"
+                class="form-select form-select-solid"
+              >
+                <option
+                  [value]="item.id"
+                  *ngFor="let item of manufacturingYearList"
+                >
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+
+              <div
+                *ngIf="
+                  !form.get('manufacturingYearId').valid &&
+                  (form.get('manufacturingYearId').dirty ||
+                    form.get('manufacturingYearId').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('manufacturingYearId').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "field.color" | translate }}</label>
+              <select
+                formControlName="carColor"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.nameAr" *ngFor="let item of carColorList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+              <!-- <div
+                *ngIf="
+                  !form.get('shopId').valid &&
+                  (form.get('shopId').dirty || form.get('shopId').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('shopId').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div> -->
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{
+                "global.plateNumber" | translate
+              }}</label>
+              <input
+                type="text"
+                formControlName="plateNumber"
+                class="form-control form-control-solid"
+                :placeholder="{{ 'global.plateNumber' | translate }}"
+              />
+            </div>
+          </div>
+        </p-tabPanel>
+
+        <!-- <p-tabPanel header="{{ 'field.AcceptanceRate' | translate }}">
+          <div class="card">
+            <div class="card-body">
+              <div class="row mb-5">
+                <div class="col-md-4 col-sm-12">
+                  <label for="range" class="d-inline">
+                    {{ "field.CreateAtFrom" | translate }}
+                  </label>
+                  <p-calendar
+                    [ngModelOptions]="{ standalone: true }"
+                    [(ngModel)]="from"
+                    [showTime]="true"
+                    dateFormat="dd.mm.yy"
+                    hourFormat="12"
+                  ></p-calendar>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <label for="range" class="d-inline">
+                    {{ "field.EndDate" | translate }}
+                  </label>
+                  <p-calendar
+                    [ngModelOptions]="{ standalone: true }"
+                    [(ngModel)]="to"
+                    [showTime]="true"
+                    dateFormat="dd.mm.yy"
+                    hourFormat="12"
+                  ></p-calendar>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                  <button
+                    type="button"
+                    (click)="getProviderOrderRejectPercentage()"
+                    class="btn btn-primary btn-sm btn-block mt-"
+                  >
+                    {{ "action.search" | translate }}
+                  </button>
+                </div>
+                <div class="col-md-12 my-5" *ngIf="percentage">
+                  <h3>
+                    {{ "field.percentage" | translate }} : {{ percentage }}
+                  </h3>
+                </div>
+
+                <div
+                  class="card bg-secondary mt-5"
+                  *ngIf="providerOrderRejectPercentage.length"
+                >
+                  <div class="card-body">
+                    <div class="col-md-12">
+                      <app-echart
+                        [width]="'100%'"
+                        [type]="'pie'"
+                        chartTitle="active Proider"
+                        [data]="providerOrderRejectPercentage"
+                      >
+                      </app-echart>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="card bg-secondary mt-5"
+                  *ngIf="providerOrderRejectPercentageChart2.length"
+                >
+                  <div class="card-body">
+                    <div class="col-md-12">
+                      <app-echart
+                        [width]="'100%'"
+                        [type]="'pie'"
+                        chartTitle="active Proider"
+                        [data]="providerOrderRejectPercentageChart2"
+                      >
+                      </app-echart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-tabPanel> -->
+      </p-tabView>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="card bg-light" *ngIf="mainObject && mode != 'Create'">
+      <div class="card-body">
+        <div class="row my-5">
+          <div class="col-md-6 col-sm-12">
+            <p>{{ "field.activation" | translate }}</p>
+            <div class="row">
+              <div class="col-4 mx-auto">
+                <label class="form-check form-check-custom form-check-solid">
+                  <input
+                    class="form-check-input mx-2"
+                    type="radio"
+                    [value]="true"
+                    name="isActive"
+                    (change)="changeActivation()"
+                    [(ngModel)]="mainObject.isActive"
+                  />
+                  <span class="form-check-label">
+                    {{ "field.active" | translate }}
+                  </span>
+                </label>
+              </div>
+              <div class="col-4 mx-auto">
+                <label class="form-check form-check-custom form-check-solid">
+                  <input
+                    class="form-check-input mx-2"
+                    type="radio"
+                    [value]="false"
+                    (change)="changeActivation()"
+                    name="isActive"
+                    [(ngModel)]="mainObject.isActive"
+                  />
+                  <span class="form-check-label">
+                    {{ "field.not_active" | translate }}
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <p>{{ "field.approve" | translate }}</p>
+            <div class="row">
+              <div class="col-4 mx-auto">
+                <label class="form-check form-check-custom form-check-solid">
+                  <input
+                    class="form-check-input mx-2"
+                    type="radio"
+                    [value]="true"
+                    name="Approvie"
+                    (change)="approveProvider()"
+                    [(ngModel)]="mainObject.isApprovied"
+                  />
+                  <span class="form-check-label">
+                    {{ "action.yes" | translate }}
+                  </span>
+                </label>
+              </div>
+              <div class="col-4 mx-auto">
+                <label class="form-check form-check-custom form-check-solid">
+                  <input
+                    class="form-check-input mx-2"
+                    type="radio"
+                    [value]="false"
+                    (change)="approveProvider()"
+                    name="Approvie"
+                    [(ngModel)]="mainObject.isApprovied"
+                  />
+                  <span class="form-check-label">
+                    {{ "action.no" | translate }}
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<img-viewer #imgViewer></img-viewer>
+
+<ng-template #subscription let-modal>
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-center">
+        <span class="fs-3 fw-bolder me-2">{{
+          "menu.providerSubscription" | translate
+        }}</span>
+      </h2>
+    </div>
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="row my-5">
+          <div class="col-md-12 col-sm-12">
+            <label class="form-label">{{
+              "menu.subscription" | translate
+            }}</label>
+            <select
+              [(ngModel)]="selectedSubscriptionId"
+              class="form-select form-select-solid"
+            >
+              <option [value]="item.id" *ngFor="let item of subscriptionList">
+                {{ currentLanguage == "en" ? item.name : item.nameAr }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row my-5">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              (click)="selectProviderSubscription()"
+              class="btn btn-primary btn-sm text-uppercase font-weight-bolder"
+            >
+              {{ "action.save" | translate }}
+              <i class="far fa-save mx-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-provider-notes-list
+  class="mt-3"
+  *ngIf="mode == 'View' || mode == 'Edit'"
+  [providerId]="route.snapshot.queryParams.providerId"
+></app-provider-notes-list>

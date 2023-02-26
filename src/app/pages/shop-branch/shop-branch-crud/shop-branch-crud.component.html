@@ -1,0 +1,400 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "shop_branch.name" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "shop_branch.description_Location" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="descriptionLocation"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'shop_branch.description_Location' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('descriptionLocation').valid &&
+              (form.get('descriptionLocation').dirty ||
+                form.get('descriptionLocation').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('descriptionLocation').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('descriptionLocation').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">ع {{
+            "shop_branch.description_Location" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="descriptionLocationAr"
+            class="form-control form-control-solid"
+            :placeholder="ع {{ 'shop_branch.description_Location' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('descriptionLocationAr').valid &&
+              (form.get('descriptionLocationAr').dirty ||
+                form.get('descriptionLocationAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('descriptionLocationAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('descriptionLocationAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "shop.shop" | translate }}</label>
+          <select
+            formControlName="shopId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="shop.id" *ngFor="let shop of shopList">
+              {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('shopId').valid &&
+              (form.get('shopId').dirty || form.get('shopId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('shopId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "city.name" | translate }}</label>
+          <select
+            formControlName="cityId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="city.id" *ngFor="let city of cityList">
+              {{ currentLanguage == "en" ? city.name : city.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('cityId').valid &&
+              (form.get('cityId').dirty || form.get('cityId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('cityId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> {{ "field.email" | translate }} </label>
+          <input
+            type="text"
+            formControlName="email"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.email' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('email').valid &&
+              (form.get('email').dirty || form.get('email').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('email').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('email').hasError('email')">
+              {{ "_.email" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "field.activation" | translate }}</p>
+          <div class="row">
+            <div class="col-4">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="true"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.active" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="false"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.not_active" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              !form.get('isActive').valid &&
+              (form.get('isActive').dirty || form.get('isActive').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('isActive').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "global.phone_number" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="phoneNumber"
+            minlength="12"
+            maxlength="12"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.phone_number' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('phoneNumber').valid &&
+              (form.get('phoneNumber').dirty || form.get('phoneNumber').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('phoneNumber').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('phoneNumber').hasError('minlength')">
+              {{ "_.min12" | translate }}
+            </p>
+            <p *ngIf="form.get('phoneNumber').hasError('maxLength')">
+              {{ "_.max12" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "global.identificationNumber" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="identificationNumber"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.identificationNumber' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('identificationNumber').valid &&
+              (form.get('identificationNumber').dirty || form.get('identificationNumber').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('identificationNumber').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.deliverectChannelId" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="deliverectChannelId"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.deliverectChannelId' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('deliverectChannelId').valid &&
+              (form.get('deliverectChannelId').dirty || form.get('deliverectChannelId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('deliverectChannelId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.latitude" | translate
+          }}</label>
+          <input
+            type="number"
+            (input)="setMarkerLocation('latitude')"
+            formControlName="latitude"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.latitude' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('latitude').valid &&
+              (form.get('latitude').dirty || form.get('latitude').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('latitude').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.longitude" | translate
+          }}</label>
+          <input
+            type="number"
+            (input)="setMarkerLocation('longitude')"
+            formControlName="longitude"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.longitude' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('longitude').valid &&
+              (form.get('longitude').dirty || form.get('longitude').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('longitude').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        
+      </div>
+
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12" *ngIf="this.mode == 'View'">
+          <label class="form-label">{{ "global.userType" | translate }}</label>
+          <select
+            [disabled]="true"
+            formControlName="userType"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.value" *ngFor="let item of userTypeDropDown">
+              {{ item.title }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('userType').valid &&
+              (form.get('userType').dirty || form.get('userType').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('userType').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row mt-5 border py-3">
+        <h4 class="mb-4">
+          {{'field.branchSearch' | translate }}
+        </h4>
+        <div class="col-md-4 col-sm-12">
+          <input
+            type="text"
+            [(ngModel)]="shopName"
+            [ngModelOptions]="{standalone: true}"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'shop.shop' | translate }}"
+          />
+        </div>
+        <div class="col-md-2">
+          <button
+          (click)="getBranchesByGoogle()"
+          type="button"
+          class="btn btn-primary btn-block btn-hover-scale"
+        >
+          {{ "action.search" | translate }}
+        </button>
+        </div>
+      </div>
+      <div class="row mt-5">
+        
+        <p class="lead">
+          {{ "field.Locate_loacation" | translate }}
+        </p>
+        <div class="col-md-11 mx-auto border py-2 shadow" style="height: 50vh">
+          <app-google-map
+            (marker)="setLocation($event)"
+            [markerPositions]="locationList"
+          ></app-google-map>
+          <div
+            *ngIf="
+              !form.get('latitude').valid &&
+              (form.get('latitude').dirty || form.get('latitude').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('latitude').hasError('required')">
+              {{ "_.location" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "report.providerReport" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+      <div class="row my-5">
+        <div class="col-md-12" *ngIf="report.length">
+          <app-echart
+          [width]="'100%'"
+          [type]="'pie'"
+          chartTitle="ali is my brother"
+          [data]="report"
+          >
+          </app-echart>
+        </div>
+      </div>
+  </div>
+</div>

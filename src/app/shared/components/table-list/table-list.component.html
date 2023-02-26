@@ -1,0 +1,96 @@
+<form [formGroup]="form" *ngIf="showSearch">
+<div class="row mb-5 mt-2">
+
+    <div class="col-md-6 col-sm-12">
+        <input type="text" formControlName="search" class="form-control form-control-solid" placeholder="{{'field.search'|translate }}"/>
+        <div *ngIf="!form.get('search').valid && (form.get('search').dirty ||   form.get('search').touched)" class="text text-danger">
+            <p *ngIf="form.get('search').hasError('required')" >{{'_.required'|translate }}</p>
+          </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <button type="button" class="btn btn-primary  btn-sm mt-1" (click)="searchValue()">
+        <i class="fas fa-search"></i>
+        {{'action.search'|translate }}
+      </button>
+      <button type="button" class="btn btn-warning  btn-sm mt-1 mx-2" (click)="resetSearch()">
+        <i class="far fa-trash-alt"></i>
+        {{'action.reset'|translate }}
+      </button>
+        </div>
+      </div>
+    </form>
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+                <thead>
+                    <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                        <th *ngFor="let title of titles" class="text-center">
+                            {{ title |translate }}
+                        </th>
+                        <th *ngIf="showAnotherCheck" class="text-center" >
+                          {{ AnotherCheckTitelName |translate }}
+                        </th>
+                        <th *ngIf="showActivation" class="text-center" >
+                          {{'field.activation'|translate }}
+                        </th>
+                        <th *ngIf="showDelete || showEdit || showView" class="text-center">
+                            {{'action.actions'|translate }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of list; let i = index">
+                        <td *ngFor="let porp of properties" class="text-center">
+                            {{ item[porp] }}
+                        </td>
+                        <td class="text-center" *ngIf="showAnotherCheck">
+                          <label
+                            class="
+                              form-check form-check-sm form-check-custom form-check-solid
+                            "
+                          >
+                            <input
+                              class="form-check-input mx-auto"
+                              type="checkbox"
+                              :value="true"
+                              [(ngModel)]="item[AnotherCheckPropName]"
+                              (ngModelChange)="changeAnotherCheckCol(i)"
+                            />
+                          </label>
+                        </td>
+                        <td class="text-center" *ngIf="showActivation">
+                          <label
+                            class="
+                              form-check form-check-sm form-check-custom form-check-solid
+                            "
+                          >
+                            <input
+                              class="form-check-input mx-auto"
+                              type="checkbox"
+                              :value="true"
+                              [(ngModel)]="item.isActive"
+                              (ngModelChange)="changeActivationCol(i)"
+                            />
+                          </label>
+                        </td>
+                        <td class="text-center d-flex justify-content-center">
+                            <i title="{{'View'|translate }}" class="lar la-eye fs-2x mx-1" *ngIf="showView" (click)="View(item)"></i>
+                            <i title="{{'Edit'|translate }}" class="las la-edit fs-2x  mx-1 " *ngIf="showEdit" (click)="Edit(item)"></i>
+
+
+                            <i title="{{'Delete'|translate }}" class="las la-trash-alt fs-2x  mx-1 " *ngIf="showDelete" (click)="Delete(item)"></i>
+                            <span *ngIf="addActions">
+            <i title="{{action.title|translate }}" [class]="action.icon"
+          class="las  fs-2x  customAction mx-1" *ngFor="let action of actionList"
+          (click)="EmitAaction(item)"
+        ></i>
+          </span>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

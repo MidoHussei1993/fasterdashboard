@@ -1,0 +1,14 @@
+::ng-deep .p-datepicker {
+  left: -173.609px !important;
+}
+
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+::ng-deep html[dir="rtl"] {
+  ::ng-deep .p-dropdown-filter {
+    position: relative;
+    right: 30px;
+  }
+}

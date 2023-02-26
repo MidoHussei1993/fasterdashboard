@@ -1,0 +1,141 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "ShopBranchWorkTime.name" | translate }}</span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-md-3 col-sm-12">
+          <label class="form-label">{{ "global.fromHour" | translate }} ( {{ "field.mainTime" | translate }} )</label>
+          <input
+            type="time"
+            formControlName="fromHour"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.fromHour' | translate }}"
+            placeholder="HH:mm"
+            min="00:00:00"
+            max="24:00:00"
+            required
+            step="60"
+          />
+          <div
+            *ngIf="
+              !form.get('fromHour').valid &&
+              (form.get('fromHour').dirty || form.get('fromHour').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('fromHour').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+          <label class="form-label">{{ "global.toHour" | translate }} ( {{ "field.mainTime" | translate }} )</label>
+          <input
+            type="time"
+            formControlName="toHour"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.toHour' | translate }}"
+            min="00:00:00"
+            max="24:00:00"
+            required
+            step="60"
+          />
+          <div
+            *ngIf="
+              !form.get('toHour').valid &&
+              (form.get('toHour').dirty || form.get('toHour').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('toHour').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+
+        <div class="col-md-3 col-sm-12">
+          <label class="form-label">{{ "field.timeFrom" | translate }} ( {{ "field.secondTime" | translate }} )</label>
+          <input
+            type="time"
+            formControlName="secondShiftFromHour"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.timeFrom' | translate }}"
+            placeholder="HH:mm"
+            min="00:00:00"
+            max="24:00:00"
+            step="60"
+          />
+          <div
+            *ngIf="
+              !form.get('secondShiftFromHour').valid &&
+              (form.get('secondShiftFromHour').dirty || form.get('secondShiftFromHour').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('secondShiftFromHour').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+          <label class="form-label">{{ "field.timeTo" | translate }} ( {{ "field.secondTime" | translate }} )</label>
+          <input
+            type="time"
+            formControlName="secondShiftToHour"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.timeTo' | translate }}"
+            min="00:00:00"
+            max="24:00:00"
+            step="60"
+          />
+      
+        </div>
+
+
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "global.day" | translate }}</label>
+     
+          
+          <select formControlName="day"class="form-select form-select-solid">
+          <option [value]="item.name" *ngFor="let item of days">
+            {{ item.name }}
+          </option>
+        </select>
+
+
+          <div
+            *ngIf="
+              !form.get('day').valid &&
+              (form.get('day').dirty || form.get('day').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('day').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+:host {
+  height: 100%;
+  margin: 0;
+
+  .flex-root {
+    height: 100%;
+  }
+}
+
+.page-loaded {
+  app-layout {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+}
+// #kt_content{
+//   background:url("../../../assets/images/icons/faster-icon.png") ;
+//   background-repeat: no-repeat ;
+//   background-position: center;
+//   background-attachment: fixed;
+//   opacity: .8;
+//   // background-size: cover;
+// }

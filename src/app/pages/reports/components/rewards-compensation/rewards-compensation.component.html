@@ -1,0 +1,82 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">{{ "menu.RewardsAndCompensation" | translate }}</h3>
+    </div>
+    <div class="card-body">
+        <div class="card bg-secondary">
+            <div class="card-body">
+              <app-filter [filter]="filter"></app-filter>
+              <div class="row">
+
+                <div class="col-md-4 col-sm-12">
+                  <label class="form-label">{{ "cobone.status" | translate }}</label>
+                  <select
+                    [(ngModel)]="filter.TransactionType"
+                    class="form-select form-select-solid"
+                  >
+                  <option [value]="0">
+                    {{ "field.all" | translate }}
+                </option>
+                <option [value]="1">
+                    {{ "action.Withdrawal" | translate }}
+                </option>
+                <option [value]="2">
+                    {{ "action.deposit" | translate }}
+                </option>
+                  </select>
+                </div>
+
+                <div class="col-md-4 col-sm-12">
+                    <label class="form-label">{{ "global.userType" | translate }}</label>
+                    <select
+                      [(ngModel)]="filter.UserType"
+                      class="form-select form-select-solid"
+                    >
+                  <option [value]="1">
+                      {{ "menu.providers" | translate }}
+                  </option>
+                  <option [value]="2">
+                      {{ "menu.customers" | translate }}
+                  </option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4 col-sm-12">
+                    <label class="form-label">{{ "action.actions" | translate }}</label>
+                    <select
+                      [(ngModel)]="filter.ActionType"
+                      class="form-select form-select-solid"
+                    >
+                  <option [value]="1">
+                      {{ "field.rewards" | translate }}
+                  </option>
+                  <option [value]="2">
+                      {{ "field.compensation" | translate }}
+                  </option>
+                    </select>
+                  </div>
+             
+              </div>
+            </div>
+          </div>
+      <app-table
+        [list]="rewardsCompensationList"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [showDelete]="false"
+        [showEdit]="false"
+        [showView]="false"
+        [showSearch]="true"
+        [isdownloadAll]="rewardsCompensationList.length?true:false"
+        (export)="downloadAll()"
+        (search)="searchValue()"
+        (resetFilter)="resetfilter()"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+      >
+      </app-table>
+    </div>
+  </div>
+  

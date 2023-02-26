@@ -1,0 +1,856 @@
+<div class=" ">
+  <div class="">
+    <h1 class="card-title mx-auto">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "field.prvider" | translate }} </span>
+    </h1>
+    <hr />
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-12">
+          <h3>
+            {{ "field.providerData" | translate }}
+          </h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 col-sm-12 text-center">
+          <label class="form-label d-block">{{
+            "field.personalPicture" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="mainObject.profileImage"
+              class="image-input-wrapper w-125px h-125px"
+              (click)="viewImage(mainObject.profileImage)"
+            />
+            <!--end::Image preview wrapper-->
+            <label
+              *ngIf="mode != 'View'"
+              class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event, 'profileImage')"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+          <!-- <div
+                  *ngIf="
+                    !form.get('profileImage').valid &&
+                    (form.get('profileImage').dirty ||
+                      form.get('profileImage').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('profileImage').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div> -->
+        </div>
+
+        <div class="col-md-4 col-sm-12 text-center">
+          <label class="form-label d-block">{{
+            "field.IdPhoto" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="mainObject.iqamaImage"
+              class="image-input-wrapper w-125px h-125px"
+              (click)="viewImage(mainObject.iqamaImage)"
+            />
+            <!--end::Image preview wrapper-->
+            <label
+              *ngIf="mode != 'View'"
+              class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event, 'iqamaImage')"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+        </div>
+
+        <div class="col-md-4 col-sm-12 text-center">
+          <label class="form-label d-block">{{
+            "field.licenseImage" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="mainObject.driverLicense"
+              class="image-input-wrapper w-125px h-125px"
+              (click)="viewImage(mainObject.driverLicense)"
+            />
+            <!--end::Image preview wrapper-->
+            <label
+              *ngIf="mode != 'View'"
+              class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event, 'driverLicense')"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+          <div
+            *ngIf="
+              !form.get('driverLicense').valid &&
+              (form.get('driverLicense').dirty ||
+                form.get('driverLicense').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('driverLicense').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "global.full_name" | translate }}</label>
+          <input
+            type="text"
+            formControlName="fullName"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.full_name' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('fullName').valid &&
+              (form.get('fullName').dirty || form.get('fullName').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('fullName').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <!-- <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{ "global.userType" | translate }}</label>
+                <select
+                  formControlName="userType"
+                  class="form-select form-select-solid"
+                >
+                  <option [value]="item.value" *ngFor="let item of userTypeDropDown">
+                    {{ item.title }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    !form.get('userType').valid &&
+                    (form.get('userType').dirty || form.get('userType').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('userType').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div> -->
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "global.phone_number" | translate
+          }}</label>
+          <input
+            type="text"
+            minlength="12"
+            maxlength="12"
+            formControlName="phoneNumber"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.phone_number' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('phoneNumber').valid &&
+              (form.get('phoneNumber').dirty || form.get('phoneNumber').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('phoneNumber').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('phoneNumber').hasError('pattern')">
+              {{ "field.PhoneNumberPlaceHolder" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "field.gender" | translate }}</p>
+          <div class="row">
+            <!-- <div class="col-4 mx-auto">
+                  <label class="form-check form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input mx-2"
+                      type="radio"
+                      [value]="0"
+                      name="gender"
+                      formControlName="gender"
+                    />
+                    <span class="form-check-label">
+                      {{ "field.undefined" | translate }}
+                    </span>
+                  </label>
+                </div> -->
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="1"
+                  name="gender"
+                  formControlName="gender"
+                />
+                <span class="form-check-label">
+                  {{ "global.male" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="2"
+                  name="gender"
+                  formControlName="gender"
+                />
+                <span class="form-check-label">
+                  {{ "global.female" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              !form.get('gender').valid &&
+              (form.get('gender').dirty || form.get('gender').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('gender').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "city.name" | translate }}</label>
+          <select
+            formControlName="cityId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of cityList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <!-- <div
+                  *ngIf="
+                    !form.get('shopId').valid &&
+                    (form.get('shopId').dirty || form.get('shopId').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('shopId').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div> -->
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "provider.registertype" | translate
+          }}</label>
+          <select
+            formControlName="registertype"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of providerTypeList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('registertype').valid &&
+              (form.get('registertype').dirty ||
+                form.get('registertype').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('registertype').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "global.providerNationalityId" | translate
+          }}</label>
+          <select
+            formControlName="providerNationalityId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of nationalityList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+        </div>
+
+        <!-- <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "menu.vendor" | translate }}</label>
+              <select
+                formControlName="venderId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of venderList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+            </div> -->
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.email" | translate }}</label>
+          <input
+            type="text"
+            formControlName="email"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.email' | translate }}"
+          />
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "global.identificationNumber" | translate
+          }}</label>
+          <input
+            type="text"
+            maxlength="10"
+            formControlName="identificationNumber"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.identificationNumber' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('identificationNumber').valid &&
+              (form.get('identificationNumber').dirty ||
+                form.get('identificationNumber').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('identificationNumber').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('identificationNumber').hasError('pattern')">
+              {{ "_.id" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12" *ngIf="this.mode == 'Create'">
+          <label class="form-label">{{ "field.password" | translate }}</label>
+          <input
+            type="text"
+            formControlName="password"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.password' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('password').valid &&
+              (form.get('password').dirty || form.get('password').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('password').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.bankName" | translate }}</label>
+          <select
+            formControlName="bankName"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of bankList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <!-- <input
+                type="text"
+                formControlName="bankName"
+                class="form-control form-control-solid"
+                placeholder="{{ 'field.bankName' | translate }}"
+              /> -->
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> IBAN </label>
+          <input
+            type="text"
+            formControlName="iBanNumber"
+            class="form-control form-control-solid"
+            placeholder="IBAN"
+            maxlength="24"
+          />
+          <div
+            *ngIf="
+              !form.get('iBanNumber').valid &&
+              (form.get('iBanNumber').dirty || form.get('iBanNumber').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('iBanNumber').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('iBanNumber').hasError('pattern')">
+              {{ "field.IbanPlaceHolder" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> stc Pay Phone Number </label>
+          <input
+            type="text"
+            maxlength="12"
+            formControlName="stcPayPhoneNumber"
+            class="form-control form-control-solid"
+            placeholder=" stc Pay Phone Number"
+          />
+          <div
+            *ngIf="
+              !form.get('stcPayPhoneNumber').valid &&
+              (form.get('stcPayPhoneNumber').dirty ||
+                form.get('stcPayPhoneNumber').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('stcPayPhoneNumber').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('stcPayPhoneNumber').hasError('pattern')">
+              {{ "field.stcPlaceHolder" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-5" />
+
+      <div class="row">
+        <div class="col-12">
+          <h3>
+            {{ "field.VehicleData" | translate }}
+          </h3>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-3 col-sm-12 text-center mx-auto">
+          <label class="form-label d-block">{{
+            "field.vehicleRegistration" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="mainObject.carLicense"
+              class="image-input-wrapper w-125px h-125px"
+              (click)="viewImage(mainObject.carLicense)"
+            />
+            <!--end::Image preview wrapper-->
+            <label
+              *ngIf="mode != 'View'"
+              class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event, 'carLicense')"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+          <div
+            *ngIf="
+              !form.get('carLicense').valid &&
+              (form.get('carLicense').dirty || form.get('carLicense').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('carLicense').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12 text-center mx-auto">
+          <label class="form-label d-block">{{
+            "field.VehicleFromTheFront" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="mainObject.carFrontImage"
+              class="image-input-wrapper w-125px h-125px"
+              (click)="viewImage(mainObject.carFrontImage)"
+            />
+            <!--end::Image preview wrapper-->
+            <label
+              *ngIf="mode != 'View'"
+              class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event, 'carFrontImage')"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+          <div
+            *ngIf="
+              !form.get('carFrontImage').valid &&
+              (form.get('carFrontImage').dirty ||
+                form.get('carFrontImage').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('carFrontImage').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12 text-center mx-auto">
+          <label class="form-label d-block">{{
+            "field.VehicleFromTheBack" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="mainObject.carBackImage"
+              class="image-input-wrapper w-125px h-125px"
+              (click)="viewImage(mainObject.carBackImage)"
+            />
+            <!--end::Image preview wrapper-->
+            <label
+              *ngIf="mode != 'View'"
+              class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event, 'carBackImage')"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+          <div
+            *ngIf="
+              !form.get('carBackImage').valid &&
+              (form.get('carBackImage').dirty ||
+                form.get('carBackImage').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('carBackImage').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12 text-center mx-auto">
+          <label class="form-label d-block">{{
+            "field.insurancePicture" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="mainObject.carInsuranceImage"
+              class="image-input-wrapper w-125px h-125px"
+              (click)="viewImage(mainObject.carInsuranceImage)"
+            />
+            <!--end::Image preview wrapper-->
+            <label
+              *ngIf="mode != 'View'"
+              class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event, 'carInsuranceImage')"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+          <div
+            *ngIf="
+              !form.get('carInsuranceImage').valid &&
+              (form.get('carInsuranceImage').dirty ||
+                form.get('carInsuranceImage').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('carInsuranceImage').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.VehicleCompany" | translate
+          }}</label>
+          <select
+            formControlName="carModelId"
+            class="form-select form-select-solid"
+            (change)="getCarNameList($event.target['value'])"
+          >
+            <option [value]="item.id" *ngFor="let item of carModalList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('carModelId').valid &&
+              (form.get('carModelId').dirty || form.get('carModelId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('carModelId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-6 col-sm-12">
+              <label class="form-label">{{ "car.carClass" | translate }}</label>
+              <select
+                formControlName="carClassId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of carClassList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+
+            </div> -->
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.VehicleName" | translate
+          }}</label>
+          <select
+            formControlName="carNameId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of carNameList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('carNameId').valid &&
+              (form.get('carNameId').dirty || form.get('carNameId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('carNameId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.VehicleModel" | translate
+          }}</label>
+
+          <select
+            formControlName="manufacturingYearId"
+            class="form-select form-select-solid"
+          >
+            <option
+              [value]="item.id"
+              *ngFor="let item of manufacturingYearList"
+            >
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+
+          <div
+            *ngIf="
+              !form.get('manufacturingYearId').valid &&
+              (form.get('manufacturingYearId').dirty ||
+                form.get('manufacturingYearId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('manufacturingYearId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.color" | translate }}</label>
+          <select
+            formControlName="carColor"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.name" *ngFor="let item of carColorList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <!-- <div
+                  *ngIf="
+                    !form.get('shopId').valid &&
+                    (form.get('shopId').dirty || form.get('shopId').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('shopId').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div> -->
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.VehiclePlateNumber" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="plateNumber"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.VehiclePlateNumber' | translate }}"
+          />
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button type="submit" class="btn btn-primary btn-hover-scale me-5">
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<img-viewer #imgViewer></img-viewer>

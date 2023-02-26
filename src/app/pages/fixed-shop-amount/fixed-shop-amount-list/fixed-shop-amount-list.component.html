@@ -1,0 +1,30 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">{{ "menu.fixedShopAmount" | translate }}</h3>
+      
+    </div>
+    <div class="card-body">
+     
+  
+        <a class="btn btn-sm btn-primary mx-2 mt-2" (click)="navigateToCreate()">
+          <i class="fas fa-plus"></i>
+          {{ "action.create" | translate }}
+        </a>
+      <app-table
+        [list]="list"
+        [titles]="titles"
+        [properties]="properties"
+        [showPagination]="false"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+        (view)="navigateToView($event)"
+        (edit)="navigateToEdit($event)"
+        (delete)="deleteItem($event)"
+        [showDelete]="true"
+        [showSearch]="false"
+        [showView]="true"
+        [showEdit]="true"
+      ></app-table>
+    </div>
+  </div>
+  

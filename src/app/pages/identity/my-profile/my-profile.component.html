@@ -1,0 +1,123 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "identity.profile" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="edit()">
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label d-block">{{
+            "identity.profileImage" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="profile.profileImage"
+              class="image-input-wrapper w-125px h-125px"
+              (click)="viewImage()"
+            />
+            <img-viewer #imgViewer [img]="profile.profileImage"></img-viewer>
+            <!--end::Image preview wrapper-->
+            <label
+              class="
+                btn btn-icon btn-circle btn-active-color-primary
+                w-25px
+                h-25px
+                bg-white
+                shadow
+              "
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event)"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "field.email" | translate }}</p>
+          <h4>{{ profile.email }}</h4>
+        </div>
+      </div>
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "global.full_name" | translate }}</label>
+          <input
+            type="text"
+            formControlName="fullName"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.full_name' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('fullName').valid &&
+              (form.get('fullName').dirty || form.get('fullName').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('fullName').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "global.phone_number" | translate
+          }}</label>
+          <input
+            type="text"
+            minlength="12"
+            maxlength="12"
+            formControlName="phoneNumber"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.phone_number' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('phoneNumber').valid &&
+              (form.get('phoneNumber').dirty || form.get('phoneNumber').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('phoneNumber').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('phoneNumber').hasError('minlength')">
+              {{ "_.min12" | translate }}
+            </p>
+            <p *ngIf="form.get('phoneNumber').hasError('maxLength')">
+              {{ "_.max12" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row my-5">
+        <div class="col-md-8 col-sm-12 mx-auto text-center">
+          <button
+            [disabled]="!form.dirty"
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

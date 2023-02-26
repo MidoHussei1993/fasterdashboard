@@ -1,0 +1,209 @@
+<div class="row" *ngIf="isAdmin">
+  <div class="col-12">
+  <div class="alert alert-danger text-center" role="alert">
+      <button type="button" class="btn btn-danger mx-auto btn-block" (click)="backupDataBase()">
+        {{ "action.backup" | translate }}
+      </button>
+    </div>
+  </div>
+  <div class="col-md-3">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-11 mx-auto col-sm-12">
+    <div class="card bg-dark">
+      <div class="card-body">
+        <div class="container" *ngIf="report.activeProviders">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-lg-3 mx-auto">
+              <div
+                class="card bg-light"
+                (click)="filter.IsActive = true; navigateToProviderList()"
+              >
+                <div class="card-body">
+                  <h3 class="card-title text-center">
+                    {{ "report.activeProviders" | translate }}
+                  </h3>
+                  <h6 class="display-4 mb-0 text-center">
+                    {{ report.activeProviders }}
+                  </h6>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-sm-6 col-lg-3 mx-auto">
+              <div
+                class="card bg-secondary text-white"
+                (click)="filter.IsActive = 'false'; navigateToProviderList()"
+              >
+                <div class="card-body">
+                  <h3 class="card-title text-center">
+                    {{ "report.notActiveProviders" | translate }}
+                  </h3>
+                  <h6 class="display-4 mb-0 text-center">
+                    {{ report.notActiveProviders }}
+                  </h6>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-sm-6 col-lg-3 mx-auto">
+              <div class="card bg-primary text-white" 
+              (click)="driverType = 'busyDeliveryProviders'; navigateToProviderListWithQuery()">
+                <div class="card-body">
+                  <h3 class="card-title text-center">
+                    {{ "report.busyDeliveryProviders" | translate }}
+                  </h3>
+                  <h6 class="display-4 mb-0 text-center">
+                    {{ report.busyDeliveryProviders }}
+                  </h6>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-sm-6 col-lg-3 mx-auto">
+              <div class="card bg-info"
+              (click)="driverType = 'busyTransportProviders'; navigateToProviderListWithQuery()" >
+                <div class="card-body">
+                  <h3 class="card-title text-center">
+                    {{ "report.busyTransportProviders" | translate }}
+                  </h3>
+                  <h6 class="display-4 mb-0 text-center">
+                    {{ report.busyTransportProviders }}
+                  </h6>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-sm-6 col-lg-3 mt-2 mx-auto">
+              <div
+                class="card bg-warning"
+                (click)="filter.Statues = 'false'; navigateToProviderList()"
+              >
+                <div class="card-body">
+                  <h3 class="card-title text-center">
+                    {{ "report.offlineProviders" | translate }}
+                  </h3>
+                  <h6 class="display-4 mb-0 text-center">
+                    {{ report.offlineProviders }}
+                  </h6>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-sm-6 col-lg-4 mt-2 mx-auto">
+              <div class="card bg-danger text-white"
+              (click)="driverType = 'providersHaveOneOrderAtLeast'; navigateToProviderListWithQuery()">
+                <div class="card-body">
+                  <h3 class="card-title text-center">
+                    {{ "report.providersHaveOneOrderAtLeast" | translate }}
+                  </h3>
+                  <h6 class="display-4 mb-0 text-center">
+                    {{ report.providersHaveOneOrderAtLeast }}
+                  </h6>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-sm-6 col-lg-3 mt-2 mx-auto">
+              <div
+                class="card bg-success"
+                (click)="filter.Statues = 'true'; navigateToProviderList()"
+              >
+                <div class="card-body">
+                  <h3 class="card-title text-center">
+                    {{ "report.onlineProviders" | translate }}
+                  </h3>
+                  <h6 class="display-4 mb-0 text-center">
+                    {{ report.onlineProviders }}
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row my-3" *ngIf="DeliveryOrderStatus.length">
+  <div class="col-sm-11 mx-auto">
+    <div class="card card-flush shadow-sm">
+      <div class="card-header">
+        <h3 class="card-title mt-2">
+          <span class="mx-2">
+            {{ "menu.DeliveryOrderDataReport" | translate }}
+          </span>
+        </h3>
+      </div>
+      <div class="card-body py-0">
+        <div class="row my-5">
+          <div class="col-md-12" *ngIf="DeliveryOrderStatus.length">
+            <app-echart
+              [width]="'100%'"
+              [type]="'pie'"
+              chartTitle="ali is my brother"
+              [data]="DeliveryOrderStatus"
+            >
+            </app-echart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row my-3" *ngIf="TransportOrderStatus.length">
+  <div class="col-sm-11 mx-auto">
+    <div class="card card-flush shadow-sm">
+      <div class="card-header">
+        <h3 class="card-title mt-2">
+          <span class="mx-2">
+            {{ "menu.TransportOrderDataReport" | translate }}
+          </span>
+        </h3>
+      </div>
+      <div class="card-body py-0">
+        <div class="row my-5">
+          <div class="col-md-12" *ngIf="TransportOrderStatus.length">
+            <app-echart
+              [width]="'100%'"
+              [type]="'pie'"
+              chartTitle="ali is my brother"
+              [data]="TransportOrderStatus"
+            >
+            </app-echart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row my-3" *ngIf="activeProvidersreport.length">
+  <div class="col-sm-11 mx-auto">
+    <div class="card card-flush shadow-sm">
+      <div class="card-header">
+        <h3 class="card-title mt-2">
+          <span class="mx-2">
+            {{ "menu.providersActive" | translate }}
+          </span>
+        </h3>
+      </div>
+      <div class="card-body py-0">
+        <div class="row my-5">
+          <div class="col-md-12" *ngIf="activeProvidersreport.length">
+            <app-echart
+              [width]="'100%'"
+              [type]="'pie'"
+              chartTitle="active Proider"
+              [data]="activeProvidersreport"
+            >
+            </app-echart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

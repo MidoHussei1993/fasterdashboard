@@ -1,0 +1,97 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "city.name" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "city.cityNameAr" | translate }}</label>
+          <input
+            type="text"
+            [readonly]="isReadonly"
+            formControlName="cityNameAr"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'city.cityNameAr' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('cityNameAr').valid &&
+              (form.get('cityNameAr').dirty || form.get('cityNameAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('cityNameAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('cityNameAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "city.cityName" | translate }}</label>
+          <input
+            type="text"
+            [readonly]="isReadonly"
+            formControlName="cityName"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'city.cityName' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('cityName').valid &&
+              (form.get('cityName').dirty || form.get('cityName').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('cityName').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('cityName').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "city.country" | translate }}</label>
+          <select
+            [disabled]="isReadonly"
+            class="form-control"
+            formControlName="countryId"
+          >
+            <option *ngFor="let item of Countrylist" [value]="item.id">
+                {{ currentLanguage == 'en'? item.name :item.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('countryId').valid &&
+              (form.get('countryId').dirty || form.get('countryId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('countryId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

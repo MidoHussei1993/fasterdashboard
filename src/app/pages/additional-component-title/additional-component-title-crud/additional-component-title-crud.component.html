@@ -1,0 +1,187 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "menu.additionalComponentTitle" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+ 
+  
+        <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.title'|translate }}</label>
+                <input type="text" formControlName="title" class="form-control form-control-solid" placeholder="{{'field.title'|translate }}"/>
+                <div *ngIf="!form.get('title').valid && (form.get('title').dirty ||   form.get('title').touched)" class="text text-danger">
+                    <p *ngIf="form.get('title').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('title').hasError('pattern')">{{'_.only_en'|translate }} </p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.title'|translate }} ع</label>
+                <input type="text" formControlName="titleAr" class="form-control form-control-solid" placeholder="{{'field.title'|translate }} ع"/>
+                <div *ngIf="!form.get('titleAr').valid && (form.get('titleAr').dirty ||  form.get('titleAr').touched)" class="text text-danger">
+                    <p *ngIf="form.get('titleAr').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('titleAr').hasError('pattern')">{{'_.only_ar'|translate }} </p>
+                  </div>
+                </div>
+         </div>
+
+         <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{ "field.numberOfSelect" | translate }}</label>
+                <input
+                  type="number"
+                  min="0"
+                  formControlName="numberOfSelect"
+                  class="form-control form-control-solid"
+                  placeholder="{{ 'field.numberOfSelect' | translate }}"
+                />
+                <div
+                  *ngIf="
+                    !form.get('numberOfSelect').valid &&
+                    (form.get('numberOfSelect').dirty || form.get('numberOfSelect').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('numberOfSelect').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12" *ngIf="additionalComponentTitleList.length">
+                <label class="form-label">{{
+                  "menu.additionalComponent" | translate
+                }}</label>
+                <select
+                  formControlName="productDetailsId"
+                  class="form-select form-select-solid"
+                >
+                  <option [value]="item.id" *ngFor="let item of additionalComponentTitleList">
+                    {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    !form.get('productDetailsId').valid &&
+                    (form.get('productDetailsId').dirty || form.get('productDetailsId').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('productDetailsId').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div>
+         </div>
+
+         <div class="row my-5">
+          <div class="col-md-6 col-sm-12">
+            <p>{{ "field.activation" | translate }}</p>
+            <div class="row">
+              <div class="col-4 mx-auto">
+                <label class="form-check form-check-custom form-check-solid">
+                  <input
+                    class="form-check-input mx-2"
+                    type="radio"
+                    [value]="true"
+                    name="isActive"
+                    formControlName="isActive"
+                  />
+                  <span class="form-check-label">
+                    {{ "field.active" | translate }}
+                  </span>
+                </label>
+              </div>
+              <div class="col-4 mx-auto">
+                <label class="form-check form-check-custom form-check-solid">
+                  <input
+                    class="form-check-input mx-2"
+                    type="radio"
+                    [value]="false"
+                    name="isActive"
+                    formControlName="isActive"
+                  />
+                  <span class="form-check-label">
+                    {{ "field.not_active" | translate }}
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div
+              *ngIf="
+                !form.get('isActive').valid &&
+                (form.get('isActive').dirty || form.get('isActive').touched)
+              "
+              class="text text-danger"
+            >
+              <p *ngIf="form.get('isActive').hasError('required')">
+                {{ "_.required" | translate }}
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <p>{{ "field.isRequired" | translate }}</p>
+            <div class="row">
+              <div class="col-4 mx-auto">
+                <label class="form-check form-check-custom form-check-solid">
+                  <input
+                    class="form-check-input mx-2"
+                    type="radio"
+                    [value]="true"
+                    name="isRequired"
+                    formControlName="isRequired"
+                  />
+                  <span class="form-check-label">
+                    {{ "action.yes" | translate }}
+                  </span>
+                </label>
+              </div>
+              <div class="col-4 mx-auto">
+                <label class="form-check form-check-custom form-check-solid">
+                  <input
+                    class="form-check-input mx-2"
+                    type="radio"
+                    [value]="false"
+                    name="isRequired"
+                    formControlName="isRequired"
+                  />
+                  <span class="form-check-label">
+                    {{ "action.no" | translate }}
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div
+              *ngIf="
+                !form.get('isRequired').valid &&
+                (form.get('isRequired').dirty || form.get('isRequired').touched)
+              "
+              class="text text-danger"
+            >
+              <p *ngIf="form.get('isRequired').hasError('required')">
+                {{ "_.required" | translate }}
+              </p>
+            </div>
+          </div>
+         </div>
+
+  
+      
+  
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

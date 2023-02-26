@@ -1,0 +1,78 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "field.createFoodShop" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12 mx-auto">
+          <label class="form-label">{{ "menu.foodType" | translate }}</label>
+          <select
+            formControlName="foodTypeId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of foodTypeList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('foodTypeId').valid &&
+              (form.get('foodTypeId').dirty || form.get('foodTypeId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('foodTypeId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12" *ngIf="!isShopId">
+          <label class="form-label">{{ "shop.shop" | translate }}</label>
+          <p-dropdown
+            [options]="shopList"
+            [filter]="true" 
+            [filterBy]="currentLanguage == 'en' ? 'name' : 'nameAr'"
+            [optionLabel]="currentLanguage == 'en' ? 'name' : 'nameAr'"
+            formControlName="shopId"
+            optionValue="id"
+          ></p-dropdown>
+          <!-- <select
+            formControlName="shopId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of shopList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select> -->
+          <div
+            *ngIf="
+              !form.get('shopId').valid &&
+              (form.get('shopId').dirty || form.get('shopId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('shopId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

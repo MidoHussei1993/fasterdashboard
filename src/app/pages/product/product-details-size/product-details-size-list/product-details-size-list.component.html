@@ -1,0 +1,28 @@
+  <div class="card card-flush shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">{{'menu.productDetailsSize'|translate }}</h3>
+        <div class="card-toolbar">
+          <button  class="btn btn-sm btn-primary mb-3 " (click)="navigateToCreate()">
+            {{'action.create'|translate }}
+        </button>
+        </div>
+    </div>
+    <div class="card-body" *ngIf="productDetailsSizeList.length>0">
+        <app-table
+        [list]="productDetailsSizeList"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        (view)="navigateToView($event)"
+        (edit)="navigateToEdit($event)"
+        [showDelete]="false"
+        [showPagination]="false"
+        [showActivation]="true"
+        [AnotherCheckPropName]="'isApprovied'"
+        [AnotherCheckTitelName]="'field.approve'"
+        (changeActivation)="changeActivation($event)"
+        >
+    </app-table>
+    </div>
+</div>

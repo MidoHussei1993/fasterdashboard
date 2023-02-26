@@ -1,0 +1,40 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">{{ "menu.customers" | translate }}</h3>
+  </div>
+  <div class="card-body">
+    <div class="card bg-secondary p-0">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+      </div>
+    </div>
+    <app-table
+      [list]="customerList"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      (view)="navigateToView($event)"
+      [showDelete]="false"
+      [showEdit]="false"
+      [addActions]="true"
+      [actionList]="[
+        { title: 'global.notes', icon: 'fa-sticky-note', type: 'customerNotes' },
+      {title:'field.wallet',icon:'la-wallet',type:'wallet'},
+      {title:'menu.order',icon:'fa-sort',type:'order'},
+      {title:'menu.customerReferrer',icon:'fa-archive',type:'customerReferrer'},
+      ]"
+      (aciton)="navigateTO($event)"
+      [showSearch]="true"
+       (search)="searchValue()" 
+      (resetFilter)="resetfilter()"
+      [showActivation]="true"
+      (changeActivation)="changeActivation($event)"
+      [isdownloadAll]="true"
+          (export)="downloadAll()"
+      ></app-table
+    >
+  </div>
+</div>

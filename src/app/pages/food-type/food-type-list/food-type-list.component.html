@@ -1,0 +1,51 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">{{ "menu.foodType" | translate }}</h3>
+    
+  </div>
+  <div class="card-body">
+    <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/food-type/create'">
+      <i class="fas fa-plus"></i>
+      {{ "action.create" | translate }}
+    </a>
+
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+      </div>
+    </div>
+      <a class="btn btn-sm btn-primary mx-2 mt-2" (click)="navigateToCreateFoodShop()">
+        <i class="fas fa-plus"></i>
+        {{ "field.createFoodShop" | translate }}
+      </a>
+    <app-table
+      [list]="list"
+      [titles]="titles"
+      create
+      [properties]="properties"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      (view)="navigateToView($event)"
+      (edit)="navigateToEdit($event)"
+      (delete)="deleteItem($event)"
+      [showDelete]="isShopId"
+      [showSearch]="true"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [showActivation]="true"
+      (changeActivation)="changeActivation($event)"
+      [showView]="!isShopId"
+      [showEdit]="!isShopId"
+      [addActions]="false"
+      [actionList]="[
+        {
+          title: 'product.productDetails',
+          icon: 'fa-info-circle',
+          type: 'productDetails'
+        }
+      ]"
+      (aciton)="navigateTO($event)"
+    ></app-table>
+  </div>
+</div>

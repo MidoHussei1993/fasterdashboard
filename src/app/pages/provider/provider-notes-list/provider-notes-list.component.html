@@ -1,0 +1,37 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">{{ "global.notes" | translate }}</h3>
+      <div class="card-toolbar"></div>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-sm btn-primary mb-3" (click)="navigateToCreate()">
+        <i class="fas fa-plus"></i>
+        {{ "action.create" | translate }}
+      </button>
+      <div class="card  bg-secondary">
+        <div class="card-body">
+  
+          <app-filter [filter]="filter"></app-filter>
+        </div>
+      </div>
+  
+      <app-table
+        [list]="notesList"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+        [showDelete]="false"
+        [showEdit]="false"
+        [showView]="false"
+        [showSearch]="true"
+        (search)="searchValue()"
+        (resetFilter)="resetfilter()"
+        ></app-table>
+    </div>
+</div>
+<!-- (view)="navigate($event, formMode.View)"
+(edit)="navigate($event, formMode.Edit)" -->
+  

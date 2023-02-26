@@ -1,0 +1,460 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "generalSuggest.name" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <!-- <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{
+                  "generalSuggest.title" | translate
+                }}</label>
+                <input
+                  type="text"
+                  formControlName="title"
+                  class="form-control form-control-solid"
+                  :placeholder="{{ 'generalSuggest.title' | translate }}"
+                />
+                <div
+                  *ngIf="
+                    !form.get('title').valid &&
+                    (form.get('title').dirty ||
+                      form.get('title').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('title').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div> -->
+
+        <div class="col-md-12 col-sm-12">
+          <label class="form-label">{{ "field.note" | translate }}</label>
+          <input
+            type="text"
+            formControlName="note"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.note' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('note').valid &&
+              (form.get('note').dirty || form.get('note').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('note').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="my-4"
+        *ngIf="mode == 'View' || (mode == 'Edit' && generalSuggest)"
+      >
+        <div class="card text-white bg-success">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.orderId" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.id }}
+                  </span>
+                </p>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "generalSuggest.title" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.title }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.isConnectionAvailable" | translate }} :
+                  </span>
+                  <span *ngIf="generalSuggest.createdIsConnectionAvailable">
+                    {{ "action.yes" | translate }}
+                  </span>
+                  <span *ngIf="!generalSuggest.createdIsConnectionAvailable">
+                    {{ "action.no" | translate }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-12 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "generalSuggest.body" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.body }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.note" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.note }}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class=""
+        *ngIf="mode == 'View' || (mode == 'Edit' && generalSuggest)"
+      >
+        <div class="card text-white bg-dark">
+          <div class="card-body">
+            <h5 class="text-white">CREATED</h5>
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.ApplicationUserId" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.createdApplicationUserId }}
+                  </span>
+                </p>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.time" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.createAt | date: "MMM d, y - h:mm a" }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.orderId" | translate }} :
+                  </span>
+                  <span *ngIf="generalSuggest.deliveryOrderId">
+                    {{ generalSuggest.deliveryOrderId }}
+                  </span>
+
+                  <span *ngIf="generalSuggest.transportOrderId">
+                    {{ generalSuggest.transportOrderId }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.email" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.createdEmail }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "global.full_name" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.createdFullName }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.phoneNumber" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.createdPhoneNumber }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "global.user_name" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.createdUserName }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "global.userType" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.createdUserTypeName }}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mt-4"
+        *ngIf="mode == 'View' || (mode == 'Edit' && generalSuggest)"
+      >
+        <div class="card text-white bg-info" *ngIf="generalSuggest.isRead">
+          <div class="card-body">
+            <h5 class="text-white">Read</h5>
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.ApplicationUserId" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.readerApplicationUserId }}
+                  </span>
+                </p>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.time" | translate }} :
+                  </span>
+                  <span>
+                    {{
+                      generalSuggest.readDateTime | date: "MMM d, y - h:mm a"
+                    }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.email" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.readEmail }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "global.full_name" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.readFullName }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.phoneNumber" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.readPhoneNumber }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "global.user_name" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.readUserName }}
+                  </span>
+                </p>
+              </div>
+
+              <!-- <div class="col-md-6 col-sm-12">
+                  <p>
+                    <span class="font-weight-bold">
+                      {{ "global.userType" | translate }} :
+                    </span>
+                    <span>
+                      {{generalSuggest.createdUserTypeName}}
+                    </span>
+                  </p>
+                </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mt-4"
+        *ngIf="mode == 'View' || (mode == 'Edit' && generalSuggest)"
+      >
+        <div
+          class="card text-white bg-danger"
+          *ngIf="generalSuggest.isFinished"
+        >
+          <div class="card-body">
+            <h5 class="text-white">Finish</h5>
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.ApplicationUserId" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.finisherApplicationUserId }}
+                  </span>
+                </p>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.time" | translate }} :
+                  </span>
+                  <span>
+                    {{
+                      generalSuggest.finishedDateTime
+                        | date: "MMM d, y - h:mm a"
+                    }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.email" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.finishEmail }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "global.full_name" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.finishFullName }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "field.phoneNumber" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.finishPhoneNumber }}
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <p>
+                  <span class="font-weight-bold">
+                    {{ "global.user_name" | translate }} :
+                  </span>
+                  <span>
+                    {{ generalSuggest.finishUserName }}
+                  </span>
+                </p>
+              </div>
+
+              <!-- <div class="col-md-6 col-sm-12">
+                  <p>
+                    <span class="font-weight-bold">
+                      {{ "global.userType" | translate }} :
+                    </span>
+                    <span>
+                      {{generalSuggest.createdUserTypeName}}
+                    </span>
+                  </p>
+                </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-6 col-sm-12 mx-auto text-center">
+          <button
+            type="button"
+            (click)="finish()"
+            *ngIf="generalSuggest.isFinished === false"
+            class="btn btn-danger btn-block mx-2"
+          >
+            {{ "action.finish" | translate }}
+          </button>
+          <button type="submit" class="btn btn-primary btn-block mx-auto">
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="card mb-4">
+    <h3 class="card-title mt-3 mx-4">
+      {{ "field.replies" | translate }}
+    </h3>
+    <div class="card-body">
+      <div class="chat-box">
+        <div
+          class="message primary"
+          *ngFor="let item of generalSuggest.replies; let i = index"
+          [ngClass]="{
+            primary: item.isFromAdmin,
+            secondary: !item.isFromAdmin
+          }"
+        >
+          <h4>{{ item.replyUserName }}</h4>
+          {{ item.message }}
+          <div class="timestamp">
+            {{ item.createAt | date: "MMM d, y - h:mm a" }}
+          </div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <input type="text" [(ngModel)]="reply" />
+        <button (click)="sendReply()" class="mx-2">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

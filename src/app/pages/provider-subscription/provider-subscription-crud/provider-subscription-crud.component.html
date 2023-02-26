@@ -1,0 +1,142 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "menu.providerSubscription" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+       
+  
+  
+        <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'menu.subscription'|translate }}</label>
+                <input type="text" formControlName="subscriptionName" class="form-control form-control-solid" placeholder="{{'menu.subscription'|translate }}"/>
+                <div *ngIf="!form.get('subscriptionName').valid && (form.get('subscriptionName').dirty ||   form.get('subscriptionName').touched)" class="text text-danger">
+                    <p *ngIf="form.get('subscriptionName').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('subscriptionName').hasError('pattern')">{{'_.only_en'|translate }} </p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'menu.subscription'|translate }} ع</label>
+                <input type="text" formControlName="subscriptionNameAr" class="form-control form-control-solid" placeholder="{{'menu.subscription'|translate }} ع"/>
+                <div *ngIf="!form.get('subscriptionNameAr').valid && (form.get('subscriptionNameAr').dirty ||  form.get('subscriptionNameAr').touched)" class="text text-danger">
+                    <p *ngIf="form.get('subscriptionNameAr').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('subscriptionNameAr').hasError('pattern')">{{'_.only_ar'|translate }} </p>
+                  </div>
+                </div>
+         </div>
+
+         <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.discription'|translate }}</label>
+                <input type="text" formControlName="subscriptionDescription" class="form-control form-control-solid" placeholder="{{'field.discription'|translate }}"/>
+                <div *ngIf="!form.get('subscriptionDescription').valid && (form.get('subscriptionDescription').dirty ||   form.get('subscriptionDescription').touched)" class="text text-danger">
+                    <p *ngIf="form.get('subscriptionDescription').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('subscriptionDescription').hasError('pattern')">{{'_.only_en'|translate }} </p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.discription'|translate }} ع</label>
+                <input type="text" formControlName="subscriptionDescriptionAr" class="form-control form-control-solid" placeholder="{{'field.discription'|translate }} ع"/>
+                <div *ngIf="!form.get('subscriptionDescriptionAr').valid && (form.get('subscriptionDescriptionAr').dirty ||  form.get('subscriptionDescriptionAr').touched)" class="text text-danger">
+                    <p *ngIf="form.get('subscriptionDescriptionAr').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('subscriptionDescriptionAr').hasError('pattern')">{{'_.only_ar'|translate }} </p>
+                  </div>
+                </div>
+         </div>
+
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.subscriptionByDay" | translate }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="subscriptionPeriodInDay"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.subscriptionByDay' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('subscriptionPeriodInDay').valid &&
+              (form.get('subscriptionPeriodInDay').dirty || form.get('subscriptionPeriodInDay').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('subscriptionPeriodInDay').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.subscriptionPrice" | translate }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="subscriptionPrice"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.subscriptionPrice' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('subscriptionPrice').valid &&
+              (form.get('subscriptionPrice').dirty || form.get('subscriptionPrice').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('subscriptionPrice').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mainObject.createAt && mode == 'View'">
+        <div class="col-md-6 col-sm-12">
+         <p class="font-weight-bolder">
+          {{ "field.CreateAtTo" | translate }} : 
+          {{
+            mainObject.createAt| date:'MMM d, y, h:mm:ss a'
+          }}
+         </p>
+     
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <p class="font-weight-bolder">
+           {{ "field.remainingDays" | translate }} : {{
+            mainObject.remainingDays
+          }}
+          </p>
+         </div>
+        
+      </div>
+
+  
+         <div class="row my-5" *ngIf="mainObject.remainingDays && mode == 'View'">
+            <span class="d-inline">{{ "field.isExpired" | translate }} :  <span class="text-danger font-weight-bolder mt-2" *ngIf="mainObject.isExpired == false">
+              {{ "action.no" | translate }}
+            </span>
+            <span class="text-success d-inline font-weight-bolder  mt-2" *ngIf="mainObject.isExpired == true">
+              {{ "action.yes" | translate }}
+            </span></span>
+           
+          </div>
+  
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

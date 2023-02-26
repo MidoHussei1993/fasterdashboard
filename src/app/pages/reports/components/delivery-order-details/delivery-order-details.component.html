@@ -1,0 +1,1184 @@
+<div class="card">
+  <div class="card-title mt-4 mb-5 row">
+    <div class="col-9 px-5">
+      <h1 class="font-weight-bolder display-6" *ngIf="mainObject.deliveryOrder">
+        {{ "field.orderId" | translate }} : {{ mainObject.deliveryOrder.id }}
+      </h1>
+      <h6
+        class="font-weight-bolder text-primary"
+        *ngIf="mainObject.deliveryOrder"
+      >
+        {{ "field.CreateAtTo" | translate }} :
+        {{ mainObject.deliveryOrder.createAt | date: "MMM d, y - h:mm a" }}
+      </h6>
+      <h6
+        class="font-weight-bolder mt-3"
+        [ngClass]="{
+          'text-success': mainObject.deliveryOrder.isAmountConfirmed == true,
+          'text-danger': mainObject.deliveryOrder.isAmountConfirmed == false
+        }"
+        *ngIf="mainObject.deliveryOrder && !isShop"
+      >
+        {{ "field.isAmountConfirmed" | translate }} :
+        {{
+          (mainObject.deliveryOrder.isAmountConfirmed
+            ? "action.orderDone"
+            : "action.orderNotDone"
+          ) | translate
+        }}
+      </h6>
+      <h3 class="font-weight-bolder mt-3 text-info">
+        {{ "field.orderType" | translate }} : Delivery 📦
+      </h3>
+    </div>
+    <div class="col-3 " *ngIf="mode == 'Edit' && !isShop">
+      <button
+        type="button"
+        (click)="orderAmountPrice = 0;openModal('orderAmountPriceModal')"
+        class="btn btn-danger btn-sm mt-3 mx-2"
+      >
+        {{ "field.confirmAmount" | translate }}
+      </button>
+      <button
+      type="button"
+      (click)="openModal('stateModel')"
+      class="btn btn-dark btn-sm mt-3"
+    >
+      {{ "action.changeStatus" | translate }}
+    </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4 col-sm-12" [ngClass]="{'col-md-12': isShop}" *ngIf="mainObject.deliveryOrder">
+        <h6 class="text-uppercase mb-4 font-weight-bolder">
+          {{ "field.customerDetails" | translate }}
+        </h6>
+
+        <div class="b-dash-border" *ngIf="!isShop">
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.customer" | translate }} :
+            <span
+              class="text-primary pointer"
+              (click)="
+                getCustomerData(mainObject.deliveryOrder.customerPhoneNumber)
+              "
+              >{{ mainObject.deliveryOrder.customerName }}</span
+            >
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.phoneNumber" | translate }} :
+            {{ mainObject.deliveryOrder.customerPhoneNumber }}
+            <a
+              [href]="
+                'https://web.whatsapp.com/send?phone=' +
+                mainObject.deliveryOrder.customerPhoneNumber +
+                '&text&app_absent=0'
+              "
+              target="_blank"
+            >
+              <i class="fab fa-whatsapp display-6 text-success mx-3"></i>
+            </a>
+          </h6>
+
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.customerNote" | translate }} :
+            {{ mainObject.deliveryOrder.customerRateNote }}
+          </h6>
+
+          <div class="d-flex">
+            <div class="p-2">
+              <div class="mb-3">
+                <h6 class="text-uppercase font-weight-bolder">
+                  {{ "field.customerRating" | translate }}
+                </h6>
+              </div>
+            </div>
+            <div class="p-2">
+              <div class="mb-3">
+                <h6 class="text-uppercase font-weight-bolder">
+                  <i
+                    [ngClass]="{
+                      'text-warning': mainObject.deliveryOrder.customerRate >= 1
+                    }"
+                    class="fas fa-star"
+                  ></i>
+                  <i
+                    [ngClass]="{
+                      'text-warning': mainObject.deliveryOrder.customerRate >= 2
+                    }"
+                    class="fas fa-star"
+                  ></i>
+                  <i
+                    [ngClass]="{
+                      'text-warning': mainObject.deliveryOrder.customerRate >= 3
+                    }"
+                    class="fas fa-star"
+                  ></i>
+                  <i
+                    [ngClass]="{
+                      'text-warning': mainObject.deliveryOrder.customerRate >= 4
+                    }"
+                    class="fas fa-star"
+                  ></i>
+                  <i
+                    [ngClass]="{
+                      'text-warning': mainObject.deliveryOrder.customerRate >= 5
+                    }"
+                    class="fas fa-star"
+                  ></i>
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h6 class="text-uppercase my-5 font-weight-bolder" *ngIf="!isShop">
+          {{ "field.providerDetails" | translate }}
+        </h6>
+
+        <div *ngIf="mainObject.deliveryOfferPrices && !isShop" class="b-dash-border">
+          <div
+            *ngFor="let driver of mainObject.deliveryOfferPrices; let i = index"
+          >
+            <h6
+              class="text-uppercase font-weight-bolder"
+              *ngIf="driver.isApprovedByCustomer"
+            >
+              {{ "field.prvider" | translate }} :
+              <span
+                class="text-primary pointer"
+                (click)="getProviderData(driver.providerId)"
+              >
+                {{ driver.providerName }}
+              </span>
+              <a
+                [href]="
+                  'https://web.whatsapp.com/send?phone=' +
+                  driver.providerPhoneNumber +
+                  '&text&app_absent=0'
+                "
+                target="_blank"
+              >
+                <i
+                  class="fab fa-whatsapp text-success"
+                  style="font-size: 25px"
+                ></i>
+              </a>
+            </h6>
+            <h6
+              class="text-uppercase font-weight-bolder"
+              *ngIf="driver.isApprovedByCustomer"
+            >
+              {{ "menu.car" | translate }} : {{ driver.providerCarName }}
+            </h6>
+            <h6
+              class="text-uppercase font-weight-bolder"
+              *ngIf="driver.isApprovedByCustomer"
+            >
+              {{ "global.plateNumber" | translate }} :
+              {{ driver.providerCarPlateNumber }}
+            </h6>
+          </div>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.providerNote" | translate }} :
+            {{ mainObject.deliveryOrder.providerRateNote }}
+          </h6>
+          <div class="d-flex">
+            <div class="p-2">
+              <h6 class="text-uppercase font-weight-bolder">
+                {{ "field.driverRating" | translate }}
+              </h6>
+            </div>
+            <div class="p-2">
+              <h6 class="text-uppercase font-weight-bolder">
+                <i
+                  [ngClass]="{
+                    'text-warning': mainObject.deliveryOrder.providerRate >= 1
+                  }"
+                  class="fas fa-star"
+                ></i>
+                <i
+                  [ngClass]="{
+                    'text-warning': mainObject.deliveryOrder.providerRate >= 2
+                  }"
+                  class="fas fa-star"
+                ></i>
+                <i
+                  [ngClass]="{
+                    'text-warning': mainObject.deliveryOrder.providerRate >= 3
+                  }"
+                  class="fas fa-star"
+                ></i>
+                <i
+                  [ngClass]="{
+                    'text-warning': mainObject.deliveryOrder.providerRate >= 4
+                  }"
+                  class="fas fa-star"
+                ></i>
+                <i
+                  [ngClass]="{
+                    'text-warning': mainObject.deliveryOrder.providerRate >= 5
+                  }"
+                  class="fas fa-star"
+                ></i>
+              </h6>
+            </div>
+          </div>
+        </div>
+
+        <h6 class="text-uppercase my-5 font-weight-bolder" *ngIf="!isShop">
+          {{ "field.financalDetail" | translate }}
+        </h6>
+
+        <div class="b-dash-border" *ngIf="!isShop">
+          <h6
+            class="text-uppercase font-weight-bolder"
+            [ngClass]="{
+              'text-danger': mainObject.deliveryOrder.invoice.amountPayed == 0,
+              'text-success': mainObject.deliveryOrder.invoice.amountPayed > 0
+            }"
+          >
+            {{ "field.amountPayed" | translate }} :
+            {{ mainObject.deliveryOrder.invoice.amountPayed }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.couboneAmount" | translate }} :
+            {{ mainObject.deliveryOrder.invoice.couboneAmount }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.customerArrearsAmount" | translate }} :
+            {{ mainObject.deliveryOrder.invoice.customerArrearsAmount }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.deliveryCouboneAmount" | translate }} :
+            {{
+              mainObject.deliveryOrder.invoice.deliveryCouboneAmount
+            }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.Amount" | translate }} :
+            {{ mainObject.deliveryOrder.invoice.deliveryAmount }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.vat" | translate }} :
+            {{ mainObject.deliveryOrder.invoice.deliveryVat }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.AmountWithVat" | translate }} :
+            {{ mainObject.deliveryOrder.invoice.deliveryAmountWithVat }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.orderAmount" | translate }} :
+            {{ mainObject.deliveryOrder.invoice.orderAmount }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.otherAmount" | translate }} :
+            {{ mainObject.deliveryOrder.invoice.otherAmount }}
+          </h6>
+          <h6
+            class="text-uppercase font-weight-bolder"
+            [ngClass]="{
+              'text-success': mainObject.deliveryOrder.invoice.total == 0,
+              'text-danger': mainObject.deliveryOrder.invoice.total > 0
+            }"
+          >
+            {{ "field.total" | translate }} :
+            {{ mainObject.deliveryOrder.invoice.total }}
+          </h6>
+        </div>
+
+        <h6 class="text-uppercase my-5 font-weight-bolder">
+          {{ "field.orderDetails" | translate }}
+        </h6>
+
+        <div class="">
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.orderType" | translate }} : Delivery
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "shop.shop_name" | translate }} :
+            <span class="pointer text-primary" (click)="getShopData()">
+              {{
+                currentLanguage == "en"
+                  ? mainObject.deliveryOrder.shopName
+                  : mainObject.deliveryOrder.shopNameAr
+              }}
+            </span>
+          </h6>
+
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "menu.Shop_Branch" | translate }} :
+            <span class="pointer text-info" (click)="getShopData()">
+              {{
+                currentLanguage == "en"
+                  ? mainObject.deliveryOrder.shopBranchDescriptionLocation
+                  : mainObject.deliveryOrder.shopBranchDescriptionLocationAr
+              }}
+            </span>
+          </h6>
+          <h6 class="font-weight-bolder mt-3"
+          [ngClass]="{
+            'text-success': mainObject.deliveryOrder.isPartner == true,
+            'text-danger': mainObject.deliveryOrder.isPartner == false
+          }"
+           *ngIf="mainObject.deliveryOrder">
+            {{ "field.Statues" | translate }} :
+            {{
+              (mainObject.deliveryOrder.isPartner
+                ? "field.subscribe"
+                : "field.unSubscribe"
+              ) | translate
+            }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.payment" | translate }} :
+            {{ mainObject.deliveryOrder.payTypeName }}
+          </h6>
+
+          <div *ngIf="mainObject.deliveryOfferPrices" class="">
+            <div
+              *ngFor="
+                let driver of mainObject.deliveryOfferPrices;
+                let i = index
+              "
+            >
+              <h6
+                class="text-uppercase font-weight-bolder"
+                *ngIf="driver.isApprovedByCustomer"
+              >
+                {{ "field.priceFrom" | translate }} : {{ driver.priceFrom }}
+              </h6>
+              <h6
+                class="text-uppercase font-weight-bolder"
+                *ngIf="driver.isApprovedByCustomer"
+              >
+                {{ "field.priceTo" | translate }} :
+                {{ driver.priceTo }}
+              </h6>
+              <h6
+                class="text-uppercase font-weight-bolder"
+                *ngIf="driver.isApprovedByCustomer"
+              >
+                {{ "field.totalDistance" | translate }} :
+                {{ driver.totalDistance }}
+              </h6>
+            </div>
+          </div>
+
+          <p
+            class="neon-red text-uppercase font-weight-bolder h2 text-danger font-weight-bolder bg-dark my-4"
+          >
+            {{ "field.note" | translate }} :
+            {{ mainObject.deliveryOrder.note }}
+          </p>
+        </div>
+
+        <div class="table-responsive">
+          <table
+            class="table table-hover table-rounded table-striped border gy-7 gs-7"
+          >
+            <thead>
+              <tr>
+                <th class="text-center">
+                  {{ "product.name" | translate }}
+                </th>
+                <th class="text-center">
+                  {{ "field.price" | translate }}
+                </th>
+                <th class="text-center">
+                  {{ "cobone.Amout" | translate }}
+                </th>
+                <th class="text-center">
+                  {{ "field.total" | translate }}
+                </th>
+                <th class="text-center">
+                  {{ "menu.additionalComponent" | translate }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of mainObject.carts; let i = index">
+                <td class="text-center">
+                  {{ item.productDetailsSize.productDetails.title }}
+                </td>
+                <td class="text-center">
+                  {{ item.price }}
+                </td>
+                <td class="text-center">
+                  {{ item.quantity }}
+                </td>
+                <td class="text-center">
+                  {{ item.quantity * item.price }}
+                </td>
+                <td class="text-center">
+                  {{ item.additionalComponents }}
+                </td>
+                <!-- <td>
+                  {{ item.createAt | date: "h:mm a" }}
+                </td>
+                <td>
+                  {{ item.statusDescription }}
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-12" *ngIf="!isShop">
+        <app-google-map
+          *ngIf="mainObject.deliveryOrder"
+          [markerPositions]="locationList"
+          [markers]="providerMark"
+          [titleList]="mapMarkerTitles"
+          [disabled]="true"
+        ></app-google-map>
+      </div>
+
+      <div class="col-md-5 col-sm-12" *ngIf="mainObject.deliveryOrder  && !isShop">
+        <!-- <h6 class="text-uppercase font-weight-bolder mb-5">
+          {{ "field.orderHistory" | translate }}
+        </h6> -->
+        <div class="row mb-3" *ngIf="mainObject.deliveryOrder">
+          <div
+            class="col-12 text-center"
+            *ngIf="mainObject.deliveryOrder.invoiceImagePath"
+          >
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <img
+                  [src]="mainObject.deliveryOrder.invoiceImagePath"
+                  (click)="viewImage(mainObject.deliveryOrder.invoiceImagePath)"
+                  class="img-fluid border-2"
+                  alt="Responsive image"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="text-uppercase font-weight-bolder">
+          {{ "field.orderState" | translate }} :
+          {{ mainObject.deliveryOrder.statusName }}
+        </h5>
+
+        <div class="table-responsive">
+          <table
+            class="table table-hover table-rounded table-striped border gy-7 gs-7"
+          >
+            <tbody>
+              <tr
+                *ngFor="
+                  let item of mainObject.trakingDeliveryOrderStatues;
+                  let i = index
+                "
+              >
+                <td>
+                  {{ item.statusName }}
+                </td>
+                <td>
+                  {{ item.createAt | date: "h:mm a" }}
+                </td>
+                <td>
+                  {{ item.statusDescription }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card my-5">
+          <div class="card-body">
+            <!-- <div class="row">
+              <div class="col-md-4 mr-auto">
+                <h3 class="text-primary pointer" (click)="getNote()">
+                  {{ "global.notes" | translate }}
+                </h3>
+              </div>
+            </div> -->
+
+            <form [formGroup]="noteForm" (ngSubmit)="addNote()">
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <label class="form-label">{{
+                    "field.note" | translate
+                  }}</label>
+                  <input
+                    type="text"
+                    formControlName="adminNote"
+                    class="form-control form-control-solid"
+                    placeholder="{{ 'field.note' | translate }}"
+                  />
+                  <div
+                    *ngIf="
+                      !noteForm.get('adminNote').valid &&
+                      (noteForm.get('adminNote').dirty ||
+                        noteForm.get('adminNote').touched)
+                    "
+                    class="text text-danger"
+                  >
+                    <p *ngIf="noteForm.get('adminNote').hasError('required')">
+                      {{ "_.required" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row my-5">
+                <div class="col-md-4 col-sm-12 mx-auto text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-block btn-hover-scale"
+                  >
+                    {{ "action.save" | translate }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="card" *ngIf="mode == 'Edit'">
+          <div class="card-body">
+            <!-- customer form -->
+            <h2 class="text-center text-info mt-3 text-uppercase">
+              {{ "field.paymentAdjesment" | translate }}
+            </h2>
+            <form
+              [formGroup]="customerForm"
+              (ngSubmit)="sendToCustomerWallet()"
+            >
+              <h3 class="text-uppercase font-weight-bolder">
+                {{ "field.customer" | translate }}
+              </h3>
+
+              <div class="row">
+                <div class="col-md-3 col-sm-12 text-center mx-auto">
+                  <label class="form-label d-block">{{
+                    "field.moneyTransferImage" | translate
+                  }}</label>
+                  <!--begin::Image input-->
+                  <div
+                    class="image-input image-input-empty"
+                    data-kt-image-input="true"
+                    style="
+                      background-image: url(/assets/media/avatars/blank.png);
+                    "
+                  >
+                    <!--begin::Image preview wrapper-->
+                    <img
+                      [src]="customerForm.get('moneyTransferImage').value"
+                      class="image-input-wrapper w-125px h-125px"
+                    />
+                    <img-viewer
+                      #imgViewer
+                      [img]="customerForm.get('moneyTransferImage').value"
+                    ></img-viewer>
+                    <!--end::Image preview wrapper-->
+                    <label
+                      class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                      data-kt-image-input-action="change"
+                      data-bs-toggle="tooltip"
+                      data-bs-dismiss="click"
+                      title="Change avatar"
+                    >
+                      <i class="bi bi-pencil-fill fs-7"></i>
+                      <input
+                        type="file"
+                        name="avatar"
+                        (change)="uploadCustomerTransferImage($event)"
+                        accept=".png, .jpg, .jpeg"
+                      />
+                    </label>
+                  </div>
+                  <!--end::Image input-->
+                </div>
+              </div>
+
+              <div class="row my-5">
+                <div class="col-md-6 col-sm-12">
+                  <label class="form-label">{{
+                    "provider.operation_amount" | translate
+                  }}</label>
+                  <input
+                    type="number"
+                    formControlName="amount"
+                    class="form-control form-control-solid"
+                    placeholder="{{ 'provider.operation_amount' | translate }}"
+                  />
+                  <div
+                    *ngIf="
+                      !customerForm.get('amount').valid &&
+                      (customerForm.get('amount').dirty ||
+                        customerForm.get('amount').touched)
+                    "
+                    class="text text-danger"
+                  >
+                    <p *ngIf="customerForm.get('amount').hasError('required')">
+                      {{ "_.required" | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12 pt-3">
+                  <div class="row mt-3">
+                    <div class="col-4 mx-auto">
+                      <label
+                        class="form-check form-check-custom form-check-solid"
+                      >
+                        <input
+                          class="form-check-input mx-2"
+                          type="radio"
+                          [value]="2"
+                          name="type"
+                          formControlName="type"
+                        />
+                        <span class="form-check-label">
+                          {{ "action.add" | translate }}
+                        </span>
+                      </label>
+                    </div>
+                    <div class="col-4 mx-auto">
+                      <label
+                        class="form-check form-check-custom form-check-solid"
+                      >
+                        <input
+                          class="form-check-input mx-2"
+                          type="radio"
+                          [value]="1"
+                          name="type"
+                          formControlName="type"
+                        />
+                        <span class="form-check-label">
+                          {{ "action.deduct" | translate }}
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="
+                      !customerForm.get('type').valid &&
+                      (customerForm.get('type').dirty ||
+                        customerForm.get('type').touched)
+                    "
+                    class="text text-danger"
+                  >
+                    <p *ngIf="customerForm.get('type').hasError('required')">
+                      {{ "_.required" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row my-5">
+                <div class="col-md-12 col-sm-12">
+                  <label class="form-label">{{
+                    "field.note" | translate
+                  }}</label>
+                  <!-- <input
+                    type="text"
+                    formControlName="note"
+                    class="form-control form-control-solid"
+                    placeholder="{{ 'field.note' | translate }}"
+                  /> -->
+                  <select
+                  formControlName="note"
+                  class="form-select form-select-solid"
+                >
+                  <option [value]="item" *ngFor="let item of walletNotes">
+                    {{ item }}
+                  </option>
+                </select>
+                  <div
+                    *ngIf="
+                      !customerForm.get('note').valid &&
+                      (customerForm.get('note').dirty ||
+                        customerForm.get('note').touched)
+                    "
+                    class="text text-danger"
+                  >
+                    <p *ngIf="customerForm.get('note').hasError('required')">
+                      {{ "_.required" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row my-5">
+                <div class="col-md-4 col-sm-12 mx-auto text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-sm text-uppercase font-weight-bolder"
+                  >
+                    {{ "action.save" | translate }}
+                    <i class="far fa-save mx-2"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <hr />
+            <!-- provider form -->
+
+            <form
+              [formGroup]="providerForm"
+              (ngSubmit)="sendToProviderWallet()"
+            >
+              <h3 class="text-uppercase font-weight-bolder">
+                {{ "field.prvider" | translate }}
+              </h3>
+
+              <div class="row">
+                <div class="col-md-3 col-sm-12 text-center mx-auto">
+                  <label class="form-label d-block">{{
+                    "field.moneyTransferImage" | translate
+                  }}</label>
+                  <!--begin::Image input-->
+                  <div
+                    class="image-input image-input-empty"
+                    data-kt-image-input="true"
+                    style="
+                      background-image: url(/assets/media/avatars/blank.png);
+                    "
+                  >
+                    <!--begin::Image preview wrapper-->
+                    <img
+                      [src]="providerForm.get('moneyTransferImage').value"
+                      class="image-input-wrapper w-125px h-125px"
+                    />
+                    <img-viewer
+                      #imgViewer
+                      [img]="providerForm.get('moneyTransferImage').value"
+                    ></img-viewer>
+                    <!--end::Image preview wrapper-->
+                    <label
+                      class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                      data-kt-image-input-action="change"
+                      data-bs-toggle="tooltip"
+                      data-bs-dismiss="click"
+                      title="Change avatar"
+                    >
+                      <i class="bi bi-pencil-fill fs-7"></i>
+                      <input
+                        type="file"
+                        name="avatar"
+                        (change)="uploadProviderTransferImage($event)"
+                        accept=".png, .jpg, .jpeg"
+                      />
+                    </label>
+                  </div>
+                  <!--end::Image input-->
+                </div>
+              </div>
+
+              <div class="row my-5">
+                <div class="col-md-6 col-sm-12">
+                  <label class="form-label">{{
+                    "provider.operation_amount" | translate
+                  }}</label>
+                  <input
+                    type="number"
+                    formControlName="amount"
+                    class="form-control form-control-solid"
+                    placeholder="{{ 'provider.operation_amount' | translate }}"
+                  />
+                  <div
+                    *ngIf="
+                      !providerForm.get('amount').valid &&
+                      (providerForm.get('amount').dirty ||
+                        providerForm.get('amount').touched)
+                    "
+                    class="text text-danger"
+                  >
+                    <p *ngIf="providerForm.get('amount').hasError('required')">
+                      {{ "_.required" | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12 pt-3">
+                  <div class="row mt-3">
+                    <div class="col-4 mx-auto">
+                      <label
+                        class="form-check form-check-custom form-check-solid"
+                      >
+                        <input
+                          class="form-check-input mx-2"
+                          type="radio"
+                          [value]="2"
+                          name="type"
+                          formControlName="type"
+                        />
+                        <span class="form-check-label">
+                          {{ "action.add" | translate }}
+                        </span>
+                      </label>
+                    </div>
+                    <div class="col-4 mx-auto">
+                      <label
+                        class="form-check form-check-custom form-check-solid"
+                      >
+                        <input
+                          class="form-check-input mx-2"
+                          type="radio"
+                          [value]="1"
+                          name="type"
+                          formControlName="type"
+                        />
+                        <span class="form-check-label">
+                          {{ "action.deduct" | translate }}
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="
+                      !providerForm.get('type').valid &&
+                      (providerForm.get('type').dirty ||
+                        providerForm.get('type').touched)
+                    "
+                    class="text text-danger"
+                  >
+                    <p *ngIf="providerForm.get('type').hasError('required')">
+                      {{ "_.required" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row my-5">
+                <div class="col-md-12 col-sm-12">
+                  <label class="form-label">{{
+                    "field.note" | translate
+                  }}</label>
+                  <!-- <input
+                    type="text"
+                    formControlName="note"
+                    class="form-control form-control-solid"
+                    placeholder="{{ 'field.note' | translate }}"
+                  /> -->
+                  <select
+                  formControlName="note"
+                  class="form-select form-select-solid"
+                >
+                  <option [value]="item" *ngFor="let item of walletNotes">
+                    {{ item }}
+                  </option>
+                </select>
+                  <div
+                    *ngIf="
+                      !providerForm.get('note').valid &&
+                      (providerForm.get('note').dirty ||
+                        providerForm.get('note').touched)
+                    "
+                    class="text text-danger"
+                  >
+                    <p *ngIf="providerForm.get('note').hasError('required')">
+                      {{ "_.required" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row my-5">
+                <div class="col-md-4 col-sm-12 mx-auto text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-sm text-uppercase font-weight-bolder"
+                  >
+                    {{ "action.save" | translate }}
+                    <i class="far fa-save mx-2"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #customerModel let-modal>
+  <!-- <div class="modal-header">
+    <button  type="button" class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-white text-center">
+        <span class="fs-3 fw-bolder me-2">{{
+          "field.customerData" | translate
+        }}</span>
+      </h2>
+    </div>
+    <div class="row mt-5" *ngIf="customerData">
+      <div class="col-3">
+        <img
+          [src]="customerData.imagePath"
+          style="border-radius: 50%"
+          width="100"
+          height="100"
+        />
+      </div>
+      <div class="col-9">
+        <div class="col-md-12">
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "global.full_name" | translate }} : {{ customerData.fullname }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "field.birthDate" | translate }} :
+            {{ customerData.birthDate | date: "MMM d, y - h:mm a" }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "field.email" | translate }} : {{ customerData.email }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "field.phoneNumber" | translate }} :
+            {{ customerData.phoneNumber }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #providerModel let-modal>
+  <!-- <div class="modal-header">
+    <button  type="button" class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-white text-center">
+        <span class="fs-3 fw-bolder me-2">{{
+          "field.providerData" | translate
+        }}</span>
+      </h2>
+    </div>
+    <div class="row mt-5" *ngIf="providerData">
+      <div class="col-3">
+        <img
+          [src]="providerData.profileImage"
+          style="border-radius: 50%"
+          width="100"
+          height="100"
+        />
+        <img
+          class="mt-2"
+          [src]="providerData.carFrontImage"
+          width="100"
+          height="100"
+        />
+      </div>
+      <div class="col-9">
+        <div class="col-md-12">
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "global.full_name" | translate }} : {{ providerData.fullName }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "field.CreateAtTo" | translate }} :
+            {{ providerData.createAt | date: "MMM d, y - h:mm a" }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "field.IdentificationNumber" | translate }} :
+            {{ providerData.identificationNumber }}
+          </p>
+
+          <!-- <p class="text-uppercase font-weight-bolder text-white">
+            {{ "global.full_name" | translate }} :
+            {{ customerData.phoneNumber }}
+          </p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #shopModel let-modal>
+  <!-- <div class="modal-header">
+    <button  type="button" class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-white text-center">
+        <span class="fs-3 fw-bolder me-2">{{ "shop.shop" | translate }}</span>
+      </h2>
+    </div>
+    <div class="row mt-5" *ngIf="shopData.id">
+      <div class="col-3">
+        <img
+          [src]="shopData.avatar"
+          style="border-radius: 50%"
+          width="100"
+          height="100"
+        />
+      </div>
+      <div class="col-9">
+        <div class="col-md-12">
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "shop.shop_name" | translate }} :
+            {{
+              currentLanguage == "en" ? shopData.shopName : shopData.shopNameAr
+            }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "field.phoneNumber" | translate }} :
+            {{ shopData.phoneNumber }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "field.email" | translate }} : {{ shopData.email }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "field.discription" | translate }} :
+            {{
+              currentLanguage == "en"
+                ? shopData.shopDescription
+                : shopData.shopDescriptionAr
+            }}
+          </p>
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "field.typeName" | translate }} :
+            {{ currentLanguage == "en" ? shopData.type : shopData.typeAr }}
+          </p>
+          <p class="text-uppercase font-weight-bolder text-white">
+            {{ "forgetPassword.userName" | translate }} :
+            {{ shopData.userName }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #stateModel let-modal>
+  <!-- <div class="modal-header">
+    <button  type="button" class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-white text-center">
+        <span class="fs-3 fw-bolder me-2">{{
+          "action.changeStatus" | translate
+        }}</span>
+      </h2>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="edit()">
+      <div class="row my-5">
+        <div class="col-md-12 col-sm-12">
+          <label class="form-label text-white">{{
+            "cobone.status" | translate
+          }}</label>
+          <select
+            formControlName="newStatusId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="state.id" *ngFor="let state of statusList">
+              {{ currentLanguage == "en" ? state.name : state.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('newStatusId').valid &&
+              (form.get('newStatusId').dirty || form.get('newStatusId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('newStatusId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12">
+          <label class="form-label">{{ "field.note" | translate }}</label>
+          <input
+            type="text"
+            formControlName="description"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.note' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('description').valid &&
+              (form.get('description').dirty || form.get('description').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('description').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            [disabled]="form.status != 'VALID'"
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+
+<ng-template #orderAmountPriceModal let-modal>
+  <!-- <div class="modal-header">
+    <button  type="button" class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-white text-center">
+        <span class="fs-3 fw-bolder me-2">{{
+          "field.confirmAmount" | translate
+        }}</span>
+      </h2>
+    </div>
+    <div class="row my-5">
+     
+
+      <div class="col-md-12 col-sm-12">
+        <label class="form-label">{{ "provider.operation_amount" | translate }}</label>
+        <input
+          type="number"
+          class="form-control form-control-solid"
+          [(ngModel)]="orderAmountPrice"
+        />
+      </div>
+    </div>      
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="button"
+            (click)="ChangeOrderAmountPrice()"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+  </div>
+</ng-template>
+
+<img-viewer #imgViewer></img-viewer>

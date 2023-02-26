@@ -1,0 +1,186 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.subscription" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "subscription.name" | translate }}</label>
+          <input
+            type="text"
+            formControlName="subscriptionName"
+            class="form-control form-control-solid"
+            placeholder="{{ 'subscription.name' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('subscriptionName').valid &&
+              (form.get('subscriptionName').dirty || form.get('subscriptionName').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('subscriptionName').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('subscriptionName').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "subscription.name" | translate }} ع</label>
+          <input
+            type="text"
+            formControlName="subscriptionNameAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'subscription.name' | translate }} ع"
+          />
+          <div
+            *ngIf="
+              !form.get('subscriptionNameAr').valid &&
+              (form.get('subscriptionNameAr').dirty ||
+                form.get('subscriptionNameAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('subscriptionNameAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('subscriptionNameAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "subscription.description" | translate }}</label>
+          <input
+            type="text"
+            formControlName="subscriptionDescription"
+            class="form-control form-control-solid"
+            placeholder="{{ 'subscription.description' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('subscriptionDescription').valid &&
+              (form.get('subscriptionDescription').dirty || form.get('subscriptionDescription').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('subscriptionDescription').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('subscriptionDescription').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "subscription.description" | translate }} ع</label>
+          <input
+            type="text"
+            formControlName="subscriptionDescriptionAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'subscription.description' | translate }} ع"
+          />
+          <div
+            *ngIf="
+              !form.get('subscriptionDescriptionAr').valid &&
+              (form.get('subscriptionDescriptionAr').dirty ||
+                form.get('subscriptionDescriptionAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('subscriptionDescriptionAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('subscriptionDescriptionAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+            <label class="form-label">{{'subscription.price'|translate }}</label>
+            <input type="number" min="0" formControlName="subscriptionPrice" class="form-control form-control-solid" placeholder="{{'subscription.price'|translate }}"/>
+            <div *ngIf="!form.get('subscriptionPrice').valid && (form.get('subscriptionPrice').dirty ||   form.get('subscriptionPrice').touched)" class="text text-danger">
+                <p *ngIf="form.get('subscriptionPrice').hasError('required')" >{{'_.required'|translate }}</p>
+              </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <label class="form-label">{{'subscription.PeriodInDay'|translate }} </label>
+            <input type="number" formControlName="subscriptionPeriodInDay" class="form-control form-control-solid" placeholder="{{'subscription.PeriodInDay'|translate }} ع"/>
+            <div *ngIf="!form.get('subscriptionPeriodInDay').valid && (form.get('subscriptionPeriodInDay').dirty ||  form.get('subscriptionPeriodInDay').touched)" class="text text-danger">
+                <p *ngIf="form.get('subscriptionPeriodInDay').hasError('required')" >{{'_.required'|translate }}</p>
+              </div>
+            </div>
+     </div>
+
+      <div class="row my-5">
+        <p>{{ "field.activation" | translate }}</p>
+        <div class="col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="true"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.active" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="false"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.not_active" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              !form.get('isActive').valid &&
+              (form.get('isActive').dirty || form.get('isActive').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('isActive').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

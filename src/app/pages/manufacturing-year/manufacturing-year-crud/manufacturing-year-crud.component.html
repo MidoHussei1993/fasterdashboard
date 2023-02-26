@@ -1,0 +1,81 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "car.manufacturingYear" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+ 
+  
+        <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.year'|translate }}</label>
+                <input type="number" formControlName="year" class="form-control form-control-solid" placeholder="{{'field.year'|translate }}"/>
+                <div *ngIf="!form.get('year').valid && (form.get('year').dirty ||   form.get('year').touched)" class="text text-danger">
+                    <p *ngIf="form.get('year').hasError('required')" >{{'_.required'|translate }}</p>
+                  </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <p>{{ "field.activation" | translate }}</p>
+              <div class="row">
+                <div class="col-md-3 col-sm-6 ">
+                  <label class="form-check form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input mx-2"
+                      type="radio"
+                      [value]="true"
+                      name="isActive"
+                      formControlName="isActive"
+                    />
+                    <span class="form-check-label">
+                      {{ "field.active" | translate }}
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-3 col-sm-6 ">
+                  <label class="form-check form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input mx-2"
+                      type="radio"
+                      [value]="false"
+                      name="isActive"
+                      formControlName="isActive"
+                    />
+                    <span class="form-check-label">
+                      {{ "field.not_active" | translate }}
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  !form.get('isActive').valid &&
+                  (form.get('isActive').dirty || form.get('isActive').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('isActive').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+        
+         </div>
+
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

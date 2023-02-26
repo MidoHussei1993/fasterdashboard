@@ -1,0 +1,38 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">{{ "menu.notifications" | translate }}</h3>
+    </div>
+    <div class="card-body">
+      <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/notification/create'">
+        <i class="fas fa-plus"></i>
+        {{ "action.create" | translate }}
+      </a>
+      <div class="card bg-secondary">
+        <div class="card-body">
+          <app-filter [filter]="filter"></app-filter>
+        </div>
+      </div>
+      <app-table
+        [list]="notificationList"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+        (view)="navigateToView($event)"
+        (edit)="navigateToEdit($event)"
+        (delete)="deleteNotification($event)"
+        [showEdit]="false"
+        [showSearch]="true"
+        (search)="searchValue()"
+        (resetFilter)="resetfilter()"
+        [addActions]="true"
+        [actionList]="[
+        { title: 'field.resend', icon: 'fa-reply', type: 'resend' }
+      ]"
+          (aciton)="navigateTO($event)"
+      ></app-table>
+    </div>
+  </div>
+  

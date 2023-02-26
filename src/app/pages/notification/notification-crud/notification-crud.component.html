@@ -1,0 +1,259 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.notifications" | translate }} </span>
+    </h3>
+    <div class="card-toolbar">
+      <a
+        *ngIf="form.get('userType').value == 7 || form.get('userType').value == 8"
+        class="btn btn-sm btn-success mt-1 mx-2 shadow"
+        href="https://api.faster.sa:5001/api/AppNotifications/DownloadExcelSample"
+        download
+      >
+        {{ "action.downloadshop" | translate }}
+      </a>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.title" | translate }}</label>
+          <input
+            type="text"
+            formControlName="title"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.title' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('title').valid &&
+              (form.get('title').dirty || form.get('title').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('title').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('title').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.title" | translate }} ع</label>
+          <input
+            type="text"
+            formControlName="titleAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.title' | translate }} ع"
+          />
+          <div
+            *ngIf="
+              !form.get('titleAr').valid &&
+              (form.get('titleAr').dirty || form.get('titleAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('titleAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('titleAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.message" | translate }}</label>
+          <input
+            type="text"
+            formControlName="message"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.message' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('message').valid &&
+              (form.get('message').dirty || form.get('message').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('message').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('message').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.messageAr" | translate }}</label>
+          <input
+            type="text"
+            formControlName="messageAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.messageAr' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('messageAr').valid &&
+              (form.get('messageAr').dirty || form.get('messageAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('messageAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('messageAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.typeName" | translate }}</label>
+          <select formControlName="type" class="form-select form-select-solid">
+            <option [ngValue]="type.id" *ngFor="let type of typeList">
+              {{ currentLanguage == "en" ? type.name : type.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('type').valid &&
+              (form.get('type').dirty || form.get('type').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('type').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "global.userType" | translate }}</label>
+          <select
+            formControlName="userType"
+            class="form-select form-select-solid"
+          >
+            <option
+              [value]="userTypeItem.id"
+              *ngFor="let userTypeItem of userType"
+            >
+              {{
+                currentLanguage == "en"
+                  ? userTypeItem.name
+                  : userTypeItem.nameAr
+              }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('userType').valid &&
+              (form.get('userType').dirty || form.get('userType').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('userType').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.imageLink" | translate }}</label>
+          <input
+            type="text"
+            formControlName="notificationImage"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.imageLink' | translate }}"
+          />
+          <!-- <div *ngIf="!form.get('message').valid && (form.get('message').dirty ||   form.get('message').touched)" class="text text-danger">
+              <p *ngIf="form.get('message').hasError('required')" >{{'_.required'|translate }}</p>
+              <p *ngIf="form.get('message').hasError('pattern')">{{'_.only_en'|translate }} </p>
+            </div> -->
+            <div class="text-center mt-2"  *ngIf="form.get('notificationImage').value">
+              <img  [src]="form.get('notificationImage').value" width="400" height="400" alt="" />
+
+            </div>
+        </div>
+      
+        <div class="col-md-6 col-sm-12" *ngIf="form.get('userType').value == 7 || form.get('userType').value == 8">
+          <label class="form-label">
+            {{ "action.downloadshop" | translate }}
+          </label>
+          <input
+            type="file"
+            (change)="uploadShopBranchesFile($event)"
+            class="form-control form-control-solid"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            placeholder="{{ 'action.downloadshop' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('userIds').valid &&
+              (form.get('userIds').dirty || form.get('userIds').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('userIds').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+    
+    <div class="row" *ngIf="uploadedProvider.length">
+      <div class="table-responsive">
+        <table
+          class="table table-hover table-rounded table-striped border gy-7 gs-7"
+        >
+          <thead>
+            <tr class="">
+              <th  class="text-center">
+                {{ 'field.id' | translate }}
+              </th>
+              <th  class="text-center">
+                {{ 'field.name' | translate }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+            *ngFor="let item of uploadedProvider; let i = index"
+              class="slideDown"
+            >
+            <td class="text-center">
+              {{item.id}}
+            </td>
+            <td class="text-center">
+              {{item.name}}
+            </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+</div>

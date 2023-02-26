@@ -1,0 +1,26 @@
+<div class="row my-3" >
+    <div class="col-sm-11 mx-auto">
+      <div class="card card-flush shadow-sm">
+        <div class="card-header">
+          <h3 class="card-title mt-2">
+            <span class="mx-2">
+              {{ "menu.ShopBranchsOrderReport" | translate }}
+            </span>
+          </h3>
+        </div>
+        <div class="card-body py-0">
+          <div class="row my-5">
+            <div class="col-md-12" *ngIf="getShopBranchsOrderList.length">
+              <app-echart
+                [width]="'100%'"
+                [type]="'pie'"
+                chartTitle="ali is my brother"
+                [data]="getShopBranchsOrderList"
+              >
+              </app-echart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,60 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">{{ "menu.motivations" | translate }}</h3>
+  </div>
+  <div class="card-body">
+    <a
+      class="btn btn-sm btn-primary mb-3"
+      target="_blank"
+      [routerLink]="'/motivation/create'"
+    >
+      <i class="fas fa-plus"></i>
+      {{ "action.create" | translate }}
+    </a>
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <label class="mb-2">
+              {{ "field.motivationType" | translate }}</label
+            >
+            <select
+              [(ngModel)]="filter.MotivationType"
+              class="form-select form-select-solid"
+            >
+              <option [value]="''">
+                {{ "field.all" | translate }}
+              </option>
+              <option [value]="shop.id" *ngFor="let shop of MotivationTypes">
+                {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-table
+      [list]="motivationList"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      (view)="navigateToView($event)"
+      (edit)="navigateToEdit($event)"
+      (delete)="deleteMotivation($event)"
+      [showSearch]="true"
+      [showEdit]="false"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [addActions]="true"
+      [actionList]="[
+        { title: 'action.duplicate', icon: 'fa-copy', type: 'duplicate' },
+        { title: 'field.evaluate', icon: 'fa-calendar-check', type: 'evaluate' }
+      ]"
+      (aciton)="navigateTO($event)"
+    ></app-table>
+  </div>
+</div>

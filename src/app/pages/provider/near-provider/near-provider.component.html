@@ -1,0 +1,170 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "field.manualAssignment" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="card bg-dark" *ngIf="transportOrder">
+      <div class="card-body">
+        <h5
+        class="text-uppercase font-weight-bolder text-white"
+      >
+        {{ "field.priceFrom" | translate }} : {{ transportOrder.priceFrom }}
+      </h5>
+      <h5
+        class="text-uppercase font-weight-bolder text-white"
+      >
+        {{ "field.priceTo" | translate }} :
+        {{ transportOrder.priceTo }}
+      </h5>
+      </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="GetNearProviderToTransportOrder()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12 mx-auto">
+          <label class="form-label">{{ "field.radius" | translate }}</label>
+          <input
+            type="text"
+            formControlName="radius"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.radius' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('radius').valid &&
+              (form.get('radius').dirty || form.get('radius').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('radius').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('radius').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.search" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="row mt-5">
+      <div class="table-responsive">
+        <table
+          class="table table-hover table-rounded table-striped border gy-7 gs-7"
+        >
+          <thead>
+            <tr class="">
+              <th class="text-center">
+                {{ "field.FullName" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.phoneNumber" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.distance" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.busy" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "action.actions" | translate }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of nearProviderList; let i = index"
+              class="slideDown"
+            >
+              <td class="text-center">
+                {{ item.fullName }}
+              </td>
+              <td class="text-center">
+                {{ item.phoneNumber }}
+              </td>
+              <td class="text-center">
+                {{ item.distance }}
+              </td>
+              <td class="text-center">
+                {{ item.isBusy }}
+              </td>
+              <td class="text-center d-flex justify-content-center"  >
+               
+                  <i
+                  title="{{'action.assign'|translate }}"
+                    class="las la-edit"
+                    (click)="currentProviderId = item.applicationUserId;openModal();"
+                  ></i>
+                 
+                </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #stateModel let-modal>
+ <div class="modal-header text-center">
+  <h3 class="text-center">
+    <span class="mx-2 text-center"> {{ "field.manualAssignment" | translate }} </span>
+  </h3>
+ </div>
+  <div class="modal-body card-flush">
+  <form [formGroup]="userform" (ngSubmit)="assignTransport()">
+      <div class="row my-5">
+      
+
+        <div class="col-md-12 col-sm-12">
+          <label class="form-label">{{
+            "field.price" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="price"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.price' | translate }}"
+          />
+          <div
+            *ngIf="
+              !userform.get('price').valid &&
+              (userform.get('price').dirty ||
+              userform.get('price').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="userform.get('price').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+          [disabled]="userform.status != 'VALID'"
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

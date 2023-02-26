@@ -1,0 +1,86 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">
+            <span>
+      {{mode|translate }} -
+    </span>
+            <span class="mx-2"> {{'country.name'|translate }} </span>
+        </h3>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="row my-5">
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+              "country.countryName" | translate
+            }}</label>
+                    <input type="text" formControlName="countryName" class="form-control form-control-solid" :placeholder="{{ 'country.countryName' | translate }}" />
+                    <div *ngIf="
+                !form.get('countryName').valid &&
+                (form.get('countryName').dirty ||
+                  form.get('countryName').touched)
+              " class="text text-danger">
+                        <p *ngIf="form.get('countryName').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+              "country.countryNameAr" | translate
+            }}</label>
+                    <input type="text" formControlName="countryNameAr" class="form-control form-control-solid" :placeholder="{{ 'country.countryNameAr' | translate }}" />
+                    <div *ngIf="
+                !form.get('countryNameAr').valid &&
+                (form.get('countryNameAr').dirty ||
+                  form.get('countryNameAr').touched)
+              " class="text text-danger">
+                        <p *ngIf="form.get('countryNameAr').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mt-5" *ngIf="view && country">
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "country.countryName" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2" *ngIf="country?.countryName">
+                        {{ country.countryName }}
+                    </h6>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "country.countryNameAr" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2">
+                        {{ country.countryNameAr }}
+                    </h6>
+                </div>
+            </div>
+
+            <div class="row mt-5" *ngIf="view && country">
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "country.Date" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2">
+                        {{ country.createAt | date:"medium" }}
+                    </h6>
+                </div>
+            </div>
+
+            <div class="row my-5" *ngIf="add">
+                <div class="col-md-4 col-sm-12 mx-auto text-center">
+                    <button type="submit" class="btn btn-primary btn-block btn-hover-scale">
+          {{ "action.save" | translate }}
+        </button >
+              </div>
+          </div>
+      </form>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      {{ "menu.customerOrderStatus" | translate }}
+    </h3>
+  </div>
+  <div class="card-body" id="print-section">
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <label class="form-label">{{ "global.type" | translate }}</label>
+            <select
+              (change)="filter.StatusId = null"
+              [(ngModel)]="filter.TypeId"
+              class="form-select form-select-solid"
+            >
+              <option [value]="1">
+                {{ "field.delivery" | translate }}
+              </option>
+              <option [value]="3">
+                {{ "field.transport" | translate }}
+              </option>
+              <option [value]="2">
+                {{ "field.taxi" | translate }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <label class="form-label">{{ "cobone.status" | translate }}</label>
+            <select
+              *ngIf="filter.TypeId == 1"
+              [(ngModel)]="filter.StatusId"
+              class="form-select form-select-solid"
+            >
+              <option
+                [value]="state.id"
+                *ngFor="let state of deliveryStatusList"
+              >
+                {{ currentLanguage == "en" ? state.name : state.nameAr }}
+              </option>
+            </select>
+            <select
+              *ngIf="filter.TypeId != 1"
+              [(ngModel)]="filter.StatusId"
+              class="form-select form-select-solid"
+            >
+              <option
+                [value]="state.id"
+                *ngFor="let state of traansportStatusList"
+              >
+                {{ currentLanguage == "en" ? state.name : state.nameAr }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-table
+      [list]="customerOrderStatusReportList"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      [showDelete]="false"
+      [showSearch]="true"
+      [showEdit]="false"
+      [showView]="false"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [isdownloadAll]="true"
+      (export)="downloadAll()"
+    ></app-table>
+  </div>
+</div>

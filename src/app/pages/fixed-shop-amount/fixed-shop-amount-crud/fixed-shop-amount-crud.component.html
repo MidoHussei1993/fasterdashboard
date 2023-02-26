@@ -1,0 +1,97 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.fixedShopAmount" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.fixedAmount" | translate
+          }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="fixedAmount"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.fixedAmount' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('fixedAmount').valid &&
+              (form.get('fixedAmount').dirty || form.get('fixedAmount').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('fixedAmount').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.fromOrderAmount" | translate
+          }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="fromOrderAmount"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.fromOrderAmount' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('fromOrderAmount').valid &&
+              (form.get('fromOrderAmount').dirty ||
+                form.get('fromOrderAmount').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('fromOrderAmount').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.toOrderAmount" | translate
+          }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="toOrderAmount"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.toOrderAmount' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('toOrderAmount').valid &&
+              (form.get('toOrderAmount').dirty ||
+                form.get('toOrderAmount').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('toOrderAmount').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

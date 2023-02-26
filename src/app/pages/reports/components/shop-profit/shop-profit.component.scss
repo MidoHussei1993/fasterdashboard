@@ -1,0 +1,8 @@
+.customAction {
+    color: black;
+    font-size: 30px;
+    &:hover {
+      color: rgb(83, 192, 56);
+      cursor: pointer;
+    }
+  }

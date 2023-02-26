@@ -1,0 +1,75 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">{{ "menu.walletManualAddition" | translate }}</h3>
+  </div>
+  <div class="card-body">
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <label class="form-label">{{
+              "provider.registertype" | translate
+            }}</label>
+            <select
+              [(ngModel)]="filter.RegisterType"
+              class="form-select form-select-solid"
+            >
+              <option [value]="1">
+                {{ "field.delivery" | translate }}
+              </option>
+              <option [value]="2">
+                {{ "field.taxi" | translate }}
+              </option>
+              <option [value]="3">
+                {{ "field.transport" | translate }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <label class="form-label">{{ "field.typeName" | translate }}</label>
+            <select
+              [(ngModel)]="filter.TransactionType"
+              class="form-select form-select-solid"
+            >
+              <option [value]="1">
+                {{ "action.deduct" | translate }}
+              </option>
+              <option [value]="2">
+                {{ "action.deposit" | translate }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-table
+      [list]="ReportList"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [showDelete]="false"
+      [showEdit]="false"
+      [showView]="true"
+      [showSearch]="true"
+      [isdownloadAll]="ReportList.length ? true : false"
+      (export)="downloadAll()"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      (view)="navigateToOrder($event)"
+      [addActions]="true"
+      [actionList]="[
+        {
+          title: 'field.wallet',
+          icon: 'la-wallet',
+          link: 'provider-wallet/$/create',
+          prop: 'providerId'
+        }
+      ]"
+    >
+    </app-table>
+  </div>
+</div>

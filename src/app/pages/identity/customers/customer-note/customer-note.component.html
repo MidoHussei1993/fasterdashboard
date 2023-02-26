@@ -1,0 +1,160 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "global.notes" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="create()">
+        <div class="row my-5">
+          <div class="col-md-10 mx-auto col-sm-12">
+            <label class="form-label">{{ "field.note" | translate }}</label>
+            <textarea
+              type="text"
+              rows="4"
+              formControlName="status"
+              class="form-control form-control-solid"
+              placeholder="{{ 'field.note' | translate }}"
+            ></textarea>
+            <div
+              *ngIf="
+                !form.get('status').valid &&
+                (form.get('status').dirty || form.get('status').touched)
+              "
+              class="text text-danger"
+            >
+              <p *ngIf="form.get('status').hasError('required')">
+                {{ "_.required" | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="row">
+        <div class="col-md-11 col-sm-12 mx-auto">
+         <div class="table-responsive" *ngIf="customerNoteList.length">
+           <table
+             class="table table-hover table-rounded table-striped border gy-7 gs-7 "
+           >
+             <thead>
+               <tr class="">
+                 <th class="text-center">
+                   {{ "country.Date" | translate }}
+                 </th>
+                 <th class="text-center">
+                  {{ "global.full_name" | translate }}
+                </th>
+                <th class="text-center">
+                  {{ "forgetPassword.userName" | translate }}
+                </th>
+                <th class="text-center">
+                  {{ "field.email" | translate }}
+                </th>
+                <th class="text-center">
+                  {{ "field.phoneNumber" | translate }}
+                </th>
+                 <th class="text-center">
+                   {{ "field.note" | translate }}
+                 </th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr *ngFor="let item of customerNoteList; let i = index">
+                 <td class="text-center">
+                   {{ item.createAt| date: "MMM d, y - h:mm a"  }}
+                 </td>
+                 <td class="text-center">
+                  {{ item.fullName }}
+                </td>
+                <td class="text-center">
+                  {{ item.userName }}
+                </td>
+                <td class="text-center">
+                  {{ item.email }}
+                </td>
+                <td class="text-center">
+                  {{ item.phoneNumber }}
+                </td>
+                <td class="text-center">
+                  {{ item.status }}
+                </td>
+
+               
+                
+               </tr>
+             </tbody>
+           </table>
+         </div>
+         <div class="row" *ngIf="customerNoteList.length">
+           <div class="col-2 text-right">
+             <select
+               [disabled]="busyLoading"
+               class="form-select form-select-solid"
+               (input)="setPageSize($event.target['value'])"
+               [(ngModel)]="filter.PageSize"
+             >
+               <option [ngValue]="rowsNum" *ngFor="let rowsNum of rowsNumber">
+                 {{ rowsNum }}
+               </option>
+             </select>
+     
+             <!--end::Page Number-->
+           </div>
+           <div class="col-10">
+             <ul class="pagination">
+               <li
+                 class="page-item previous disabled"
+                 (click)="setPageNumber(active - 1)"
+                 *ngIf="pagination.totalPagesCount > 1 && active > 1"
+               >
+                 <span class="page-link text-dark font-weight-bolder">
+                   {{ "global.previous" | translate }}
+                 </span>
+               </li>
+               <li
+                 class="page-item"
+                 [ngClass]="{ active: item + 1 == active }"
+                 *ngFor="
+                   let item of pagination.totalPagesCount | demoNumber;
+                   let i = index
+                 "
+                 (click)="setPageNumber(item + 1)"
+               >
+                 <a class="page-link">
+                   {{ item + 1 }}
+                 </a>
+               </li>
+     
+               <li
+                 class="page-item next"
+                 (click)="setPageNumber(active + 1)"
+                 *ngIf="
+                   pagination.totalPagesCount > 1 &&
+                   active < pagination.totalPagesCount
+                 "
+               >
+                 <a class="page-link text-dark font-weight-bolder">
+                   {{ "global.next" | translate }}
+                 </a>
+               </li>
+             </ul>
+           </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

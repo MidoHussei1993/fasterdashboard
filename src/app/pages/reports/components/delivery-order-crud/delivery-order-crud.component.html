@@ -1,0 +1,52 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "menu.DeliveryOrderDataReport" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+       
+  
+        <div class="row my-5">
+          <div class="col-md-12 col-sm-12">
+            <label class="form-label">{{ "cobone.status" | translate }}</label>
+            <select
+              formControlName="newStatusId"
+              class="form-select form-select-solid"
+            >
+              <option [value]="state.id" *ngFor="let state of statusList">
+                {{ currentLanguage == "en" ? state.name : state.nameAr }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                !form.get('newStatusId').valid &&
+                (form.get('newStatusId').dirty || form.get('newStatusId').touched)
+              "
+              class="text text-danger"
+            >
+              <p *ngIf="form.get('newStatusId').hasError('required')">
+                {{ "_.required" | translate }}
+              </p>
+            </div>
+          </div>
+          
+        </div>
+  
+  
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div  class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,136 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/sass/style";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100;200;300;400;500;600;700&display=swap');
+html[dir="rtl"] {
+  h1,h2,h3,h4,h5,h6,p ,th,td{
+    font-family: 'Noto Kufi Arabic', sans-serif !important;
+  }
+}
+
+// Replace above style with this SCSS file to enable dark mode styles
+//@import "./assets/sass/style.dark";
+input.ng-dirty.ng-invalid {
+  border: 1px solid red;
+  color: red;
+}
+
+.card {
+  animation-name: fadeIn;
+  -webkit-animation-name: fadeIn;
+
+  animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+
+  animation-timing-function: ease-out;
+  -webkit-animation-timing-function: ease-out;
+
+  visibility: visible !important;
+  //   background-color: rgb(212 211 211 / 74%) !important;
+  //   background-image: linear-gradient(112.5deg, rgba(214,214,214, 0.4) 0%, rgba(214,214,214, 0.4) 10%,rgba(195,195,195, 0.41) 10%, rgba(195,195,195, 0.41) 53%,rgba(176,176,176, 0.44) 53%, rgba(176,176,176, 0.44) 55%,rgba(157,157,157, 0.42) 55%, rgba(157,157,157, 0.42) 60%,rgba(137,137,137, 0.41) 60%, rgba(137,137,137, 0.41) 88%,rgba(118,118,118, 0.48) 88%, rgba(118,118,118, 0.48) 91%,rgba(99,99,99, 0.47) 91%, rgba(99,99,99, 0.47) 100%),linear-gradient(157.5deg, rgba(214,214,214, 0.4) 0%, rgba(214,214,214, 0.4) 10%,rgba(195,195,195, 0.41) 10%, rgba(195,195,195, 0.41) 53%,rgba(176,176,176, 0.44) 53%, rgba(176,176,176, 0.44) 55%,rgba(157,157,157, 0.42) 55%, rgba(157,157,157, 0.42) 60%,rgba(137,137,137, 0.41) 60%, rgba(137,137,137, 0.41) 88%,rgba(118,118,118, 0.48) 88%, rgba(118,118,118, 0.48) 91%,rgba(99,99,99, 0.47) 91%, rgba(99,99,99, 0.47) 100%),linear-gradient(135deg, rgba(214,214,214, 0.4) 0%, rgba(214,214,214, 0.4) 10%,rgba(195,195,195, 0.41) 10%, rgba(195,195,195, 0.41) 53%,rgba(176,176,176, 0.44) 53%, rgba(176,176,176, 0.44) 55%,rgba(157,157,157, 0.42) 55%, rgba(157,157,157, 0.42) 60%,rgba(137,137,137, 0.41) 60%, rgba(137,137,137, 0.41) 88%,rgba(118,118,118, 0.48) 88%, rgba(118,118,118, 0.48) 91%,rgba(99,99,99, 0.47) 91%, rgba(99,99,99, 0.47) 100%),linear-gradient(90deg, rgba(195,195,195, 0.41),rgba(228,228,228, 0.48));
+  //    background-blend-mode:overlay,overlay,overlay,normal;
+  background-color: white;
+
+  border: 1px solid rgb(0 ,0 ,0 , 13%);
+  // border: 1px solid rgb(0, 0, 0);
+  // box-shadow: 0px 3px 8px 0px black !important;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+  -webkit-animation-name: fadeIn;
+
+  animation-duration: 1.5s;
+  -webkit-animation-duration: 1.5s;
+
+  animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+
+  visibility: visible !important;
+}
+@keyframes fadeIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 0.3;
+  }
+  80% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    -webkit-transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    -webkit-transform: scale(1.1);
+  }
+  80% {
+    -webkit-transform: scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.form-control,
+.form-select {
+  border: 1px solid rgb(0 0 0 / 20%) !important;
+}
+.form-check.form-check-solid .form-check-input {
+  border: 1px solid rgb(0 0 0 / 40%) !important;
+}
+
+body {
+  //   background-image: url('./assets/images/icons/Artboard_22048.png');
+  //   background-position: center;
+  //   background-size: contain;
+  //   background-repeat: no-repeat;
+  background-color: #e5e5e5 !important;
+}
+
+table > thead > tr > th {
+  font-weight: 700 !important;
+}
+
+table {
+  border: 1px solid rgb(0 0 0) !important;
+  box-shadow: 0px 2px 6px black;
+  background: rgb(11 114 181 / 25%);
+}
+tbody tr:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 1px 6px black;
+}
+
+.card .card-body {
+  padding: 0.9rem;
+}
+.card .card-header {
+  padding: 0 0.9rem;
+}
+
+.aside-dark .menu .menu-item .menu-link .menu-icon .svg-icon svg [fill]:not(.permanent):not(g) {
+  transition: fill 0.3s ease;
+  fill: rgb(255, 255, 255);
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+tr[data-change-color=true] {
+	background-color: #ffc700;
+  }

@@ -1,0 +1,41 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "menu.userActionTracking" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-11 col-sm-12 mx-auto">
+        <div class="card bg-secondary">
+          <div class="card-body">
+            <app-filter [filter]="filter"></app-filter>
+          </div>
+        </div>
+        <div class="col-12 mt-3">
+          <div class="alert alert-primary text-center" role="alert">
+            <strong>
+              all working Time : 
+              {{ allTimeWork}}
+            </strong>
+          </div>
+        </div>
+        <app-table
+          [list]="userActionList"
+          [titles]="titles"
+          [properties]="properties"
+          [pagination]="pagination"
+          [showView]="false"
+          [showDelete]="false"
+          [showEdit]="false"
+          [pagination]="pagination"
+          (activetedPageSize)="setPageSize($event)"
+          (activetedPageNumber)="setPageNumber($event)"
+          [showSearch]="true"
+          (search)="searchValue()"
+          (resetFilter)="resetfilter()"
+        ></app-table>
+      </div>
+    </div>
+  </div>
+</div>

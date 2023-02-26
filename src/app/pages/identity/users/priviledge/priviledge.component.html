@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">{{ "menu.priviledges" | translate }}</h3>
+  </div>
+  <div class="card-body" *ngIf="privilegeList.length">
+    <div class="row my-5" *ngFor="let item of privilegeList; let i = index">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4>
+              {{ item.roleName }}
+            </h4>
+            <div class="row">
+              <div
+                class="col-md-3 col-sm-6 my-2"
+                *ngFor="let privilege of item.privileges; let currentActiveIndex = index"
+              >
+                <div class="form-check form-check-custom form-check-solid">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [(ngModel)]="privilege.isHavePrivilege"
+                    (change)="changePriviledge(privilege)"
+                    [value]="true"
+                  />
+                  <label class="form-check-label mx-2" for="flexCheckDefault">
+                    {{ privilege.privilegeName }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

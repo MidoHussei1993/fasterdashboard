@@ -1,0 +1,86 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "menu.approveTransaction" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <p-tabView>
+      <p-tabPanel header="{{ 'field.customerData' | translate }}">
+        <div class="row">
+          <div class="col-md-11 col-sm-12 mx-auto">
+            <app-table
+              [list]="customerWalletList"
+              [titles]="titles"
+              [properties]="properties"
+              [pagination]="pagination"
+              [showView]="true"
+              (view)="navigateToOrder($event)"
+              [showDelete]="false"
+              [showEdit]="false"
+              (activetedPageSize)="setPageSize($event)"
+              (activetedPageNumber)="setPageNumber($event)"
+              [addActions]="true"
+              [actionList]="[
+                {
+                  title: 'action.approved',
+                  icon: 'fa-check',
+                  type: 'approve'
+                },
+                {
+                  title: 'action.notapproved',
+                  icon: 'fa-times',
+                  type: 'delete'
+                },
+                {
+                  title: 'field.prvider',
+                  icon: 'fa-user',
+                  type: 'navigateToCustomer'
+                }
+              ]"
+              (aciton)="customerAction($event)"
+            ></app-table>
+          </div>
+        </div>
+      </p-tabPanel>
+
+      <p-tabPanel header="{{ 'field.providerData' | translate }}">
+        <div class="row">
+          <div class="col-md-11 col-sm-12 mx-auto">
+            <app-table
+              [list]="providerWalletList"
+              [titles]="providerTitles"
+              [properties]="providerProperties"
+              [pagination]="providerPagination"
+              [showView]="true"
+              (view)="navigateToOrder($event)"
+              [showDelete]="false"
+              [showEdit]="false"
+              (activetedPageSize)="setProviderPageSize($event)"
+              (activetedPageNumber)="setProviderPageNumber($event)"
+              [addActions]="true"
+              [actionList]="[
+                {
+                  title: 'action.approved',
+                  icon: 'fa-check',
+                  type: 'approve'
+                },
+                {
+                  title: 'action.notapproved',
+                  icon: 'fa-times',
+                  type: 'delete'
+                },
+                {
+                  title: 'field.prvider',
+                  icon: 'fa-car',
+                  type: 'navigateToProvider'
+                }
+              ]"
+              (aciton)="providerAction($event)"
+            ></app-table>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>

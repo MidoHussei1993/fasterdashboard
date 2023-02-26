@@ -1,0 +1,174 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">{{ "shop_branch.name" | translate }}</h3>
+    <div class="card-toolbar"></div>
+  </div>
+  <div class="card-body">
+    <a
+      *ngIf="!admin"
+      class="btn btn-sm btn-primary mb-3"
+      [routerLink]="'/shop-branch/create'"
+    >
+      <i class="fas fa-plus"></i>
+      {{ "action.create" | translate }}
+    </a>
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+      </div>
+    </div>
+    <app-table
+      [list]="shoplist"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      (view)="navigate($event, formMode.View)"
+      (edit)="navigate($event, formMode.Edit)"
+      [showDelete]="false"
+      [addActions]="true"
+      [showActivation]="true"
+      (changeActivation)="changeActivation($event)"
+      [actionList]="actionTableLIst"
+      (aciton)="navigateTO($event)"
+      [showSearch]="true"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+    >
+    </app-table>
+
+
+    <div class="row my-5" *ngIf="markers.length">
+      <div class="col-md-12" style="height: 50vh">
+        <app-google-map
+          [disabled]="true"
+          [markers]="markers"
+        ></app-google-map>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #resetPass let-modal>
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-center">
+        <span class="fs-3 fw-bolder me-2">{{
+          "menu.Change_Password" | translate
+        }}</span>
+      </h2>
+    </div>
+    <div class="row mt-5" *ngIf="rowData.id">
+      <div class="col-3">
+        <img
+          [src]="rowData.avatar"
+          style="border-radius: 50%"
+          width="100"
+          height="100"
+        />
+      </div>
+      <div class="col-9">
+        <div class="col-md-12">
+          <p class="text-uppercase font-weight-bolder">
+            {{ "shop.shop_name" | translate }} :
+            {{
+              currentLanguage == "en" ? rowData.shopName : rowData.shopNameAr
+            }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder">
+            {{ "field.phoneNumber" | translate }} :
+            {{ rowData.phoneNumber }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder">
+            {{ "field.email" | translate }} : {{ rowData.email }}
+          </p>
+
+          <!-- <p class="text-uppercase font-weight-bolder ">
+            {{ "field.discription" | translate }} :
+            {{ currentLanguage == "en" ? rowData.shopDescription : rowData.shopDescriptionAr }}
+          </p>
+          <p class="text-uppercase font-weight-bolder ">
+            {{ "field.typeName" | translate }} :
+            {{ currentLanguage == "en" ? rowData.type : rowData.typeAr }}
+          </p> -->
+          <p class="text-uppercase font-weight-bolder">
+            {{ "forgetPassword.userName" | translate }} :
+            {{ rowData.userName }}
+          </p>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="resetPassword()">
+          <div class="row my-5">
+            <div class="col-md-12 col-sm-12">
+              <label class="form-label">{{
+                "field.password" | translate
+              }}</label>
+              <input
+                type="text"
+                formControlName="password"
+                class="form-control form-control-solid"
+                placeholder="{{ 'field.password' | translate }}"
+              />
+              <div
+                *ngIf="
+                  !form.get('password').valid &&
+                  (form.get('password').dirty || form.get('password').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('password').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-4 col-sm-12 mx-auto text-center">
+              <button
+                type="submit"
+                class="btn btn-primary btn-sm text-uppercase font-weight-bolder"
+              >
+                {{ "action.save" | translate }}
+                <i class="far fa-save mx-2"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #addToWallet let-modal>
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-center text-white mb-4">
+        <span class="fs-3 fw-bolder me-2">{{
+          "field.Wallet" | translate
+        }}</span>
+      </h2>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-primary">
+          <div class="d-flex flex-column">
+            <h4 class="mb-1 text-primary">
+              {{ "provider.amount" | translate }} :
+              {{ currentWalletAmount }}
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</ng-template>
+
+
+

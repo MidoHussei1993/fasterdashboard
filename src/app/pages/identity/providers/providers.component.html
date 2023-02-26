@@ -1,0 +1,405 @@
+<div class="card card-flush shadow-sm px-2">
+  <div class="card-header">
+    <h3 class="card-title">{{ "menu.providers" | translate }}</h3>
+    <div class="card-toolbar">
+      <a
+        class="btn btn-sm btn-success mt-1 px-3"
+        *ngIf="isAdmin"
+        [routerLink]="'/identity/providers/create'"
+      >
+        <i class="fas fa-plus"></i>
+        {{ "action.create" | translate }}
+      </a>
+      <a
+        class="btn btn-sm btn-primary mt-1 px-2 mx-2"
+        *ngIf="isAdmin"
+        [routerLink]="'/provider-subscription/create'"
+      >
+        {{ "action.providerSubscriptionCreate" | translate }}
+      </a>
+      <button
+      *ngIf="!isVendor"
+        class="btn btn-sm btn-danger mt-1 px-2"
+        (click)="openRenewSubscriptionModal()"
+      >
+        {{ "field.RenewDriversSubscriptionExpired" | translate }}
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row mb-2">
+      <div class="col-md-4 col-sm-12 d-flex justify-content-between" *ngIf="!isVendor">
+        <button
+          class="btn btn-sm btn-warning mt-1 px-2"
+          (click)="openWindow('TrackingDeliveryProvider')"
+        >
+          {{ "provider.TrackingDeliveryProvider" | translate }}
+        </button>
+        <button
+          class="btn btn-sm btn-dark mt-1 px-2"
+          (click)="openWindow('TrackingTaxiProvider')"
+        >
+          {{ "provider.TrackingTaxiProvider" | translate }}
+        </button>
+        <button
+          class="btn btn-sm btn-info mt-1 px-2"
+          (click)="openWindow('TrackingTransportProvider')"
+        >
+          {{ "provider.TrackingTransportProvider" | translate }}
+        </button>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="card bg-secondary p-0">
+        <div class="card-body">
+          <app-filter [filter]="filter"></app-filter>
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <label class="mb-2"> {{ "global.type" | translate }}</label>
+              <select
+                (change)="filterProviders($event.target['value'])"
+                class="form-select form-select-solid"
+              >
+                <option [value]="''">
+                  {{ "field.searchProviderType" | translate }}
+                </option>
+                <option [value]="shop.id" *ngFor="let shop of providerTypeList">
+                  {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-4 col-sm-12" *ngIf="!isVendor">
+              <label class="mb-2"> {{ "field.VendorId" | translate }}</label>
+              <select
+                [(ngModel)]="filter.VendorId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="''">
+                  {{ "field.searchProviderType" | translate }}
+                </option>
+                <option [value]="shop.id" *ngFor="let shop of vendorList">
+                  {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4 col-sm-12">
+              <label class="mb-2">{{ "field.Statues" | translate }}</label>
+              <select
+                [(ngModel)]="filter.Statues"
+                class="form-select form-select-solid"
+              >
+                <option [ngValue]="null">
+                  {{ "field.all" | translate }}
+                </option>
+                <option [ngValue]="'false'">
+                  {{ "report.offlineProviders" | translate }}
+                </option>
+                <option [ngValue]="'true'">
+                  {{ "report.onlineProviders" | translate }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+              <label class="form-label">{{ "city.name" | translate }}</label>
+              <select
+                [(ngModel)]="filter.CityId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of cityList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4 col-sm-12">
+              <label class="form-label">{{
+                "global.providerNationalityId" | translate
+              }}</label>
+              <select
+                [(ngModel)]="filter.NationalityId"
+                class="form-select form-select-solid"
+              >
+                <option [value]="item.id" *ngFor="let item of nationalityList">
+                  {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4 d-flex justify-content-between mb-2">
+      <!-- <div class="col-md-3 col-sm-12">
+        <div
+          class="alert alert-warning mt-4 text-center"
+          role="alert"
+          *ngIf="pagination.totalItemCount"
+        >
+          <strong>
+            {{ "field.total" | translate }} : {{ pagination.totalItemCount }}
+          </strong>
+        </div>
+      </div> -->
+      <div class="col-4 d-flex my-4">
+        <button
+          type="button"
+          class="btn btn-dark btn-sm btn-block mx-2"
+          (click)="downloadExcelFile()"
+        >
+          <i class="fas fa-download"></i>
+          {{ "action.download" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm btn-block mx-2"
+          (click)="getProviderList()"
+        >
+          <i class="fas fa-search"></i>
+          {{ "action.search" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger btn-block btn-sm"
+          (click)="resetFilter()"
+        >
+          <i class="far fa-trash-alt"></i>
+          {{ "action.reset" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <app-table
+      [list]="providerList"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      [addActions]="true"
+      [actionList]="actionList"
+      (view)="navigate($event, formMode.View)"
+      (edit)="navigate($event, formMode.Edit)"
+      [showDelete]="false"
+      [showEdit]="isAdmin"
+      [showActivation]="true"
+      [showAnotherCheck]="true"
+      [AnotherCheckPropName]="'isApprovied'"
+      [AnotherCheckTitelName]="'field.approve'"
+      (changeActivation)="changeActivation($event)"
+      (changeAnotherCheck)="approveProvider($event)"
+      (aciton)="navigateTO($event)"
+    >
+    </app-table>
+  </div>
+</div>
+
+<ng-template #resetPass let-modal>
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-center">
+        <span class="fs-3 fw-bolder me-2">{{
+          "menu.Change_Password" | translate
+        }}</span>
+      </h2>
+    </div>
+    <div class="row mt-5" *ngIf="rowData.id">
+      <div class="col-3">
+        <img
+          [src]="rowData.profileImage"
+          style="border-radius: 50%"
+          width="100"
+          height="100"
+        />
+      </div>
+      <div class="col-9">
+        <div class="col-md-12">
+          <p class="text-uppercase font-weight-bolder">
+            {{ "global.full_name" | translate }} : {{ rowData.fullName }}
+          </p>
+
+          <!-- <p class="text-uppercase font-weight-bolder ">
+            {{ "field.birthDate" | translate }} :
+            {{ rowData.manufacturingYearId| date: "MMM d, y - h:mm a" }}
+          </p> -->
+
+          <p class="text-uppercase font-weight-bolder">
+            {{ "field.email" | translate }} : {{ rowData.email }}
+          </p>
+
+          <p class="text-uppercase font-weight-bolder">
+            {{ "global.full_name" | translate }} :
+            {{ rowData.phoneNumber }}
+          </p>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="resetPassword()">
+          <div class="row my-5">
+            <div class="col-md-12 col-sm-12">
+              <label class="form-label">{{
+                "field.password" | translate
+              }}</label>
+              <input
+                type="text"
+                formControlName="password"
+                class="form-control form-control-solid"
+                placeholder="{{ 'field.password' | translate }}"
+              />
+              <div
+                *ngIf="
+                  !form.get('password').valid &&
+                  (form.get('password').dirty || form.get('password').touched)
+                "
+                class="text text-danger"
+              >
+                <p *ngIf="form.get('password').hasError('required')">
+                  {{ "_.required" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row my-5">
+            <div class="col-md-4 col-sm-12 mx-auto text-center">
+              <button
+                type="submit"
+                class="btn btn-primary btn-sm text-uppercase font-weight-bolder"
+              >
+                {{ "action.save" | translate }}
+                <i class="far fa-save mx-2"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #subscription let-modal>
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-center">
+        <span class="fs-3 fw-bolder me-2">{{
+          "menu.providerSubscription" | translate
+        }}</span>
+      </h2>
+    </div>
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="row my-5">
+          <div class="col-md-12 col-sm-12">
+            <label class="form-label">{{
+              "menu.subscription" | translate
+            }}</label>
+            <select
+              [(ngModel)]="selectedSubscriptionId"
+              class="form-select form-select-solid"
+            >
+              <option [value]="item.id" *ngFor="let item of subscriptionList">
+                {{ currentLanguage == "en" ? item.name : item.nameAr }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row my-5">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              (click)="selectProviderSubscription()"
+              class="btn btn-primary btn-sm text-uppercase font-weight-bolder"
+            >
+              {{ "action.save" | translate }}
+              <i class="far fa-save mx-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #renewsubscriptionModal let-modal>
+  <div class="modal-body card-flush">
+    <div class="">
+      <h2 class="text-center">
+        <span class="fs-3 fw-bolder me-2">
+          {{ "field.RenewDriversSubscriptionExpired" | translate }}
+        </span>
+      </h2>
+    </div>
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="row my-5">
+          <div class="col-md-12 col-sm-12">
+            <label class="form-label">{{
+              "field.taxiSubscription" | translate
+            }}</label>
+            <select
+              [(ngModel)]="renewObject.taxiSubscriptionId"
+              class="form-select form-select-solid"
+            >
+              <option [ngValue]="null">
+                {{ "field.null" | translate }}
+              </option>
+              <option [ngValue]="item.id" *ngFor="let item of subscriptionList">
+                {{ currentLanguage == "en" ? item.name : item.nameAr }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row my-5">
+          <div class="col-md-12 col-sm-12">
+            <label class="form-label">{{
+              "field.deliverySubscription" | translate
+            }}</label>
+            <select
+              [(ngModel)]="renewObject.deliverySubscriptionId"
+              class="form-select form-select-solid"
+            >
+              <option [ngValue]="null">
+                {{ "field.null" | translate }}
+              </option>
+              <option [ngValue]="item.id" *ngFor="let item of subscriptionList">
+                {{ currentLanguage == "en" ? item.name : item.nameAr }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row my-5">
+          <div class="col-md-12 col-sm-12">
+            <label class="form-label">{{
+              "field.transportSubscription" | translate
+            }}</label>
+            <select
+              [(ngModel)]="renewObject.transportSubscriptionId"
+              class="form-select form-select-solid"
+            >
+              <option [ngValue]="null">
+                {{ "field.null" | translate }}
+              </option>
+              <option [ngValue]="item.id" *ngFor="let item of subscriptionList">
+                {{ currentLanguage == "en" ? item.name : item.nameAr }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row my-5">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              (click)="RenewDriversSubscriptionExpired()"
+              class="btn btn-primary btn-sm text-uppercase font-weight-bolder"
+            >
+              {{ "action.save" | translate }}
+              <i class="far fa-save mx-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

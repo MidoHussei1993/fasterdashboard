@@ -1,0 +1,28 @@
+.la-trash-alt{
+    color:black;
+    &:hover{
+        color:red;
+        cursor: pointer;
+    }
+}
+.la-edit{
+    color:black;
+    &:hover{
+        color:rgb(255, 185, 33);
+        cursor: pointer;
+    }
+}
+.la-eye{
+    color:black;
+    &:hover{
+        color:rgb(0, 174, 255);
+        cursor: pointer;
+    }
+}
+.customAction{
+    color:black;
+    &:hover{
+        color:rgb(83, 192, 56);
+        cursor: pointer;
+    }
+}

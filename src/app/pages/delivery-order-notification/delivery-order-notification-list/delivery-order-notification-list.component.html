@@ -1,0 +1,53 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">{{ "menu.DeliveryOrderNotification" | translate }}</h3>
+    </div>
+    <div class="card-body">
+      <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/delivery-order-notification/create'">
+        <i class="fas fa-plus"></i>
+        {{ "action.create" | translate }}
+      </a>
+      <div class="row">
+        <div class="table-responsive">
+          <table
+            class="table table-hover table-rounded table-striped border gy-7 gs-7"
+          >
+            <thead>
+              <tr class="">
+                  <th class="text-center">
+                      #
+                  </th>
+                <th *ngFor="let title of titles" class="text-center">
+                  {{ title |translate }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of deliveryOrderNotificationList; let i = index" class="slideDown">
+                <td class="text-center font-weight-bolder h5">
+                    {{i + 1}}
+                </td>
+                <td *ngFor="let porp of properties" class="text-center">
+                  {{ item[porp] }}
+                </td>
+                <td class="text-center d-flex justify-content-center"  >
+                  <i
+                    title="{{'View'|translate }}"
+                    class="lar la-eye "
+                    (click)="navigateToView(item)"
+                  ></i>
+                  <i
+                  title="{{'Edit'|translate }}"
+                    class="las la-edit  "
+                    (click)="navigateToEdit(item)"
+                  ></i>
+                 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,95 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "menu.additionalComponent" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+ 
+  
+        <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.componentName'|translate }}</label>
+                <input type="text" formControlName="componentName" class="form-control form-control-solid" placeholder="{{'field.componentName'|translate }}"/>
+                <div *ngIf="!form.get('componentName').valid && (form.get('componentName').dirty ||   form.get('componentName').touched)" class="text text-danger">
+                    <p *ngIf="form.get('componentName').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('componentName').hasError('pattern')">{{'_.only_en'|translate }} </p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.componentName'|translate }} ع</label>
+                <input type="text" formControlName="componentNameAr" class="form-control form-control-solid" placeholder="{{'field.componentName'|translate }} ع"/>
+                <div *ngIf="!form.get('componentNameAr').valid && (form.get('componentNameAr').dirty ||  form.get('componentNameAr').touched)" class="text text-danger">
+                    <p *ngIf="form.get('componentNameAr').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('componentNameAr').hasError('pattern')">{{'_.only_ar'|translate }} </p>
+                  </div>
+                </div>
+         </div>
+
+         <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{ "field.price" | translate }}</label>
+                <input
+                  type="number"
+                  min="0"
+                  formControlName="price"
+                  class="form-control form-control-solid"
+                  placeholder="{{ 'field.price' | translate }}"
+                />
+                <div
+                  *ngIf="
+                    !form.get('price').valid &&
+                    (form.get('price').dirty || form.get('price').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('price').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div>
+              <!-- <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{
+                  "menu.additionalComponent" | translate
+                }}</label>
+                <select
+                  formControlName="additionalComponentTitleId"
+                  class="form-select form-select-solid"
+                >
+                  <option [value]="item.id" *ngFor="let item of additionalComponentTitleList">
+                    {{ currentLanguage == "en" ? item.name : item.nameAr }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    !form.get('additionalComponentTitleId').valid &&
+                    (form.get('additionalComponentTitleId').dirty || form.get('additionalComponentTitleId').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('additionalComponentTitleId').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div> -->
+         </div>
+
+  
+      
+  
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

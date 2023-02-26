@@ -1,0 +1,23 @@
+.b-dash-border{
+    border-bottom: 2px dashed black;
+
+}
+
+.card-flush{
+    background-color: #22232B
+}
+
+.neon-red{
+    color: rgb(255 217 226);
+    text-shadow: 0 0 0 transparent, 0 0 10px #ff003c, 0 0 20px rgb(255 0 60 / 50%), 0 0 40px #ff003c, 0 0 100px #ff003c, 0 0 200px #ff003c, 0 0 300px #ff003c, 0 0 500px #ff003c, 0 0 1000px #ff003c;
+    border: 0.2rem solid #fff;
+  border-radius: 2rem;
+  padding: 0.4em;
+  line-height: 34px;
+  box-shadow: 0 0 .2rem #fff,
+            0 0 .2rem #fff,
+            0 0 2rem #bc13fe,
+            0 0 0.3rem #bc13fe,
+            0 0 0.4rem #bc13fe,
+            inset 0 0 0.6rem #bc13fe; 
+}

@@ -1,0 +1,45 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">{{ "menu.FasterWallet" | translate }}</h3>
+    </div>
+    <div class="card-body">
+      <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/faster-wallet/create'">
+        <i class="fas fa-plus"></i>
+        {{ "action.create" | translate }}
+      </a>
+      <div class="card bg-secondary">
+        <div class="card-body">
+          <app-filter [filter]="filter"></app-filter>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-12 mx-auto">
+          <div
+          class="alert alert-primary mt-4 text-center"
+          role="alert"
+          *ngIf="total || total == 0"
+        >
+          <h5 class="">
+            {{ "field.total" | translate }} : {{ total }}
+          </h5>
+        </div>
+        </div>
+      </div>
+      <app-table
+        [list]="mainList"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+        [showEdit]="false"
+        [showView]="false"
+        [showDelete]="false"
+        [showSearch]="true"
+        (search)="searchValue()"
+        (resetFilter)="resetfilter()"
+      ></app-table>
+    </div>
+  </div>
+  

@@ -1,0 +1,186 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">
+            <span>
+    {{mode|translate }} -
+  </span>
+            <span class="mx-2"> {{'menu.Bundle_Offer'|translate }} </span>
+        </h3>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="row my-5">
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+            "bundle.bundleName" | translate
+          }}</label>
+                    <input type="text" [(ngModel)]="bundleoffer.bundleName" formControlName="bundleName" class="form-control form-control-solid" :placeholder="{{ 'bundle.bundleName' | translate }}" />
+                    <div *ngIf="
+              !form.get('bundleName').valid &&
+              (form.get('bundleName').dirty ||
+                form.get('bundleName').touched)
+            " class="text text-danger">
+                        <p *ngIf="form.get('bundleName').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+                    "bundle.bundleNameAr" | translate
+          }}</label>
+                    <input type="text" [(ngModel)]="bundleoffer.bundleNameAr" formControlName="bundleNameAr" class="form-control form-control-solid" :placeholder="{{ 'bundle.bundleNameAr' | translate }}" />
+                    <div *ngIf="
+              !form.get('bundleNameAr').valid &&
+              (form.get('bundleNameAr').dirty ||
+                form.get('bundleNameAr').touched)
+            " class="text text-danger">
+                        <p *ngIf="form.get('bundleNameAr').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+                    "bundle.description" | translate
+        }}</label>
+                    <input type="text" [(ngModel)]="bundleoffer.description" formControlName="description" class="form-control form-control-solid" :placeholder="{{ 'bundle.description' | translate }}" />
+                    <div *ngIf="
+            !form.get('description').valid &&
+            (form.get('description').dirty ||
+              form.get('description').touched)
+          " class="text text-danger">
+                        <p *ngIf="form.get('description').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+        "bundle.descriptionAr" | translate
+      }}</label>
+                    <input type="text" [(ngModel)]="bundleoffer.descriptionAr" formControlName="descriptionAr" class="form-control form-control-solid" :placeholder="{{ 'bundle.descriptionAr' | translate }}" />
+                    <div *ngIf="
+          !form.get('descriptionAr').valid &&
+          (form.get('descriptionAr').dirty ||
+            form.get('descriptionAr').touched)
+        " class="text text-danger">
+                        <p *ngIf="form.get('descriptionAr').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+      "bundle.discountPercentage" | translate
+    }}</label>
+                    <input type="number" [(ngModel)]="bundleoffer.discountPercentage" formControlName="discountPercentage" class="form-control form-control-solid" :placeholder="{{ 'bundle.discountPercentage' | translate }}" />
+                    <div *ngIf="
+        !form.get('discountPercentage').valid &&
+        (form.get('discountPercentage').dirty ||
+          form.get('discountPercentage').touched)
+      " class="text text-danger">
+                        <p *ngIf="form.get('discountPercentage').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">{{
+    "bundle.expiryDate" | translate
+  }}</label>
+                    <input type="datetime-local" [(ngModel)]="bundleoffer.expiryDate" formControlName="expiryDate" class="form-control form-control-solid" :placeholder="{{ 'bundle.expiryDate' | translate }}" />
+                    <div *ngIf="
+      !form.get('expiryDate').valid &&
+      (form.get('expiryDate').dirty ||
+        form.get('expiryDate').touched)
+    " class="text text-danger">
+                        <p *ngIf="form.get('expiryDate').hasError('required')">
+                            {{ "_.required" | translate }}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mt-5" *ngIf="mode == 'View' || mode == 'Edit' && bundleoffer">
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "bundle.bundleName" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2" *ngIf="bundleoffer?.bundleName">
+                        {{ bundleoffer.bundleName }}
+                    </h6>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "bundle.bundleNameAr" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2">
+                        {{ bundleoffer.bundleNameAr }}
+                    </h6>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "bundle.description" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2">
+                        {{ bundleoffer.description }}
+                    </h6>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "bundle.descriptionAr" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2">
+                        {{ bundleoffer.descriptionAr }}
+                    </h6>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "bundle.discountPercentage" | translate }} :
+                    </h4>
+                    <h6 class="d-inline mx-2">
+                        {{ bundleoffer.discountPercentage }}
+                    </h6>
+                </div>
+            </div>
+
+            <div class="row mt-5" *ngIf="mode == 'View' || mode == 'Edit' && bundleoffer">
+
+
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "bundle.expiryDate" | translate }} :
+                    </h4>
+
+                    <h6 class="d-inline mx-2">
+                        {{ bundleoffer.expiryDate | date:"medium" }}
+                    </h6>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <h4 class="d-inline">
+                        {{ "category.Date" | translate }} :
+                    </h4>
+
+                    <h6 class="d-inline mx-2">
+                        {{ bundleoffer.createAt | date:"medium" }}
+                    </h6>
+                </div>
+
+
+            </div>
+
+
+            <div class="row my-5" *ngIf="mode != 'View'">
+                <div class="col-md-4 col-sm-12 mx-auto text-center">
+                    <button type="submit" class="btn btn-primary btn-block btn-hover-scale">
+        {{ "action.save" | translate }}
+      </button >
+            </div>
+        </div>
+    </form>
+</div>
+</div>

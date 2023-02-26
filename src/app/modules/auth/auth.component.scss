@@ -1,0 +1,42 @@
+:host {
+  height: 100%;
+}
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.login-wrapper {
+  background: #141414bd;
+  width: 64%;
+  z-index: 114;
+}
+.bg {
+  animation:slide 3s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, #62b546 50%, #113f6f 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
+}
+
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:4s;
+}
+
+.bg3 {
+  animation-duration:5s;
+}
+
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
+}

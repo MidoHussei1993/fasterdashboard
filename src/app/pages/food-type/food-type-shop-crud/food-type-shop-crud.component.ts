@@ -8,6 +8,8 @@ import { Crud, FormMode } from 'src/app/shared';
 import { ShopService } from '../../shop/services';
 import { FoodTypeShopService } from '../services/food-type-shop.service';
 import { FoodTypeService } from '../services/food-type.service';
+import { Product } from '../../product/models';
+import { ProductService } from '../../product/services';
 
 @Component({
   selector: 'app-food-type-shop-crud',
@@ -17,6 +19,7 @@ import { FoodTypeService } from '../services/food-type.service';
 export class FoodTypeShopCrudComponent extends Crud implements OnInit {
   foodTypeList = [];
   shopList = [];
+  productDetailsList = [];
   isShopId: boolean = false;
 
   constructor(
@@ -27,12 +30,14 @@ export class FoodTypeShopCrudComponent extends Crud implements OnInit {
     public translate: TranslateService,
     public spinner: NgxSpinnerService,
     private shopService: ShopService,
+    private productService: ProductService,
     private foodTypeShopService: FoodTypeShopService
   ) {
     super(foodTypeService, notifier, spinner, translate, route);
     this.form = this.formBuilder.group({
       shopId: ['', [Validators.required]],
       foodTypeId: ['', [Validators.required]],
+      productDetailsId: [null],
     });
     this.mode = this.route.snapshot.data.mode;
     this.currentLanguage = this.translate.currentLang;
@@ -42,13 +47,12 @@ export class FoodTypeShopCrudComponent extends Crud implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isShopId = this.route.snapshot.queryParamMap.get('shopId')
-      ? true
-      : false;
+    this.isShopId = this.route.snapshot.queryParams.shopId ? true : false;
     if (this.isShopId) {
+      this.GetProductDetailsDDLByShopId();
       this.form
         .get('shopId')
-        .patchValue(this.route.snapshot.queryParamMap.get('shopId'));
+        .patchValue(this.route.snapshot.queryParams.shopId);
     }
     if (this.mode == FormMode.Edit || this.mode == FormMode.View) {
       this.getById(this.route.snapshot.params.id);
@@ -57,6 +61,20 @@ export class FoodTypeShopCrudComponent extends Crud implements OnInit {
     this.getFoodTypeDropdown();
   }
 
+  GetProductDetailsDDLByShopId() {
+    this.spinner.show();
+    this.productService
+      .GetProductDetailsDDLByShopId(this.route.snapshot.queryParams.shopId)
+      .subscribe(
+        (result) => {
+          this.spinner.hide();
+          this.productDetailsList = result;
+        },
+        (err) => {
+          this.spinner.hide();
+        }
+      );
+  }
   getFoodTypeDropdown() {
     this.spinner.show();
     this.foodTypeService.getDropdown().subscribe(

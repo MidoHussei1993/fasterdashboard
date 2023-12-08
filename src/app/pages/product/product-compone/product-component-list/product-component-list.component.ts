@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NotifierService } from 'angular-notifier';
@@ -17,6 +17,7 @@ import { ProductComponentService } from '../services/product-component.service';
 })
 export class ProductComponentListComponent implements OnInit {
   productComponentList: ProductComponent[] = [];
+  @Input() productId: string
   titles: string[] = [
     'product.componantName',
     'product.componantName',
@@ -51,7 +52,7 @@ export class ProductComponentListComponent implements OnInit {
   getproductComponentList() {
     this.busyLoading = true;
     this.spinner.show();
-    this.productService.getProductDetailsByID(this.activatedRoute.snapshot.params.detailsId).subscribe(
+    this.productService.getProductDetailsByID(this.activatedRoute.snapshot.params.detailsId ?this.activatedRoute.snapshot.params.detailsId:this.productId).subscribe(
       (res: any) => {
         this.spinner.hide();
         this.busyLoading = false;
@@ -67,13 +68,13 @@ export class ProductComponentListComponent implements OnInit {
   }
   
   navigateToCreate() {
-    this.router.navigateByUrl(`/product/components/${this.activatedRoute.snapshot.params.detailsId}/create`);
+    this.router.navigateByUrl(`/product/components/${this.activatedRoute.snapshot.params.detailsId ?this.activatedRoute.snapshot.params.detailsId:this.productId}/create`);
   }
   navigateToEdit(productCompoent: ProductComponent) {
-    this.router.navigateByUrl(`/product/components/${this.activatedRoute.snapshot.params.detailsId}/edit/${productCompoent.id}`);
+    this.router.navigateByUrl(`/product/components/${this.activatedRoute.snapshot.params.detailsId ?this.activatedRoute.snapshot.params.detailsId:this.productId}/edit/${productCompoent.id}`);
   }
   navigateToView(productCompoent: ProductComponent) {
-    this.router.navigateByUrl(`/product/components/${this.activatedRoute.snapshot.params.detailsId}/view/${productCompoent.id}`);
+    this.router.navigateByUrl(`/product/components/${this.activatedRoute.snapshot.params.detailsId ?this.activatedRoute.snapshot.params.detailsId:this.productId}/view/${productCompoent.id}`);
   }
   changeActivation(index: number) {
     this.spinner.show();

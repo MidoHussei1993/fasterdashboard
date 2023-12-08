@@ -30,12 +30,40 @@
             </p>
           </div>
         </div>
+        <!-- <div
+          class="col-md-6 col-sm-12 mx-auto"
+          *ngIf="productDetailsList.length"
+        >
+          <label class="form-label">{{
+            "product.productDetails" | translate
+          }}</label>
+          <select
+            formControlName="productDetailsId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of productDetailsList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('productDetailsId').valid &&
+              (form.get('productDetailsId').dirty ||
+                form.get('productDetailsId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('productDetailsId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div> -->
 
         <div class="col-md-6 col-sm-12" *ngIf="!isShopId">
           <label class="form-label">{{ "shop.shop" | translate }}</label>
           <p-dropdown
             [options]="shopList"
-            [filter]="true" 
+            [filter]="true"
             [filterBy]="currentLanguage == 'en' ? 'name' : 'nameAr'"
             [optionLabel]="currentLanguage == 'en' ? 'name' : 'nameAr'"
             formControlName="shopId"

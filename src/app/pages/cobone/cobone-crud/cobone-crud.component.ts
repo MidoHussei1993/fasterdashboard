@@ -8,6 +8,7 @@ import { NotifierService } from 'angular-notifier';
 import { TranslateService } from '@ngx-translate/core';
 import { ShopService } from '../../shop/services';
 import * as moment from 'moment';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cobone-crud',
@@ -40,7 +41,7 @@ export class CoboneCrudComponent implements OnInit {
       shopId: [''],
       isActive: ['', [Validators.required]],
       limitation: ['', [Validators.required]],
-      numberOfUse: [1, [Validators.required,Validators.min(1)]],
+      numberOfUse: [1, [Validators.required, Validators.min(1)]],
       note: [''],
       coboneType: [''],
     });
@@ -84,12 +85,19 @@ export class CoboneCrudComponent implements OnInit {
   }
 
   getShopDropdown(): void {
-    this.shopService.getDropdown().subscribe(
-      (res) => {
-        this.shopList = res;
-      },
-      (err) => {}
-    );
+    this.shopService
+      .getDropdown()
+      .pipe(
+        map((res: any[]) => {
+          return [{ id: null, name: 'All Shop', nameAr: 'كل المتاجر' }, ...res];
+        })
+      )
+      .subscribe(
+        (res) => {
+          this.shopList = res;
+        },
+        (err) => {}
+      );
   }
 
   getCoboneType(): void {
@@ -113,7 +121,7 @@ export class CoboneCrudComponent implements OnInit {
   create() {
     let body = this.form.value;
     body.coboneType = +body.coboneType;
-    body.expiryDate = moment(body.expiryDate).format('YYYY-MM-DD')
+    body.expiryDate = moment(body.expiryDate).format('YYYY-MM-DD');
     this.spinner.show();
     this.coboneService.create(body).subscribe(
       (result) => {

@@ -1,7 +1,18 @@
 ::ng-deep .w-lg-500px {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 ::ng-deep .login-wrapper {
-    background: #eaeaeaeb  !important;
+  background: #eaeaeaeb !important;
+}
+
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+::ng-deep html[dir="rtl"] {
+  ::ng-deep .p-dropdown-filter {
+    position: relative;
+    right: 30px;
+  }
 }

@@ -1,3 +1,4 @@
+// export const BaseURL = 'http://api.faster.sa:5005';
 export const BaseURL = 'https://api.faster.sa:5001';
 
 export const FasterAPI = BaseURL + '/api';
@@ -61,6 +62,7 @@ export class END_POINTS {
     ChangeUserPrivilegesStatus: (userId: string, privilegeId: string) =>
       FasterAPI +
       `/Identity/ChangeUserPrivilegesStatus/${userId}/${privilegeId}`,
+    updateFirebaseToken: FasterAPI + '/Identity/updateFirebaseToken',
   };
 
   // faster profile
@@ -82,6 +84,9 @@ export class END_POINTS {
       FasterAPI + `/Shop/GetFoodTypesByShopId/${shopId}`,
     ChangeAllShopBranchesActivation: (shopId: number, status: boolean) =>
       FasterAPI + `/Shop/ChangeAllShopBranchesActivation/${shopId}/${status}`,
+    GetDispatchTypeDDL: FasterAPI + '/Shop/GetDispatchTypeDDL',
+    ChangeDispatchType: (shopId: number) =>
+      FasterAPI + `/Shop/ChangeDispatchType/${shopId}`,
   };
 
   public static Country = {
@@ -167,6 +172,7 @@ export class END_POINTS {
       FasterAPI + `/ShopBranch/changeActivation/${id}`,
     AddByExcel: (id: string) =>
       FasterAPI + `/ShopBranch/AddByExcel?shopId=${id}`,
+    BusyChange: (id: string) => FasterAPI + `/ShopBranch/BusyChange/${id}`,
   };
 
   public static ShopBranchWorkTime = {
@@ -175,6 +181,8 @@ export class END_POINTS {
     add: FasterAPI + '/ShopBranchWorkTime' + OperationEnum.ADD,
     update: FasterAPI + '/ShopBranchWorkTime' + OperationEnum.UPDATE,
     delete: FasterAPI + '/ShopBranchWorkTime' + OperationEnum.DELETE,
+    UpdateAllShopBranchsWorkTime:
+      FasterAPI + '/ShopBranchWorkTime/UpdateAllShopBranchsWorkTime',
   };
   public static GeneralSuggest = {
     search: FasterAPI + '/GeneralSuggest' + OperationEnum.SEARCH,
@@ -210,6 +218,9 @@ export class END_POINTS {
       FasterAPI + `/Provider/AcceptanceReport/${VendorId}`,
     sendToken: (ProviderId: string) =>
       FasterAPI + `/Provider/IntegrateToTookan/${ProviderId}`,
+    sendToMeLink: (ProviderId: string) =>
+      FasterAPI + `/Provider/IntegrateToTawseel/${ProviderId}`,
+    getMapProviders: FasterAPI + '/Provider/GetMapProviders',
   };
 
   public static ProviderWallet = {
@@ -284,6 +295,15 @@ export class END_POINTS {
     DeliveryOrdersReport: FasterAPI + '/Report/DeliveryOrdersReport',
     AddedFromPaymentReport: FasterAPI + '/Report/AddedFromPaymentReport',
     ShopProfitReport: FasterAPI + '/Report/ShopProfitReport',
+    DeliveryOrderStatistics: FasterAPI + '/Report/DeliveryOrderStatistics',
+    NewOrdersReport: FasterAPI + '/Report/NewOrdersReport',
+    AssignedOrdersReport: FasterAPI + '/Report/AssignedOrdersReport',
+    OutForDeliveryOrdersReport:
+      FasterAPI + '/Report/OutForDeliveryOrdersReport',
+    DelayedNoDriverForOrdersReport:
+      FasterAPI + '/Report/DelayedNoDriverForOrdersReport',
+    DeliverdOrdersReport: FasterAPI + '/Report/DeliverdOrdersReport',
+    NotPickedUpOrdersReport: FasterAPI + '/Report/NotPickedUpOrdersReport',
   };
 
   public static Banner = {
@@ -327,6 +347,10 @@ export class END_POINTS {
     ChangeProductDetailsSizeActivation: (ProductSizeId: number): string =>
       FasterAPI +
       `/Product/ChangeProductDetailsSizeActivation/${ProductSizeId}`,
+    GetProductAvailability: (ProductDetailsId: string): string =>
+      FasterAPI + `/Product/GetProductAvailability/${ProductDetailsId}`,
+    GetProductDetailsDDLByShopId: (ProductDetailsId: string): string =>
+      FasterAPI + `/Product/GetProductDetailsDDLByShopId/${ProductDetailsId}`,
   };
 
   public static App = {
@@ -354,6 +378,9 @@ export class END_POINTS {
     UserActionTracking: FasterAPI + '/App/UserActionTracking',
     getLimitationOrderValue: FasterAPI + '/App/getLimitationOrderValue',
     updateLimitationOrderValue: FasterAPI + '/App/updateLimitationOrderValue',
+    getDispatchSystemDDL: FasterAPI + '/App/getDispatchSystemDDL',
+    UpdateDispatchSystem: FasterAPI + '/App/UpdateDispatchSystem',
+    getDispatchSystem: FasterAPI + '/App/getDispatchSystem',
   };
 
   public static ItemSize = {
@@ -423,10 +450,11 @@ export class END_POINTS {
   };
 
   public static BranchProduct = {
-    search: FasterAPI + '/BranchProduct' + OperationEnum.SEARCH,
-    add: FasterAPI + '/BranchProduct' + OperationEnum.ADD,
-    ChangeActivationById: FasterAPI + '/BranchProduct/ChangeActivationById',
-    getShopBranchDDL: FasterAPI + '/BranchProduct/getShopBranchDDL',
+    search: FasterAPI + '/BranchProductDetails' + OperationEnum.SEARCH,
+    add: FasterAPI + '/BranchProductDetails' + OperationEnum.ADD,
+    ChangeActivationById:
+      FasterAPI + '/BranchProductDetails/ChangeActivationById',
+    getShopBranchDDL: FasterAPI + '/BranchProductDetails/getShopBranchDDL',
   };
 
   public static ProviderSubscriptions = {
@@ -563,11 +591,11 @@ export class END_POINTS {
       `/DeliveryOrder/manualAssignment/${orderId}/${price}/${providerUserId}`,
     ChangeOrderAmountPrice: (orderId: any, price: string): string =>
       FasterAPI + `/DeliveryOrder/ChangeOrderAmountPrice/${orderId}/${price}`,
-      getOrderCart: (orderId: any): string =>
+    getOrderCart: (orderId: any): string =>
       FasterAPI + `/DeliveryOrder/getOrderCart/${orderId}`,
-      acceptOrder: (orderId: any): string =>
+    acceptOrder: (orderId: any): string =>
       FasterAPI + `/DeliveryOrder/acceptOrder/${orderId}`,
-      rejectOrder: (orderId: any): string =>
+    rejectOrder: (orderId: any): string =>
       FasterAPI + `/DeliveryOrder/rejectOrder/${orderId}`,
   };
 
@@ -701,18 +729,70 @@ export class END_POINTS {
 
   public static foodTypeShop = {
     add: FasterAPI + '/FoodTypeShop' + OperationEnum.ADD,
-    delete: (FoodTypeId: number, ShopId: number): string =>
-      FasterAPI + `/FoodTypeShop/Delete/${FoodTypeId}/${ShopId}`,
+    search: FasterAPI + '/FoodTypeShop' + OperationEnum.SEARCH,
+    delete: (FoodTypeId: number): string =>
+      FasterAPI + `/FoodTypeShop/Delete/${FoodTypeId}`,
   };
 
-  public static FixedShopAmounts  = {
+  public static FixedShopAmounts = {
     search: (shopId: number): string =>
-      FasterAPI +`/FixedShopAmounts/Search/${shopId}`,
+      FasterAPI + `/FixedShopAmounts/Search/${shopId}`,
     getById: (id: number): string =>
-    FasterAPI + '/FixedShopAmounts' + OperationEnum.GET_BY_ID + id,
+      FasterAPI + '/FixedShopAmounts' + OperationEnum.GET_BY_ID + id,
     add: FasterAPI + '/FixedShopAmounts' + OperationEnum.ADD,
     update: FasterAPI + '/FixedShopAmounts' + OperationEnum.UPDATE,
     delete: (id: number): string =>
       FasterAPI + '/FixedShopAmounts' + OperationEnum.DELETE + id,
+  };
+
+  public static Moyaser = {
+    getAll: FasterAPI + '/Moyaser/List',
+    RefundPayment: FasterAPI + '/Moyaser/RefundPayment',
+    getCustomerPhone: (description: string): string =>
+      FasterAPI + `/Moyaser/GetCustomerPhone/${description}`,
+  };
+
+  public static Task = {
+    SendOrderToTookan: (orderId: string): string =>
+      FasterAPI + `/Task/SendOrderToTookan/${orderId}`,
+  };
+  public static SubAdditionalComponent = {
+    search: FasterAPI + '/SubAdditionalComponent' + OperationEnum.SEARCH,
+    getById: (id: number): string =>
+      FasterAPI + '/SubAdditionalComponent' + OperationEnum.GET_BY_ID + id,
+    add: FasterAPI + '/SubAdditionalComponent' + OperationEnum.ADD,
+    update: FasterAPI + '/SubAdditionalComponent' + OperationEnum.UPDATE,
+    getDropdown: FasterAPI + '/SubAdditionalComponent' + OperationEnum.GET_DDL,
+  };
+  public static SubAdditionalComponentTitle = {
+    search: FasterAPI + '/SubAdditionalComponentTitle' + OperationEnum.SEARCH,
+    getById: (id: number): string =>
+      FasterAPI + '/SubAdditionalComponentTitle' + OperationEnum.GET_BY_ID + id,
+    add: FasterAPI + '/SubAdditionalComponentTitle' + OperationEnum.ADD,
+    update: FasterAPI + '/SubAdditionalComponentTitle' + OperationEnum.UPDATE,
+    getDropdown:
+      FasterAPI + '/SubAdditionalComponentTitle' + OperationEnum.GET_DDL,
+  };
+
+  public static firebase = {
+    updateFirebaseToken: FasterAPI + '/Identity/updateFirebaseToken',
+    getTestMessage: FasterAPI + 'AppNotifications/getTestMessage',
+  };
+
+  public static OrderDispatch = {
+    GetDeliveryProviders: FasterAPI + '/OrderDispatch/GetDeliveryProviders',
+  };
+
+  public static GiftCard = {
+    search: FasterAPI + '/GiftCard' + OperationEnum.SEARCH,
+    getDell: FasterAPI + '/GiftCard' + OperationEnum.GET_DDL,
+    getById: FasterAPI + '/GiftCard' + OperationEnum.GET_BY_ID,
+    add: FasterAPI + '/GiftCard' + OperationEnum.ADD,
+    update: FasterAPI + '/GiftCard' + OperationEnum.UPDATE,
+    delete: FasterAPI + '/GiftCard' + OperationEnum.DELETE,
+    UploadImage: FasterAPI + '/GiftCard/UploadImage',
+    GetGiftCardTypesSendSearch: FasterAPI + '/GiftCard/GetGiftCardSendSearch',
+    ChangeActivation: (id: string) =>
+      FasterAPI + `/GiftCard/changeActivation/${id}`,
   };
 }

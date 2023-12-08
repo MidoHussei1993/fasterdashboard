@@ -8,12 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { WalletModule } from '../wallet/wallet.module';
+import { WorkTimeComponent } from './work-time/work-time.component';
 
 
 @NgModule({
   declarations: [
     ShopBranchListComponent,
-    ShopBranchCrudComponent
+    ShopBranchCrudComponent,
+    WorkTimeComponent
   ],
   imports: [
     CommonModule,

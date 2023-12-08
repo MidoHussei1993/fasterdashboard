@@ -19,7 +19,7 @@
     "target": "es2017",
     "module": "esnext",
     "lib": [
-      "es2018",
+      "es2017",
       "dom"
     ]
   },
@@ -27,9 +27,9 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
+    "strictTemplates": false,
     "preserveWhiteSpace": true,
-    "fullTemplateTypeCheck": true,
+    "fullTemplateTypeCheck": false,
     "allowSyntheticDefaultImports":true,
     "suppressImplicitAnyIndexErrors": true
   }

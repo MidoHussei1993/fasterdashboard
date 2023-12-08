@@ -11,6 +11,7 @@ import {
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { IdentityFilter, Customer } from '../models';
 import { IdentityService, IList } from '../services/identity.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-customers',
@@ -47,12 +48,14 @@ export class CustomersComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private excelService: ExcelService,
+    private headerService: HeaderService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.customers'));
     this.filter.PageNumber = 1;
-    this.filter.PageSize = 10;
+    this.filter.PageSize = 150;
     if (this.activatedRoute.snapshot.queryParams.customerPhone) {
       this.filter.phoneNumber =
         this.activatedRoute.snapshot.queryParams.customerPhone;
@@ -180,18 +183,18 @@ export class CustomersComponent implements OnInit {
           )
         );
         window.open(walletUrl, '_blank');
-       
+
         break;
-        case 'order':
-          const url = this.router.serializeUrl(
-            this.router.createUrlTree([
-              `/report/customer-order/${customer.event.id}`,
-            ])
-          );
-          window.open(url, '_blank');
-         
-          break;
-          case 'customerReferrer':
+      case 'order':
+        const url = this.router.serializeUrl(
+          this.router.createUrlTree([
+            `/report/customer-order/${customer.event.id}`,
+          ])
+        );
+        window.open(url, '_blank');
+
+        break;
+      case 'customerReferrer':
         const referrerUrl = this.router.serializeUrl(
           this.router.createUrlTree([
             `/report/customer-referrer/${customer.event.id}`,
@@ -210,18 +213,15 @@ export class CustomersComponent implements OnInit {
     downloadFilter.PageNumber = 1;
     downloadFilter.PageSize = this.pagination.totalItemCount;
     this.spinner.show();
-    this.customerService
-      .get(downloadFilter)
-      .subscribe(
-        (res: any) => {
-          this.spinner.hide();
-          this.excelService.exportAsExcelFile(res.data, 'data_file');
-        },
-        (err) => {
-          this.spinner.hide();
-          console.log(err);
-        }
-      );
+    this.customerService.get(downloadFilter).subscribe(
+      (res: any) => {
+        this.spinner.hide();
+        this.excelService.exportAsExcelFile(res.data, 'data_file');
+      },
+      (err) => {
+        this.spinner.hide();
+        console.log(err);
+      }
+    );
   }
-
 }

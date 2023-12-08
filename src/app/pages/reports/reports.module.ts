@@ -18,9 +18,9 @@ import { AllProvidersWorkingTimeComponent } from './components/all-providers-wor
 import { ProviderWalletReportComponent } from './components/provider-wallet-report/provider-wallet-report.component';
 import { CustomerWalletReportComponent } from './components/customer-wallet-report/customer-wallet-report.component';
 import { CustomerOrderComponent } from './components/customer-order/customer-order.component';
-import {TabViewModule} from 'primeng/tabview';
+import { TabViewModule } from 'primeng/tabview';
 import { IgnoredOrderComponent } from './components/ignored-order/ignored-order.component';
-import {CalendarModule} from 'primeng/calendar';
+import { CalendarModule } from 'primeng/calendar';
 import { HeatMapComponent } from './components/heat-map/heat-map.component';
 import { WalletManualAdditionComponent } from './components/wallet-manual-addition/wallet-manual-addition.component';
 import { CustomerWalletManualAdditionComponent } from './components/customer-wallet-manual-addition/customer-wallet-manual-addition.component';
@@ -30,11 +30,13 @@ import { DeliveryOrderStatusComponent } from './components/delivery-order-status
 import { CustomerReferrerComponent } from './components/customer-referrer/customer-referrer.component';
 import { AddedFromPaymentComponent } from './components/added-from-payment/added-from-payment.component';
 import { ShopProfitComponent } from './components/shop-profit/shop-profit.component';
-import { NgxPrintModule } from 'ngx-print';
-
+// import { NgxPrintModule } from 'ngx-print';
+import { AllReportComponent } from './all-report/all-report.component';
+import { GiftCardTypesSendSearchComponent } from './components/gift-card-types-send-search/gift-card-types-send-search.component';
 
 @NgModule({
   declarations: [
+    GiftCardTypesSendSearchComponent,
     ActiveProvidersComponent,
     DeliveryOrderComponent,
     TransportOrderComponent,
@@ -59,6 +61,7 @@ import { NgxPrintModule } from 'ngx-print';
     CustomerReferrerComponent,
     AddedFromPaymentComponent,
     ShopProfitComponent,
+    AllReportComponent,
   ],
   imports: [
     CommonModule,
@@ -67,8 +70,8 @@ import { NgxPrintModule } from 'ngx-print';
     ReactiveFormsModule,
     FormsModule,
     CalendarModule,
-    NgxPrintModule,
-    TabViewModule
-  ]
+    // NgxPrintModule,
+    TabViewModule,
+  ],
 })
-export class ReportsModule { }
+export class ReportsModule {}

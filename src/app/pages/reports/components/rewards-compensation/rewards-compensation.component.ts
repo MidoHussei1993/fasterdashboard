@@ -5,11 +5,12 @@ import { Pagination } from 'src/app/shared';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { RewardCompensationFilter, TaxsReport } from '../../model';
 import { ReportsService } from '../../services/reports.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-rewards-compensation',
   templateUrl: './rewards-compensation.component.html',
-  styleUrls: ['./rewards-compensation.component.scss']
+  styleUrls: ['./rewards-compensation.component.scss'],
 })
 export class RewardsCompensationComponent implements OnInit {
   titles: string[] = [
@@ -41,11 +42,14 @@ export class RewardsCompensationComponent implements OnInit {
     private reportsService: ReportsService,
     private spinner: NgxSpinnerService,
     private excelService: ExcelService,
-    private translate: TranslateService,
-
+    private headerService: HeaderService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.RewardsAndCompensation')
+    );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getRewardsAndCompensation();
@@ -66,14 +70,13 @@ export class RewardsCompensationComponent implements OnInit {
       (res: any) => {
         this.spinner.hide();
         this.busyLoading = false;
-        this.rewardsCompensationList = res.data.map(item =>{
-          if(item.type == 1){
-            item.type = this.translate.instant('action.Withdrawal')
-          }else if(item.type == 2){
-            item.type = this.translate.instant('action.deposit')
-          }
-          else if(item.type == 0){
-            item.type = this.translate.instant('field.all')
+        this.rewardsCompensationList = res.data.map((item) => {
+          if (item.type == 1) {
+            item.type = this.translate.instant('action.Withdrawal');
+          } else if (item.type == 2) {
+            item.type = this.translate.instant('action.deposit');
+          } else if (item.type == 0) {
+            item.type = this.translate.instant('field.all');
           }
           return item;
         });

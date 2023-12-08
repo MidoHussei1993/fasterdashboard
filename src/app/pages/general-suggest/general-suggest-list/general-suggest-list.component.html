@@ -1,8 +1,4 @@
-<div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">{{ "menu.general_suggest" | translate }}</h3>
-    <div class="card-toolbar"></div>
-  </div>
+<div class="card shadow-sm">
   <div class="card-body">
     <!-- <a
       class="btn btn-sm btn-primary mb-3"
@@ -11,45 +7,47 @@
     <i class="fas fa-plus"></i>
       {{ "action.create" | translate }}
     </a> -->
-    <div class="card bg-secondary">
+    <div class="card bg-light">
       <div class="card-body">
-        <app-filter [filter]="filter"></app-filter>
-        <div class="row">
-          <div class="col-md-3 col-sm-12">
-            <label class="form-label">{{'global.userType'|translate }}</label>
+        <app-filter [filter]="filter">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <label class="form-label">{{
+              "global.userType" | translate
+            }}</label>
             <select
-            [(ngModel)]="filter.UserTypeName"
-            class="form-select form-select-solid"
-          >
-          <option [value]="'Customer'">
-            {{ "field.customer" | translate }}
-          </option>
-          <option [value]="'Provider'">
-            {{ "global.provider" | translate }}
-          </option>
-          </select>
-        </div>
-        <div class="col-md-3 col-sm-12">
-          <label class="form-label">{{'cobone.status'|translate }}</label>
-          <select
-          [(ngModel)]="filter.Status"
-          class="form-select form-select-solid"
-        >
-        <option [value]="'New'">
-          {{ "field.new" | translate }}
-        </option>
-        <option [value]="'Opened'">
-          {{ "field.opened" | translate }}
-        </option>
-        <option [value]="'Finished'">
-          {{ "field.finished" | translate }}
-        </option>
-        </select>
-      </div>
-        </div>
+              [(ngModel)]="filter.UserTypeName"
+              class="form-select form-select-solid"
+            >
+              <option [value]="'Customer'">
+                {{ "field.customer" | translate }}
+              </option>
+              <option [value]="'Provider'">
+                {{ "global.provider" | translate }}
+              </option>
+            </select>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <label class="form-label">{{ "cobone.status" | translate }}</label>
+            <select
+              [(ngModel)]="filter.Status"
+              class="form-select form-select-solid"
+            >
+              <option [value]="'New'">
+                {{ "field.new" | translate }}
+              </option>
+              <option [value]="'Opened'">
+                {{ "field.opened" | translate }}
+              </option>
+              <option [value]="'Finished'">
+                {{ "field.finished" | translate }}
+              </option>
+            </select>
+          </div>
+        </app-filter>
       </div>
     </div>
     <app-table
+      [filter]="filter"
       [list]="generalSuggestlist"
       [titles]="titles"
       [properties]="properties"

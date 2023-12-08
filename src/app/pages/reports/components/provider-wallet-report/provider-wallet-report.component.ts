@@ -5,15 +5,16 @@ import { Pagination, FormMode } from 'src/app/shared';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { ProviderWalletReportFilter } from '../../model';
 import { ReportsService } from '../../services/reports.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-provider-wallet-report',
   templateUrl: './provider-wallet-report.component.html',
-  styleUrls: ['./provider-wallet-report.component.scss']
+  styleUrls: ['./provider-wallet-report.component.scss'],
 })
 export class ProviderWalletReportComponent implements OnInit {
   walletReportList: any[] = [];
-  finalTotalMinutes:number = null;
+  finalTotalMinutes: number = null;
   filter: ProviderWalletReportFilter;
   busyLoading: boolean = true;
   pagination: Pagination = new Pagination();
@@ -26,12 +27,15 @@ export class ProviderWalletReportComponent implements OnInit {
   constructor(
     private reportsService: ReportsService,
     private spinner: NgxSpinnerService,
-    private excelService:ExcelService,
-    private translate: TranslateService,
-
-    ) {}
+    private excelService: ExcelService,
+    private headerService: HeaderService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.providerWalletReport')
+    );
     this.filter = new ProviderWalletReportFilter();
     this.walletReportList = [];
     this.filter.PageNumber = 1;
@@ -63,7 +67,7 @@ export class ProviderWalletReportComponent implements OnInit {
         this.busyLoading = false;
         this.walletReportList = res.data;
         delete res.data;
-        this.pagination = { ...res};
+        this.pagination = { ...res };
       },
       (err) => {
         console.log(err);
@@ -86,29 +90,29 @@ export class ProviderWalletReportComponent implements OnInit {
     this.filter.PageNumber = pageNumber;
     this.getProviderWalletReport();
   }
-  downloadAll(){
-    let downloadFilter : any = this.filter;
+  downloadAll() {
+    let downloadFilter: any = this.filter;
     downloadFilter.PageNumber = 1;
     downloadFilter.PageSize = this.pagination.totalItemCount;
     this.reportsService.ProviderWalletReport(downloadFilter).subscribe(
       (res: any) => {
         this.spinner.hide();
-        let arr2 = []
-        let arr = res.data.map(item =>{
-          item.walletTransactions.map(transaction =>{
+        let arr2 = [];
+        let arr = res.data.map((item) => {
+          item.walletTransactions.map((transaction) => {
             arr2.push({
               providerId: item.providerId,
               providerName: item.providerName,
-              providerPhone:item.providerPhone,
-              walletSum:item.walletSum,
-              registerType:item.registerType,
+              providerPhone: item.providerPhone,
+              walletSum: item.walletSum,
+              registerType: item.registerType,
               ...transaction,
-              type:this.translate.instant(transaction.type == 1?"action.Withdrawal":"action.deposit")
-
-            })
-
-          })
-        })
+              type: this.translate.instant(
+                transaction.type == 1 ? 'action.Withdrawal' : 'action.deposit'
+              ),
+            });
+          });
+        });
         console.log(arr2);
         this.excelService.exportAsExcelFile(arr2, 'data_file');
       },
@@ -116,7 +120,6 @@ export class ProviderWalletReportComponent implements OnInit {
         this.spinner.hide();
         console.log(err);
       }
-    )
+    );
   }
-
 }

@@ -18,6 +18,7 @@ import {
 import { ChangePassword } from '../models/changepsssword.model';
 import { ForgetPassword } from '../models/forgetPAssword.model';
 import { ResetPassword } from '../models/resetPassword.model';
+import { TranslateService } from '@ngx-translate/core';
 
 const API = END_POINTS.Identity;
 export interface IList<T> {
@@ -37,7 +38,7 @@ type DashboardUserProfile = {
   providedIn: 'root',
 })
 export class IdentityService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private translate: TranslateService) {}
 
   getUsers(filter: UserFilter): Observable<IList<User>> {
     return this.http.get<IList<User>>(API.getUsers, {
@@ -238,5 +239,13 @@ export class IdentityService {
       API.ChangeUserPrivilegesStatus(userId, privilegeId),
       {}
     );
+  }
+
+  updateFirebaseToken(token: string): Observable<any> {
+    return this.http.put<any>(API.updateFirebaseToken, {
+      token: token,
+      favoriteLanguage: this.translate.currentLang,
+      frontEndDevice: 'dashboard',
+    });
   }
 }

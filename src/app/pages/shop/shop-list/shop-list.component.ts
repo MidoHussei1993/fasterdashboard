@@ -15,6 +15,7 @@ import { ShopTypeService } from '../../shop-type/services';
 import { Shop, ShopFilter } from '../models';
 import { ShopService } from '../services';
 import { isAdmin } from 'src/app/util/access-storge';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-shop-list',
@@ -75,7 +76,7 @@ export class ShopListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private excelService: ExcelService,
     private swalService: SwalModalService,
-
+    private headerService: HeaderService,
     private identityService: IdentityService
   ) {
     this.currentLanguage = this.translate.currentLang;
@@ -86,6 +87,7 @@ export class ShopListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('shop.shop'));
     this.isShopRoles = isShop();
     this.isAdmin = isAdmin();
     this.actionList = [
@@ -328,7 +330,7 @@ export class ShopListComponent implements OnInit {
         break;
       case 'foodType':
         const foodType = this.router.serializeUrl(
-          this.router.createUrlTree([`/food-type`], {
+          this.router.createUrlTree([`/food-type/shop`], {
             queryParams: {
               shopId: shop.event.id,
             },
@@ -444,5 +446,8 @@ export class ShopListComponent implements OnInit {
         );
       }
     });
+  }
+  navigateToUpdateAllShopBranchesWorkTime() {
+    this.router.navigateByUrl('/shop-branchs-work-time');
   }
 }

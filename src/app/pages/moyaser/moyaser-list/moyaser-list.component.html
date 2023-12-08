@@ -1,0 +1,55 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="card bg-light">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+      </div>
+    </div>
+    <app-table
+      [filter]="filter"
+      [list]="list"
+      [titles]="titles"
+      [properties]="properties"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      [showDelete]="false"
+      [showEdit]="false"
+      [showView]="false"
+      [showSearch]="true"
+      [isdownloadAll]="true"
+      (export)="downloadAll()"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [addActions]="true"
+      [actionList]="[
+        {
+          title: 'field.customerPhone',
+          icon: 'fa-phone-square-alt',
+          type: 'showCustomerNumberModal'
+        }
+      ]"
+      (aciton)="navigateTO($event)"
+    ></app-table>
+  </div>
+</div>
+
+<ng-template #customerPhoneModal let-modal>
+  <div class="modal-body">
+    <div class="">
+      <h2 class="text-center text-white">
+        <span class="fs-3 fw-bolder me-2">{{
+          "field.customerPhone" | translate
+        }}</span>
+      </h2>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h4 class="card-title text-white my-4">
+          <i class="fas fa-phone-volume"></i>
+          {{ customerPhoneNumber }}
+        </h4>
+      </div>
+    </div>
+  </div>
+</ng-template>

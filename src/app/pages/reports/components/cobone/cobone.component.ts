@@ -9,6 +9,7 @@ import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { CoboneReport } from '../../model/cobone-report.model';
 import { CoboneFilter } from '../../model/cobonefilter.model';
 import { ReportsService } from '../../services/reports.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-cobone',
@@ -58,10 +59,16 @@ export class CoboneComponent implements OnInit {
     private reportServices: ReportsService,
     private router: Router,
     private swalService: SwalModalService,
+    private headerService: HeaderService,
+    private translate: TranslateService,
+
     private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('reports.CoboneReport')
+    );
     this.filter = new CoboneFilter();
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
@@ -100,14 +107,12 @@ export class CoboneComponent implements OnInit {
     switch (cobone.type) {
       case 'product':
         const product = this.router.serializeUrl(
-          this.router.createUrlTree(
-            [`/cobone-report/delivery/${cobone.event.id}`]
-          )
+          this.router.createUrlTree([
+            `/cobone-report/delivery/${cobone.event.id}`,
+          ])
         );
         window.open(product, '_blank');
         break;
-    
     }
   }
-
 }

@@ -1,6 +1,5 @@
-<div class="card card-flush shadow-sm">
+<div class="card shadow-sm">
   <div class="card-header">
-    <h3 class="card-title">{{ "menu.banner" | translate }}</h3>
     <div class="card-toolbar">
       <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/banner/create'">
         <i class="fas fa-plus"></i>
@@ -8,11 +7,10 @@
       </a>
     </div>
   </div>
-  <div class="card bg-secondary">
+  <div class="card bg-light">
     <div class="card-body">
-      <app-filter [filter]="filter"></app-filter>
-      <div class="row">
-        <div class="col-md-6 col-sm-12">
+      <app-filter [filter]="filter">
+        <div class="col-lg-3 col-md-6 col-sm-12">
           <label class="form-label">{{ "shop.shop_name" | translate }}</label>
           <select
             [(ngModel)]="filter.ShopId"
@@ -22,13 +20,13 @@
               {{ currentLanguage == "en" ? item.name : item.nameAr }}
             </option>
           </select>
-     
         </div>
-      </div>
+      </app-filter>
     </div>
   </div>
   <div class="card-body">
     <app-table
+      [filter]="filter"
       [list]="bannerList"
       [titles]="titles"
       [properties]="properties"
@@ -44,7 +42,7 @@
       (resetFilter)="resetfilter()"
       [showActivation]="true"
       (changeActivation)="changeActivation($event)"
-      >
+    >
     </app-table>
   </div>
 </div>

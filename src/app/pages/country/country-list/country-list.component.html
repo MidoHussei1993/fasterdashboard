@@ -1,22 +1,16 @@
-<div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">{{ "menu.Country" | translate }}</h3>
-  </div>
-  <div
-    class="card-body"
-    
-  >
+<div class="card shadow-sm">
+  <div class="card-body">
     <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/country/create'">
       <i class="fas fa-plus"></i>
       {{ "action.create" | translate }}
     </a>
     <div class="card">
       <div class="card-body">
-
         <app-filter [filter]="filter"></app-filter>
       </div>
     </div>
     <app-table
+      [filter]="filter"
       [list]="Countrylist"
       [titles]="titles"
       [properties]="properties"

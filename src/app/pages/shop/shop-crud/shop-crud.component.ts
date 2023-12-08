@@ -24,12 +24,11 @@ export class ShopCrudComponent implements OnInit {
   busyLoading: boolean = false;
   currentLanguage: string = '';
   shopId: number = null;
-  userTypeDropDown =  UserType;
+  userTypeDropDown = UserType;
 
-  @ViewChild('imgViewer', { static: false }) imgViewer:ImgViewerComponent;
+  @ViewChild('imgViewer', { static: false }) imgViewer: ImgViewerComponent;
   bankList: Dropdown[] = [];
-  
-  
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -39,13 +38,16 @@ export class ShopCrudComponent implements OnInit {
     private translate: TranslateService,
     private notifier: NotifierService,
     private spinner: NgxSpinnerService,
-    private providerService: ProviderService,
+    private providerService: ProviderService
   ) {
     this.form = this.formBuilder.group({
       id: [0],
       shopName: [
         '',
-        [Validators.required, Validators.pattern(Pattern.OnlyEnglishLettersAndSpace)],
+        [
+          Validators.required,
+          Validators.pattern(Pattern.OnlyEnglishLettersAndSpace),
+        ],
       ],
       shopNameAr: [
         '',
@@ -53,7 +55,10 @@ export class ShopCrudComponent implements OnInit {
       ],
       shopDescription: [
         '',
-        [Validators.required, Validators.pattern(Pattern.OnlyEnglishLettersAndSpace)],
+        [
+          Validators.required,
+          Validators.pattern(Pattern.OnlyEnglishLettersAndSpace),
+        ],
       ],
       shopDescriptionAr: [
         '',
@@ -63,13 +68,20 @@ export class ShopCrudComponent implements OnInit {
       isPartner: [true, Validators.required],
       percentageFromOrder: [null],
       staticDeliveryAmount: [null],
-      email: ['', [Validators.required,Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       // userType: ['', [Validators.required]],
       // avatarName: ['', Validators.required],
       // applicationUserId: 'string',
       shopTypeId: ['', Validators.required],
       identificationNumber: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required,Validators.minLength(12),Validators.maxLength(12)]],
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(12),
+          Validators.maxLength(12),
+        ],
+      ],
       applicationUserId: ['', []],
       commercialRegisterImage: ['', []],
       shopManagerNationalIdImage: ['', []],
@@ -79,8 +91,11 @@ export class ShopCrudComponent implements OnInit {
       shopIBAN: ['', []],
       shopBankName: ['', []],
       headerImage: ['', []],
-      minimumOrderValue: ['', []],
-      maximumOrderValue: ['', []],
+      minimumOrderValue: ['', [Validators.required]],
+      maximumOrderValue: ['', [Validators.required]],
+      deliverectAccountId: ['', []],
+      MinimumCreditOrderValue: [null, [Validators.required]],
+      MaximumCreditOrderValue: [null, [Validators.required]],
     });
 
     this.mode = this.route.snapshot.data.mode;
@@ -94,7 +109,6 @@ export class ShopCrudComponent implements OnInit {
   ngOnInit(): void {
     this.getshopTypeDropdown();
     this.getBankList();
-
   }
   getBankList() {
     this.providerService.getBankList().subscribe(
@@ -107,10 +121,10 @@ export class ShopCrudComponent implements OnInit {
     );
   }
 
-  viewImage(){
+  viewImage() {
     this.imgViewer.openBackDropCustomClass();
   }
-  
+
   getShopById(id: number) {
     this.busyLoading = true;
     this.spinner.show();
@@ -120,8 +134,8 @@ export class ShopCrudComponent implements OnInit {
 
         this.spinner.hide();
         let avatarArray = shop.avatar.split('/');
-      //  shop.avatar = avatarArray[avatarArray.length - 1];
-      //  delete shop.avatar;
+        //  shop.avatar = avatarArray[avatarArray.length - 1];
+        //  delete shop.avatar;
         this.form.patchValue(shop);
         this.form.controls.shopTypeId.patchValue(shop.shopTypeId);
         // this.form.pa
@@ -171,7 +185,7 @@ export class ShopCrudComponent implements OnInit {
   create() {
     let body = this.form.value;
     body.identificationNumber = String(body.identificationNumber);
-    body.phoneNumber = String(body.phoneNumber); 
+    body.phoneNumber = String(body.phoneNumber);
     this.spinner.show();
     this.shopService.create(body).subscribe(
       (result) => {
@@ -188,8 +202,8 @@ export class ShopCrudComponent implements OnInit {
   }
   edit() {
     let body = this.form.value;
-    body.identificationNumber = String(body.identificationNumber); 
-    body.phoneNumber = String(body.phoneNumber); 
+    body.identificationNumber = String(body.identificationNumber);
+    body.phoneNumber = String(body.phoneNumber);
     this.spinner.show();
     this.shopService.update(body).subscribe(
       (result) => {

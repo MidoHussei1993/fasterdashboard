@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NotifierService } from 'angular-notifier';
@@ -16,21 +16,21 @@ import { ProductService } from '../services';
 })
 export class ProductDetailsListComponent implements OnInit {
   productDetailslist: ProductDetails[] = [];
+  @Input() productId: string;
   titles: string[] = [
     'field.title',
     'field.title',
     'field.price',
     'field.availableFromHour',
     'field.availableToHour',
-    'field.activation',
   ];
   properties: string[] = [
     'title',
-     'titleAr',
-      'price',
-      'availableFromHour',
-      'availableToHour',
-    ];
+    'titleAr',
+    'price',
+    'availableFromHour',
+    'availableToHour',
+  ];
   busyLoading: boolean = true;
   public get formMode(): typeof FormMode {
     return FormMode;
@@ -55,6 +55,8 @@ export class ProductDetailsListComponent implements OnInit {
     this.productService
       .getProductDetailsByProductId(
         this.activatedRoute.snapshot.params.productId
+          ? this.activatedRoute.snapshot.params.productId
+          : this.productId
       )
       .subscribe(
         (res: ProductDetails[]) => {
@@ -71,18 +73,61 @@ export class ProductDetailsListComponent implements OnInit {
   }
   navigateToCreate() {
     this.router.navigateByUrl(
-      `/product/${this.activatedRoute.snapshot.params.productId}/details/create`
+      `/product/${
+        this.activatedRoute.snapshot.params.productId
+          ? this.activatedRoute.snapshot.params.productId
+          : this.productId
+      }/details/create`
     );
   }
   navigateToView(productDetails: ProductDetails) {
+    console.log(
+      '🚀 ~ file: product-details-list.component.ts:79 ~ ProductDetailsListComponent ~ navigateToView ~ productDetails:',
+      productDetails
+    );
     this.router.navigateByUrl(
-      `/product/${this.activatedRoute.snapshot.params.productId}/details/view/${productDetails.id}`
+      `/product/${
+        this.activatedRoute.snapshot.params.productId
+          ? this.activatedRoute.snapshot.params.productId
+          : this.productId
+      }/details/view/${productDetails.id}`
     );
   }
   navigateToEdit(productDetails: ProductDetails) {
     this.router.navigateByUrl(
-      `/product/${this.activatedRoute.snapshot.params.productId}/details/edit/${productDetails.id}`
+      `/product/${
+        this.activatedRoute.snapshot.params.productId
+          ? this.activatedRoute.snapshot.params.productId
+          : this.productId
+      }/details/edit/${productDetails.id}`
     );
+  }
+  navigateProductAvailability(productDetails: ProductDetails) {
+    this.router.navigateByUrl(
+      `/product/${
+        this.activatedRoute.snapshot.params.productId
+          ? this.activatedRoute.snapshot.params.productId
+          : this.productId
+      }/availability/${productDetails.id}`
+    );
+  }
+  navigateTO(productDetails: { event: ProductDetails; type: string }) {
+    switch (productDetails.type) {
+      case 'productDetailsSize':
+        this.navigateToProductDetailsSize(productDetails.event);
+        break;
+      case 'components':
+        this.navigateToProductComponents(productDetails.event);
+        break;
+      case 'additionalComponentTitle':
+        this.navigateToAdditionalComponentTitle(productDetails.event);
+        break;
+      case 'foodType':
+        this.router.navigateByUrl(
+          `/food-type/shop?productDetailsId=${productDetails.event.id}`
+        );
+        break;
+    }
   }
   navigateToProductDetailsSize(productDetails: ProductDetails) {
     this.router.navigateByUrl(`/product/size-details/${productDetails.id}`);

@@ -1,175 +1,293 @@
 <div class="card card-flush shadow-sm">
-    <div class="card-header">
-      <h3 class="card-title">
-        <span> {{ mode | translate }} - </span>
-        <span class="mx-2"> {{ "menu.customerOrderBonus" | translate }} </span>
-      </h3>
-    </div>
-    <div class="card-body">
-      <form [formGroup]="form" (ngSubmit)="submit()">
- 
-        <div class="row my-5">
-            <div class="col-md-6 col-sm-12">
-              <label class="form-label d-block">{{
-                "field.StartDate" | translate
-              }}</label>
-              <input type="datetime-local"  formControlName="startAt" class="form-control"/>
-              <!-- <p-calendar
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.customerOrderBonus" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label d-block">{{
+            "field.StartDate" | translate
+          }}</label>
+          <input
+            type="datetime-local"
+            formControlName="startAt"
+            class="form-control"
+          />
+          <!-- <p-calendar
                 formControlName="startAt"
                 [showTime]="true"
                 dateFormat="dd.mm.yy"
                 hourFormat="12"
               ></p-calendar> -->
-              <div
-                *ngIf="
-                  !form.get('startAt').valid &&
-                  (form.get('startAt').dirty || form.get('startAt').touched)
-                "
-                class="text text-danger"
-              >
-                <p *ngIf="form.get('startAt').hasError('required')">
-                  {{ "_.required" | translate }}
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 col-sm-12">
-              <label class="form-label d-block">{{
-                "field.EndDate" | translate
-              }}</label>
-              <input type="datetime-local"  formControlName="endAt" class="form-control"/>
+          <div
+            *ngIf="
+              !form.get('startAt').valid &&
+              (form.get('startAt').dirty || form.get('startAt').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('startAt').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label d-block">{{
+            "field.EndDate" | translate
+          }}</label>
+          <input
+            type="datetime-local"
+            formControlName="endAt"
+            class="form-control"
+          />
 
-              <!-- <p-calendar
+          <!-- <p-calendar
                 formControlName="endAt"
                 [showTime]="true"
                 inputId="time"
                 dateFormat="dd.mm.yy"
                 hourFormat="12"
               ></p-calendar> -->
-              <div
-                *ngIf="
-                  !form.get('endAt').valid &&
-                  (form.get('endAt').dirty || form.get('endAt').touched)
-                "
-                class="text text-danger"
-              >
-                <p *ngIf="form.get('endAt').hasError('required')">
-                  {{ "_.required" | translate }}
-                </p>
-              </div>
-            </div>
+          <div
+            *ngIf="
+              !form.get('endAt').valid &&
+              (form.get('endAt').dirty || form.get('endAt').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('endAt').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
           </div>
-  
-        <div class="row my-5">
-            
-            <div class="col-md-6 col-sm-12">
-                <label class="form-label">{{'field.deliveryBonus'|translate }}</label>
-                <input type="number" formControlName="deliveryBonus" class="form-control form-control-solid" placeholder="{{'field.deliveryBonus'|translate }}"/>
-                <div *ngIf="!form.get('deliveryBonus').valid && (form.get('deliveryBonus').dirty ||   form.get('deliveryBonus').touched)" class="text text-danger">
-                    <p *ngIf="form.get('deliveryBonus').hasError('required')" >{{'_.required'|translate }}</p>
-                  </div>
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <label class="form-label">{{'field.taxiBonus'|translate }} </label>
-                <input type="number" formControlName="taxiBonus" class="form-control form-control-solid" placeholder="{{'field.taxiBonus'|translate }} "/>
-                <div *ngIf="!form.get('taxiBonus').valid && (form.get('taxiBonus').dirty ||  form.get('taxiBonus').touched)" class="text text-danger">
-                    <p *ngIf="form.get('taxiBonus').hasError('required')" >{{'_.required'|translate }}</p>
-                  </div>
-                </div>
-         </div>
+        </div>
+      </div>
 
-         <div class="row my-5">
-            <div class="col-md-6 col-sm-12">
-                <label class="form-label">{{'field.transportBonus'|translate }}</label>
-                <input type="number" formControlName="transportBonus" class="form-control form-control-solid" placeholder="{{'field.transportBonus'|translate }}"/>
-                <div *ngIf="!form.get('transportBonus').valid && (form.get('transportBonus').dirty ||   form.get('transportBonus').touched)" class="text text-danger">
-                    <p *ngIf="form.get('transportBonus').hasError('required')" >{{'_.required'|translate }}</p>
-                  </div>
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <label class="form-label">{{'field.allowedOrderCountPerCustomer'|translate }} </label>
-                <input type="number" formControlName="allowedOrderCountPerCustomer" class="form-control form-control-solid" placeholder="{{'field.allowedOrderCountPerCustomer'|translate }} "/>
-                <div *ngIf="!form.get('allowedOrderCountPerCustomer').valid && (form.get('allowedOrderCountPerCustomer').dirty ||  form.get('allowedOrderCountPerCustomer').touched)" class="text text-danger">
-                    <p *ngIf="form.get('allowedOrderCountPerCustomer').hasError('required')" >{{'_.required'|translate }}</p>
-                  </div>
-                </div>
-         </div>
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.deliveryBonus" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="deliveryBonus"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.deliveryBonus' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('deliveryBonus').valid &&
+              (form.get('deliveryBonus').dirty ||
+                form.get('deliveryBonus').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('deliveryBonus').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.taxiBonus" | translate }} </label>
+          <input
+            type="number"
+            formControlName="taxiBonus"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.taxiBonus' | translate }} "
+          />
+          <div
+            *ngIf="
+              !form.get('taxiBonus').valid &&
+              (form.get('taxiBonus').dirty || form.get('taxiBonus').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('taxiBonus').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
 
-  
-         <div class="row my-5">
-          <div class="col-md-6 col-sm-12">
-              <label class="form-label">{{'field.limitations'|translate }} </label>
-              <input type="number" formControlName="limitations" class="form-control form-control-solid" placeholder="{{'field.limitations'|translate }} "/>
-              <div *ngIf="!form.get('limitations').valid && (form.get('limitations').dirty ||  form.get('limitations').touched)" class="text text-danger">
-                  <p *ngIf="form.get('limitations').hasError('required')" >{{'_.required'|translate }}</p>
-                </div>
-              </div>
-           <div class="col-md-6 col-sm-12">
-              <p>{{ "field.activation" | translate }}</p>
-            <div class="row">
-              <div class="col-4 mx-auto">
-                <label class="form-check form-check-custom form-check-solid">
-                  <input
-                    class="form-check-input mx-2"
-                    type="radio"
-                    [value]="true"
-                    name="isActive"
-                    formControlName="isActive"
-                  />
-                  <span class="form-check-label">
-                    {{ "field.active" | translate }}
-                  </span>
-                </label>
-              </div>
-              <div class="col-4 mx-auto">
-                <label class="form-check form-check-custom form-check-solid">
-                  <input
-                    class="form-check-input mx-2"
-                    type="radio"
-                    [value]="false"
-                    name="isActive"
-                    formControlName="isActive"
-                  />
-                  <span class="form-check-label">
-                    {{ "field.not_active" | translate }}
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.transportBonus" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="transportBonus"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.transportBonus' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('transportBonus').valid &&
+              (form.get('transportBonus').dirty ||
+                form.get('transportBonus').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('transportBonus').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"
+            >{{ "field.allowedOrderCountPerCustomer" | translate }}
+          </label>
+          <input
+            type="number"
+            formControlName="allowedOrderCountPerCustomer"
+            class="form-control form-control-solid"
+            placeholder="{{
+              'field.allowedOrderCountPerCustomer' | translate
+            }} "
+          />
+          <div
+            *ngIf="
+              !form.get('allowedOrderCountPerCustomer').valid &&
+              (form.get('allowedOrderCountPerCustomer').dirty ||
+                form.get('allowedOrderCountPerCustomer').touched)
+            "
+            class="text text-danger"
+          >
+            <p
               *ngIf="
-                !form.get('isActive').valid &&
-                (form.get('isActive').dirty || form.get('isActive').touched)
+                form.get('allowedOrderCountPerCustomer').hasError('required')
               "
-              class="text text-danger"
             >
-              <p *ngIf="form.get('isActive').hasError('required')">
-                {{ "_.required" | translate }}
-              </p>
-            </div>
+              {{ "_.required" | translate }}
+            </p>
           </div>
         </div>
+      </div>
 
-        <div class="row my-5" *ngIf="form.get('isValue').value == false">
-          <div class="col-md-6 col-sm-12">
-            <label class="form-label">{{'field.minOrderAmount'|translate }} </label>
-            <input type="number" formControlName="minOrderAmount" class="form-control form-control-solid" placeholder="{{'field.minOrderAmount'|translate }} "/>
-            <div *ngIf="!form.get('minOrderAmount').valid && (form.get('minOrderAmount').dirty ||  form.get('minOrderAmount').touched)" class="text text-danger">
-                <p *ngIf="form.get('minOrderAmount').hasError('required')" >{{'_.required'|translate }}</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-sm-12">
-              <label class="form-label">{{'field.maxBonusValue'|translate }} </label>
-              <input type="number" formControlName="maxBonusValue" class="form-control form-control-solid" placeholder="{{'field.maxBonusValue'|translate }} "/>
-              <div *ngIf="!form.get('maxBonusValue').valid && (form.get('maxBonusValue').dirty ||  form.get('maxBonusValue').touched)" class="text text-danger">
-                  <p *ngIf="form.get('maxBonusValue').hasError('required')" >{{'_.required'|translate }}</p>
-                </div>
-              </div>
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"
+            >{{ "field.limitations" | translate }}
+          </label>
+          <input
+            type="number"
+            formControlName="limitations"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.limitations' | translate }} "
+          />
+          <div
+            *ngIf="
+              !form.get('limitations').valid &&
+              (form.get('limitations').dirty || form.get('limitations').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('limitations').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
         </div>
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "field.activation" | translate }}</p>
+          <div class="row">
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="true"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.active" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="false"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.not_active" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              !form.get('isActive').valid &&
+              (form.get('isActive').dirty || form.get('isActive').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('isActive').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
 
+      <div class="row my-5" *ngIf="form.get('isValue').value == false">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"
+            >{{ "field.minOrderAmount" | translate }}
+          </label>
+          <input
+            type="number"
+            formControlName="minOrderAmount"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.minOrderAmount' | translate }} "
+          />
+          <div
+            *ngIf="
+              !form.get('minOrderAmount').valid &&
+              (form.get('minOrderAmount').dirty ||
+                form.get('minOrderAmount').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('minOrderAmount').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"
+            >{{ "field.maxBonusValue" | translate }}
+          </label>
+          <input
+            type="number"
+            formControlName="maxBonusValue"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.maxBonusValue' | translate }} "
+          />
+          <div
+            *ngIf="
+              !form.get('maxBonusValue').valid &&
+              (form.get('maxBonusValue').dirty ||
+                form.get('maxBonusValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('maxBonusValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
 
-        <div class="row my-5">
-          <div class="col-md-6 col-sm-12">
-            <p>{{ "field.motivationType" | translate }}</p>
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "field.motivationType" | translate }}</p>
           <div class="row">
             <div class="col-4 mx-auto">
               <label class="form-check form-check-custom form-check-solid">
@@ -214,64 +332,64 @@
         </div>
         <div class="col-md-6 col-sm-12">
           <p>{{ "field.motivationTo" | translate }}</p>
-        <div class="row">
-          <div class="col-4 mx-auto">
-            <label class="form-check form-check-custom form-check-solid">
-              <input
-                class="form-check-input mx-2"
-                type="radio"
-                [value]="true"
-                name="isForNewCutomer"
-                formControlName="isForNewCutomer"
-              />
-              <span class="form-check-label">
-                {{ "field.newCustomers" | translate }}
-              </span>
-            </label>
+          <div class="row">
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="true"
+                  name="isForNewCutomer"
+                  formControlName="isForNewCutomer"
+                />
+                <span class="form-check-label">
+                  {{ "field.newCustomers" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="false"
+                  name="isForNewCutomer"
+                  formControlName="isForNewCutomer"
+                />
+                <span class="form-check-label">
+                  {{ "field.allCustomers" | translate }}
+                </span>
+              </label>
+            </div>
           </div>
-          <div class="col-4 mx-auto">
-            <label class="form-check form-check-custom form-check-solid">
-              <input
-                class="form-check-input mx-2"
-                type="radio"
-                [value]="false"
-                name="isForNewCutomer"
-                formControlName="isForNewCutomer"
-              />
-              <span class="form-check-label">
-                {{ "field.allCustomers" | translate }}
-              </span>
-            </label>
+          <div
+            *ngIf="
+              !form.get('isActive').valid &&
+              (form.get('isActive').dirty || form.get('isActive').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('isActive').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
           </div>
-        </div>
-        <div
-          *ngIf="
-            !form.get('isActive').valid &&
-            (form.get('isActive').dirty || form.get('isActive').touched)
-          "
-          class="text text-danger"
-        >
-          <p *ngIf="form.get('isActive').hasError('required')">
-            {{ "_.required" | translate }}
-          </p>
         </div>
       </div>
-        </div>
-  
-        <div class="row my-5" *ngIf="mode != 'View'">
-          <div class="col-md-4 col-sm-12 mx-auto text-center">
-            <button
-              type="submit"
-              class="btn btn-primary btn-block btn-hover-scale"
-            >
-              {{ "action.save" | translate }}
-            </button>
-          </div>
-        </div>
-      </form>
 
-      <hr>
-      <app-table
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr />
+    <app-table
       *ngIf="customersOrders.length"
       [list]="customersOrders"
       [titles]="titles"
@@ -281,8 +399,7 @@
       [showView]="false"
       [showEdit]="false"
       [showPagination]="false"
-      >
-  </app-table>
-    </div>
+    >
+    </app-table>
   </div>
-  
+</div>

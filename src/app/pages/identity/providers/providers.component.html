@@ -1,6 +1,5 @@
-<div class="card card-flush shadow-sm px-2">
+<div class="card shadow-sm px-2">
   <div class="card-header">
-    <h3 class="card-title">{{ "menu.providers" | translate }}</h3>
     <div class="card-toolbar">
       <a
         class="btn btn-sm btn-success mt-1 px-3"
@@ -18,7 +17,7 @@
         {{ "action.providerSubscriptionCreate" | translate }}
       </a>
       <button
-      *ngIf="!isVendor"
+        *ngIf="!isVendor"
         class="btn btn-sm btn-danger mt-1 px-2"
         (click)="openRenewSubscriptionModal()"
       >
@@ -28,7 +27,10 @@
   </div>
   <div class="card-body">
     <div class="row mb-2">
-      <div class="col-md-4 col-sm-12 d-flex justify-content-between" *ngIf="!isVendor">
+      <div
+        class="col-md-4 col-sm-12 d-flex justify-content-between"
+        *ngIf="!isVendor"
+      >
         <button
           class="btn btn-sm btn-warning mt-1 px-2"
           (click)="openWindow('TrackingDeliveryProvider')"
@@ -50,11 +52,10 @@
       </div>
     </div>
     <div class="row mb-2">
-      <div class="card bg-secondary p-0">
+      <div class="card bg-light p-0">
         <div class="card-body">
-          <app-filter [filter]="filter"></app-filter>
-          <div class="row">
-            <div class="col-md-4 col-sm-12">
+          <app-filter [filter]="filter">
+            <div class="col-lg-3 col-md-6 col-sm-12">
               <label class="mb-2"> {{ "global.type" | translate }}</label>
               <select
                 (change)="filterProviders($event.target['value'])"
@@ -69,7 +70,7 @@
               </select>
             </div>
 
-            <div class="col-md-4 col-sm-12" *ngIf="!isVendor">
+            <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="!isVendor">
               <label class="mb-2"> {{ "field.VendorId" | translate }}</label>
               <select
                 [(ngModel)]="filter.VendorId"
@@ -83,7 +84,7 @@
                 </option>
               </select>
             </div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12">
               <label class="mb-2">{{ "field.Statues" | translate }}</label>
               <select
                 [(ngModel)]="filter.Statues"
@@ -101,7 +102,7 @@
               </select>
             </div>
 
-            <div class="col-md-4 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12">
               <label class="form-label">{{ "city.name" | translate }}</label>
               <select
                 [(ngModel)]="filter.CityId"
@@ -112,7 +113,7 @@
                 </option>
               </select>
             </div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12">
               <label class="form-label">{{
                 "global.providerNationalityId" | translate
               }}</label>
@@ -125,7 +126,7 @@
                 </option>
               </select>
             </div>
-          </div>
+          </app-filter>
         </div>
       </div>
     </div>
@@ -171,6 +172,7 @@
     </div>
 
     <app-table
+      [filter]="filter"
       [list]="providerList"
       [titles]="titles"
       [properties]="properties"

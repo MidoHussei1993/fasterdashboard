@@ -6,6 +6,7 @@ import { AdditionalComponentListComponent } from './additional-component-list/ad
 import { AdditionalComponentCrudComponent } from './additional-component-crud/additional-component-crud.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -19,6 +20,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    CalendarModule
+  ],
+  exports: [
+    AdditionalComponentListComponent,
+    AdditionalComponentCrudComponent
   ]
 })
 export class AdditionalComponentModule { }

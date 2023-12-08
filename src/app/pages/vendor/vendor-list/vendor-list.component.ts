@@ -9,26 +9,27 @@ import { FormMode, List, Pagination } from 'src/app/shared';
 import { IdentityService } from '../../identity/services/identity.service';
 import { Vendor, VendorFilter } from '../models';
 import { VendorService } from '../services/vendor.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-vendor-list',
   templateUrl: './vendor-list.component.html',
-  styleUrls: ['./vendor-list.component.scss']
+  styleUrls: ['./vendor-list.component.scss'],
 })
 export class VendorListComponent implements OnInit {
   @ViewChild('resetPassword', { static: false }) resetPassword;
   VendorList: Vendor[] = [];
-  titles:string[] = [
-    'field.ApplicationUserId', 
-    'field.name', 
-    'field.phoneNumber', 
-    'field.email', 
+  titles: string[] = [
+    'field.ApplicationUserId',
+    'field.name',
+    'field.phoneNumber',
+    'field.email',
   ];
   properties: string[] = [
-    'applicationUserId', 
-    'fullName', 
-    'phoneNumber', 
-    'email', 
+    'applicationUserId',
+    'fullName',
+    'phoneNumber',
+    'email',
   ];
   busyLoading: boolean = true;
   pagination: Pagination = new Pagination();
@@ -47,16 +48,17 @@ export class VendorListComponent implements OnInit {
     private identityService: IdentityService,
     private notifier: NotifierService,
     private translate: TranslateService,
-    private modalService: NgbModal,
+    private headerService: HeaderService,
+    private modalService: NgbModal
   ) {
     this.form = this.formBuilder.group({
-      userId: ['', [ Validators.required]],
-      password: ['', [ Validators.required]],
-
+      userId: ['', [Validators.required]],
+      password: ['', [Validators.required]],
     });
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.vendor'));
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getVendorList();
@@ -110,19 +112,18 @@ export class VendorListComponent implements OnInit {
       );
   }
 
-  setPageSize(pageSize){
-    if(pageSize == this.filter.PageSize) return;
+  setPageSize(pageSize) {
+    if (pageSize == this.filter.PageSize) return;
     this.filter.PageSize = pageSize;
     this.getVendorList();
   }
 
-  setPageNumber(pageNumber:number){
-    if(pageNumber == this.filter.PageNumber) return;
+  setPageNumber(pageNumber: number) {
+    if (pageNumber == this.filter.PageNumber) return;
     this.filter.PageNumber = pageNumber;
     this.getVendorList();
   }
 
- 
   navigateToEdit(Vendor: Vendor) {
     this.router.navigateByUrl(`/vendor/edit/${Vendor.id}`);
   }
@@ -143,17 +144,23 @@ export class VendorListComponent implements OnInit {
   }
 
   create() {
-    if(!this.form.valid) return;
+    if (!this.form.valid) return;
     let body = this.form.value;
     this.spinner.show();
-    this.identityService.ResetPassword(body).subscribe(result => {
-      this.form.reset();
-      this.spinner.hide();
-      this.modalService.dismissAll();
-      this.notifier.notify('success',this.translate.instant('global.created'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.identityService.ResetPassword(body).subscribe(
+      (result) => {
+        this.form.reset();
+        this.spinner.hide();
+        this.modalService.dismissAll();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.created')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
 }

@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   hasError: boolean;
   returnUrl: string;
-  isLoading$: Observable<boolean>;
+  isLoading: boolean = false;
 
   // private fields
   private unsubscribe: Subscription[] = [];
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private translate: TranslateService
   ) {
-    this.isLoading$ = this.authService.isLoading$;
+    // this.isLoading = this.authService.isLoading;
     // redirect to home if already logged in
     if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
@@ -84,9 +84,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submit() {
     this.hasError = false;
-    console.log(this.user);
+    this.isLoading = true;
     this.loginService.login(this.user).subscribe(
       (res: any) => {
+        this.isLoading = false;
         localStorage.setItem('refreshToken', res.refreshToken);
         localStorage.setItem('token', res.token);
         if (this.route.snapshot.queryParamMap.get('redirectFrom')) {
@@ -97,6 +98,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['/dashboard']);
       },
       (err) => {
+        this.isLoading = false;
+        this.hasError = false;
+
         Swal.fire({
           position: 'center',
           text: this.translate.instant('err.login'),

@@ -69,4 +69,7 @@ export class ShopBranchService {
     formData.append('excelFile', file);
     return this.http.post<any>(API.AddByExcel(id), formData);
   }
+  BusyChange(id: string): Observable<any> {
+    return this.http.post<any>(API.BusyChange(id), {});
+  }
 }

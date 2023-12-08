@@ -1,8 +1,4 @@
 <div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">{{ "menu.foodType" | translate }}</h3>
-    
-  </div>
   <div class="card-body">
     <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/food-type/create'">
       <i class="fas fa-plus"></i>
@@ -14,13 +10,10 @@
         <app-filter [filter]="filter"></app-filter>
       </div>
     </div>
-      <a class="btn btn-sm btn-primary mx-2 mt-2" (click)="navigateToCreateFoodShop()">
-        <i class="fas fa-plus"></i>
-        {{ "field.createFoodShop" | translate }}
-      </a>
     <app-table
       [list]="list"
       [titles]="titles"
+      [filter]="filter"
       create
       [properties]="properties"
       [pagination]="pagination"
@@ -29,7 +22,7 @@
       (view)="navigateToView($event)"
       (edit)="navigateToEdit($event)"
       (delete)="deleteItem($event)"
-      [showDelete]="isShopId"
+      [showDelete]="false"
       [showSearch]="true"
       (search)="searchValue()"
       (resetFilter)="resetfilter()"

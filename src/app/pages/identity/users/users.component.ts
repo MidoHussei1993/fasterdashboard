@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FormMode, Pagination } from 'src/app/shared';
 import { User, UserFilter } from '../models';
 import { IdentityService, IList } from '../services/identity.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-users',
@@ -49,6 +50,7 @@ export class UsersComponent implements OnInit {
     private notifier: NotifierService,
     private translate: TranslateService,
     private modalService: NgbModal,
+    private headerService: HeaderService,
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
@@ -58,6 +60,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.users'));
     this.filter.PageNumber = 1;
     this.filter.PageSize = 100;
     this.getUserList();
@@ -153,15 +156,13 @@ export class UsersComponent implements OnInit {
         this.rowData = user.event;
         this.openModal();
         break;
-        case 'priviledge':
-          this.router.navigateByUrl(
-            `/identity/users/priviledge/${user.event.id}`
-          );
-          break;
-          case 'userActionTracking':
+      case 'priviledge':
         this.router.navigateByUrl(
-          `/app/user-action-tracking/${user.event.id}`
+          `/identity/users/priviledge/${user.event.id}`
         );
+        break;
+      case 'userActionTracking':
+        this.router.navigateByUrl(`/app/user-action-tracking/${user.event.id}`);
         break;
 
       default:

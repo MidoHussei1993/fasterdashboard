@@ -1,22 +1,18 @@
-<div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">{{ "car.carName" | translate }}</h3>
-  </div>
+<div class="card shadow-sm">
   <div class="card-body">
     <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/car-name/create'">
       <i class="fas fa-plus"></i>
       {{ "action.create" | translate }}
     </a>
-    <div class="card bg-secondary">
+    <div class="card bg-light">
       <div class="card-body">
-        <app-filter [filter]="filter"></app-filter>
-
-        <div class="col-md-6 col-sm-12">
+        <app-filter [filter]="filter">
+          <div class="col-lg-3 col-md-6 col-sm-12">
             <p class="font-weight-bolder">
               {{ "shop.shop_type" | translate }}
             </p>
             <select
-            (change)="setCarModel($event.target['value'])"
+              (change)="setCarModel($event.target['value'])"
               class="form-select form-select-solid"
             >
               <option [value]="''">
@@ -27,11 +23,11 @@
               </option>
             </select>
           </div>
-          <div class="col-md-3 col-sm-12 align-baseline"></div>
-
-        </div>
+        </app-filter>
+      </div>
     </div>
     <app-table
+      [filter]="filter"
       [list]="CarNameList"
       [titles]="titles"
       [properties]="properties"

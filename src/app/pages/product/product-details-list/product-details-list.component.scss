@@ -1,47 +1,44 @@
-.la-trash-alt{
-    color:black;
-    &:hover{
-        color:red;
-        cursor: pointer;
-    }
+.la-trash-alt {
+  color: black;
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
 }
-.la-edit{
-    color:black;
-    &:hover{
-        color:rgb(255, 185, 33);
-        cursor: pointer;
-    }
+.la-edit {
+  color: black;
+  &:hover {
+    color: rgb(255, 185, 33);
+    cursor: pointer;
+  }
 }
-.la-eye{
-    color:black;
-    &:hover{
-        color:rgb(0, 174, 255);
-        cursor: pointer;
-    }
+.la-eye {
+  color: black;
+  &:hover {
+    color: rgb(0, 174, 255);
+    cursor: pointer;
+  }
 }
-.fa-ruler{
-    color:black;
-    &:hover{
-        color:rgb(243, 56, 23);
-        cursor: pointer;
-    }
+.fa-ruler {
+  color: black;
+  &:hover {
+    color: rgb(243, 56, 23);
+    cursor: pointer;
+  }
+}
+.fa-store {
+  color: black;
+  &:hover {
+    color: rgb(23, 170, 243);
+    cursor: pointer;
+  }
 }
 
-.fa-creative-commons-remix , .fa-battle-net{
-    color:black;
-    &:hover{
-        color:rgb(24, 126, 116);
-        cursor: pointer;
-    }
-}
-
-table{
-	border: 1px solid rgb(0 0 0) !important;
-    box-shadow: 0px 2px 6px black;
-	background: rgb(11 114 181 / 25%);
-}
-tbody tr:hover{
-	transform: scale(1.03);
-	box-shadow: 0px 1px 6px black;
-
+.fa-creative-commons-remix,
+.fa-battle-net {
+  color: black;
+  &:hover {
+    color: rgb(24, 126, 116);
+    cursor: pointer;
+  }
 }

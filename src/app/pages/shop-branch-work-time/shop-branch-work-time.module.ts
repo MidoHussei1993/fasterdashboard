@@ -7,12 +7,14 @@ import { ShopBranchWorkTimeCrudComponent } from './shop-branch-work-time-crud/sh
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AddShopBranchesWorkTimeComponent } from './add-shop-branches-work-time/add-shop-branches-work-time.component';
 
 
 @NgModule({
   declarations: [
     ShopBranchWorkTimeListComponent,
-    ShopBranchWorkTimeCrudComponent
+    ShopBranchWorkTimeCrudComponent,
+    AddShopBranchesWorkTimeComponent
   ],
   imports: [
     CommonModule,

@@ -6,22 +6,18 @@ import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { ItemSize } from '../models';
 import { ItemSizeFilter } from '../models/item-size-filter.model';
 import { ItemSizeService } from '../services/item-size.service';
+import { HeaderService } from 'src/app/core/services/header.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-item-size-list',
   templateUrl: './item-size-list.component.html',
-  styleUrls: ['./item-size-list.component.scss']
+  styleUrls: ['./item-size-list.component.scss'],
 })
 export class ItemSizeListComponent implements OnInit {
   itemSizeList: ItemSize[] = [];
-  titles: string[] = [
-    'shop.sizeName',
-    'shop.sizeName',
-  ];
-  properties: string[] = [
-    'sizeName',
-    'sizeNameAr',
-  ];
+  titles: string[] = ['shop.sizeName', 'shop.sizeName'];
+  properties: string[] = ['sizeName', 'sizeNameAr'];
   filter: ItemSizeFilter;
   busyLoading: boolean = true;
   pagination: Pagination = new Pagination();
@@ -32,10 +28,13 @@ export class ItemSizeListComponent implements OnInit {
     private itemSizeService: ItemSizeService,
     private router: Router,
     private swalService: SwalModalService,
+    private translate: TranslateService,
+    private headerService: HeaderService,
     private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.itemSize'));
     this.filter = new ItemSizeFilter();
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
@@ -99,5 +98,4 @@ export class ItemSizeListComponent implements OnInit {
         break;
     }
   }
-
 }

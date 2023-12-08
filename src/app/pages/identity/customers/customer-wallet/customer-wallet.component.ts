@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NotifierService } from 'angular-notifier';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MoyaserService } from 'src/app/pages/moyaser/services/moyaser.service';
 import { ProviderWalletService } from 'src/app/pages/provider-wallet/services';
 import {
   CustomerWallet,
@@ -14,6 +15,7 @@ import {
 import { ImgViewerComponent } from 'src/app/shared/components/img-viewer/img-viewer.component';
 import { CustomerWalletService } from 'src/app/shared/services/customer-wallet.service';
 import { ExcelService } from 'src/app/shared/services/excel.service';
+import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 
 @Component({
   selector: 'app-customer-wallet',
@@ -66,6 +68,8 @@ export class CustomerWalletComponent implements OnInit {
     private notifier: NotifierService,
     private spinner: NgxSpinnerService,
     private excelService: ExcelService,
+    private swalModalService: SwalModalService,
+    private moyaserService: MoyaserService,
     private providerWalletService: ProviderWalletService
   ) {
     this.form = this.formBuilder.group({
@@ -257,6 +261,43 @@ export class CustomerWalletComponent implements OnInit {
     switch (item.type) {
       case 'viewImage':
         this.viewImage(item.event.moneyTransferImage);
+        break;
+      case 'refund':
+        this.swalModalService
+          .Confirmation(
+            this.translate.instant('refundMsg'),
+            `<strong>${
+              this.translate.instant('refundAmount') + item.event.amount
+            }</strong>`
+          )
+          .then((res) => {
+            if (res) {
+              this.spinner.show();
+              this.moyaserService
+                .refundPayment({
+                  paymentId: item.event.paymentId,
+                  customerId: item.event.customerId,
+                  amount: item.event.amount,
+                })
+                .subscribe(
+                  (res) => {
+                    this.spinner.hide();
+                    this.notifier.notify(
+                      'success',
+                      this.translate.instant('action.done')
+                    );
+                  },
+                  (err) => {
+                    this.spinner.hide();
+                    this.notifier.notify(
+                      'error',
+                      this.translate.instant('global.server_error')
+                    );
+                    console.log(err);
+                  }
+                );
+            }
+          });
         break;
 
       default:

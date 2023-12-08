@@ -36,7 +36,7 @@ export class ProviderListComponent implements OnInit {
   currentLanguage: string = '';
 
   driverType: string = '';
-  showDownload:boolean = false;
+  showDownload: boolean = false;
 
   constructor(
     private identityService: IdentityService,
@@ -55,10 +55,13 @@ export class ProviderListComponent implements OnInit {
     this.filter.PageSize = 10;
     this.driverType = this.activatedRoute.snapshot.queryParams.driverType;
     if (this.activatedRoute.snapshot.queryParams.driverType) {
-      if (this.activatedRoute.snapshot.queryParams.driverType == 'providersHaveOneOrderAtLeast') {
-       this.showDownload = true;
+      if (
+        this.activatedRoute.snapshot.queryParams.driverType ==
+        'providersHaveOneOrderAtLeast'
+      ) {
+        this.showDownload = true;
       }
-   }
+    }
     if (localStorage.getItem('providerFilter')) {
       this.filter = {
         ...this.filter,
@@ -146,6 +149,7 @@ export class ProviderListComponent implements OnInit {
       default:
         break;
     }
+    if (!ProviderApi$) return;
     this.busyLoading = true;
     this.spinner.show();
     ProviderApi$.subscribe(

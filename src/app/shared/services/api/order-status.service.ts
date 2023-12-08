@@ -6,14 +6,13 @@ import { Dropdown } from '../../models';
 
 const API = END_POINTS.OrderStatus;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderStatusService {
-
   constructor(private http: HttpClient) {}
 
-  DeliveryOrderStatusDDL(): Observable<Dropdown[]> {
-    return this.http.get<Dropdown[]>(API.DeliveryOrderStatusDDL);
+  DeliveryOrderStatusDDL(): Observable<any[]> {
+    return this.http.get<any[]>(API.DeliveryOrderStatusDDL);
   }
 
   TransportOrderStatusDDL(): Observable<Dropdown[]> {
@@ -26,5 +25,4 @@ export class OrderStatusService {
   UpdateTransportOrderStatus(model: any): Observable<any> {
     return this.http.put<any>(API.UpdateTransportOrderStatus, model);
   }
-
 }

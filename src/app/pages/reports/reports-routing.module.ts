@@ -25,8 +25,14 @@ import { TransportOrderDetailsComponent } from './components/transport-order-det
 import { TransportOrderComponent } from './components/transport-order/transport-order.component';
 import { WalletManualAdditionComponent } from './components/wallet-manual-addition/wallet-manual-addition.component';
 import { WorkTimeComponent } from './components/work-time/work-time.component';
+import { AllReportComponent } from './all-report/all-report.component';
+import { GiftCardTypesSendSearchComponent } from './components/gift-card-types-send-search/gift-card-types-send-search.component';
 
 const routes: Routes = [
+  {
+    path: 'show/:id',
+    component: AllReportComponent,
+  },
   {
     path: 'active-providers',
     component: ActiveProvidersComponent,
@@ -126,6 +132,10 @@ const routes: Routes = [
   {
     path: 'shop-profit',
     component: ShopProfitComponent,
+  },
+  {
+    path: 'send-search',
+    component: GiftCardTypesSendSearchComponent,
   },
 ];
 

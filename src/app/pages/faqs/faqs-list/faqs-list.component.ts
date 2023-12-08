@@ -7,6 +7,7 @@ import { Pagination, FormMode, List } from 'src/app/shared';
 import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { Faqs, FaqsFilter } from '../models';
 import { FaqsService } from '../services';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-faqs-list',
@@ -36,10 +37,12 @@ export class FaqsListComponent implements OnInit {
     private router: Router,
     private swalService: SwalModalService,
     private translate: TranslateService,
+    private headerService: HeaderService,
     private notify: NotifierService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.faqs'));
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getFaqsList();

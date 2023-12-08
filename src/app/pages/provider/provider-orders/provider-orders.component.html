@@ -1,118 +1,118 @@
-<div class="card card-flush shadow-sm">
-    <div class="card-header">
-      <h3 class="card-title">
-        <span class="mx-2"> {{ "menu.order" | translate }} </span>
-      </h3>
-    </div>
-    <div class="card-body">
-      <p-tabView>
-        <p-tabPanel header="{{ 'menu.DeliveryOrderDataReport' | translate }}">
-          <div class="card bg-secondary">
-            <div class="card-body">
-              <app-filter [filter]="filter"></app-filter>
-              <div class="row">
-                <div class="col-md-4 col-sm-12">
-                  <label class="form-label">{{
-                    "cobone.status" | translate
-                  }}</label>
-                  <select
-                    [(ngModel)]="filter.StatusId"
-                    class="form-select form-select-solid"
-                  >
-                    <option [value]="state.id" *ngFor="let state of statusList">
-                      {{ currentLanguage == "en" ? state.name : state.nameAr }}
-                    </option>
-                  </select>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                  <label class="form-label">{{
-                    "field.payTypeName" | translate
-                  }}</label>
-                  <select
-                    [(ngModel)]="filter.PayTypeId"
-                    class="form-select form-select-solid"
-                  >
-                    <option [value]="type.id" *ngFor="let type of payTypeList">
-                      {{ currentLanguage == "en" ? type.name : type.nameAr }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <app-table
-            [list]="deliveryOrderlist"
-            [titles]="titles"
-            [properties]="properties"
-            [busyLoading]="busyLoading"
-            [pagination]="pagination"
-            (activetedPageSize)="setPageSize($event)"
-            (activetedPageNumber)="setPageNumber($event)"
-            [showDelete]="false"
-            [isdownloadAll]="deliveryOrderlist.length?true:false"
-            (edit)="navigateToEdit($event)"
-            (view)="navigateToView($event)"
-            [showSearch]="true"
-            (search)="searchValue()"
-            (resetFilter)="resetfilter()"
-            (export)="downloadAll()"
-          ></app-table>
-        </p-tabPanel>
-        <p-tabPanel header="{{ 'menu.TransportOrderDataReport' | translate }}">
-          <div class="card bg-secondary">
-            <div class="card-body">
-              <app-filter [filter]="filter"></app-filter>
-              <div class="row">
-                <div class="col-md-4 col-sm-12">
-                  <label class="form-label">{{
-                    "cobone.status" | translate
-                  }}</label>
-                  <select
-                    [(ngModel)]="filter.StatusId"
-                    class="form-select form-select-solid"
-                  >
-                    <option [value]="state.id" *ngFor="let state of statusList">
-                      {{ currentLanguage == "en" ? state.name : state.nameAr }}
-                    </option>
-                  </select>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                  <label class="form-label">{{
-                    "field.payTypeName" | translate
-                  }}</label>
-                  <select
-                    [(ngModel)]="filter.PayTypeId"
-                    class="form-select form-select-solid"
-                  >
-                    <option [value]="type.id" *ngFor="let type of payTypeList">
-                      {{ currentLanguage == "en" ? type.name : type.nameAr }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <app-table
-            [list]="transportOrderList"
-            [titles]="TransportTitles"
-            [properties]="TransportProperties"
-            [busyLoading]="busyLoading"
-            [pagination]="transportPagination"
-            (activetedPageSize)="transportSetPageSize($event)"
-            (activetedPageNumber)="transportsSetPageNumber($event)"
-            [showDelete]="false"
-            [isdownloadAll]="transportOrderList.length?true:false"
-            (edit)="transportNavigateToEdit($event)"
-            (view)="transportNavigateToView($event)"
-            [showSearch]="true"
-            (search)="transportSearchValue()"
-            (resetFilter)="transportResetFilter()"
-            (export)="transportDownloadAll()"
-          ></app-table>
-        </p-tabPanel>
-      </p-tabView>
-    </div>
+<div class="card shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span class="mx-2"> {{ "menu.order" | translate }} </span>
+    </h3>
   </div>
-  
-  <img-viewer #imgViewer></img-viewer>
-  
+  <div class="card-body">
+    <p-tabView>
+      <p-tabPanel header="{{ 'menu.DeliveryOrderDataReport' | translate }}">
+        <div class="card bg-light">
+          <div class="card-body">
+            <app-filter [filter]="filter">
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                <label class="form-label">{{
+                  "cobone.status" | translate
+                }}</label>
+                <select
+                  [(ngModel)]="filter.StatusId"
+                  class="form-select form-select-solid"
+                >
+                  <option [value]="state.id" *ngFor="let state of statusList">
+                    {{ currentLanguage == "en" ? state.name : state.nameAr }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-12">
+                <label class="form-label">{{
+                  "field.payTypeName" | translate
+                }}</label>
+                <select
+                  [(ngModel)]="filter.PayTypeId"
+                  class="form-select form-select-solid"
+                >
+                  <option [value]="type.id" *ngFor="let type of payTypeList">
+                    {{ currentLanguage == "en" ? type.name : type.nameAr }}
+                  </option>
+                </select>
+              </div>
+            </app-filter>
+          </div>
+        </div>
+        <app-table
+          [filter]="filter"
+          [list]="deliveryOrderlist"
+          [titles]="titles"
+          [properties]="properties"
+          [busyLoading]="busyLoading"
+          [pagination]="pagination"
+          (activetedPageSize)="setPageSize($event)"
+          (activetedPageNumber)="setPageNumber($event)"
+          [showDelete]="false"
+          [isdownloadAll]="deliveryOrderlist.length ? true : false"
+          (edit)="navigateToEdit($event)"
+          (view)="navigateToView($event)"
+          [showSearch]="true"
+          (search)="searchValue()"
+          (resetFilter)="resetfilter()"
+          (export)="downloadAll()"
+        ></app-table>
+      </p-tabPanel>
+      <p-tabPanel header="{{ 'menu.TransportOrderDataReport' | translate }}">
+        <div class="card bg-light">
+          <div class="card-body">
+            <app-filter [filter]="filter"></app-filter>
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                <label class="form-label">{{
+                  "cobone.status" | translate
+                }}</label>
+                <select
+                  [(ngModel)]="filter.StatusId"
+                  class="form-select form-select-solid"
+                >
+                  <option [value]="state.id" *ngFor="let state of statusList">
+                    {{ currentLanguage == "en" ? state.name : state.nameAr }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <label class="form-label">{{
+                  "field.payTypeName" | translate
+                }}</label>
+                <select
+                  [(ngModel)]="filter.PayTypeId"
+                  class="form-select form-select-solid"
+                >
+                  <option [value]="type.id" *ngFor="let type of payTypeList">
+                    {{ currentLanguage == "en" ? type.name : type.nameAr }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <app-table
+          [filter]="filter"
+          [list]="transportOrderList"
+          [titles]="TransportTitles"
+          [properties]="TransportProperties"
+          [busyLoading]="busyLoading"
+          [pagination]="transportPagination"
+          (activetedPageSize)="transportSetPageSize($event)"
+          (activetedPageNumber)="transportsSetPageNumber($event)"
+          [showDelete]="false"
+          [isdownloadAll]="transportOrderList.length ? true : false"
+          (edit)="transportNavigateToEdit($event)"
+          (view)="transportNavigateToView($event)"
+          [showSearch]="true"
+          (search)="transportSearchValue()"
+          (resetFilter)="transportResetFilter()"
+          (export)="transportDownloadAll()"
+        ></app-table>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+
+<img-viewer #imgViewer></img-viewer>

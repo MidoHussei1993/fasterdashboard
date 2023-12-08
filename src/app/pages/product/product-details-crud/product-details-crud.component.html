@@ -301,6 +301,77 @@
         </div>
       </div>
 
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">snooze Start</label>
+          <p-calendar
+          class="d-block"
+          formControlName="snoozeStart"
+          [showTime]="true"
+          dateFormat="dd.mm.yy"
+          hourFormat="12"
+        ></p-calendar>
+          <div
+            *ngIf="
+              !form.get('snoozeStart').valid &&
+              (form.get('snoozeStart').dirty || form.get('snoozeStart').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('snoozeStart').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">snooze End</label>
+          <p-calendar
+          class="d-block"
+          formControlName="snoozeEnd"
+          [showTime]="true"
+          dateFormat="dd.mm.yy"
+          hourFormat="12"
+        ></p-calendar>
+          <div
+            *ngIf="
+              !form.get('snoozeEnd').valid &&
+              (form.get('snoozeEnd').dirty || form.get('snoozeEnd').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('snoozeEnd').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">deliverect Product Id</label>
+          <input
+            type="text"
+            formControlName="deliverectProductId"
+            class="form-control form-control-solid"
+            placeholder="deliverect Product Id"
+          />
+  
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> deliverect PLU</label>
+          <input
+            type="text"
+            formControlName="deliverectPLU"
+            class="form-control form-control-solid"
+            placeholder="deliverect PLU"
+          />
+  
+        </div>
+  
+      </div>
+
       <div class="row my-5" *ngIf="mode != 'View'">
         <div class="col-md-4 col-sm-12 mx-auto text-center">
           <button

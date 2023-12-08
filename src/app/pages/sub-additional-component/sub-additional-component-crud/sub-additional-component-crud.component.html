@@ -1,0 +1,210 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span> {{ mode | translate }} - </span>
+        <span class="mx-2"> {{ "menu.subadditionalComponent" | translate }} </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+ 
+  
+        <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.componentName'|translate }}</label>
+                <input type="text" formControlName="componentName" class="form-control form-control-solid" placeholder="{{'field.componentName'|translate }}"/>
+                <div *ngIf="!form.get('componentName').valid && (form.get('componentName').dirty ||   form.get('componentName').touched)" class="text text-danger">
+                    <p *ngIf="form.get('componentName').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('componentName').hasError('pattern')">{{'_.only_en'|translate }} </p>
+                  </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{'field.componentName'|translate }} ع</label>
+                <input type="text" formControlName="componentNameAr" class="form-control form-control-solid" placeholder="{{'field.componentName'|translate }} ع"/>
+                <div *ngIf="!form.get('componentNameAr').valid && (form.get('componentNameAr').dirty ||  form.get('componentNameAr').touched)" class="text text-danger">
+                    <p *ngIf="form.get('componentNameAr').hasError('required')" >{{'_.required'|translate }}</p>
+                    <p *ngIf="form.get('componentNameAr').hasError('pattern')">{{'_.only_ar'|translate }} </p>
+                  </div>
+                </div>
+         </div>
+
+         <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">{{ "field.price" | translate }}</label>
+                <input
+                  type="number"
+                  min="0"
+                  formControlName="price"
+                  class="form-control form-control-solid"
+                  placeholder="{{ 'field.price' | translate }}"
+                />
+                <div
+                  *ngIf="
+                    !form.get('price').valid &&
+                    (form.get('price').dirty || form.get('price').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('price').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <p>default Quantity</p>
+                <div class="row">
+                  <div class="col-4 mx-auto">
+                    <label class="form-check form-check-custom form-check-solid">
+                      <input
+                        class="form-check-input mx-2"
+                        type="radio"
+                        [value]="true"
+                        name="defaultQuantity"
+                        formControlName="defaultQuantity"
+                      />
+                      <span class="form-check-label">
+                        {{ "action.yes" | translate }}
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-4 mx-auto">
+                    <label class="form-check form-check-custom form-check-solid">
+                      <input
+                        class="form-check-input mx-2"
+                        type="radio"
+                        [value]="false"
+                        name="defaultQuantity"
+                        formControlName="defaultQuantity"
+                      />
+                      <span class="form-check-label">
+                        {{ "action.no" | translate }}
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <div
+                  *ngIf="
+                    !form.get('defaultQuantity').valid &&
+                    (form.get('defaultQuantity').dirty || form.get('defaultQuantity').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('defaultQuantity').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div>
+         </div>
+
+
+         <div class="row my-5">
+          <div class="col-md-6 col-sm-12">
+            <label class="form-label">snooze Start</label>
+            <p-calendar
+            class="d-block"
+            formControlName="snoozeStart"
+            [showTime]="true"
+            dateFormat="dd.mm.yy"
+            hourFormat="12"
+          ></p-calendar>
+            <div
+              *ngIf="
+                !form.get('snoozeStart').valid &&
+                (form.get('snoozeStart').dirty || form.get('snoozeStart').touched)
+              "
+              class="text text-danger"
+            >
+              <p *ngIf="form.get('snoozeStart').hasError('required')">
+                {{ "_.required" | translate }}
+              </p>
+            </div>
+          </div>
+  
+          <div class="col-md-6 col-sm-12">
+            <label class="form-label">snooze End</label>
+            <p-calendar
+            class="d-block"
+            formControlName="snoozeEnd"
+            [showTime]="true"
+            dateFormat="dd.mm.yy"
+            hourFormat="12"
+          ></p-calendar>
+            <div
+              *ngIf="
+                !form.get('snoozeEnd').valid &&
+                (form.get('snoozeEnd').dirty || form.get('snoozeEnd').touched)
+              "
+              class="text text-danger"
+            >
+              <p *ngIf="form.get('snoozeEnd').hasError('required')">
+                {{ "_.required" | translate }}
+              </p>
+            </div>
+          </div>
+        
+        </div>
+  
+        <div class="row my-5">
+          <div class="col-md-6 col-sm-12">
+            <label class="form-label">deliverect Modifier Id</label>
+            <input
+              type="text"
+              formControlName="deliverectModifierId"
+              class="form-control form-control-solid"
+              placeholder="deliverect Product Id"
+            />
+    
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <label class="form-label"> deliverect PLU</label>
+            <input
+              type="text"
+              formControlName="deliverectPLU"
+              class="form-control form-control-solid"
+              placeholder="deliverect PLU"
+            />
+          </div>
+        </div>
+
+        <div class="row my-5">
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label">min Of Select</label>
+              <input
+                type="number"
+                min="0"
+                formControlName="minOfSelect"
+                class="form-control form-control-solid"
+                placeholder="deliverect Product Id"
+              />
+      
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">max Of Select</label>
+                <input
+                  type="number"
+                  min="0"
+                  formControlName="maxOfSelect"
+                  class="form-control form-control-solid"
+                  placeholder="deliverect Product Id"
+                />
+        
+              </div>
+           
+          </div>
+      
+  
+        <div class="row my-5" *ngIf="mode != 'View'">
+          <div class="col-md-4 col-sm-12 mx-auto text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-hover-scale"
+            >
+              {{ "action.save" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

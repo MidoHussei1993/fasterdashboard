@@ -9,22 +9,24 @@ import { ImgViewerComponent } from 'src/app/shared/components/img-viewer/img-vie
 import { ShopService } from '../../shop/services';
 import { Banner } from '../models';
 import { BannerService } from '../services';
+import { ShopTypeService } from '../../shop-type/services';
 
 @Component({
   selector: 'app-banner-crud',
   templateUrl: './banner-crud.component.html',
-  styleUrls: ['./banner-crud.component.scss']
+  styleUrls: ['./banner-crud.component.scss'],
 })
 export class BannerCrudComponent implements OnInit {
-  @ViewChild('imgViewer', { static: false }) imgViewer:ImgViewerComponent;
+  @ViewChild('imgViewer', { static: false }) imgViewer: ImgViewerComponent;
 
   mode: FormMode;
-  banner:Banner
+  banner: Banner;
   form: FormGroup;
-  busyLoading:boolean = false;
-  currentLanguage:string = '';
+  busyLoading: boolean = false;
+  currentLanguage: string = '';
   shopBranchId: number = null;
   shopList: Dropdown[] = [];
+  shopTypeList: Dropdown[] = [];
 
   constructor(
     private router: Router,
@@ -33,19 +35,27 @@ export class BannerCrudComponent implements OnInit {
     private bannerService: BannerService,
     private notifier: NotifierService,
     private translate: TranslateService,
-    private spinner:NgxSpinnerService ,
+    private spinner: NgxSpinnerService,
+    private shopTypeService: ShopTypeService,
     private shopService: ShopService
-
-
-  ) { 
+  ) {
     this.form = this.formBuilder.group({
       id: [0],
-      description: ['', [ Validators.required,Validators.pattern(Pattern.OnlyEnglishLettersAndSpace)]],
-      descriptionAr: ['', [ Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)]],
-      imagePath: ['', [ Validators.required]],
-      isActive: ['', [ Validators.required]],
-      shopId: [''],
-     
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(Pattern.OnlyEnglishLettersAndSpace),
+        ],
+      ],
+      descriptionAr: [
+        '',
+        [Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)],
+      ],
+      imagePath: ['', [Validators.required]],
+      isActive: ['', [Validators.required]],
+      shopId: [null],
+      shopTypeId: [null],
     });
 
     this.mode = this.route.snapshot.data.mode;
@@ -57,51 +67,68 @@ export class BannerCrudComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.mode == FormMode.Edit || this.mode == FormMode.View){
+    if (this.mode == FormMode.Edit || this.mode == FormMode.View) {
       this.banner = new Banner();
       this.shopBranchId = this.route.snapshot.params.id;
-      this.getBannerById(this.shopBranchId)
+      this.getBannerById(this.shopBranchId);
     }
     this.getShopList();
+    this.getShopTypeList();
   }
 
-  getShopList(){
-    this.shopService.getDropdown().subscribe((res:Dropdown[]) =>{
-      this.shopList = res
-    }, err =>{
-      console.log(err);
-    })
+  getShopTypeList() {
+    this.shopTypeService.getDropdown().subscribe(
+      (res: Dropdown[]) => {
+        this.shopTypeList = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
-  viewImage(){
+  getShopList() {
+    this.shopService.getDropdown().subscribe(
+      (res: Dropdown[]) => {
+        this.shopList = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  viewImage() {
     this.imgViewer.openBackDropCustomClass();
   }
 
-  getBannerById(id:number){
+  getBannerById(id: number) {
     this.busyLoading = true;
     this.spinner.show();
-    this.bannerService.getByID(id).subscribe(res => {
-      this.spinner.hide();
-      this.banner = new Banner();
-      this.banner = res;
-      this.busyLoading = false;
-      this.form.patchValue(res)
-    },err => {
-    this.spinner.show();
-      this.busyLoading = false;
-    })
+    this.bannerService.getByID(id).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.banner = new Banner();
+        this.banner = res;
+        this.busyLoading = false;
+        this.form.patchValue(res);
+      },
+      (err) => {
+        this.spinner.show();
+        this.busyLoading = false;
+      }
+    );
   }
 
   async handleInputChange(event) {
     const file = event.target.files[0];
-    this.bannerService.UploadImage(file).subscribe(res => {
-      this.form.get('imagePath').patchValue(res.returnData.response)
-    })
+    this.bannerService.UploadImage(file).subscribe((res) => {
+      this.form.get('imagePath').patchValue(res.returnData.response);
+    });
   }
 
   submit() {
     this.form.markAllAsTouched();
-    if(!this.form.valid) return;
-    console.log(this.form)
+    if (!this.form.valid) return;
+    console.log(this.form);
     if (this.mode === FormMode.Create) {
       this.create();
     } else {
@@ -111,25 +138,38 @@ export class BannerCrudComponent implements OnInit {
   create() {
     let body = this.form.value;
     this.spinner.show();
-    this.bannerService.create(body).subscribe(result => {
-      this.form.reset();
-      this.form.get('id').patchValue(0);
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.created'))
-    },err=>{
-      this.spinner.hide();
-      // this.notifier.notify('error',err)
-    })
+    this.bannerService.create(body).subscribe(
+      (result) => {
+        this.form.reset();
+        this.form.get('id').patchValue(0);
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.created')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        // this.notifier.notify('error',err)
+      }
+    );
   }
   edit() {
     let body = this.form.value;
+    if (body.shopId == '') body.shopId = null;
     this.spinner.show();
-    this.bannerService.update(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      // this.notifier.notify('error',err)
-    })
+    this.bannerService.update(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        // this.notifier.notify('error',err)
+      }
+    );
   }
 }

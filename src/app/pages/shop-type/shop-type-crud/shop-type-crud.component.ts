@@ -11,17 +11,16 @@ import { ShopTypeService } from '../services';
 @Component({
   selector: 'app-shop-type-crud',
   templateUrl: './shop-type-crud.component.html',
-  styleUrls: ['./shop-type-crud.component.scss']
+  styleUrls: ['./shop-type-crud.component.scss'],
 })
 export class ShopTypeCrudComponent implements OnInit {
-
-  @ViewChild('imgViewer', { static: false }) imgViewer:ImgViewerComponent;
+  @ViewChild('imgViewer', { static: false }) imgViewer: ImgViewerComponent;
 
   mode: FormMode;
   form: FormGroup;
-  busyLoading:boolean = false;
-  currentLanguage:string = '';
-  formSubmited
+  busyLoading: boolean = false;
+  currentLanguage: string = '';
+  formSubmited;
 
   constructor(
     private router: Router,
@@ -30,18 +29,36 @@ export class ShopTypeCrudComponent implements OnInit {
     private shopTypeService: ShopTypeService,
     private notifier: NotifierService,
     private translate: TranslateService,
-    private spinner:NgxSpinnerService ,
-
-  ) { 
+    private spinner: NgxSpinnerService
+  ) {
     this.form = this.formBuilder.group({
       id: [0],
-      type: ['', [ Validators.required,Validators.pattern(Pattern.OnlyEnglishLettersAndSpace)]],
-      typeAr: ['', [ Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)]],
-      description: ['', [ Validators.required,Validators.pattern(Pattern.OnlyEnglishLettersAndSpace)]],
-      descriptionAr: ['', [ Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)]],
-      shopTypeAvatar: ['', [ Validators.required]],     
-      color: ['', [ Validators.required]],     
-      isActive: ['', [ Validators.required]],
+      type: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(Pattern.OnlyEnglishLettersAndSpace),
+        ],
+      ],
+      typeAr: [
+        '',
+        [Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)],
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(Pattern.OnlyEnglishLettersAndSpace),
+        ],
+      ],
+      descriptionAr: [
+        '',
+        [Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)],
+      ],
+      shopTypeAvatar: ['', [Validators.required]],
+      color: ['', [Validators.required]],
+      isActive: ['', [Validators.required]],
+      sort: [0],
     });
 
     this.mode = this.route.snapshot.data.mode;
@@ -53,38 +70,41 @@ export class ShopTypeCrudComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.mode == FormMode.Edit || this.mode == FormMode.View){
-      this.getFaqsById(this.route.snapshot.params.id)
+    if (this.mode == FormMode.Edit || this.mode == FormMode.View) {
+      this.getFaqsById(this.route.snapshot.params.id);
     }
   }
 
-  viewImage(){
+  viewImage() {
     this.imgViewer.openBackDropCustomClass();
   }
 
-  getFaqsById(id:number){
+  getFaqsById(id: number) {
     this.busyLoading = true;
     this.spinner.show();
-    this.shopTypeService.getByID(id).subscribe(res => {
-      this.spinner.hide();
-      this.busyLoading = false;
-      this.form.patchValue(res)
-    },err => {
-    this.spinner.hide();
-      this.busyLoading = false;
-    })
+    this.shopTypeService.getByID(id).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.busyLoading = false;
+        this.form.patchValue(res);
+      },
+      (err) => {
+        this.spinner.hide();
+        this.busyLoading = false;
+      }
+    );
   }
   async handleInputChange(event) {
     const file = event.target.files[0];
-    this.shopTypeService.UploadImage(file).subscribe(res => {
-      this.form.get('shopTypeAvatar').patchValue(res.returnData.response)
-    })
+    this.shopTypeService.UploadImage(file).subscribe((res) => {
+      this.form.get('shopTypeAvatar').patchValue(res.returnData.response);
+    });
   }
 
   submit() {
     this.form.markAllAsTouched();
-    if(!this.form.valid) return;
-    console.log(this.form)
+    if (!this.form.valid) return;
+    console.log(this.form);
     if (this.mode === FormMode.Create) {
       this.create();
     } else {
@@ -94,25 +114,37 @@ export class ShopTypeCrudComponent implements OnInit {
   create() {
     let body = this.form.value;
     this.spinner.show();
-    this.shopTypeService.create(body).subscribe(result => {
-      this.form.reset();
-      this.form.get('id').patchValue(0);
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.created'))
-    },err=>{
-      this.spinner.hide();
-      // this.notifier.notify('error',err)
-    })
+    this.shopTypeService.create(body).subscribe(
+      (result) => {
+        this.form.reset();
+        this.form.get('id').patchValue(0);
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.created')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        // this.notifier.notify('error',err)
+      }
+    );
   }
   edit() {
     let body = this.form.value;
     this.spinner.show();
-    this.shopTypeService.update(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      // this.notifier.notify('error',err)
-    })
+    this.shopTypeService.update(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        // this.notifier.notify('error',err)
+      }
+    );
   }
 }

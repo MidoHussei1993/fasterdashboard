@@ -12,8 +12,6 @@ import { AppComponent } from './app.component';
 import { AuthService } from './modules/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
 // #fake-start#
-import { FakeAPIService } from './_fake/fake-api.service';
-import { AuthGuard } from './core/Auth/Guards';
 import { ErrorInterceptor, JwtInterceptor } from './core/Http/interceptors';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from './shared/shared.module';
@@ -21,24 +19,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
 import { NotifierModule } from 'angular-notifier';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { CoboneComponent } from './pages/reports/components/cobone/cobone.component';
-import { TransportOrderStatusReportComponent } from './pages/reports/components/transport-order-status-report/transport-order-status-report.component';
-import { DeliveryOrderStatusReportComponent } from './pages/reports/components/delivery-order-status-report/delivery-order-status-report.component';
-import { ShopOrdersCountReportComponent } from './pages/reports/components/shop-orders-count-report/shop-orders-count-report.component';
-import { ProviderCountsReportComponent } from './pages/reports/components/provider-counts-report/provider-counts-report.component';
-import { TransportOrderStatusDetailsReportComponent } from './pages/reports/components/transport-order-status-details-report/transport-order-status-details-report.component';
-import { DeliveryOrderStatusDetailsReportComponent } from './pages/reports/components/delivery-order-status-details-report/delivery-order-status-details-report.component';
 import { NgxEchartsModule } from 'ngx-echarts';
- 
-// #fake-end#
+// import * as firebase from 'firebase';
+// import { initializeApp } from 'firebase/app';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 
-// function appInitializer(authService: AuthService) {
-//   return () => {
-//     return new Promise((resolve) => {
-//       authService.getUserByToken().subscribe().add(resolve);
-//     });
-//   };
-// }
+import { SignalrService } from './core/services/signalr.service';
+import { AsyncPipe } from '@angular/common';
+import { MessagingService } from './core/services/messaging.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -59,8 +48,13 @@ import { NgxEchartsModule } from 'ngx-echarts';
     NotifierModule,
     GoogleMapsModule,
     NgxEchartsModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
+    // firebase.default.initializeApp(environment.firebaseConfig),
+    MessagingService,
+    AsyncPipe,
     // {
     //   provide: APP_INITIALIZER,
     //   useFactory: appInitializer,
@@ -69,6 +63,14 @@ import { NgxEchartsModule } from 'ngx-echarts';
     // },
 
     // AuthGuard, // <------------ Include here
+    SignalrService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (signalrService: SignalrService) => () =>
+        signalrService.initiateSignalrConnection(),
+      deps: [SignalrService],
+      multi: true,
+    },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],

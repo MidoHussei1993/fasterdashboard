@@ -9,6 +9,7 @@ import { OrderStatusService } from 'src/app/shared/services/api/order-status.ser
 import { getColorDependOnNumber } from 'src/app/util';
 import { IgnoredOrderFilter } from '../../model';
 import { ReportsService } from '../../services/reports.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-heat-map',
@@ -32,10 +33,12 @@ export class HeatMapComponent implements OnInit {
     private reportService: ReportsService,
     private spinner: NgxSpinnerService,
     private orderStatusService: OrderStatusService,
+    private headerService: HeaderService,
     private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.heatMap'));
     this.currentLanguage = this.translate.currentLang;
     this.filter = new IgnoredOrderFilter();
     this.filter.PageNumber = 1;

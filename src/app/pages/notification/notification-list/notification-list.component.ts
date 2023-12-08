@@ -7,21 +7,21 @@ import { FormMode, List, Pagination } from 'src/app/shared';
 import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { NotificationFilter } from '../models';
 import { NotificationService } from '../services/notification.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-notification-list',
   templateUrl: './notification-list.component.html',
-  styleUrls: ['./notification-list.component.scss']
+  styleUrls: ['./notification-list.component.scss'],
 })
 export class NotificationListComponent implements OnInit {
   notificationList: any[] = [];
-  titles:string[] = [
+  titles: string[] = [
     'field.CreateAtTo',
     'field.title_en',
     'field.titleAr',
     'field.message',
     'field.messageAr',
-  
   ];
   properties: string[] = [
     'createAt',
@@ -44,11 +44,14 @@ export class NotificationListComponent implements OnInit {
     private router: Router,
     private swalService: SwalModalService,
     private translate: TranslateService,
-    private notify: NotifierService,
-
+    private headerService: HeaderService,
+    private notify: NotifierService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.notifications')
+    );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getNotificationList();
@@ -77,7 +80,7 @@ export class NotificationListComponent implements OnInit {
         this.spinner.hide();
         this.busyLoading = false;
         this.notificationList = res.returnData.data;
-        delete res.returnData.data
+        delete res.returnData.data;
         this.pagination = { ...res };
       },
       (err) => {
@@ -88,19 +91,18 @@ export class NotificationListComponent implements OnInit {
     );
   }
 
-  setPageSize(pageSize){
-    if(pageSize == this.filter.PageSize) return;
+  setPageSize(pageSize) {
+    if (pageSize == this.filter.PageSize) return;
     this.filter.PageSize = pageSize;
     this.getNotificationList();
   }
 
-  setPageNumber(pageNumber:number){
-    if(pageNumber == this.filter.PageNumber) return;
+  setPageNumber(pageNumber: number) {
+    if (pageNumber == this.filter.PageNumber) return;
     this.filter.PageNumber = pageNumber;
     this.getNotificationList();
   }
 
-  
   navigateToEdit(any: any) {
     this.router.navigateByUrl(`/notification/edit/${any.id}`);
   }
@@ -112,29 +114,27 @@ export class NotificationListComponent implements OnInit {
     this.swalService.deleteConfirmation().then((res) => {
       if (res) {
         this.spinner.show();
-        this.notificationService
-          .delete(any.id)
-          .subscribe(
-            (res) => {
-              const deletedIndex = this.notificationList.findIndex(
-                (item) => item.id == any.id
-              );
-              this.notificationList.splice(deletedIndex, 1);
-              this.spinner.hide();
-              this.notify.notify(
-                'success',
-                this.translate.instant('global.deleted')
-              );
-            },
-            (err) => {
-              this.spinner.hide();
-              this.notify.notify(
-                'error',
-                this.translate.instant('global.server_error')
-              );
-              console.log(err);
-            }
-          );
+        this.notificationService.delete(any.id).subscribe(
+          (res) => {
+            const deletedIndex = this.notificationList.findIndex(
+              (item) => item.id == any.id
+            );
+            this.notificationList.splice(deletedIndex, 1);
+            this.spinner.hide();
+            this.notify.notify(
+              'success',
+              this.translate.instant('global.deleted')
+            );
+          },
+          (err) => {
+            this.spinner.hide();
+            this.notify.notify(
+              'error',
+              this.translate.instant('global.server_error')
+            );
+            console.log(err);
+          }
+        );
       }
     });
   }
@@ -143,20 +143,20 @@ export class NotificationListComponent implements OnInit {
     switch (notification.type) {
       case 'resend':
         this.spinner.show();
-    this.notificationService.reSend(notification.event.id).subscribe(
-      (res: any) => {
-        this.spinner.hide();
-        this.notify.notify(
-          'success',
-          this.translate.instant('action.done')
+        this.notificationService.reSend(notification.event.id).subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            this.notify.notify(
+              'success',
+              this.translate.instant('action.done')
+            );
+          },
+          (err) => {
+            console.log(err);
+            this.spinner.hide();
+            this.busyLoading = false;
+          }
         );
-      },
-      (err) => {
-        console.log(err);
-        this.spinner.hide();
-        this.busyLoading = false;
-      }
-    );
         break;
 
       default:

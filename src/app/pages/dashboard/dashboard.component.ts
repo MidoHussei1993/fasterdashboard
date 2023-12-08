@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NotifierService } from 'angular-notifier';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { List, Pagination } from 'src/app/shared';
+import { Filter, List, Pagination } from 'src/app/shared';
 import { ProviderList, ProviderFilter } from '../provider/models';
 import { ProviderService } from '../provider/services';
 import { ProviderCount } from '../reports/model';
@@ -11,6 +11,9 @@ import { OrderFilter } from '../reports/model/deliverOrderStatusFilter.model';
 import { DeliveryOrderStatus } from '../reports/model/deliveryOrder-status.model';
 import { ReportsService } from '../reports/services/reports.service';
 import { SettingService } from '../setting/services/setting.service';
+import { ShopService } from '../shop/services';
+import { HeaderService } from 'src/app/core/services/header.service';
+import { isShop } from 'src/app/util/access-storge';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,11 +24,15 @@ export class DashboardComponent implements OnInit {
   report: any = {};
   DeliveryOrderStatus = [];
   TransportOrderStatus = [];
+  dispatchTypeList = [];
   activeProvidersreport: { name: string; count: number }[] = [];
-
+  currentLanguage: string = '';
+  dispatchTypeId: number = null;
+  isShop: boolean = false;
   filter: ProviderFilter = new ProviderFilter();
   driverType: string = '';
   isAdmin: boolean = false;
+  seliveryOrderStatistics: any = {};
 
   constructor(
     private reportsService: ReportsService,
@@ -35,10 +42,16 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private settingService: SettingService,
+    private shopService: ShopService,
+    private headerService: HeaderService,
     private notifier: NotifierService
-  ) {}
+  ) {
+    this.currentLanguage = this.translate.currentLang;
+  }
 
   ngOnInit() {
+    this.isShop = isShop();
+    this.headerService.setPageTitle(this.translate.instant('faster'));
     let u1 = new SpeechSynthesisUtterance('Hi');
     u1.lang = 'en-US';
     speechSynthesis.speak(u1);
@@ -75,7 +88,54 @@ export class DashboardComponent implements OnInit {
         }
       }
     }
+    this.getDispatchTypeDropDown();
+    this.getDeliveryOrderStatistics();
   }
+  getDeliveryOrderStatistics() {
+    this.reportsService.DeliveryOrderStatistics().subscribe(
+      (res) => {
+        this.seliveryOrderStatistics = res;
+        console.log(
+          '🚀 ~ file: dashboard.component.ts:93 ~ DashboardComponent ~ getDeliveryOrderStatistics ~ this.seliveryOrderStatistics:',
+          this.seliveryOrderStatistics
+        );
+      },
+      (err) => {}
+    );
+  }
+
+  getDispatchTypeDropDown() {
+    this.spinner.show();
+    this.shopService.GetDispatchTypeDDL().subscribe(
+      (res) => {
+        console.log(res);
+        this.dispatchTypeList = res;
+        this.spinner.hide();
+      },
+      (err) => {
+        this.spinner.hide();
+      }
+    );
+  }
+
+  changeDispatchType() {
+    this.spinner.show();
+    if (!this.dispatchTypeId) return;
+    this.shopService.ChangeDispatchType(this.dispatchTypeId).subscribe(
+      (res) => {
+        this.spinner.hide();
+        console.log(
+          '🚀 ~ file: dashboard.component.ts:106 ~ DashboardComponent ~ changeDispatchType ~ res:',
+          res
+        );
+        this.notifier.notify('success', this.translate.instant('action.done'));
+      },
+      (err) => {
+        this.spinner.hide();
+      }
+    );
+  }
+
   backupDataBase() {
     this.spinner.show();
     this.settingService.BackupDB().subscribe(

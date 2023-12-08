@@ -1,23 +1,30 @@
-<div class="card card-flush shadow-sm">
+<div class="card shadow-sm">
   <div class="card-header">
-    <h3 class="card-title">{{ "shop_branch.name" | translate }}</h3>
-    <div class="card-toolbar"></div>
+    <div class="card-toolbar">
+      <a
+        *ngIf="!admin"
+        class="btn btn-sm btn-primary mx-2"
+        [routerLink]="'/shop-branch/create'"
+      >
+        <i class="fas fa-plus"></i>
+        {{ "action.create" | translate }}
+      </a>
+      <a
+        class="btn btn-sm btn-dark"
+        [routerLink]="'/shop-branch/work-time/' + currentShopId"
+      >
+        {{ "updateAllShopBranchesWorkTime" | translate }}
+      </a>
+    </div>
   </div>
   <div class="card-body">
-    <a
-      *ngIf="!admin"
-      class="btn btn-sm btn-primary mb-3"
-      [routerLink]="'/shop-branch/create'"
-    >
-      <i class="fas fa-plus"></i>
-      {{ "action.create" | translate }}
-    </a>
-    <div class="card bg-secondary">
+    <div class="card bg-light">
       <div class="card-body">
         <app-filter [filter]="filter"></app-filter>
       </div>
     </div>
     <app-table
+      [filter]="filter"
       [list]="shoplist"
       [titles]="titles"
       [properties]="properties"
@@ -36,24 +43,25 @@
       [showSearch]="true"
       (search)="searchValue()"
       (resetFilter)="resetfilter()"
+      [showAnotherCheck]="true"
+      [AnotherCheckPropName]="'isBusy'"
+      [AnotherCheckTitelName]="'field.busy'"
+      (changeAnotherCheck)="changeShopBranchBusy($event)"
+      [isdownloadAll]="true"
+      (export)="downloadAll()"
     >
     </app-table>
 
-
     <div class="row my-5" *ngIf="markers.length">
       <div class="col-md-12" style="height: 50vh">
-        <app-google-map
-          [disabled]="true"
-          [markers]="markers"
-        ></app-google-map>
+        <app-google-map [disabled]="true" [markers]="markers"></app-google-map>
       </div>
     </div>
-
   </div>
 </div>
 
 <ng-template #resetPass let-modal>
-  <div class="modal-body card-flush">
+  <div class="modal-body">
     <div class="">
       <h2 class="text-center">
         <span class="fs-3 fw-bolder me-2">{{
@@ -144,8 +152,203 @@
   </div>
 </ng-template>
 
+<ng-template #updateAllShopBranchesWorkTimeModal let-modal>
+  <div class="modal-body">
+    <div class="">
+      <h2 class="text-center text-white mb-4">
+        <span class="fs-3 fw-bolder me-2">{{
+          "updateAllShopBranchesWorkTime" | translate
+        }}</span>
+      </h2>
+    </div>
+
+    <form
+      [formGroup]="updateAllShopBranchesWorkTimeForm"
+      (ngSubmit)="updateAllShopBranchesWorkTime()"
+    >
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label text-white"
+            >{{ "global.fromHour" | translate }} (
+            {{ "field.mainTime" | translate }} )</label
+          >
+          <input
+            type="time"
+            formControlName="firstShiftFromHour"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.fromHour' | translate }}"
+            placeholder="HH:mm"
+            min="00:00:00"
+            max="24:00:00"
+            required
+            step="60"
+          />
+          <div
+            *ngIf="
+              !updateAllShopBranchesWorkTimeForm.get('firstShiftFromHour')
+                .valid &&
+              (updateAllShopBranchesWorkTimeForm.get('firstShiftFromHour')
+                .dirty ||
+                updateAllShopBranchesWorkTimeForm.get('firstShiftFromHour')
+                  .touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="
+                updateAllShopBranchesWorkTimeForm
+                  .get('firstShiftFromHour')
+                  .hasError('required')
+              "
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12 mb-3">
+          <label class="form-label text-white"
+            >{{ "global.toHour" | translate }} (
+            {{ "field.mainTime" | translate }} )</label
+          >
+          <input
+            type="time"
+            formControlName="firstShiftToHour"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'global.toHour' | translate }}"
+            min="00:00:00"
+            max="24:00:00"
+            required
+            step="60"
+          />
+          <div
+            *ngIf="
+              !updateAllShopBranchesWorkTimeForm.get('firstShiftToHour')
+                .valid &&
+              (updateAllShopBranchesWorkTimeForm.get('firstShiftToHour')
+                .dirty ||
+                updateAllShopBranchesWorkTimeForm.get('firstShiftToHour')
+                  .touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="
+                updateAllShopBranchesWorkTimeForm
+                  .get('firstShiftToHour')
+                  .hasError('required')
+              "
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12 my-4">
+          <label class="form-label text-white"
+            >{{ "field.timeFrom" | translate }} (
+            {{ "field.secondTime" | translate }} )</label
+          >
+          <input
+            type="time"
+            formControlName="secondShiftFromHour"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.timeFrom' | translate }}"
+            placeholder="HH:mm"
+            min="00:00:00"
+            max="24:00:00"
+            step="60"
+          />
+          <div
+            *ngIf="
+              !updateAllShopBranchesWorkTimeForm.get('secondShiftFromHour')
+                .valid &&
+              (updateAllShopBranchesWorkTimeForm.get('secondShiftFromHour')
+                .dirty ||
+                updateAllShopBranchesWorkTimeForm.get('secondShiftFromHour')
+                  .touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="
+                updateAllShopBranchesWorkTimeForm
+                  .get('secondShiftFromHour')
+                  .hasError('required')
+              "
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12 my-4">
+          <label class="form-label text-white"
+            >{{ "field.timeTo" | translate }} (
+            {{ "field.secondTime" | translate }} )</label
+          >
+          <input
+            type="time"
+            formControlName="secondShiftToHour"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.timeTo' | translate }}"
+            min="00:00:00"
+            max="24:00:00"
+            step="60"
+          />
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label text-white">{{
+            "global.day" | translate
+          }}</label>
+
+          <select formControlName="day" class="form-select form-select-solid">
+            <option [value]="item.name" *ngFor="let item of days">
+              {{ item.name }}
+            </option>
+          </select>
+
+          <div
+            *ngIf="
+              !updateAllShopBranchesWorkTimeForm.get('day').valid &&
+              (updateAllShopBranchesWorkTimeForm.get('day').dirty ||
+                updateAllShopBranchesWorkTimeForm.get('day').touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="
+                updateAllShopBranchesWorkTimeForm
+                  .get('day')
+                  .hasError('required')
+              "
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-t">
+        <div class="col-md-3 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale d-block w-100"
+          >
+            <i class="fa fa-file" aria-hidden="true"></i>
+            <strong style="font-weight: bolder">
+              {{ "action.save" | translate }}
+            </strong>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
 <ng-template #addToWallet let-modal>
-  <div class="modal-body card-flush">
+  <div class="modal-body">
     <div class="">
       <h2 class="text-center text-white mb-4">
         <span class="fs-3 fw-bolder me-2">{{
@@ -166,9 +369,5 @@
         </div>
       </div>
     </div>
-   
   </div>
 </ng-template>
-
-
-

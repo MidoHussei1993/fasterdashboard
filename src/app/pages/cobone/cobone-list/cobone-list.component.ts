@@ -6,6 +6,7 @@ import { Dropdown, FormMode, List, Pagination } from 'src/app/shared';
 import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { Cobone, CoboneFilter } from '../models';
 import { CoboneService } from '../services';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-cobone-list',
@@ -47,10 +48,12 @@ export class CoboneListComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private swalService: SwalModalService,
+    private headerService: HeaderService,
     private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.Cobone'));
     this.filter = new CoboneFilter();
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;

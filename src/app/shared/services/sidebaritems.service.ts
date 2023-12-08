@@ -28,11 +28,6 @@ export class SidebaritemsService {
           role: ['administrator'],
         },
         {
-          title: 'Shop_Type',
-          link: '/shop-type',
-          childern: [],
-        },
-        {
           title: 'app',
           link: '/app',
           childern: [],
@@ -75,6 +70,18 @@ export class SidebaritemsService {
           title: 'faqs',
           link: '/faqs',
           childern: [],
+        },
+        {
+          title: 'tracking',
+          link: '/providers/tracking',
+          childern: [],
+          role: ['administrator'],
+        },
+        {
+          title: 'giftCards',
+          link: '/gift-card',
+          childern: [],
+          role: ['administrator'],
         },
       ],
     },
@@ -142,6 +149,10 @@ export class SidebaritemsService {
           title: 'manufacturingYear',
           link: '/manufacturing-year',
         },
+        {
+          title: 'moyaser',
+          link: '/moyaser',
+        },
       ],
     },
     {
@@ -201,18 +212,6 @@ export class SidebaritemsService {
           title: 'FasterWallet',
           link: '/faster-wallet',
         },
-        {
-          title: 'Shop_Branch_Wallet',
-          link: '/faster-wallet/branch-wallet',
-        },
-        {
-          title: 'bulkBranchWallet',
-          link: '/shop/bulk-branch-wallet',
-        },
-        {
-          title: 'shopProfit',
-          link: '/report/shop-profit',
-        },
       ],
     },
     {
@@ -220,11 +219,6 @@ export class SidebaritemsService {
       icon: 'ecommerce/ecm004',
       role: ['administrator', 'shop_branch', 'shop'],
       childern: [
-        {
-          title: 'List',
-          link: '/food-type',
-          role: ['administrator'],
-        },
         // {
         //   title: 'additionalComponentTitle',
         //   link: '/additional-component-title',
@@ -250,16 +244,7 @@ export class SidebaritemsService {
           link: '/addition',
           role: ['administrator'],
         },
-        {
-          title: 'Shop',
-          link: '/shop',
-          role: ['administrator', 'shop_branch', 'shop'],
-        },
-        {
-          title: 'Shop_Branch',
-          link: '/shop-branch',
-          role: ['administrator', 'shop_branch', 'shop'],
-        },
+
         {
           title: 'products',
           link: '/product',
@@ -283,6 +268,11 @@ export class SidebaritemsService {
         {
           title: 'Bundle_Offer',
           link: '/bundle',
+          role: ['administrator'],
+        },
+        {
+          title: 'foodType',
+          link: '/food-type',
           role: ['administrator'],
         },
       ],
@@ -323,20 +313,204 @@ export class SidebaritemsService {
           title: 'customerLastLoginReport',
           link: '/report/customer-last-login',
         },
-      ],
-    },
-    {
-      role: ['shop'],
-      icon: 'communication/com006',
-      menuTitle: 'deliveryOrderStatusReport',
-      childern: [
         {
-          title: 'List',
-          link: '/report/delivery-order-status',
-          childern: [],
+          title: 'giftCardsReport',
+          link: '/report/send-search',
         },
       ],
     },
+    {
+      role: ['administrator'],
+      icon: 'ecommerce/ecm001',
+      menuTitle: 'order',
+      childern: [
+        {
+          title: 'customers',
+          link: '/report/delivery-order-status',
+          childern: [
+            {
+              title: 'Sub_report',
+              link: '/cobone-report/SubScription',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      role: ['administrator'],
+      icon: 'customer',
+      menuTitle: 'customers',
+      childern: [
+        {
+          title: 'customers',
+          link: '/report/delivery-order-status',
+          childern: [
+            {
+              title: 'Sub_report',
+              link: '/cobone-report/SubScription',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      role: ['administrator', 'shop_branch', 'shop'],
+      icon: 'food1',
+      menuTitle: 'Shop',
+      childern: [
+        {
+          title: 'List',
+          link: '/food-type',
+          role: ['administrator'],
+        },
+        {
+          title: 'Shop',
+          link: '/shop',
+          role: ['administrator', 'shop_branch', 'shop'],
+        },
+        {
+          title: 'Shop_Branch',
+          link: '/shop-branch',
+          role: ['administrator', 'shop_branch', 'shop'],
+        },
+        {
+          title: 'Shop_Type',
+          link: '/shop-type',
+          role: ['administrator'],
+        },
+        {
+          title: 'Shop_Branch_Wallet',
+          link: '/faster-wallet/branch-wallet',
+        },
+        {
+          title: 'bulkBranchWallet',
+          link: '/shop/bulk-branch-wallet',
+        },
+        {
+          title: 'shopProfit',
+          link: '/report/shop-profit',
+        },
+      ],
+    },
+    {
+      role: ['administrator'],
+      icon: 'customer2',
+      menuTitle: 'users',
+      childern: [
+        {
+          title: 'customers',
+          link: '/report/delivery-order-status',
+          childern: [
+            {
+              title: 'Sub_report',
+              link: '/cobone-report/SubScription',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      role: ['administrator'],
+      icon: 'coding/cod001',
+      menuTitle: 'configuration',
+      childern: [
+        {
+          title: 'customers',
+          link: '/report/delivery-order-status',
+          childern: [
+            {
+              title: 'Sub_report',
+              link: '/cobone-report/SubScription',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      role: ['administrator'],
+      icon: 'general/gen013',
+      menuTitle: 'actifityLog',
+      childern: [
+        {
+          title: 'customers',
+          link: '/report/delivery-order-status',
+          childern: [
+            {
+              title: 'Sub_report',
+              link: '/cobone-report/SubScription',
+            },
+          ],
+        },
+      ],
+    },
+
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'dashboard',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'orders',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'customers',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'shops',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'logistics',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'finance',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'reports',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'support',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'users',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'configuration',
+    //   childern: [],
+    // },
+    // {
+    //   role: ['administrator'],
+    //   icon: 'general/gen032',
+    //   menuTitle: 'activityLog',
+    //   childern: [],
+    // },
+
     // {
     //   role: ['administrator'],
     //   icon: 'communication/com003',
@@ -360,8 +534,7 @@ export class SidebaritemsService {
     //     },
     //   ],
     // },
-  
-    
+
     // {
     //   role: ['administrator'],
     //   icon: 'communication/com001',
@@ -374,7 +547,7 @@ export class SidebaritemsService {
     //     },
     //   ],
     // },
-  
+
     // {
     //   role: ['administrator'],
     //   icon: 'general/gen025',

@@ -6,6 +6,8 @@ import { Pagination, FormMode } from 'src/app/shared';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { CustomerOrderBounsFilter } from '../models';
 import { CustomerOrderBounsService } from '../services/customer-order-bouns.service';
+import { HeaderService } from 'src/app/core/services/header.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-customer-bonus-list',
@@ -47,10 +49,15 @@ export class CustomerBonusListComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private notifier: NotifierService,
     private excelService: ExcelService,
+    private headerService: HeaderService,
+    private translate: TranslateService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.customerOrderBonus')
+    );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getCustomerOrderBonusList();
@@ -127,7 +134,7 @@ export class CustomerBonusListComponent implements OnInit {
   navigateTO(motivation: { event: any; type: string }) {
     switch (motivation.type) {
       case 'duplicate':
-        this.getCustomerOrderBonus(motivation.event.id)
+        this.getCustomerOrderBonus(motivation.event.id);
         break;
       // case 'evaluate':
       //   const evaluate = this.router.serializeUrl(

@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-body">
+    <h3 class="my-3 mb-5">   
+        {{'menu.quickAccess' | translate}}
+    </h3>
+    <p-panel
+      header="{{ 'product.productDetails' | translate }}"
+      [toggleable]="true"
+      [collapsed]="true"
+    >
+      <app-product-details-list
+        [productId]="productId"
+      ></app-product-details-list>
+    </p-panel>
+
+    <p-panel
+      class="my-3"
+      [collapsed]="true"
+      header="{{ 'menu.productDetailsSize' | translate }}"
+      [toggleable]="true"
+    >
+      <app-product-details-size-list
+        [productId]="productId"
+      ></app-product-details-size-list>
+    </p-panel>
+
+    <p-panel
+      class="my-3"
+      [collapsed]="true"
+      header="{{ 'product.components' | translate }}"
+      [toggleable]="true"
+    >
+      <app-product-component-list
+        [productId]="productId"
+      ></app-product-component-list>
+    </p-panel>
+  </div>
+</div>

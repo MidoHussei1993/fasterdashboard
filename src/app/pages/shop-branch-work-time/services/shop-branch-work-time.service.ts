@@ -35,4 +35,9 @@ export class ShopBranchWorkTimeService {
     return this.http.delete<ShopBranchWorkTime>(API.delete + `${id}`);
   }
 
+  updateAllShopBranchsWorkTime(model: any): Observable<any> {
+    return this.http.post<any>(API.UpdateAllShopBranchsWorkTime, model);
+  }
+
+
 }

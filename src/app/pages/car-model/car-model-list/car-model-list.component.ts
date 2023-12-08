@@ -4,22 +4,18 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Pagination, FormMode, List } from 'src/app/shared';
 import { CarModel, CarModelFilter } from '../models';
 import { CarModelService } from '../services';
+import { TranslateService } from '@ngx-translate/core';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-car-model-list',
   templateUrl: './car-model-list.component.html',
-  styleUrls: ['./car-model-list.component.scss']
+  styleUrls: ['./car-model-list.component.scss'],
 })
 export class CarModelListComponent implements OnInit {
   CarModelList: CarModel[] = [];
-  titles:string[] = [
-    'field.name',
-    'field.name',
-  ];
-  properties: string[] = [
-    'name',
-    'nameAr', 
-  ];
+  titles: string[] = ['field.name', 'field.name'];
+  properties: string[] = ['name', 'nameAr'];
   busyLoading: boolean = true;
   pagination: Pagination = new Pagination();
 
@@ -31,10 +27,13 @@ export class CarModelListComponent implements OnInit {
   constructor(
     private carModelService: CarModelService,
     private spinner: NgxSpinnerService,
-    private router: Router,
+    private headerService: HeaderService,
+    private translate: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('car.carModel'));
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getCarModelList();
@@ -87,18 +86,18 @@ export class CarModelListComponent implements OnInit {
       );
   }
 
-  setPageSize(pageSize){
-    if(pageSize == this.filter.PageSize) return;
+  setPageSize(pageSize) {
+    if (pageSize == this.filter.PageSize) return;
     this.filter.PageSize = pageSize;
     this.getCarModelList();
   }
 
-  setPageNumber(pageNumber:number){
-    if(pageNumber == this.filter.PageNumber) return;
+  setPageNumber(pageNumber: number) {
+    if (pageNumber == this.filter.PageNumber) return;
     this.filter.PageNumber = pageNumber;
     this.getCarModelList();
   }
- 
+
   navigateToEdit(CarModel: CarModel) {
     this.router.navigateByUrl(`/car-model/edit/${CarModel.id}`);
   }

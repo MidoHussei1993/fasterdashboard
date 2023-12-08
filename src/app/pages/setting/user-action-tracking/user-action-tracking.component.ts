@@ -7,6 +7,7 @@ import { CustomerWallet, Pagination } from 'src/app/shared';
 import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { UserTrackingActionFilter } from '../models';
 import { SettingService } from '../services/setting.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-user-action-tracking',
@@ -42,14 +43,19 @@ export class UserActionTrackingComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private swalService: SwalModalService,
     private translate: TranslateService,
+    private headerService: HeaderService,
     private notify: NotifierService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.userActionTracking')
+    );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     if (this.activatedRoute.snapshot.queryParamMap.get('providerId')) {
-      this.filter.Note = this.activatedRoute.snapshot.queryParamMap.get('providerId');
+      this.filter.Note =
+        this.activatedRoute.snapshot.queryParamMap.get('providerId');
       this.getUserActions();
     }
 

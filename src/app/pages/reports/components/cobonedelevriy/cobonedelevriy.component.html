@@ -1,31 +1,32 @@
-<div class="card card-flush shadow-sm">
-    <div class="card-header">
-      <h3 class="card-title">{{ "reports.CoponeDeliveryDetailsReport" | translate }}</h3>
-    </div>
-    <div class="card-body">
-    
-      <div class="card bg-secondary">
-        <div class="card-body">
-          <app-filter [filter]="filter"></app-filter>
-        </div>
-      </div>
-      <app-table
-        [list]="CoboneReport"
-        [titles]="titles"
-        [properties]="properties"
-        [busyLoading]="busyLoading"
-        [pagination]="pagination"
-        (activetedPageSize)="setPageSize($event)"
-        (activetedPageNumber)="setPageNumber($event)"
-        [showDelete]="false"
-        [showEdit]="false"
-        [showView]="false"
-        [showSearch]="true"
-        (search)="searchValue()"
-        (resetFilter)="resetfilter()"
-        [isdownloadAll]="true"
-          (export)="downloadAll()"
-      ></app-table>
-    </div>
+<div class="card shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      {{ "reports.CoponeDeliveryDetailsReport" | translate }}
+    </h3>
   </div>
-  
+  <div class="card-body">
+    <div class="card bg-light">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+      </div>
+    </div>
+    <app-table
+      [filter]="filter"
+      [list]="CoboneReport"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      [showDelete]="false"
+      [showEdit]="false"
+      [showView]="false"
+      [showSearch]="true"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [isdownloadAll]="true"
+      (export)="downloadAll()"
+    ></app-table>
+  </div>
+</div>

@@ -7,11 +7,12 @@ import { FormMode, List, Pagination } from 'src/app/shared';
 import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { ProductBranch, ProductBranchFilter } from '../models';
 import { ProductBranchService } from '../services/product-branch.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-product-branch-list',
   templateUrl: './product-branch-list.component.html',
-  styleUrls: ['./product-branch-list.component.scss']
+  styleUrls: ['./product-branch-list.component.scss'],
 })
 export class ProductBranchListComponent implements OnInit {
   productBranchList: any[] = [];
@@ -35,10 +36,15 @@ export class ProductBranchListComponent implements OnInit {
   constructor(
     private productBranchService: ProductBranchService,
     private spinner: NgxSpinnerService,
+    private headerService: HeaderService,
+    private translate: TranslateService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.branchProduct')
+    );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getProductBranchList();
@@ -59,8 +65,9 @@ export class ProductBranchListComponent implements OnInit {
   }
 
   getProductBranchList() {
-    if(this.activatedRoute.snapshot.queryParamMap.get('ShopBranchId')){
-      this.filter.ShopBranchId = this.activatedRoute.snapshot.queryParamMap.get('ShopBranchId')
+    if (this.activatedRoute.snapshot.queryParamMap.get('ShopBranchId')) {
+      this.filter.ShopBranchId =
+        this.activatedRoute.snapshot.queryParamMap.get('ShopBranchId');
     }
     this.busyLoading = true;
     this.spinner.show();
@@ -80,14 +87,14 @@ export class ProductBranchListComponent implements OnInit {
     );
   }
 
-  setPageSize(pageSize){
-    if(pageSize == this.filter.PageSize) return;
+  setPageSize(pageSize) {
+    if (pageSize == this.filter.PageSize) return;
     this.filter.PageSize = pageSize;
-    this.getProductBranchList(); 
+    this.getProductBranchList();
   }
 
-  setPageNumber(pageNumber:number){
-    if(pageNumber == this.filter.PageNumber) return;
+  setPageNumber(pageNumber: number) {
+    if (pageNumber == this.filter.PageNumber) return;
     this.filter.PageNumber = pageNumber;
     this.getProductBranchList();
   }
@@ -95,21 +102,18 @@ export class ProductBranchListComponent implements OnInit {
   changeActivation(index: number) {
     console.log(this.productBranchList[index].isActive);
     this.spinner.show();
-    let body: {id:number, isActive:boolean} = {
+    let body: { id: number; isActive: boolean } = {
       id: this.productBranchList[index].id,
       isActive: this.productBranchList[index].isActive,
     };
-    this.productBranchService
-      .ChangeActivationById(body)
-      .subscribe(
-        (res) => {
-          this.spinner.hide();
-          console.log(res);
-        },
-        (err) => {
-          this.spinner.hide();
-        }
-      );
+    this.productBranchService.ChangeActivationById(body).subscribe(
+      (res) => {
+        this.spinner.hide();
+        console.log(res);
+      },
+      (err) => {
+        this.spinner.hide();
+      }
+    );
   }
-
 }

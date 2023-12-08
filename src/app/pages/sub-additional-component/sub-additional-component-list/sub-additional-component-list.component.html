@@ -1,0 +1,41 @@
+<div class="card shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">{{ "menu.subadditionalComponent" | translate }}</h3>
+  </div>
+  <div class="card-body">
+    <a class="btn btn-sm btn-primary mb-3" (click)="navigateToCreate()">
+      <i class="fas fa-plus"></i>
+      {{ "action.create" | translate }}
+    </a>
+    <div class="card bg-light">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+      </div>
+    </div>
+    <app-table
+      [filter]="filter"
+      [list]="list"
+      [titles]="titles"
+      [properties]="properties"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      (view)="navigateToView($event)"
+      (edit)="navigateToEdit($event)"
+      (delete)="deleteItem($event)"
+      [showDelete]="false"
+      [showSearch]="true"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [addActions]="false"
+      [actionList]="[
+        {
+          title: 'menu.additionalComponentTitle',
+          icon: 'fa-project-diagram',
+          type: 'subAdditionalCopnentTilte'
+        }
+      ]"
+      (aciton)="navigateTO($event)"
+    ></app-table>
+  </div>
+</div>

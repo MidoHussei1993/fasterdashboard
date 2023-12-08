@@ -21,6 +21,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+  ],
+  exports: [
+    ProductDetailsSizeListComponent,
   ]
 })
 export class ProductDetailsSizeModule { }

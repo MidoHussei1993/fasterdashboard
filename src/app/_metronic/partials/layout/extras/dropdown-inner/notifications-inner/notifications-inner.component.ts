@@ -1,5 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../../layout';
+import { MessagingService } from 'src/app/core/services/messaging.service';
 
 export type NotificationsTabsType =
   | 'kt_topbar_notifications_1'
@@ -15,12 +16,30 @@ export class NotificationsInnerComponent implements OnInit {
     'menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px';
   @HostBinding('attr.data-kt-menu') dataKtMenu = 'true';
 
-  activeTabId: NotificationsTabsType = 'kt_topbar_notifications_2';
+  activeTabId: NotificationsTabsType = 'kt_topbar_notifications_1';
   alerts: Array<AlertModel> = defaultAlerts;
   logs: Array<LogModel> = defaultLogs;
-  constructor() {}
+  notificationList: any[] = [];
+  constructor(private messagingService: MessagingService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.messagingService.currentMessage.subscribe((message) => {
+      if (message) {
+        console.log(
+          '🚀 ~ file: notifications-inner.component.ts:27 ~ NotificationsInnerComponent ~ this.messagingService.currentMessage.subscribe ~ message:',
+          message
+        );
+        this.notificationList.push(message);
+        // this.alerts.push({
+        //   title: message.title,
+        //   description: message.body,
+        //   time: '1 hr',
+        //   icon: 'icons/duotune/technology/teh008.svg',
+        //   state: 'primary',
+        // });
+      }
+    });
+  }
 
   setActiveTabId(tabId: NotificationsTabsType) {
     this.activeTabId = tabId;

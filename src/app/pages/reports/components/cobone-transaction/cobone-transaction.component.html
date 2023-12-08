@@ -1,36 +1,34 @@
 <div class="card card-flush shadow-sm">
-    <div class="card-header">
-        <h3 class="card-title">{{'reports.CoponeDeliveryDetailsReport'|translate }}</h3>
-        <div class="card-toolbar">
-
-            <button printTitle="Cobone Reports" [useExistingCss]="true" printSectionId="print-section" type="button" class="btn btn-primary btn-print" ngxPrint><i class="fas fa-print mx-2"></i>طباعة</button>
-
-
-        </div>
+  <div class="card-header">
+    <h3 class="card-title">
+      {{ "reports.CoponeDeliveryDetailsReport" | translate }}
+    </h3>
+    <div class="card-toolbar">
+      <!-- <button printTitle="Cobone Reports" [useExistingCss]="true" printSectionId="print-section" type="button" class="btn btn-primary btn-print" ngxPrint><i class="fas fa-print mx-2"></i>طباعة</button> -->
     </div>
-    <div class="card-body " id="print-section" *ngIf="CoboneReport.length>0">
-
-        <div class="tabel-tresponsive">
-            <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
-                <thead>
-                    <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                        <th *ngFor="let title of titles" class="text-center">
-                            {{ title |translate }}
-                        </th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of CoboneReport; let i = index">
-                        <td *ngFor="let porp of properties" class="text-center">
-                            {{ item[porp] }}
-                        </td>
-
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
+  </div>
+  <div class="card-body" id="print-section" *ngIf="CoboneReport.length > 0">
+    <div class="tabel-tresponsive">
+      <table
+        class="table table-hover table-rounded table-striped border gy-7 gs-7"
+      >
+        <thead>
+          <tr
+            class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200"
+          >
+            <th *ngFor="let title of titles" class="text-center">
+              {{ title | translate }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of CoboneReport; let i = index">
+            <td *ngFor="let porp of properties" class="text-center">
+              {{ item[porp] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
+  </div>
 </div>

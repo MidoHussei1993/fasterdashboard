@@ -1,6 +1,6 @@
 export class Filter {
-    PageNumber: number;
-    PageSize: number;
-    CreateAtFrom: Date;
-    CreateAtTo: Date;
+  PageNumber: number = 1;
+  PageSize: number = 10;
+  CreateAtFrom: Date;
+  CreateAtTo: Date;
 }

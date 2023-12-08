@@ -1,6 +1,9 @@
 <div class="row">
+  <h3>
+    {{ "filter" | translate }}
+  </h3>
   <div
-    class="col-md-4 col-sm-12 mt-2"
+    class="col-lg-3 col-md-6 col-sm-12 mt-2"
     *ngFor="let item of propertiesArray; let i = index"
   >
     <div class="form-group">
@@ -14,8 +17,11 @@
           item == 'EndDate' ||
           item == 'LastLoginFrom' ||
           item == 'LastLoginTo' ||
+          item == 'CreatedAfter' ||
+          item == 'CreatedBefore' ||
           item == 'ExpiryDateTo'
         "
+        (ngModelChange)="dateChanged($event, item)"
         class="d-block"
         [(ngModel)]="filter[item]"
         [showTime]="true"
@@ -30,15 +36,21 @@
           item != 'EndDate' &&
           item != 'LastLoginFrom' &&
           item != 'LastLoginTo' &&
+          item != 'CreatedAfter' &&
+          item != 'CreatedBefore' &&
           item != 'ExpiryDateTo'
         "
+        (input)="modelChangeFn($event, item)"
         type="text"
+        [name]="item"
         [(ngModel)]="filter[item]"
         class="form-control"
         placeholder="{{ 'field.' + item | translate }}"
       />
     </div>
   </div>
+  <ng-content #main></ng-content>
+
   <div class="col-md-4 col-sm-12 mt-2" *ngIf="isActiviationFilter">
     <p>{{ "field.activation" | translate }}</p>
     <select [(ngModel)]="filter.IsActive" class="form-select form-select-solid">

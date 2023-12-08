@@ -7,7 +7,7 @@ import { ProviderCountsReportComponent } from '../components/provider-counts-rep
 import { ShopOrdersCountReportComponent } from '../components/shop-orders-count-report/shop-orders-count-report.component';
 import { TransportOrderStatusDetailsReportComponent } from '../components/transport-order-status-details-report/transport-order-status-details-report.component';
 import { TransportOrderStatusReportComponent } from '../components/transport-order-status-report/transport-order-status-report.component';
-import { NgxPrintModule } from 'ngx-print';
+// import { NgxPrintModule } from 'ngx-print';
 import { CoboneRoutingModule } from './reports-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,33 +16,29 @@ import { CoboneTransactionComponent } from '../components/cobone-transaction/cob
 import { CobonedelevriyComponent } from '../components/cobonedelevriy/cobonedelevriy.component';
 import { SubscriptionComponent } from '../components/subscription/subscription.component';
 
-
-
 @NgModule({
   declarations: [
     CoboneComponent,
-     TransportOrderStatusReportComponent,
-     DeliveryOrderStatusReportComponent,
-     ShopOrdersCountReportComponent,
-     ProviderCountsReportComponent,
-     TransportOrderStatusDetailsReportComponent,
-      DeliveryOrderStatusDetailsReportComponent ,
-      CoboneTransactionComponent,
-      SubscriptionComponent,
-      CobonedelevriyComponent
-
+    TransportOrderStatusReportComponent,
+    DeliveryOrderStatusReportComponent,
+    ShopOrdersCountReportComponent,
+    ProviderCountsReportComponent,
+    TransportOrderStatusDetailsReportComponent,
+    DeliveryOrderStatusDetailsReportComponent,
+    CoboneTransactionComponent,
+    SubscriptionComponent,
+    CobonedelevriyComponent,
   ],
 
   imports: [
     CommonModule,
     CoboneRoutingModule,
     FormsModule,
-    NgxPrintModule,
+    // NgxPrintModule,
     SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-
-  ]
+  ],
 })
-export class ReportsModule { }
+export class ReportsModule {}

@@ -20,6 +20,7 @@ import { SubscriptionService } from '../../subscription/services';
 import { VendorService } from '../../vendor/services/vendor.service';
 import { IdentityFilter, ProviderIdentity } from '../models';
 import { IdentityService, IList } from '../services/identity.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-providers',
@@ -94,7 +95,7 @@ export class ProvidersComponent implements OnInit {
     private excelService: ExcelService,
     private vendorService: VendorService,
     private cityService: CityService,
-
+    private headerService: HeaderService,
     private activatedRoute: ActivatedRoute
   ) {
     this.currentLanguage = this.translate.currentLang;
@@ -105,6 +106,7 @@ export class ProvidersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.providers'));
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     if (this.activatedRoute.snapshot.queryParams.ProviderId) {
@@ -171,6 +173,11 @@ export class ProvidersComponent implements OnInit {
           title: 'field.sendTookan',
           icon: 'fa-qrcode text-danger',
           type: 'sendTookan',
+        },
+        {
+          title: 'sendToMeLink',
+          icon: 'fa-external-link-alt',
+          type: 'sendToMeLink',
         },
       ];
     }
@@ -342,20 +349,41 @@ export class ProvidersComponent implements OnInit {
         });
         break;
       case 'sendTookan':
-        this.providerService
-          .sendToken(String(provider.event.id))
-          .subscribe((res) => {
-            console.log(res);
-            this.notifier.notify(
-              'success',
-              this.translate.instant('action.done')
-            );
-          });
+        this.sendToken(provider);
+        break;
+      case 'sendToMeLink':
+        this.sendToken(provider);
         break;
 
       default:
         break;
     }
+  }
+
+  sendToken(provider: { event: ProviderIdentity; type: string }) {
+    this.spinner.show();
+    this.providerService.sendToken(String(provider.event.id)).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.notifier.notify('success', this.translate.instant('action.done'));
+      },
+      (err) => {
+        this.spinner.hide();
+      }
+    );
+  }
+
+  sendToMeLink(provider: { event: ProviderIdentity; type: string }) {
+    this.spinner.show();
+    this.providerService.sendToMeLink(String(provider.event.id)).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.notifier.notify('success', this.translate.instant('action.done'));
+      },
+      (err) => {
+        this.spinner.hide();
+      }
+    );
   }
 
   getProviderList() {

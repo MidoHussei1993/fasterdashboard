@@ -13,7 +13,8 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { CreateProviderComponent } from './components/create-provider/create-provider.component';
 import { TabViewModule } from 'primeng/tabview';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     LoginComponent,
@@ -32,8 +33,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HttpClientModule,
     ArchwizardModule,
     TabViewModule,
-    SharedModule
-
+    CalendarModule,
+    DropdownModule,
+    SharedModule,
   ],
 })
 export class AuthModule {}

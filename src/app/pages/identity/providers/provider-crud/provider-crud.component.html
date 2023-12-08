@@ -6,8 +6,9 @@
     </h3>
     <div class="card-toolbar" *ngIf="mode != 'Create'">
       <a
+        *ngIf="mainObject.id"
         type="button"
-        href="providers/notes/{{ route.snapshot.queryParams.providerId }}"
+        href="providers/notes/{{ mainObject.id }}"
         target="_blank"
         class="btn btn-outline btn-outline-dashed btn-outline-success btn-active-light-success mx-2"
       >
@@ -582,6 +583,23 @@
                 placeholder="IBAN"
               />
             </div>
+            <div class="col-md-6 col-sm-12">
+              <label class="form-label d-block">
+                {{ "field.driverDateOfBirth" | translate }}
+              </label>
+              <!-- <input
+                type="date"
+                formControlName="driverDateOfBirth"
+                class="form-control form-control-solid"
+                placeholder="driverDateOfBirth"
+              /> -->
+              <p-calendar
+                formControlName="driverDateOfBirth"
+                [showTime]="true"
+                dateFormat="dd.mm.yy"
+                hourFormat="12"
+              ></p-calendar>
+            </div>
 
             <!-- <div class="col-md-6 col-sm-12">
               <label class="form-label">
@@ -997,7 +1015,7 @@
                 </div>
 
                 <div
-                  class="card bg-secondary mt-5"
+                  class="card bg-light mt-5"
                   *ngIf="providerOrderRejectPercentage.length"
                 >
                   <div class="card-body">
@@ -1014,7 +1032,7 @@
                 </div>
 
                 <div
-                  class="card bg-secondary mt-5"
+                  class="card bg-light mt-5"
                   *ngIf="providerOrderRejectPercentageChart2.length"
                 >
                   <div class="card-body">
@@ -1172,8 +1190,10 @@
   </div>
 </ng-template>
 
-<app-provider-notes-list
-  class="mt-3"
-  *ngIf="mode == 'View' || mode == 'Edit'"
-  [providerId]="route.snapshot.queryParams.providerId"
-></app-provider-notes-list>
+<ng-template mainObject.id>
+  <app-provider-notes-list
+    class="mt-3"
+    *ngIf="mode == 'View' || mode == 'Edit'"
+    [providerId]="mainObject.id"
+  ></app-provider-notes-list>
+</ng-template>

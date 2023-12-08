@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DeliveryOrderNotification } from '../models';
 import { DeliveryOrderNotificationService } from '../services';
+import { HeaderService } from 'src/app/core/services/header.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-delivery-order-notification-list',
   templateUrl: './delivery-order-notification-list.component.html',
-  styleUrls: ['./delivery-order-notification-list.component.scss']
+  styleUrls: ['./delivery-order-notification-list.component.scss'],
 })
 export class DeliveryOrderNotificationListComponent implements OnInit {
   deliveryOrderNotificationList: any[] = [];
@@ -18,10 +20,15 @@ export class DeliveryOrderNotificationListComponent implements OnInit {
   constructor(
     private deliveryOrderNotificationService: DeliveryOrderNotificationService,
     private spinner: NgxSpinnerService,
+    private translate: TranslateService,
+    private headerService: HeaderService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.DeliveryOrderNotification')
+    );
     this.getFaqsList();
   }
 

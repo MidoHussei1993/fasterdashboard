@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ApexOptions } from 'ng-apexcharts';
+// import { ApexOptions } from 'ng-apexcharts';
 import { getCSSVariableValue } from '../../../../../kt/_utils';
 
 @Component({
@@ -40,8 +40,8 @@ function getChartOptions(
   labelColor: string,
   baseColor: string,
   lightColor: string
-): ApexOptions {
-  const options: ApexOptions = {
+): any {
+  const options: any = {
     series: [
       {
         name: 'Net Profit',

@@ -117,4 +117,15 @@ export class SettingService {
   updateLimitationOrderValue(body: any): Observable<any> {
     return this.http.put<any>(API.updateLimitationOrderValue, body);
   }
+
+  // --------------------dispatch----------------------------------------------------------------
+  getDispatchSystemDDL(): Observable<any> {
+    return this.http.get<any>(API.getDispatchSystemDDL);
+  }
+  UpdateDispatchSystem(body: any): Observable<any> {
+    return this.http.put<any>(API.UpdateDispatchSystem, body);
+  }
+  getDispatchSystem(): Observable<any> {
+    return this.http.get<any>(API.getDispatchSystem);
+  }
 }

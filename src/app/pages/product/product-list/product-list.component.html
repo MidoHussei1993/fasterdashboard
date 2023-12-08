@@ -1,7 +1,6 @@
 <div class="card">
   <div class="card-body">
     <div class="row">
-      <h3 class="card-title my-3">{{ "menu.products" | translate }}</h3>
       <div class="col-md-6 col-sm-12">
         <div
           class="btn-group"
@@ -26,11 +25,10 @@
           </a>
         </div>
       </div>
-      <div class="card bg-secondary mt-3">
+      <div class="card bg-light mt-3">
         <div class="card-body">
-          <app-filter [filter]="filter"></app-filter>
-          <div class="row">
-            <div class="col-md-4 col-sm-12">
+          <app-filter [filter]="filter">
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
               <label class="mb-2"> {{ "field.CategoryId" | translate }}</label>
               <select
                 [(ngModel)]="filter.CategoryId"
@@ -44,10 +42,11 @@
                 </option>
               </select>
             </div>
-          </div>
+          </app-filter>
         </div>
       </div>
       <app-table
+        [filter]="filter"
         [list]="productlist"
         [titles]="titles"
         [properties]="properties"
@@ -66,6 +65,11 @@
         [addActions]="true"
         [actionList]="[
           {
+            title: 'menu.quickAccess',
+            icon: 'fa-tachometer-alt',
+            type: 'quickAccess'
+          },
+          {
             title: 'product.product_additional_options',
             icon: 'fa-puzzle-piece',
             type: 'additionalOptions'
@@ -74,6 +78,11 @@
             title: 'product.productDetails',
             icon: 'fa-info-circle',
             type: 'productDetails'
+          },
+          {
+            title: 'menu.productAvailability',
+            icon: 'fa-search',
+            type: 'productAvailability'
           }
         ]"
         (aciton)="navigateTO($event)"

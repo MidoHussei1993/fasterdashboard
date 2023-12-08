@@ -4,20 +4,18 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Pagination, FormMode, List } from 'src/app/shared';
 import { ManufacturingYear, ManufacturingYearFilter } from '../models';
 import { ManufacturingYearService } from '../services/manufacturing-year.service';
+import { TranslateService } from '@ngx-translate/core';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-manufacturing-year-list',
   templateUrl: './manufacturing-year-list.component.html',
-  styleUrls: ['./manufacturing-year-list.component.scss']
+  styleUrls: ['./manufacturing-year-list.component.scss'],
 })
 export class ManufacturingYearListComponent implements OnInit {
   ManufacturingYearList: ManufacturingYear[] = [];
-  titles:string[] = [
-    'field.year',
-  ];
-  properties: string[] = [
-    'year', 
-  ];
+  titles: string[] = ['field.year'];
+  properties: string[] = ['year'];
   busyLoading: boolean = true;
   pagination: Pagination = new Pagination();
 
@@ -29,10 +27,15 @@ export class ManufacturingYearListComponent implements OnInit {
   constructor(
     private manufacturingYearService: ManufacturingYearService,
     private spinner: NgxSpinnerService,
-    private router: Router,
+    private headerService: HeaderService,
+    private translate: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('car.manufacturingYear')
+    );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getManufacturingYearList();
@@ -86,23 +89,26 @@ export class ManufacturingYearListComponent implements OnInit {
       );
   }
 
-  setPageSize(pageSize){
-    if(pageSize == this.filter.PageSize) return;
+  setPageSize(pageSize) {
+    if (pageSize == this.filter.PageSize) return;
     this.filter.PageSize = pageSize;
     this.getManufacturingYearList();
   }
 
-  setPageNumber(pageNumber:number){
-    if(pageNumber == this.filter.PageNumber) return;
+  setPageNumber(pageNumber: number) {
+    if (pageNumber == this.filter.PageNumber) return;
     this.filter.PageNumber = pageNumber;
     this.getManufacturingYearList();
   }
 
- 
   navigateToEdit(ManufacturingYear: ManufacturingYear) {
-    this.router.navigateByUrl(`/manufacturing-year/edit/${ManufacturingYear.id}`);
+    this.router.navigateByUrl(
+      `/manufacturing-year/edit/${ManufacturingYear.id}`
+    );
   }
   navigateToView(ManufacturingYear: ManufacturingYear) {
-    this.router.navigateByUrl(`/manufacturing-year/view/${ManufacturingYear.id}`);
+    this.router.navigateByUrl(
+      `/manufacturing-year/view/${ManufacturingYear.id}`
+    );
   }
 }

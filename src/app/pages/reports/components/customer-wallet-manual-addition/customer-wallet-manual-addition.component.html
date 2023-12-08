@@ -1,15 +1,9 @@
-<div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">
-      {{ "menu.walletManualAdditionCustomer" | translate }}
-    </h3>
-  </div>
+<div class="card shadow-sm">
   <div class="card-body">
-    <div class="card bg-secondary">
+    <div class="card bg-light">
       <div class="card-body">
-        <app-filter [filter]="filter"></app-filter>
-        <div class="row">
-          <div class="col-md-4 col-sm-12">
+        <app-filter [filter]="filter">
+          <div class="col-lg-3 col-md-6 col-sm-12">
             <label class="form-label">{{ "field.typeName" | translate }}</label>
             <select
               [(ngModel)]="filter.TransactionType"
@@ -23,10 +17,11 @@
               </option>
             </select>
           </div>
-        </div>
+        </app-filter>
       </div>
     </div>
     <app-table
+      [filter]="filter"
       [list]="reportList"
       [titles]="titles"
       [properties]="properties"

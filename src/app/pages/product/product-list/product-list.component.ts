@@ -8,6 +8,7 @@ import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { CategoryService } from '../../Category/services';
 import { ProductList, ProductFilter } from '../models';
 import { ProductService } from '../services';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-product-list',
@@ -56,6 +57,7 @@ export class ProductListComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private categoryService: CategoryService,
+    private headerService: HeaderService,
     private formBuilder: FormBuilder
   ) {
     // this.form = this.formBuilder.group({
@@ -65,6 +67,7 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.products'));
     this.filter = new ProductFilter();
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
@@ -115,6 +118,10 @@ export class ProductListComponent implements OnInit {
         this.spinner.hide();
         this.busyLoading = false;
         this.productlist = res.data;
+        console.log(
+          '🚀 ~ file: product-list.component.ts:119 ~ ProductListComponent ~ getProductList ~ res.data.filter(item => item.deliverectMenuId):',
+          res.data.filter((item) => item.deliverectMenuId)
+        );
         delete res.data;
         this.pagination = { ...res };
       },
@@ -150,18 +157,28 @@ export class ProductListComponent implements OnInit {
         break;
     }
   }
-  navigateTO(provider: { event: ProductList; type: string }) {
-    switch (provider.type) {
+  navigateTO(product: { event: ProductList; type: string }) {
+    switch (product.type) {
       case 'additionalOptions':
-        this.navigateToProductAdditionalOption(provider.event);
+        this.navigateToProductAdditionalOption(product.event);
         break;
       case 'productDetails':
-        this.navigateToProductDetails(provider.event);
-
+        this.navigateToProductDetails(product.event);
+        break;
+      case 'productAvailability':
+        this.navigateProductAvailability(product.event);
+        break;
+      case 'quickAccess':
+        this.router.navigateByUrl(`/product/quick-access/${product.event.id}`);
         break;
       default:
         break;
     }
+  }
+  navigateProductAvailability(product: ProductList) {
+    this.router.navigateByUrl(
+      `/product/availability/${product.deliverectMenuId}`
+    );
   }
 
   navigateToProductDetails(product: ProductList) {

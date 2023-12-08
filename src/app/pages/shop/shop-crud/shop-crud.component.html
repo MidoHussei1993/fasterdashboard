@@ -50,7 +50,7 @@
               <input
                 type="file"
                 name="avatar"
-                (change)="handleInputChange($event,'avatar')"
+                (change)="handleInputChange($event, 'avatar')"
                 accept=".png, .jpg, .jpeg"
               />
             </label>
@@ -102,7 +102,7 @@
               <input
                 type="file"
                 name="avatar"
-                (change)="handleInputChange($event,'commercialRegisterImage')"
+                (change)="handleInputChange($event, 'commercialRegisterImage')"
                 accept=".png, .jpg, .jpeg"
               />
             </label>
@@ -111,7 +111,8 @@
           <div
             *ngIf="
               !form.get('commercialRegisterImage').valid &&
-              (form.get('commercialRegisterImage').dirty || form.get('commercialRegisterImage').touched)
+              (form.get('commercialRegisterImage').dirty ||
+                form.get('commercialRegisterImage').touched)
             "
             class="text text-danger"
           >
@@ -120,7 +121,6 @@
             </p>
           </div>
         </div>
-
 
         <div class="col-md-3 col-sm-12 text-center">
           <label class="form-label d-block">{{
@@ -155,7 +155,9 @@
               <input
                 type="file"
                 name="shopManagerNationalIdImage"
-                (change)="handleInputChange($event,'shopManagerNationalIdImage')"
+                (change)="
+                  handleInputChange($event, 'shopManagerNationalIdImage')
+                "
                 accept=".png, .jpg, .jpeg"
               />
             </label>
@@ -164,11 +166,16 @@
           <div
             *ngIf="
               !form.get('shopManagerNationalIdImage').valid &&
-              (form.get('shopManagerNationalIdImage').dirty || form.get('shopManagerNationalIdImage').touched)
+              (form.get('shopManagerNationalIdImage').dirty ||
+                form.get('shopManagerNationalIdImage').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="form.get('shopManagerNationalIdImage').hasError('required')">
+            <p
+              *ngIf="
+                form.get('shopManagerNationalIdImage').hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
@@ -207,7 +214,7 @@
               <input
                 type="file"
                 name="vatCertificateImage"
-                (change)="handleInputChange($event,'vatCertificateImage')"
+                (change)="handleInputChange($event, 'vatCertificateImage')"
                 accept=".png, .jpg, .jpeg"
               />
             </label>
@@ -216,7 +223,8 @@
           <div
             *ngIf="
               !form.get('vatCertificateImage').valid &&
-              (form.get('vatCertificateImage').dirty || form.get('vatCertificateImage').touched)
+              (form.get('vatCertificateImage').dirty ||
+                form.get('vatCertificateImage').touched)
             "
             class="text text-danger"
           >
@@ -225,7 +233,6 @@
             </p>
           </div>
         </div>
-
 
         <div class="col-md-3 col-sm-12 text-center">
           <label class="form-label d-block">{{
@@ -260,7 +267,7 @@
               <input
                 type="file"
                 name="headerImage"
-                (change)="handleInputChange($event,'headerImage')"
+                (change)="handleInputChange($event, 'headerImage')"
                 accept=".png, .jpg, .jpeg"
               />
             </label>
@@ -278,7 +285,6 @@
             </p>
           </div>
         </div>
-
       </div>
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
@@ -511,7 +517,8 @@
           <div
             *ngIf="
               !form.get('percentageFromOrder').valid &&
-              (form.get('percentageFromOrder').dirty || form.get('percentageFromOrder').touched)
+              (form.get('percentageFromOrder').dirty ||
+                form.get('percentageFromOrder').touched)
             "
             class="text text-danger"
           >
@@ -533,7 +540,8 @@
           <div
             *ngIf="
               !form.get('staticDeliveryAmount').valid &&
-              (form.get('staticDeliveryAmount').dirty || form.get('staticDeliveryAmount').touched)
+              (form.get('staticDeliveryAmount').dirty ||
+                form.get('staticDeliveryAmount').touched)
             "
             class="text text-danger"
           >
@@ -545,11 +553,10 @@
       </div>
 
       <div class="row my-5">
-       
         <div class="col-md-6 col-sm-12">
           <p>{{ "field.PartnerShop" | translate }}</p>
           <div class="row">
-            <div class="col-md-3 col-sm-6 ">
+            <div class="col-md-3 col-sm-6">
               <label class="form-check form-check-custom form-check-solid">
                 <input
                   class="form-check-input mx-2"
@@ -563,7 +570,7 @@
                 </span>
               </label>
             </div>
-            <div class="col-md-3 col-sm-6 ">
+            <div class="col-md-3 col-sm-6">
               <label class="form-check form-check-custom form-check-solid">
                 <input
                   class="form-check-input mx-2"
@@ -590,37 +597,37 @@
             </p>
           </div>
         </div>
-     </div>
+      </div>
 
-     <div class="row my-5">
-      <div class="col-md-6 col-sm-12">
-        <label class="form-label">{{ "field.bankName" | translate }}</label>
-        <select
-          formControlName="shopBankName"
-          class="form-select form-select-solid"
-        >
-          <option [value]="item.id" *ngFor="let item of bankList">
-            {{ currentLanguage == "en" ? item.name : item.nameAr }}
-          </option>
-        </select>
-        <!-- <input
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.bankName" | translate }}</label>
+          <select
+            formControlName="shopBankName"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of bankList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <!-- <input
               type="text"
               formControlName="bankName"
               class="form-control form-control-solid"
               placeholder="{{ 'field.bankName' | translate }}"
             /> -->
-      </div>
+        </div>
 
-      <div class="col-md-6 col-sm-12">
-        <label class="form-label"> IBAN </label>
-        <input
-          type="text"
-          formControlName="shopIBAN"
-          class="form-control form-control-solid"
-          placeholder="IBAN"
-          maxlength="24"
-        />
-        <!-- <div
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> IBAN </label>
+          <input
+            type="text"
+            formControlName="shopIBAN"
+            class="form-control form-control-solid"
+            placeholder="IBAN"
+            maxlength="24"
+          />
+          <!-- <div
           *ngIf="
             !form.get('shopIBAN').valid &&
             (form.get('shopIBAN').dirty || form.get('shopIBAN').touched)
@@ -634,79 +641,154 @@
             {{ "field.IbanPlaceHolder" | translate }}
           </p>
         </div> -->
-      </div>
-    </div>
-
-    <div class="row my-5">
-      <div class="col-md-6 col-sm-12">
-        <label class="form-label">{{ "field.shopManagerName" | translate }}</label>
-        <input
-        type="text"
-        formControlName="shopManagerName"
-        class="form-control form-control-solid"
-      />
-      </div>
-
-      <div class="col-md-6 col-sm-12">
-        <label class="form-label"> {{ "field.vatNumber" | translate }} </label>
-        <input
-          type="text"
-          formControlName="vatNumber"
-          class="form-control form-control-solid"
-        
-        />
-      </div>
-    </div>
-
-
-
-    <div class="row my-5">
-      <div class="col-md-6 col-sm-12">
-        <label class="form-label">{{
-          "field.minimumOrderValue" | translate
-        }}</label>
-        <input
-          type="number"
-          formControlName="minimumOrderValue"
-          class="form-control form-control-solid"
-          :placeholder="{{ 'field.minimumOrderValue' | translate }}"
-        />
-        <div
-          *ngIf="
-            !form.get('minimumOrderValue').valid &&
-            (form.get('minimumOrderValue').dirty || form.get('minimumOrderValue').touched)
-          "
-          class="text text-danger"
-        >
-          <p *ngIf="form.get('minimumOrderValue').hasError('required')">
-            {{ "_.required" | translate }}
-          </p>
         </div>
       </div>
-      <div class="col-md-6 col-sm-12">
-        <label class="form-label">{{
-          "field.maximumOrderValue" | translate
-        }}</label>
-        <input
-          type="number"
-          formControlName="maximumOrderValue"
-          class="form-control form-control-solid"
-          :placeholder="{{ 'field.maximumOrderValue' | translate }}"
-        />
-        <div
-          *ngIf="
-            !form.get('maximumOrderValue').valid &&
-            (form.get('maximumOrderValue').dirty || form.get('maximumOrderValue').touched)
-          "
-          class="text text-danger"
-        >
-          <p *ngIf="form.get('maximumOrderValue').hasError('required')">
-            {{ "_.required" | translate }}
-          </p>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.shopManagerName" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="shopManagerName"
+            class="form-control form-control-solid"
+          />
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">
+            {{ "field.vatNumber" | translate }}
+          </label>
+          <input
+            type="text"
+            formControlName="vatNumber"
+            class="form-control form-control-solid"
+          />
         </div>
       </div>
-    </div>
-     
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.minimumOrderValue" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="minimumOrderValue"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.minimumOrderValue' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('minimumOrderValue').valid &&
+              (form.get('minimumOrderValue').dirty ||
+                form.get('minimumOrderValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('minimumOrderValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.maximumOrderValue" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="maximumOrderValue"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.maximumOrderValue' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('maximumOrderValue').valid &&
+              (form.get('maximumOrderValue').dirty ||
+                form.get('maximumOrderValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('maximumOrderValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.deliverectAccountId" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="deliverectAccountId"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.deliverectAccountId' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('deliverectAccountId').valid &&
+              (form.get('deliverectAccountId').dirty ||
+                form.get('deliverectAccountId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('deliverectAccountId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "MinimumCreditOrderValue" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="MinimumCreditOrderValue"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'MinimumCreditOrderValue' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('MinimumCreditOrderValue').valid &&
+              (form.get('MinimumCreditOrderValue').dirty ||
+                form.get('MinimumCreditOrderValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('MinimumCreditOrderValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "MaximumCreditOrderValue" | translate
+          }}</label>
+          <input
+            type="number"
+            formControlName="MaximumCreditOrderValue"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'MaximumCreditOrderValue' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('MaximumCreditOrderValue').valid &&
+              (form.get('MaximumCreditOrderValue').dirty ||
+                form.get('MaximumCreditOrderValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('MaximumCreditOrderValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div class="row my-5" *ngIf="mode != 'View'">
         <div class="col-md-4 col-sm-12 mx-auto text-center">

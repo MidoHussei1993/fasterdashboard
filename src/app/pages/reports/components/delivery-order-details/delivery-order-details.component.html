@@ -9,7 +9,7 @@
         *ngIf="mainObject.deliveryOrder"
       >
         {{ "field.CreateAtTo" | translate }} :
-        {{ mainObject.deliveryOrder.createAt | date: "MMM d, y - h:mm a" }}
+        {{ mainObject.deliveryOrder.createAt | date : "MMM d, y - h:mm a" }}
       </h6>
       <h6
         class="font-weight-bolder mt-3"
@@ -31,26 +31,30 @@
         {{ "field.orderType" | translate }} : Delivery 📦
       </h3>
     </div>
-    <div class="col-3 " *ngIf="mode == 'Edit' && !isShop">
+    <div class="col-3" *ngIf="mode == 'Edit' && !isShop">
       <button
         type="button"
-        (click)="orderAmountPrice = 0;openModal('orderAmountPriceModal')"
+        (click)="orderAmountPrice = 0; openModal('orderAmountPriceModal')"
         class="btn btn-danger btn-sm mt-3 mx-2"
       >
         {{ "field.confirmAmount" | translate }}
       </button>
       <button
-      type="button"
-      (click)="openModal('stateModel')"
-      class="btn btn-dark btn-sm mt-3"
-    >
-      {{ "action.changeStatus" | translate }}
-    </button>
+        type="button"
+        (click)="openModal('stateModel')"
+        class="btn btn-dark btn-sm mt-3"
+      >
+        {{ "action.changeStatus" | translate }}
+      </button>
     </div>
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-md-4 col-sm-12" [ngClass]="{'col-md-12': isShop}" *ngIf="mainObject.deliveryOrder">
+      <div
+        class="col-md-6 col-sm-12"
+        [ngClass]="{ 'col-md-12': isShop }"
+        *ngIf="mainObject.deliveryOrder"
+      >
         <h6 class="text-uppercase mb-4 font-weight-bolder">
           {{ "field.customerDetails" | translate }}
         </h6>
@@ -137,7 +141,10 @@
           {{ "field.providerDetails" | translate }}
         </h6>
 
-        <div *ngIf="mainObject.deliveryOfferPrices && !isShop" class="b-dash-border">
+        <div
+          *ngIf="mainObject.deliveryOfferPrices && !isShop"
+          class="b-dash-border"
+        >
           <div
             *ngFor="let driver of mainObject.deliveryOfferPrices; let i = index"
           >
@@ -252,9 +259,7 @@
           </h6>
           <h6 class="text-uppercase font-weight-bolder">
             {{ "field.deliveryCouboneAmount" | translate }} :
-            {{
-              mainObject.deliveryOrder.invoice.deliveryCouboneAmount
-            }}
+            {{ mainObject.deliveryOrder.invoice.deliveryCouboneAmount }}
           </h6>
           <h6 class="text-uppercase font-weight-bolder">
             {{ "field.Amount" | translate }} :
@@ -317,12 +322,14 @@
               }}
             </span>
           </h6>
-          <h6 class="font-weight-bolder mt-3"
-          [ngClass]="{
-            'text-success': mainObject.deliveryOrder.isPartner == true,
-            'text-danger': mainObject.deliveryOrder.isPartner == false
-          }"
-           *ngIf="mainObject.deliveryOrder">
+          <h6
+            class="font-weight-bolder mt-3"
+            [ngClass]="{
+              'text-success': mainObject.deliveryOrder.isPartner == true,
+              'text-danger': mainObject.deliveryOrder.isPartner == false
+            }"
+            *ngIf="mainObject.deliveryOrder"
+          >
             {{ "field.Statues" | translate }} :
             {{
               (mainObject.deliveryOrder.isPartner
@@ -384,6 +391,12 @@
                   {{ "product.name" | translate }}
                 </th>
                 <th class="text-center">
+                  {{ "field.SizeName" | translate }}
+                </th>
+                <th class="text-center">
+                  {{ "field.SizeNameAr" | translate }}
+                </th>
+                <th class="text-center">
                   {{ "field.price" | translate }}
                 </th>
                 <th class="text-center">
@@ -392,15 +405,21 @@
                 <th class="text-center">
                   {{ "field.total" | translate }}
                 </th>
-                <th class="text-center">
+                <!-- <th class="text-center">
                   {{ "menu.additionalComponent" | translate }}
-                </th>
+                </th> -->
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of mainObject.carts; let i = index">
                 <td class="text-center">
                   {{ item.productDetailsSize.productDetails.title }}
+                </td>
+                <td class="text-center">
+                  {{ item.productDetailsSize.itemSize.sizeName }}
+                </td>
+                <td class="text-center">
+                  {{ item.productDetailsSize.itemSize.sizeNameAr }}
                 </td>
                 <td class="text-center">
                   {{ item.price }}
@@ -410,9 +429,6 @@
                 </td>
                 <td class="text-center">
                   {{ item.quantity * item.price }}
-                </td>
-                <td class="text-center">
-                  {{ item.additionalComponents }}
                 </td>
                 <!-- <td>
                   {{ item.createAt | date: "h:mm a" }}
@@ -424,19 +440,59 @@
             </tbody>
           </table>
         </div>
+        <div class="row">
+          <h3 class="mt-3 mb-2">
+            {{ "menu.additionalComponent" | translate }}
+          </h3>
+          <div class="col-12">
+            <div
+              class="card bg-light"
+              *ngFor="let item of additionalComponents"
+            >
+              <div class="card-body py-2">
+                <div class="col-12">
+                  <div class="card my-2" *ngFor="let nested of item">
+                    <div class="card-body py-2">
+                      <p class="text-muted font-weight-bold mb-0">
+                        {{
+                          currentLanguage == "ar"
+                            ? nested.titleAr
+                            : nested.title
+                        }}
+                      </p>
+                      <div class="card my-2 bg-secondary">
+                        <div
+                          class="card-body py-2"
+                          *ngFor="
+                            let nestedChild of nested.additionalComponents
+                          "
+                        >
+                          <p class="lead mb-0">
+                            {{
+                              currentLanguage == "ar"
+                                ? nestedChild.componentNameAr
+                                : nestedChild.componentName
+                            }}
+                            -
+                            <strong class="h6 text-primary">
+                              {{ nestedChild.quantity }}
+                            </strong>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="col-md-3 col-sm-12" *ngIf="!isShop">
-        <app-google-map
-          *ngIf="mainObject.deliveryOrder"
-          [markerPositions]="locationList"
-          [markers]="providerMark"
-          [titleList]="mapMarkerTitles"
-          [disabled]="true"
-        ></app-google-map>
-      </div>
-
-      <div class="col-md-5 col-sm-12" *ngIf="mainObject.deliveryOrder  && !isShop">
+      <div
+        class="col-md-6 col-sm-12"
+        *ngIf="mainObject.deliveryOrder && !isShop"
+      >
         <!-- <h6 class="text-uppercase font-weight-bolder mb-5">
           {{ "field.orderHistory" | translate }}
         </h6> -->
@@ -478,7 +534,7 @@
                   {{ item.statusName }}
                 </td>
                 <td>
-                  {{ item.createAt | date: "h:mm a" }}
+                  {{ item.createAt | date : "h:mm a" }}
                 </td>
                 <td>
                   {{ item.statusDescription }}
@@ -682,13 +738,13 @@
                     placeholder="{{ 'field.note' | translate }}"
                   /> -->
                   <select
-                  formControlName="note"
-                  class="form-select form-select-solid"
-                >
-                  <option [value]="item" *ngFor="let item of walletNotes">
-                    {{ item }}
-                  </option>
-                </select>
+                    formControlName="note"
+                    class="form-select form-select-solid"
+                  >
+                    <option [value]="item" *ngFor="let item of walletNotes">
+                      {{ item }}
+                    </option>
+                  </select>
                   <div
                     *ngIf="
                       !customerForm.get('note').valid &&
@@ -857,13 +913,13 @@
                     placeholder="{{ 'field.note' | translate }}"
                   /> -->
                   <select
-                  formControlName="note"
-                  class="form-select form-select-solid"
-                >
-                  <option [value]="item" *ngFor="let item of walletNotes">
-                    {{ item }}
-                  </option>
-                </select>
+                    formControlName="note"
+                    class="form-select form-select-solid"
+                  >
+                    <option [value]="item" *ngFor="let item of walletNotes">
+                      {{ item }}
+                    </option>
+                  </select>
                   <div
                     *ngIf="
                       !providerForm.get('note').valid &&
@@ -893,6 +949,23 @@
             </form>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="row my-3">
+      <div
+        class="col-md-10 col-sm-12 mx-auto"
+        *ngIf="!isShop"
+        style="height: 400px"
+      >
+        <app-google-map
+          *ngIf="mainObject.deliveryOrder"
+          [markerPositions]="locationList"
+          [markers]="providerMark"
+          [titleList]="mapMarkerTitles"
+          [disabled]="true"
+          style="height: 300px"
+        ></app-google-map>
       </div>
     </div>
   </div>
@@ -929,7 +1002,7 @@
 
           <p class="text-uppercase font-weight-bolder text-white">
             {{ "field.birthDate" | translate }} :
-            {{ customerData.birthDate | date: "MMM d, y - h:mm a" }}
+            {{ customerData.birthDate | date : "MMM d, y - h:mm a" }}
           </p>
 
           <p class="text-uppercase font-weight-bolder text-white">
@@ -983,7 +1056,7 @@
 
           <p class="text-uppercase font-weight-bolder text-white">
             {{ "field.CreateAtTo" | translate }} :
-            {{ providerData.createAt | date: "MMM d, y - h:mm a" }}
+            {{ providerData.createAt | date : "MMM d, y - h:mm a" }}
           </p>
 
           <p class="text-uppercase font-weight-bolder text-white">
@@ -1139,7 +1212,6 @@
   </div>
 </ng-template>
 
-
 <ng-template #orderAmountPriceModal let-modal>
   <!-- <div class="modal-header">
     <button  type="button" class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -1155,29 +1227,29 @@
       </h2>
     </div>
     <div class="row my-5">
-     
-
       <div class="col-md-12 col-sm-12">
-        <label class="form-label">{{ "provider.operation_amount" | translate }}</label>
+        <label class="form-label">{{
+          "provider.operation_amount" | translate
+        }}</label>
         <input
           type="number"
           class="form-control form-control-solid"
           [(ngModel)]="orderAmountPrice"
         />
       </div>
-    </div>      
+    </div>
 
-      <div class="row my-5">
-        <div class="col-md-4 col-sm-12 mx-auto text-center">
-          <button
-            type="button"
-            (click)="ChangeOrderAmountPrice()"
-            class="btn btn-primary btn-block btn-hover-scale"
-          >
-            {{ "action.save" | translate }}
-          </button>
-        </div>
+    <div class="row my-5">
+      <div class="col-md-4 col-sm-12 mx-auto text-center">
+        <button
+          type="button"
+          (click)="ChangeOrderAmountPrice()"
+          class="btn btn-primary btn-block btn-hover-scale"
+        >
+          {{ "action.save" | translate }}
+        </button>
       </div>
+    </div>
   </div>
 </ng-template>
 

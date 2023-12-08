@@ -13,10 +13,10 @@ import { AdditionalComponentService } from '../services/additional-component.ser
 @Component({
   selector: 'app-additional-component-crud',
   templateUrl: './additional-component-crud.component.html',
-  styleUrls: ['./additional-component-crud.component.scss']
+  styleUrls: ['./additional-component-crud.component.scss'],
 })
 export class AdditionalComponentCrudComponent extends Crud implements OnInit {
-  additionalComponentTitleList = []
+  additionalComponentTitleList = [];
   constructor(
     private additionalComponentService: AdditionalComponentService,
     public route: ActivatedRoute,
@@ -25,14 +25,27 @@ export class AdditionalComponentCrudComponent extends Crud implements OnInit {
     public translate: TranslateService,
     private additionalComponentTitleService: AdditionalComponentTitleService,
     public spinner: NgxSpinnerService
-  ) { 
-    super(additionalComponentService,notifier,spinner,translate,route)
+  ) {
+    super(additionalComponentService, notifier, spinner, translate, route);
     this.form = this.formBuilder.group({
-      id:[0],
-      componentName: ['', [ Validators.required,Validators.pattern(Pattern.OnlyEnglishLettersAndSpace)]],
-      componentNameAr: ['', [ Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)]],
+      id: [0],
+      componentName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(Pattern.OnlyEnglishLettersAndSpace),
+        ],
+      ],
+      componentNameAr: [
+        '',
+        [Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)],
+      ],
       price: [0],
-      additionalComponentTitleId: [null,[ Validators.required]],
+      additionalComponentTitleId: [null, [Validators.required]],
+      snoozeStart: [''],
+      snoozeEnd: [''],
+      deliverectModifierId: [''],
+      deliverectPLU: [''],
     });
     this.mode = this.route.snapshot.data.mode;
     this.currentLanguage = this.translate.currentLang;
@@ -42,14 +55,34 @@ export class AdditionalComponentCrudComponent extends Crud implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.mode == FormMode.Edit || this.mode == FormMode.View){
-      this.getById(this.route.snapshot.params.id)
+    if (this.mode == FormMode.Edit || this.mode == FormMode.View) {
+      this.getById(this.route.snapshot.params.id);
     }
     if (this.route.snapshot.queryParams.additionalComponentTitleId) {
       this.form
         .get('additionalComponentTitleId')
-        .patchValue( +this.route.snapshot.queryParams.additionalComponentTitleId );
-    } 
+        .patchValue(
+          +this.route.snapshot.queryParams.additionalComponentTitleId
+        );
+    }
+  }
+
+  getById(id: number) {
+    this.busyLoading = true;
+    this.spinner.show();
+    this.additionalComponentService.getById(id).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.busyLoading = false;
+        res.snoozeStart = new Date(res.snoozeStart);
+        res.snoozeEnd = new Date(res.snoozeEnd);
+        this.form.patchValue(res);
+      },
+      (err) => {
+        this.spinner.hide();
+        this.busyLoading = false;
+      }
+    );
   }
 
   // getDdl(){
@@ -78,13 +111,15 @@ export class AdditionalComponentCrudComponent extends Crud implements OnInit {
   edit() {
     let body = this.form.value;
     this.spinner.show();
-    this.additionalComponentService.edit(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('edited'))
-    },err=>{
-      this.spinner.hide();
-      // this.notifier.notify('error',err)
-    })
+    this.additionalComponentService.edit(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify('success', this.translate.instant('edited'));
+      },
+      (err) => {
+        this.spinner.hide();
+        // this.notifier.notify('error',err)
+      }
+    );
   }
-
 }

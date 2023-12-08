@@ -1,16 +1,26 @@
-<div class="card card-flush shadow-sm">
+<div class="card shadow-sm">
   <div class="card-header">
     <h3 class="card-title">
       {{ "menu.deliveryOrderStatusReport" | translate }}
     </h3>
   </div>
   <div class="card-body">
-    <div class="card bg-secondary">
+    <div class="card bg-light">
       <div class="card-body">
         <app-filter [filter]="filter"></app-filter>
       </div>
     </div>
+    <div class="row mt-2">
+      <div class="col-lg-2 mx-auto col-md-6 col-sm-12">
+        <div class="alert alert-warning" role="alert">
+          <strong>
+            {{ timeLeft }}
+          </strong>
+        </div>
+      </div>
+    </div>
     <app-table
+      [filter]="filter"
       [list]="list"
       [titles]="titles"
       [properties]="properties"
@@ -19,6 +29,8 @@
       [showEdit]="false"
       [showView]="true"
       [showSearch]="true"
+      [isReload]="true"
+      (reload)="timeLeft = 0"
       [isdownloadAll]="list.length ? true : false"
       (export)="downloadAll()"
       (view)="navigateToOrderDetails($event)"

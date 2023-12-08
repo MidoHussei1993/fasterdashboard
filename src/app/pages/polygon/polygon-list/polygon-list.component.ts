@@ -7,6 +7,7 @@ import { ListComponent } from 'src/app/shared';
 import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { PolygonFilter } from '../models';
 import { PolygonService } from '../services/polygon.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-polygon-list',
@@ -18,7 +19,7 @@ export class PolygonListComponent
   implements OnInit
 {
   currentId: number = null;
-  filter:PolygonFilter = new PolygonFilter()
+  filter: PolygonFilter = new PolygonFilter();
   orderTypeList: any[] = [];
   polygonTypeList: any[] = [];
   currentLanguage = '';
@@ -29,14 +30,21 @@ export class PolygonListComponent
     public spinner: NgxSpinnerService,
     public translate: TranslateService,
     public route: ActivatedRoute,
+    private headerService: HeaderService,
     private swalService: SwalModalService,
     public router: Router
   ) {
     super(polygonService, notifier, spinner, translate, route, router);
-    this.titles = ['id', 'field.Date', 'field.serviceType', 'field.districtType', 'field.note'];
+    this.titles = [
+      'id',
+      'field.Date',
+      'field.serviceType',
+      'field.districtType',
+      'field.note',
+    ];
     this.properties = ['id', 'createAt', 'orderType', 'type', 'note'];
     this.navigateTo = 'polygon';
-     this.currentLanguage = this.translate.currentLang;
+    this.currentLanguage = this.translate.currentLang;
   }
 
   resetfilter() {
@@ -51,7 +59,7 @@ export class PolygonListComponent
   }
 
   ngOnInit(): void {
-    console.log('fire');
+    this.headerService.setPageTitle(this.translate.instant('menu.polygon'));
     this.getList();
     this.GetOrderTypeDDL();
     this.getDropdown();
@@ -78,13 +86,13 @@ export class PolygonListComponent
     );
   }
   getList() {
-    console.log('get list of items')
+    console.log('get list of items');
     this.spinner.show();
     this.polygonService.get(this.filter).subscribe(
       (res: any) => {
         this.spinner.hide();
         this.list = res.data;
-        delete res.data
+        delete res.data;
         this.pagination = res;
       },
       (err) => {
@@ -127,5 +135,4 @@ export class PolygonListComponent
   navigateToView(faqs: any) {
     this.router.navigateByUrl(`/polygon/view/${faqs.id}`);
   }
-
 }

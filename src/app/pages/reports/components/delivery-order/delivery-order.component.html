@@ -1,15 +1,9 @@
-<div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">
-      {{ "menu.DeliveryOrderDataReport" | translate }}
-    </h3>
-  </div>
+<div class="card shadow-sm">
   <div class="card-body">
-    <div class="card bg-secondary">
+    <div class="card bg-light">
       <div class="card-body">
-        <app-filter [filter]="filter"></app-filter>
-        <div class="row">
-          <div class="col-md-4 col-sm-12">
+        <app-filter [filter]="filter">
+          <div class="col-lg-3 col-md-6 col-sm-12">
             <label class="form-label">{{ "cobone.status" | translate }}</label>
             <select
               [(ngModel)]="filter.StatusId"
@@ -23,7 +17,7 @@
               </option>
             </select>
           </div>
-          <div class="col-md-4 col-sm-12" *ngIf="isShop == false">
+          <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="isShop == false">
             <label class="form-label">{{
               "field.payTypeName" | translate
             }}</label>
@@ -36,8 +30,9 @@
               </option>
             </select>
           </div>
-
-          <!-- <div class="col-md-4 col-sm-12">
+        </app-filter>
+        <div class="row">
+          <!-- <div class="col-lg-3 col-md-6col-sm-12">
             <label class="form-label">{{ "field.VendorId" | translate }}</label>
             <select
               [(ngModel)]="filter.VendorId"
@@ -61,6 +56,7 @@
       </div>
     </div>
     <app-table
+      [filter]="filter"
       [list]="deliveryOrderlist"
       [titles]="titles"
       [properties]="properties"
@@ -106,6 +102,18 @@
           type: 'rejectOrder',
           hide: !isVender && !isShop
         },
+        {
+          title: 'field.SendOrderToTookan',
+          icon: 'fa-paper-plane text-primary',
+          type: 'SendOrderToTookan',
+          hide: !isVender && !isShop
+        },
+        {
+          title: 'field.shopCartData',
+          icon: 'fa-shopping-cart',
+          type: 'shopCartData',
+          hide: !isVender && !isShop
+        }
       ]"
       (aciton)="navigateTO($event)"
     ></app-table>
@@ -113,7 +121,7 @@
 </div>
 
 <ng-template #orderCard let-modal>
-  <div class="modal-body card-flush" style="direction: ltr" id="print-section">
+  <div class="modal-body" style="direction: ltr" id="print-section">
     <div class="d-flex justify-content-between mx-4">
       <div class="p-2">
         <img
@@ -123,7 +131,7 @@
         />
       </div>
       <div class="p-2">
-        <button
+        <!-- <button
           type="button"
           class="btn btn-primary"
           [useExistingCss]="true"
@@ -136,7 +144,7 @@
             class="fas fa-print display-6"
             title="{{ 'reports.print' | translate }}"
           ></i>
-        </button>
+        </button> -->
       </div>
     </div>
     <div class="d-flex justify-content-between mx-4">
@@ -160,7 +168,7 @@
       </div>
       <div class="p-2">
         <p class="lead text-dark">
-          {{ orderCardDetails.createAt | date: "MMM d, y - h:mm a" }}
+          {{ orderCardDetails.createAt | date : "MMM d, y - h:mm a" }}
         </p>
       </div>
     </div>
@@ -170,7 +178,73 @@
           class="table table-hover table-rounded table-striped border gy-7 gs-7"
         >
           <thead>
-            <tr class="">
+            <tr class="text-dark">
+              <th class="text-center">
+                {{ "product.image" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.Product" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.ProductAr" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.quantity" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.price" | translate }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of orderCardDetails.carts; let i = index"
+              class="slideDown"
+            >
+              <td class="text-center text-dark">
+                <img
+                  [src]="item.productDetailsSize.productDetails.coverImage"
+                  width="75"
+                  height="75"
+                  style="border-radius: 50%"
+                />
+              </td>
+              <td class="text-center text-dark font-weight-bolder">
+                {{ item.productDetailsSize.productDetails.title }}
+              </td>
+              <td class="text-center text-dark font-weight-bolder">
+                {{ item.productDetailsSize.productDetails.titleAr }}
+              </td>
+              <td class="text-center text-dark font-weight-bolder">
+                {{ item.quantity }}
+              </td>
+              <td class="text-center text-dark font-weight-bolder">
+                {{ item.price }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #shopCartData let-modal>
+  <div class="modal-body" style="direction: ltr" id="print-section">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center font-weight-bolder my-3">
+          {{ "field.shopCartData" | translate }}
+        </h3>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="table-responsive" style="direction: rtl">
+        <table
+          class="table table-hover table-rounded table-striped border gy-7 gs-7"
+        >
+          <thead>
+            <tr class="text-dark">
               <th class="text-center">
                 {{ "product.image" | translate }}
               </th>
@@ -201,16 +275,16 @@
                   style="border-radius: 50%"
                 />
               </td>
-              <td class="text-center font-weight-bolder">
+              <td class="text-center font-weight-bolder text-dark">
                 {{ item.productDetailsSize.productDetails.title }}
               </td>
-              <td class="text-center font-weight-bolder">
+              <td class="text-center font-weight-bolder text-dark">
                 {{ item.productDetailsSize.productDetails.titleAr }}
               </td>
-              <td class="text-center font-weight-bolder">
+              <td class="text-center font-weight-bolder text-dark">
                 {{ item.quantity }}
               </td>
-              <td class="text-center font-weight-bolder">
+              <td class="text-center font-weight-bolder text-dark">
                 {{ item.price }}
               </td>
             </tr>

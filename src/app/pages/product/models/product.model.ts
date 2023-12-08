@@ -17,6 +17,7 @@ export class ProductList {
   isOffer: boolean;
   shopId: number;
   categoryId: number;
+  deliverectMenuId: number;
   createAt: Date;
   categoryName: string;
   categoryNameAr: string;

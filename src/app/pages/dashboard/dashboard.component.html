@@ -1,125 +1,316 @@
-<div class="row" *ngIf="isAdmin">
-  <div class="col-12">
-  <div class="alert alert-danger text-center" role="alert">
-      <button type="button" class="btn btn-danger mx-auto btn-block" (click)="backupDataBase()">
-        {{ "action.backup" | translate }}
-      </button>
+<div class="row mt-2 align-items-center mx-2">
+  <div class="col-lg-6 col-md-8 col-sm-12" *ngIf="isShop">
+    <div class="card">
+      <div class="card-body py-2">
+        <div
+          class="row justify-content-around align-items-end"
+          *ngIf="dispatchTypeList.length"
+        >
+          <div class="col-lg-8 col-md-9 col-sm-12">
+            <label class="form-label">{{
+              "field.dispatchType" | translate
+            }}</label>
+            <select
+              [(ngModel)]="dispatchTypeId"
+              class="form-select form-select-solid"
+            >
+              <option [value]="item.id" *ngFor="let item of dispatchTypeList">
+                {{ currentLanguage == "en" ? item.name : item.nameAr }}
+              </option>
+            </select>
+          </div>
+          <div class="col-lg-4 col-md-3 col-sm-12 text-center">
+            <button
+              type="button"
+              class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary"
+              (click)="changeDispatchType()"
+            >
+              {{ "action.save" | translate }}
+              <i class="far fa-save"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="col-md-3">
+  <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="isAdmin">
+    <button
+      type="button"
+      class="btn btn-outline btn-outline-dashed btn-outline-danger btn-active-light-danger"
+      (click)="backupDataBase()"
+    >
+      <img
+        class="pointer"
+        src="assets/images/restorDb.svg"
+        width="60"
+        height="60"
+      />
+      <h4 class="text-danger font-weight-bolder d-inline pointer">
+        {{ "action.backup" | translate }}
+      </h4>
+    </button>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-11 mx-auto col-sm-12">
-    <div class="card bg-dark">
+<app-trackingx-providers class="mx-2"></app-trackingx-providers>
+<div class="row mx-2">
+  <div class="col-md-6 col-sm-12">
+    <div class="card">
       <div class="card-body">
-        <div class="container" *ngIf="report.activeProviders">
-          <div class="row">
-            <div class="col-12 col-sm-6 col-lg-3 mx-auto">
-              <div
-                class="card bg-light"
-                (click)="filter.IsActive = true; navigateToProviderList()"
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              <a
+                routerLink="/report/show/DeliverdOrdersReport"
+                class="list-group-item list-group-item-action h6 text-success"
               >
-                <div class="card-body">
-                  <h3 class="card-title text-center">
-                    {{ "report.activeProviders" | translate }}
-                  </h3>
-                  <h6 class="display-4 mb-0 text-center">
-                    {{ report.activeProviders }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-        
-            <div class="col-12 col-sm-6 col-lg-3 mx-auto">
-              <div
-                class="card bg-secondary text-white"
-                (click)="filter.IsActive = 'false'; navigateToProviderList()"
+                {{ "deliverdOrders" | translate }}
+              </a>
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0 text-success">
+              {{ seliveryOrderStatistics.deliverdOrders }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              <a
+                routerLink="/report/show/AssignedOrdersReport"
+                class="list-group-item list-group-item-action h6"
               >
-                <div class="card-body">
-                  <h3 class="card-title text-center">
-                    {{ "report.notActiveProviders" | translate }}
-                  </h3>
-                  <h6 class="display-4 mb-0 text-center">
-                    {{ report.notActiveProviders }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-        
-            <div class="col-12 col-sm-6 col-lg-3 mx-auto">
-              <div class="card bg-primary text-white" 
-              (click)="driverType = 'busyDeliveryProviders'; navigateToProviderListWithQuery()">
-                <div class="card-body">
-                  <h3 class="card-title text-center">
-                    {{ "report.busyDeliveryProviders" | translate }}
-                  </h3>
-                  <h6 class="display-4 mb-0 text-center">
-                    {{ report.busyDeliveryProviders }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-        
-            <div class="col-12 col-sm-6 col-lg-3 mx-auto">
-              <div class="card bg-info"
-              (click)="driverType = 'busyTransportProviders'; navigateToProviderListWithQuery()" >
-                <div class="card-body">
-                  <h3 class="card-title text-center">
-                    {{ "report.busyTransportProviders" | translate }}
-                  </h3>
-                  <h6 class="display-4 mb-0 text-center">
-                    {{ report.busyTransportProviders }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-        
-            <div class="col-12 col-sm-6 col-lg-3 mt-2 mx-auto">
-              <div
-                class="card bg-warning"
-                (click)="filter.Statues = 'false'; navigateToProviderList()"
+                {{ "assignedOrders" | translate }}
+              </a>
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ seliveryOrderStatistics.assignedOrders }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              <a
+                routerLink="/report/show/DelayedNoDriverForOrdersReport"
+                class="list-group-item list-group-item-action h6"
               >
-                <div class="card-body">
-                  <h3 class="card-title text-center">
-                    {{ "report.offlineProviders" | translate }}
-                  </h3>
-                  <h6 class="display-4 mb-0 text-center">
-                    {{ report.offlineProviders }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-        
-            <div class="col-12 col-sm-6 col-lg-4 mt-2 mx-auto">
-              <div class="card bg-danger text-white"
-              (click)="driverType = 'providersHaveOneOrderAtLeast'; navigateToProviderListWithQuery()">
-                <div class="card-body">
-                  <h3 class="card-title text-center">
-                    {{ "report.providersHaveOneOrderAtLeast" | translate }}
-                  </h3>
-                  <h6 class="display-4 mb-0 text-center">
-                    {{ report.providersHaveOneOrderAtLeast }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-        
-            <div class="col-12 col-sm-6 col-lg-3 mt-2 mx-auto">
-              <div
-                class="card bg-success"
-                (click)="filter.Statues = 'true'; navigateToProviderList()"
+                {{ "delayedNoDriverForOrders" | translate }}
+              </a>
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ seliveryOrderStatistics.delayedNoDriverForOrders }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              <a
+                routerLink="/report/show/NewOrdersReport"
+                class="list-group-item list-group-item-action h6"
               >
-                <div class="card-body">
-                  <h3 class="card-title text-center">
-                    {{ "report.onlineProviders" | translate }}
-                  </h3>
-                  <h6 class="display-4 mb-0 text-center">
-                    {{ report.onlineProviders }}
-                  </h6>
-                </div>
-              </div>
-            </div>
+                {{ "newOrders" | translate }}
+              </a>
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ seliveryOrderStatistics.newOrders }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              <a
+                routerLink="/report/show/OutForDeliveryOrdersReport"
+                class="list-group-item list-group-item-action h6"
+              >
+                {{ "outForDeliveryOrders" | translate }}
+              </a>
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ seliveryOrderStatistics.outForDeliveryOrders }}
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="d-flex justify-content-between align-items-center mx-2 bg-danger p-1"
+          style="border-radius: 8px"
+        >
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              <a
+                routerLink="/report/show/NotPickedUpOrdersReport"
+                class="list-group-item list-group-item-action h6 text-white"
+              >
+                {{ "notPickedUpOrders" | translate }}
+              </a>
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0 text-white">
+              {{ seliveryOrderStatistics.notPickedUpOrders }}
+            </p>
+          </div>
+        </div>
+
+        <hr style="box-shadow: 0px 2px 7px 2px black" />
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p
+              class="font-weitght-bold mb-0 h6"
+              (click)="filter.IsActive = true; navigateToProviderList()"
+            >
+              {{ "report.activeProviders" | translate }}
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ report.activeProviders }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p
+              class="font-weitght-bold mb-0 h6"
+              (click)="filter.IsActive = 'false'; navigateToProviderList()"
+            >
+              {{ "report.notActiveProviders" | translate }}
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ report.notActiveProviders }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p
+              class="font-weitght-bold mb-0 h6"
+              (click)="
+                driverType = 'busyDeliveryProviders';
+                navigateToProviderListWithQuery()
+              "
+            >
+              {{ "report.busyDeliveryProviders" | translate }}
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ report.busyDeliveryProviders }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p
+              class="font-weitght-bold mb-0 h6"
+              (click)="
+                driverType = 'busyTransportProviders';
+                navigateToProviderListWithQuery()
+              "
+            >
+              {{ "report.busyTransportProviders" | translate }}
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ report.busyTransportProviders }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p
+              class="font-weitght-bold mb-0 h6"
+              (click)="filter.Statues = 'false'; navigateToProviderList()"
+            >
+              {{ "report.offlineProviders" | translate }}
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ report.offlineProviders }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p
+              class="font-weitght-bold mb-0 h6"
+              (click)="
+                driverType = 'providersHaveOneOrderAtLeast';
+                navigateToProviderListWithQuery()
+              "
+            >
+              {{ "report.providersHaveOneOrderAtLeast" | translate }}
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ report.providersHaveOneOrderAtLeast }}
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mx-2">
+          <div class="p-1">
+            <p
+              class="font-weitght-bold mb-0 h6"
+              (click)="filter.Statues = 'true'; navigateToProviderList()"
+            >
+              {{ "report.onlineProviders" | translate }}
+            </p>
+          </div>
+          <div class="p-1">
+            <p class="font-weitght-bold mb-0">
+              {{ report.onlineProviders }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12 h-100" *ngIf="activeProvidersreport.length">
+    <div class="card card-flush shadow-sm">
+      <div class="card-header">
+        <h3 class="card-title mt-2">
+          <span class="mx-2">
+            {{ "menu.providersActive" | translate }}
+          </span>
+        </h3>
+      </div>
+      <div class="card-body py-0">
+        <div class="row my-5">
+          <div class="col-md-12" *ngIf="activeProvidersreport.length">
+            <app-echart
+              [width]="'100%'"
+              [type]="'pie'"
+              chartTitle="active Proider"
+              [data]="activeProvidersreport"
+            >
+            </app-echart>
           </div>
         </div>
       </div>
@@ -127,8 +318,210 @@
   </div>
 </div>
 
-<div class="row my-3" *ngIf="DeliveryOrderStatus.length">
-  <div class="col-sm-11 mx-auto">
+<!-- <div class="row" *ngIf="isAdmin">
+  <div class="col-12">
+    <div class="alert alert-danger text-center" role="alert">
+      <button
+        type="button"
+        class="btn btn-danger mx-auto btn-block"
+        (click)="backupDataBase()"
+      >
+      
+      </button>
+    </div>
+  </div>
+</div> -->
+<!-- <div class="row">
+  <div class="col-lg-9 col-md-12 px-0 mt-md-3">
+    <div
+      class="px-3 d-flex flex-column justify-content-between"
+      *ngIf="report.activeProviders"
+    >
+      <div class="row">
+        <div class="col-12 col-sm-6 col-lg-3 mx-auto px-1">
+          <div
+            class="card bg-dark"
+            (click)="filter.IsActive = true; navigateToProviderList()"
+          >
+            <div class="card-body">
+              <h4 class="card-title text-center text-white">
+                {{ "report.activeProviders" | translate }}
+              </h4>
+              <h6 class="display-4 mb-0 text-center text-white">
+                {{ report.activeProviders }}
+              </h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3 mx-auto px-1">
+          <div
+            class="card text-white"
+            (click)="filter.IsActive = 'false'; navigateToProviderList()"
+          >
+            <div class="card-body">
+              <h4 class="card-title text-center">
+                {{ "report.notActiveProviders" | translate }}
+              </h4>
+              <h6 class="display-4 mb-0 text-center">
+                {{ report.notActiveProviders }}
+              </h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3 mx-auto px-1">
+          <div
+            class="card bg-primary text-white"
+            (click)="
+              driverType = 'busyDeliveryProviders';
+              navigateToProviderListWithQuery()
+            "
+          >
+            <div class="card-body">
+              <h4 class="card-title text-center text-white">
+                {{ "report.busyDeliveryProviders" | translate }}
+              </h4>
+              <h6 class="display-4 mb-0 text-center text-white">
+                {{ report.busyDeliveryProviders }}
+              </h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3 mx-auto px-1">
+          <div
+            class="card bg-info"
+            (click)="
+              driverType = 'busyTransportProviders';
+              navigateToProviderListWithQuery()
+            "
+          >
+            <div class="card-body">
+              <h4 class="card-title text-center text-white">
+                {{ "report.busyTransportProviders" | translate }}
+              </h4>
+              <h6 class="display-4 mb-0 text-center text-white">
+                {{ report.busyTransportProviders }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-6 col-lg-4 px-1 mt-2 mx-auto">
+          <div
+            class="card bg-warning"
+            (click)="filter.Statues = 'false'; navigateToProviderList()"
+          >
+            <div class="card-body">
+              <h4 class="card-title text-center text-white">
+                {{ "report.offlineProviders" | translate }}
+              </h4>
+              <h6 class="display-4 mb-0 text-center text-white">
+                {{ report.offlineProviders }}
+              </h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-5 px-1 mt-2 mx-auto">
+          <div
+            class="card bg-danger text-white"
+            (click)="
+              driverType = 'providersHaveOneOrderAtLeast';
+              navigateToProviderListWithQuery()
+            "
+          >
+            <div class="card-body">
+              <h4 class="card-title text-center text-white">
+                {{ "report.providersHaveOneOrderAtLeast" | translate }}
+              </h4>
+              <h6 class="display-4 mb-0 text-center text-white">
+                {{ report.providersHaveOneOrderAtLeast }}
+              </h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3 px-1 mt-2 mx-auto">
+          <div
+            class="card bg-success"
+            (click)="filter.Statues = 'true'; navigateToProviderList()"
+          >
+            <div class="card-body text-white">
+              <h4 class="card-title text-center text-white">
+                {{ "report.onlineProviders" | translate }}
+              </h4>
+              <h6 class="display-4 mb-0 text-center text-white">
+                {{ report.onlineProviders }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-12 px-1 mt-md-3">
+    <div class="card bg-dark">
+      <div class="card-body">
+        <h3 class="card-title my-2 mb-3 text-white">
+          {{ "deliveryOrderStatistics" | translate }}
+        </h3>
+        <div class="list-group">
+          <a
+            routerLink="/report/show/AssignedOrdersReport"
+            class="list-group-item list-group-item-action h6"
+          >
+            {{ "assignedOrders" | translate }} :
+            {{ seliveryOrderStatistics.assignedOrders }}
+          </a>
+          <a
+            routerLink="/report/show/DelayedNoDriverForOrdersReport"
+            class="list-group-item list-group-item-action h6"
+          >
+            {{ "delayedNoDriverForOrders" | translate }} :
+            {{ seliveryOrderStatistics.delayedNoDriverForOrders }}
+          </a>
+          <a
+            routerLink="/report/show/DeliverdOrdersReport"
+            class="list-group-item list-group-item-action h6"
+          >
+            {{ "deliverdOrders" | translate }} :
+            {{ seliveryOrderStatistics.deliverdOrders }}
+          </a>
+          <a
+            routerLink="/report/show/NewOrdersReport"
+            class="list-group-item list-group-item-action h6"
+          >
+            {{ "newOrders" | translate }} :
+            {{ seliveryOrderStatistics.newOrders }}
+          </a>
+          <a
+            routerLink="/report/show/NotPickedUpOrdersReport"
+            class="list-group-item list-group-item-action h6"
+          >
+            {{ "notPickedUpOrders" | translate }} :
+            {{ seliveryOrderStatistics.notPickedUpOrders }}
+          </a>
+          <a
+            routerLink="/report/show/OutForDeliveryOrdersReport"
+            class="list-group-item list-group-item-action h6"
+          >
+            {{ "outForDeliveryOrders" | translate }} :
+            {{ seliveryOrderStatistics.outForDeliveryOrders }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="row col-lg-7 col-md-11 mx-auto my-3"></div>
+
+<div class="row my-3">
+  <div class="col-md-12 mx-auto" *ngIf="DeliveryOrderStatus.length">
     <div class="card card-flush shadow-sm">
       <div class="card-header">
         <h3 class="card-title mt-2">
@@ -152,10 +545,7 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="row my-3" *ngIf="TransportOrderStatus.length">
-  <div class="col-sm-11 mx-auto">
+  <div class="mt-2 col-md-12 mx-auto" *ngIf="TransportOrderStatus.length">
     <div class="card card-flush shadow-sm">
       <div class="card-header">
         <h3 class="card-title mt-2">
@@ -172,33 +562,6 @@
               [type]="'pie'"
               chartTitle="ali is my brother"
               [data]="TransportOrderStatus"
-            >
-            </app-echart>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row my-3" *ngIf="activeProvidersreport.length">
-  <div class="col-sm-11 mx-auto">
-    <div class="card card-flush shadow-sm">
-      <div class="card-header">
-        <h3 class="card-title mt-2">
-          <span class="mx-2">
-            {{ "menu.providersActive" | translate }}
-          </span>
-        </h3>
-      </div>
-      <div class="card-body py-0">
-        <div class="row my-5">
-          <div class="col-md-12" *ngIf="activeProvidersreport.length">
-            <app-echart
-              [width]="'100%'"
-              [type]="'pie'"
-              chartTitle="active Proider"
-              [data]="activeProvidersreport"
             >
             </app-echart>
           </div>

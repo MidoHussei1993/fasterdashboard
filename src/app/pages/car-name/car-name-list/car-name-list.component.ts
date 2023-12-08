@@ -6,32 +6,26 @@ import { Pagination, FormMode, List, Dropdown } from 'src/app/shared';
 import { CarModelService } from '../../car-model/services';
 import { CarName, CarNameFilter } from '../models';
 import { CarNameService } from '../services';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-car-name-list',
   templateUrl: './car-name-list.component.html',
-  styleUrls: ['./car-name-list.component.scss']
+  styleUrls: ['./car-name-list.component.scss'],
 })
 export class CarNameListComponent implements OnInit {
   CarNameList: CarName[] = [];
-  titles:string[] = [
+  titles: string[] = [
     'field.name',
     'field.name',
     'menu.carModel',
     'menu.carModel',
-
   ];
-  properties: string[] = [
-    'name',
-    'nameAr', 
-    'carModelName', 
-    'carModelNameAr', 
-  ];
+  properties: string[] = ['name', 'nameAr', 'carModelName', 'carModelNameAr'];
   carModelList: Dropdown[] = [];
   busyLoading: boolean = true;
   pagination: Pagination = new Pagination();
   currentLanguage: string = '';
-
 
   public get formMode(): typeof FormMode {
     return FormMode;
@@ -44,11 +38,13 @@ export class CarNameListComponent implements OnInit {
     private router: Router,
     private carModelService: CarModelService,
     private translate: TranslateService,
+    private headerService: HeaderService
   ) {
     this.currentLanguage = this.translate.currentLang;
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('car.carModel'));
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getCarNameList();
@@ -67,8 +63,8 @@ export class CarNameListComponent implements OnInit {
 
   setCarModel(event) {
     this.filter.CarModelId = event;
-    console.log(event)
-    console.log(this.filter)
+    console.log(event);
+    console.log(this.filter);
   }
 
   searchValue(): void {
@@ -87,7 +83,7 @@ export class CarNameListComponent implements OnInit {
   }
 
   getCarNameList() {
-    console.log(this.filter)
+    console.log(this.filter);
     this.busyLoading = true;
     this.spinner.show();
     this.carNameService.get(this.filter).subscribe(
@@ -120,19 +116,18 @@ export class CarNameListComponent implements OnInit {
       );
   }
 
-  setPageSize(pageSize){
-    if(pageSize == this.filter.PageSize) return;
+  setPageSize(pageSize) {
+    if (pageSize == this.filter.PageSize) return;
     this.filter.PageSize = pageSize;
     this.getCarNameList();
   }
 
-  setPageNumber(pageNumber:number){
-    if(pageNumber == this.filter.PageNumber) return;
+  setPageNumber(pageNumber: number) {
+    if (pageNumber == this.filter.PageNumber) return;
     this.filter.PageNumber = pageNumber;
     this.getCarNameList();
   }
 
- 
   navigateToEdit(CarName: CarName) {
     this.router.navigateByUrl(`/car-name/edit/${CarName.id}`);
   }

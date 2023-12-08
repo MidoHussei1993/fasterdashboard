@@ -9,11 +9,12 @@ import {
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
 export type Marker = {
+  id?: any;
   title: string;
   position: { lat: number; lng: number };
-  label: { color: string; text: string };
+  label: { color: string; text: string; fontSize?: any };
   options: any;
-  icon?:any
+  icon?: any;
 };
 @Component({
   selector: 'app-google-map',

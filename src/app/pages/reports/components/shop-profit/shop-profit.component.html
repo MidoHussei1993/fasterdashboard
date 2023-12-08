@@ -1,9 +1,9 @@
-<div class="card card-flush shadow-sm">
+<div class="card shadow-sm">
   <div class="card-header">
     <h3 class="card-title">{{ "menu.shopProfit" | translate }}</h3>
   </div>
   <div class="card-body">
-    <div class="card bg-secondary" *ngIf="!isShop">
+    <div class="card bg-light" *ngIf="!isShop">
       <div class="card-body">
         <app-filter [filter]="filter"></app-filter>
       </div>
@@ -25,39 +25,38 @@
     ></app-table> -->
 
     <div class="row">
-        <div class=" col-sm-12 d-flex justify-content-end my-4 ml-auto">
-            <button
-            *ngIf="!isShop"
-              type="button"
-              class="btn btn-outline btn-outline-dashed btn-outline-info btn-active-light-info mt-1"
-              (click)="downloadAll()"
-            >
-              <i class="fas fa-download"></i>
-              {{ "action.downloadAll" | translate }}
-            </button>
-            <!-- <button type="button" class="btn btn-dark btn-block mx-2 btn-sm mt-1" *ngIf="list.length"
+      <div class="col-sm-12 d-flex justify-content-end my-4 ml-auto">
+        <button
+          *ngIf="!isShop"
+          type="button"
+          class="btn btn-outline btn-outline-dashed btn-outline-info btn-active-light-info mt-1"
+          (click)="downloadAll()"
+        >
+          <i class="fas fa-download"></i>
+          {{ "action.downloadAll" | translate }}
+        </button>
+        <!-- <button type="button" class="btn btn-dark btn-block mx-2 btn-sm mt-1" *ngIf="list.length"
               (click)="downloadAsExcelFile()">
                <i class="fas fa-download"></i>
                {{'action.download'|translate }}
              </button> -->
-            <button
-              type="button"
-              class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary mx-2"
-              (click)="searchValue()"
-            >
-              <i class="fas fa-search text-primary"></i>
-              {{ "action.search" | translate }}
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline btn-outline-dashed btn-outline-danger btn-active-light-danger"
-              (click)="resetfilter()"
-            >
-              <i class="far fa-trash-alt text-danger"></i>
-              {{ "action.reset" | translate }}
-            </button>
-        
-          </div>
+        <button
+          type="button"
+          class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary mx-2"
+          (click)="searchValue()"
+        >
+          <i class="fas fa-search text-primary"></i>
+          {{ "action.search" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline btn-outline-dashed btn-outline-danger btn-active-light-danger"
+          (click)="resetfilter()"
+        >
+          <i class="far fa-trash-alt text-danger"></i>
+          {{ "action.reset" | translate }}
+        </button>
+      </div>
     </div>
     <div class="table-responsive mt-3">
       <table
@@ -69,24 +68,25 @@
               {{ "field.ShopName" | translate }}
             </th>
             <th class="text-center">
-                {{ "field.branch" | translate }}
-              </th>
-              <th class="text-center">
-                {{ "field.totalShopProfit" | translate }}
-              </th>
-              <th class="text-center">
-                {{ "field.totalFasterProfit" | translate }}
-              </th>
-                 <th class="text-center">
-                {{ "field.totalOrderAmount" | translate }}
-              </th>
-          
+              {{ "field.branch" | translate }}
+            </th>
+            <th class="text-center">
+              {{ "field.totalShopProfit" | translate }}
+            </th>
+            <th class="text-center">
+              {{ "field.totalFasterProfit" | translate }}
+            </th>
+            <th class="text-center">
+              {{ "field.totalOrderAmount" | translate }}
+            </th>
+
             <th class="text-center" colspan="2">
               <div class="row">
                 <div class="col-2">{{ "field.orderId" | translate }}</div>
                 <div class="col-2">
                   {{ "field.Date" | translate }}
                 </div>
+                <div class="col-2">{{ "field.statusName" | translate }}</div>
                 <div class="col-2">{{ "field.shopProfite" | translate }}</div>
                 <div class="col-2">{{ "field.fasterProfite" | translate }}</div>
                 <div class="col-2">{{ "field.orderAmount" | translate }}</div>
@@ -104,14 +104,14 @@
               {{ item.descriptionLocationEn }}
             </td>
             <td class="text-center">
-                {{ item.totalShopProfit }}
-              </td>
-              <td class="text-center">
-                {{ item.totalFasterProfit }}
-              </td>
-              <td class="text-center">
-                {{ item.totalOrderAmount }}
-              </td>
+              {{ item.totalShopProfit }}
+            </td>
+            <td class="text-center">
+              {{ item.totalFasterProfit }}
+            </td>
+            <td class="text-center">
+              {{ item.totalOrderAmount }}
+            </td>
             <td class="text-center">
               <div
                 class="row border-bottom border-warning"
@@ -121,7 +121,10 @@
                   {{ order.orderId }}
                 </div>
                 <div class="col-2">
-                  {{ order.createAt | date: "MMM d, y - h:mm a" }}
+                  {{ order.createAt | date : "MMM d, y - h:mm a" }}
+                </div>
+                <div class="col-2">
+                  {{ order.orderStatues }}
                 </div>
                 <div class="col-2">
                   {{ order.shopProfite }}
@@ -130,11 +133,11 @@
                   {{ order.fasterProfite }}
                 </div>
                 <div class="col-2">
-                    {{ order.orderAmount }}
-                  </div>
-                  <div class="col-2 text-center d-flex justify-content-center">
-                    <i
-                  (click)="navigateToOrder(order.orderId)"
+                  {{ order.orderAmount }}
+                </div>
+                <div class="col-2 text-center d-flex justify-content-center">
+                  <i
+                    (click)="navigateToOrder(order.orderId)"
                     title="{{ 'menu.order' | translate }}"
                     class="fas fa-truck customAction mx-2"
                   ></i>
@@ -143,7 +146,7 @@
                   title="{{ 'shop.shop' | translate }}"
                   class="fas fa-shopping-basket customAction mx-2"
                 ></i> -->
-                  </div>
+                </div>
               </div>
             </td>
           </tr>

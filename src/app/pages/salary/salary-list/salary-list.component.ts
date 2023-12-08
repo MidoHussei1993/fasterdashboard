@@ -7,6 +7,7 @@ import { Pagination, FormMode, Dropdown, List } from 'src/app/shared';
 import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { Motivation, MotivationFilter } from '../../motivations/models';
 import { MotivationService } from '../../motivations/services/motivation.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-salary-list',
@@ -51,10 +52,12 @@ export class SalaryListComponent implements OnInit {
     private router: Router,
     private swalService: SwalModalService,
     private translate: TranslateService,
+    private headerService: HeaderService,
     private notify: NotifierService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.salary'));
     this.currentLanguage = this.translate.currentLang;
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
@@ -120,27 +123,21 @@ export class SalaryListComponent implements OnInit {
     switch (motivation.type) {
       case 'duplicate':
         const create = this.router.serializeUrl(
-          this.router.createUrlTree(
-            [`/salaries/create`],
-            {
-              queryParams: {
-                motivationId: motivation.event.id,
-              },
-            }
-          )
+          this.router.createUrlTree([`/salaries/create`], {
+            queryParams: {
+              motivationId: motivation.event.id,
+            },
+          })
         );
         window.open(create, '_blank');
         break;
-        case 'evaluate':
+      case 'evaluate':
         const evaluate = this.router.serializeUrl(
-          this.router.createUrlTree(
-            [`/salaries/evaluate`],
-            {
-              queryParams: {
-                evaluate: motivation.event.id,
-              },
-            }
-          )
+          this.router.createUrlTree([`/salaries/evaluate`], {
+            queryParams: {
+              evaluate: motivation.event.id,
+            },
+          })
         );
         window.open(evaluate, '_blank');
         break;
@@ -181,9 +178,7 @@ export class SalaryListComponent implements OnInit {
   }
   navigateToView(Motivation: Motivation) {
     const View = this.router.serializeUrl(
-      this.router.createUrlTree(
-        [`salaries/view/${Motivation.id}`]
-      )
+      this.router.createUrlTree([`salaries/view/${Motivation.id}`])
     );
     window.open(View, '_blank');
   }

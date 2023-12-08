@@ -8,6 +8,7 @@ import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { ShopService } from '../../shop/services';
 import { Banner, BannerFilter } from '../models';
 import { BannerService } from '../services';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-banner-list',
@@ -20,19 +21,20 @@ export class BannerListComponent implements OnInit {
     'field.Description',
     'field.DescriptionAr',
     'shop.shop',
+    'shopTypeId',
   ];
   properties: string[] = [
     'description',
     'descriptionAr',
     'shopName',
+    'shopTypeId',
   ];
   busyLoading: boolean = true;
   pagination: Pagination = new Pagination();
   rowsNumber: Number[] = [10, 20, 30, 40, 50];
   active: number = 1;
   shopList: Dropdown[] = [];
-  currentLanguage:string = '';
-
+  currentLanguage: string = '';
 
   public get formMode(): typeof FormMode {
     return FormMode;
@@ -46,23 +48,28 @@ export class BannerListComponent implements OnInit {
     private swalService: SwalModalService,
     private translate: TranslateService,
     private notify: NotifierService,
+    private headerService: HeaderService,
     private shopService: ShopService
   ) {
     this.currentLanguage = this.translate.currentLang;
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.banner'));
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getbannerList();
     this.getShopList();
   }
-  getShopList(){
-    this.shopService.getDropdown().subscribe((res:Dropdown[]) =>{
-      this.shopList = res
-    }, err =>{
-      console.log(err);
-    })
+  getShopList() {
+    this.shopService.getDropdown().subscribe(
+      (res: Dropdown[]) => {
+        this.shopList = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
   searchValue(): void {
     this.getbannerList();
@@ -95,14 +102,14 @@ export class BannerListComponent implements OnInit {
     );
   }
 
-  setPageSize(pageSize){
-    if(pageSize == this.filter.PageSize) return;
+  setPageSize(pageSize) {
+    if (pageSize == this.filter.PageSize) return;
     this.filter.PageSize = pageSize;
-    this.getbannerList(); 
+    this.getbannerList();
   }
 
-  setPageNumber(pageNumber:number){
-    if(pageNumber == this.filter.PageNumber) return;
+  setPageNumber(pageNumber: number) {
+    if (pageNumber == this.filter.PageNumber) return;
     this.filter.PageNumber = pageNumber;
     this.getbannerList();
   }
@@ -121,7 +128,7 @@ export class BannerListComponent implements OnInit {
   //         console.log(res);
   //       },
   //       (err) => {
-  //        this.bannerList[index].isActive = !this.bannerList[index].isActive; 
+  //        this.bannerList[index].isActive = !this.bannerList[index].isActive;
   //         this.spinner.hide();
   //       }
   //     );
@@ -144,7 +151,7 @@ export class BannerListComponent implements OnInit {
       }
     );
   }
-  
+
   navigateToEdit(Banner: Banner) {
     this.router.navigateByUrl(`/banner/edit/${Banner.id}`);
   }
@@ -156,29 +163,27 @@ export class BannerListComponent implements OnInit {
     this.swalService.deleteConfirmation().then((res) => {
       if (res) {
         this.spinner.show();
-        this.bannerService
-          .delete(banner.id)
-          .subscribe(
-            (res) => {
-              const deletedIndex = this.bannerList.findIndex(
-                (item) => item.id == banner.id
-              );
-              this.bannerList.splice(deletedIndex, 1);
-              this.spinner.hide();
-              this.notify.notify(
-                'success',
-                this.translate.instant('global.deleted')
-              );
-            },
-            (err) => {
-              this.spinner.hide();
-              this.notify.notify(
-                'error',
-                this.translate.instant('global.server_error')
-              );
-              console.log(err);
-            }
-          );
+        this.bannerService.delete(banner.id).subscribe(
+          (res) => {
+            const deletedIndex = this.bannerList.findIndex(
+              (item) => item.id == banner.id
+            );
+            this.bannerList.splice(deletedIndex, 1);
+            this.spinner.hide();
+            this.notify.notify(
+              'success',
+              this.translate.instant('global.deleted')
+            );
+          },
+          (err) => {
+            this.spinner.hide();
+            this.notify.notify(
+              'error',
+              this.translate.instant('global.server_error')
+            );
+            console.log(err);
+          }
+        );
       }
     });
   }

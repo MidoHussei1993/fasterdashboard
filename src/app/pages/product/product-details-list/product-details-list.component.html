@@ -9,72 +9,49 @@
           class="btn btn-sm btn-primary mb-3"
           (click)="navigateToCreate()"
         >
-        <i class="fas fa-plus"></i>
+          <i class="fas fa-plus"></i>
           {{ "action.create" | translate }}
         </button>
       </div>
-      <div class="table-responsive">
-        <table
-          class="table table-hover table-rounded table-striped border gy-7 gs-7"
-        >
-          <thead>
-            <tr class="">
-              <th class="text-center" *ngFor="let title of titles">
-                {{ title | translate }}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of productDetailslist; let i = index">
-              <td class="text-center" *ngFor="let prop of properties">
-                {{ item[prop] }}
-              </td>
-              <td class="text-center">
-                <label
-                  class="
-                    form-check form-check-sm form-check-custom form-check-solid
-                  "
-                >
-                  <input
-                    class="form-check-input mx-auto"
-                    type="checkbox"
-                    :value="true"
-                    [(ngModel)]="item.isActive"
-                    (ngModelChange)="changeActivation(i)"
-                  />
-                </label>
-              </td>
-              <td class="text-center">
-                <i
-                  title="{{ 'View' | translate }}"
-                  class="lar la-eye fs-2x mx-1"
-                  (click)="navigateToView(item)"
-                ></i>
-                <i
-                  title="{{ 'Edit' | translate }}"
-                  class="las la-edit fs-2x mx-1"
-                  (click)="navigateToEdit(item)"
-                ></i
-                ><i
-                  title="{{ 'product.productDetailsSize' | translate }}"
-                  class="fas fa-ruler fs-2x mx-1"
-                  (click)="navigateToProductDetailsSize(item)"
-                ></i>
-                <i
-                  title="{{ 'product.components' | translate }}"
-                  class="fab fa-creative-commons-remix fs-2x mx-1"
-                  (click)="navigateToProductComponents(item)"
-                ></i>
-                <i
-                  title="{{ 'menu.additionalComponentTitle' | translate }}"
-                  class="fab fa-battle-net fs-2x mx-1"
-                  (click)="navigateToAdditionalComponentTitle(item)"
-                ></i>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
+      <app-table
+        [list]="productDetailslist"
+        [titles]="titles"
+        [properties]="properties"
+        [showPagination]="false"
+        (view)="navigateToView($event)"
+        (edit)="navigateToEdit($event)"
+        [showActivation]="true"
+        (changeActivation)="changeActivation($event)"
+        [showDelete]="false"
+        [showSearch]="false"
+        [showView]="true"
+        [showEdit]="true"
+        [addActions]="true"
+        [actionList]="[
+          {
+            title: 'product.productDetailsSize',
+            icon: 'fa-ruler',
+            type: 'productDetailsSize'
+          },
+          {
+            title: 'product.components',
+            icon: ' fa-hamburger ',
+            type: 'components'
+          },
+          {
+            title: 'menu.additionalComponentTitle',
+            icon: ' fa-keyboard',
+            type: 'additionalComponentTitle'
+          },
+          {
+            title: 'foodType',
+            icon: ' fa-carrot',
+            type: 'foodType'
+          }
+        ]"
+        (aciton)="navigateTO($event)"
+      ></app-table>
     </div>
   </div>
 </div>

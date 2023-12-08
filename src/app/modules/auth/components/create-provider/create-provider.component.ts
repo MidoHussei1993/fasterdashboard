@@ -80,7 +80,7 @@ export class CreateProviderComponent implements OnInit {
       carBackImage: ['', [Validators.required]],
       driverLicense: ['', [Validators.required]],
       carLicense: ['', [Validators.required]],
-      gender: [''],
+      gender: [null],
       phoneNumber: [
         '',
         [Validators.required, Validators.pattern(Pattern.saudiMobileNumbers)],
@@ -100,8 +100,8 @@ export class CreateProviderComponent implements OnInit {
       password: ['', [Validators.required]],
       email: [null, [Validators.email]],
       plateNumber: [null],
-      iqamaImage: [null],
-      registertype: ['', [Validators.required]],
+      iqamaImage: [null, [Validators.required]],
+      registertype: [null],
       mobileType: [null],
       cityId: [null],
       providerNationalityId: [null],
@@ -115,6 +115,7 @@ export class CreateProviderComponent implements OnInit {
         [Validators.pattern(Pattern.saudiMobileNumbers)],
       ],
       carInsuranceImage: [null],
+      driverDateOfBirth: ['', [Validators.required]],
     });
 
     let a = {
@@ -139,9 +140,14 @@ export class CreateProviderComponent implements OnInit {
     if (this.route.snapshot.queryParams.activeTap) {
       this.currentActiveTab = 2;
     }
+    if (this.route.snapshot.queryParams.vendorId) {
+      this.form
+        .get('venderId')
+        .patchValue(this.route.snapshot.queryParams.vendorId);
+    }
 
     this.getProviderRigesterTypeDDL();
-    this.getVenderList();
+    // this.getVenderList();
     this.getCityList();
     this.getCarColorsList();
     this.getNationality();
@@ -245,16 +251,18 @@ export class CreateProviderComponent implements OnInit {
       }
     );
   }
-  getCarNameList(carModelId) {
-    console.log(carModelId);
-    this.carNameService.getDropdown(carModelId).subscribe(
-      (res: Dropdown[]) => {
-        this.carNameList = res;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  getCarNameList() {
+    console.log(this.form.get('carModelId').value);
+    this.carNameService
+      .getDropdown(this.form.get('carModelId').value)
+      .subscribe(
+        (res: Dropdown[]) => {
+          this.carNameList = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
   getManufacturingYearList() {
     this.manufacturingYearService.getDropdown().subscribe(

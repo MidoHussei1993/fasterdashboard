@@ -1,13 +1,8 @@
-<div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">
-      <span class="mx-2"> {{ "menu.userActionTracking" | translate }} </span>
-    </h3>
-  </div>
+<div class="card shadow-sm">
   <div class="card-body">
     <div class="row">
-      <div class="col-md-11 col-sm-12 mx-auto">
-        <div class="card bg-secondary">
+      <div class="col-md-12 col-sm-12">
+        <div class="card bg-light">
           <div class="card-body">
             <app-filter [filter]="filter"></app-filter>
           </div>
@@ -15,12 +10,13 @@
         <div class="col-12 mt-3">
           <div class="alert alert-primary text-center" role="alert">
             <strong>
-              all working Time : 
-              {{ allTimeWork}}
+              all working Time :
+              {{ allTimeWork }}
             </strong>
           </div>
         </div>
         <app-table
+          [filter]="filter"
           [list]="userActionList"
           [titles]="titles"
           [properties]="properties"

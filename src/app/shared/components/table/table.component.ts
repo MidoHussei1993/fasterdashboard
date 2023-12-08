@@ -7,19 +7,22 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination } from '../..';
 import { ExcelService } from '../../services/excel.service';
 import { SwalModalService } from '../../services/swal-modal.service';
 import { ImgViewerComponent } from '../img-viewer/img-viewer.component';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface IActionLTable {
   title: string;
+  label?: string;
   icon: string;
   type?: string;
   link?: string;
   prop?: string;
   hide?: boolean;
+  command?: any;
 }
 
 @Component({
@@ -29,10 +32,22 @@ export interface IActionLTable {
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
+  items = [
+    {
+      label: 'Update',
+      icon: 'pi pi-refresh',
+    },
+    {
+      label: 'Delete',
+      icon: 'pi pi-times',
+    },
+  ];
+  currentAction: any = {};
   @ViewChild('imgViewer', { static: false }) imgViewer: ImgViewerComponent;
   @Input() list: any[] = [];
   @Input() properties: string[] = [];
   @Input() titles: string[] = [];
+  @Input() filter: any = {};
 
   @Input() pagination: Pagination = new Pagination();
 
@@ -53,6 +68,11 @@ export class TableComponent implements OnInit {
   }
   @Input() set actionList(value: IActionLTable[]) {
     this._allowDay = value.filter((action) => {
+      action.label = this.translateService.instant(action.title);
+      action.icon = 'fas mx-2 ' + action.icon;
+      action.command = () => {
+        this.currentAction = action;
+      };
       if (action.hasOwnProperty('hide')) {
         return action.hide;
       } else return true;
@@ -82,12 +102,16 @@ export class TableComponent implements OnInit {
   @Input() isReload: boolean = false;
   @Output() reload = new EventEmitter<any>();
 
+  @Input() disabledCheckBox: boolean = false;
+
   active: number = 1;
   form: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private excelService: ExcelService,
-    private swalService: SwalModalService, 
+    private swalService: SwalModalService,
+    private translateService: TranslateService,
+    private route: ActivatedRoute,
     private router: Router
   ) {
     this.form = this.formBuilder.group({
@@ -103,8 +127,24 @@ export class TableComponent implements OnInit {
     this.reload.emit('');
   }
   reset(): void {
+    this.resetFilterObject();
     this.form.reset();
     this.resetFilter.emit('');
+  }
+  resetFilterObject() {
+    const newQueryParam = {};
+    const filterClone = new this.filter.constructor();
+    Object.entries(filterClone as Object).map((keyProp) => {
+      newQueryParam[keyProp[0]] = keyProp[1];
+      this.filter[keyProp[0]] = keyProp[1];
+    });
+    const currentQueryParams = this.route.snapshot.queryParams;
+    const updatedQueryParams = { ...currentQueryParams, ...newQueryParam };
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: updatedQueryParams,
+      queryParamsHandling: 'merge',
+    });
   }
   View(item: any): void {
     this.view.emit(item);
@@ -128,26 +168,21 @@ export class TableComponent implements OnInit {
       }
     });
   }
-  EmitAaction(
-    item: any,
-    action?: {
-      title?: string;
-      icon?: string;
-      type?: string;
-      link?: string;
-      prop?: string;
-    }
-  ): void {
-    if (action.link) {
+  EmitAaction(event: any, item: any): void {
+    console.log(this.currentAction);
+    console.log(...arguments);
+    if (this.currentAction.link) {
       const URL = this.router.serializeUrl(
-        this.router.createUrlTree([action.link.replace('$', item[action.prop])])
+        this.router.createUrlTree([
+          this.currentAction.link.replace('$', item[this.currentAction.prop]),
+        ])
       );
       window.open(URL, '_blank');
       return;
     }
     this.aciton.emit({
       event: item,
-      ...(action.type && { type: action.type }),
+      ...(this.currentAction.type && { type: this.currentAction.type }),
     });
   }
 
@@ -173,5 +208,12 @@ export class TableComponent implements OnInit {
   viewImage(img) {
     this.imgViewer.img = img;
     this.imgViewer.openBackDropCustomClass();
+  }
+
+  getObjectData(item: any) {
+    const els = this.properties.map(
+      (prop) => `<span class="pb-1 d-block ">${prop} : ${item[prop]}</span>`
+    );
+    return els.join('');
   }
 }

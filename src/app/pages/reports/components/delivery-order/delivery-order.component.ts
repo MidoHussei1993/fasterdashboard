@@ -6,7 +6,13 @@ import { NotifierService } from 'angular-notifier';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { IdentityService } from 'src/app/pages/identity/services/identity.service';
 import { VendorService } from 'src/app/pages/vendor/services/vendor.service';
-import { Pagination, FormMode, List, Dropdown } from 'src/app/shared';
+import {
+  Pagination,
+  FormMode,
+  List,
+  Dropdown,
+  TaskService,
+} from 'src/app/shared';
 import { OrderStatusService } from 'src/app/shared/services/api/order-status.service';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
@@ -14,6 +20,7 @@ import { isShop, isVender } from 'src/app/util/access-storge';
 import { OrderReport, OrderReportFilter } from '../../model';
 import { DeliveryOrderService } from '../../services/delivery-order.service';
 import { ReportsService } from '../../services/reports.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-delivery-order',
@@ -22,12 +29,15 @@ import { ReportsService } from '../../services/reports.service';
 })
 export class DeliveryOrderComponent implements OnInit, OnDestroy {
   @ViewChild('orderCard', { static: false }) orderCard;
+  @ViewChild('shopCartData', { static: false }) shopCartData;
   deliveryOrderlist: OrderReport[] = [];
   titles: string[] = [
     'field.orderId',
     'shop.shop',
+    'field.descriptionLocation',
     'field.CreateAtTo',
     'field.customer',
+    'field.customerPhone',
     // 'field.ProviderId',
     'field.ProviderFullName',
     'product.offer',
@@ -41,8 +51,10 @@ export class DeliveryOrderComponent implements OnInit, OnDestroy {
   properties: string[] = [
     'id',
     'shopName',
+    'shopBranchDescriptionLocationAr',
     'createAt',
     'customerName',
+    'customerPhoneNumber',
     // 'providerId',
     'providerName',
     'hasOffers',
@@ -85,13 +97,18 @@ export class DeliveryOrderComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private deliveryOrderService: DeliveryOrderService,
     private activatedRoute: ActivatedRoute,
-    private notifier: NotifierService
+    private notifier: NotifierService,
+    private headerService: HeaderService,
+    private taskService: TaskService
   ) {}
   ngOnDestroy(): void {
     window.clearInterval(this.interval);
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.DeliveryOrderDataReport')
+    );
     this.isVender = isVender();
     this.filter = new OrderReportFilter();
     if (isVender()) {
@@ -279,11 +296,36 @@ export class DeliveryOrderComponent implements OnInit, OnDestroy {
         );
         // this.currentShopId = shop.event.id;
         break;
+      case 'shopCartData':
+        this.spinner.show();
+        console.log(
+          '🚀 ~ file: delivery-order.component.ts:297 ~ DeliveryOrderComponent ~ navigateTO ~ order:',
+          order
+        );
+        this.deliveryOrderService.getOrderCart(order.event.id).subscribe(
+          (res) => {
+            this.spinner.hide();
+            this.orderCardDetails = res;
+            this.modalService.open(this.shopCartData, {
+              windowClass: 'mymodal',
+              size: 'xl',
+            });
+            // 'backdrop': 'static'
+          },
+          (err) => {
+            this.spinner.hide();
+          }
+        );
+        // this.currentShopId = shop.event.id;
+        break;
       case 'acceptOrder':
         this.acceptOrder(order.event.id);
         break;
       case 'rejectOrder':
         this.rejectOrder(order.event.id);
+        break;
+      case 'SendOrderToTookan':
+        this.sendOrderToTookan(order.event.id);
         break;
 
       default:
@@ -313,6 +355,26 @@ export class DeliveryOrderComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     );
+  }
+
+  sendOrderToTookan(id: any): void {
+    this.swalService.Confirmation().then((res) => {
+      if (res) {
+        this.spinner.show();
+        this.taskService.SendOrderToTookan(id).subscribe(
+          (res) => {
+            this.spinner.hide();
+            this.notifier.notify(
+              'success',
+              this.translate.instant(res.message ? res.message : 'action.done')
+            );
+          },
+          (err) => {
+            this.spinner.hide();
+          }
+        );
+      }
+    });
   }
 
   acceptOrder(id: any): void {

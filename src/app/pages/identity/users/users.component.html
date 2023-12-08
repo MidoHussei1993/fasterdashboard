@@ -1,17 +1,16 @@
-<div class="card ">
+<div class="card">
   <div class="card-header">
-    <h3 class="card-title">{{ "menu.users" | translate }}</h3>
     <div class="card-toolbar">
       <a
         class="btn btn-sm btn-primary mt-1 shadow"
         [routerLink]="'/identity/users/create'"
       >
-      <i class="fas fa-plus"></i>
+        <i class="fas fa-plus"></i>
         {{ "action.create" | translate }}
       </a>
     </div>
   </div>
-  <div class="card-body ">
+  <div class="card-body">
     <div class="row">
       <!-- <h3 class="card-title my-3">{{'menu.users'|translate }}</h3> -->
       <!-- <div class="card-toolbar">
@@ -23,122 +22,124 @@
           {{ "action.create" | translate }}
         </a>
     </div> -->
-    <div class="card bg-secondary">
-      <div class="card-body">
-        <app-filter [filter]="filter"></app-filter>
-      </div>
-    </div>
-    <app-table
-    [list]="userlist"
-    [titles]="titles"
-    [properties]="properties"
-    [busyLoading]="busyLoading"
-    [pagination]="pagination"
-    (activetedPageSize)="setPageSize($event)"
-    (activetedPageNumber)="setPageNumber($event)"
-    (view)="navigateToView($event)"
-    [showDelete]="false"
-    [showEdit]="false"
-    [showSearch]="true"
-    (search)="searchValue()"
-    (resetFilter)="resetfilter()"
-    [addActions]="true"
-    [actionList]="[
-      { title: 'menu.products', icon: 'la-user-tag', type: 'role' },
-      {title:'menu.Change_Password',icon:'fa-lock-open',type:'reset'},
-      {title:'menu.priviledges',icon:'fa-fingerprint',type:'priviledge'},
-      {title:'',icon:'fa-user-secret',type:'userActionTracking'},
-    ]"
-    (aciton)="navigateTO($event)"
-    [showActivation]="true"
-    (changeActivation)="changeActivation($event)"
-
-  ></app-table>
-
-
-     
-  </div>
-</div>
-
-
-
-<ng-template #resetPass let-modal>
-  <div class="modal-body card-flush">
-    <div class="">
-      <h2 class=" text-center">
-        <span class="fs-3 fw-bolder me-2">{{
-          "menu.Change_Password" | translate
-        }}</span>
-      </h2>
-    </div>
-    <div class="row mt-5" *ngIf="rowData.id">
-      <div class="col-3">
-        <img
-          [src]="rowData.profileImage"
-          style="border-radius: 50%"
-          width="100"
-          height="100"
-        />
-      </div>
-      <div class="col-9">
-        <div class="col-md-12">
-
-          <p class="text-uppercase font-weight-bolder ">
-            {{ "field.name" | translate }} :
-            {{ rowData.fullName }}
-          </p>
-          <p class="text-uppercase font-weight-bolder ">
-            {{ "field.phoneNumber" | translate }} :
-            {{ rowData.phoneNumber }}
-          </p>
-          <p class="text-uppercase font-weight-bolder ">
-            {{ "field.email" | translate }} : {{ rowData.email }}
-          </p>
-
+      <div class="card bg-light">
+        <div class="card-body">
+          <app-filter [filter]="filter"></app-filter>
         </div>
-        <form
-        [formGroup]="form"
-        (ngSubmit)="resetPassword()"
-      >
-        <div class="row my-5">
-          <div class="col-md-12 col-sm-12 ">
-            <label class="form-label">{{
-              "field.password" | translate
-            }}</label>
-            <input
-              type="text"
-              formControlName="password"
-              class="form-control form-control-solid"
-              placeholder="{{ 'field.password' | translate }}"
-            />
-            <div
-              *ngIf="
-                !form.get('password').valid &&
-                (form.get('password').dirty ||
-                form.get('password').touched)
-              "
-              class="text text-danger"
-            >
-              <p *ngIf="form.get('password').hasError('required')">
-                {{ "_.required" | translate }}
-              </p>
+      </div>
+      <app-table
+        [filter]="filter"
+        [list]="userlist"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+        (view)="navigateToView($event)"
+        [showDelete]="false"
+        [showEdit]="false"
+        [showSearch]="true"
+        (search)="searchValue()"
+        (resetFilter)="resetfilter()"
+        [addActions]="true"
+        [actionList]="[
+          { title: 'menu.products', icon: 'la-user-tag', type: 'role' },
+          {
+            title: 'menu.Change_Password',
+            icon: 'fa-lock-open',
+            type: 'reset'
+          },
+          {
+            title: 'menu.priviledges',
+            icon: 'fa-fingerprint',
+            type: 'priviledge'
+          },
+          {
+            title: 'menu.userActionTracking',
+            icon: 'fa-user-secret',
+            type: 'userActionTracking'
+          }
+        ]"
+        (aciton)="navigateTO($event)"
+        [showActivation]="true"
+        (changeActivation)="changeActivation($event)"
+      ></app-table>
+    </div>
+  </div>
+
+  <ng-template #resetPass let-modal>
+    <div class="modal-body card-flush">
+      <div class="">
+        <h2 class="text-center">
+          <span class="fs-3 fw-bolder me-2">{{
+            "menu.Change_Password" | translate
+          }}</span>
+        </h2>
+      </div>
+      <div class="row mt-5" *ngIf="rowData.id">
+        <div class="col-3">
+          <img
+            [src]="rowData.profileImage"
+            style="border-radius: 50%"
+            width="100"
+            height="100"
+          />
+        </div>
+        <div class="col-9">
+          <div class="col-md-12">
+            <p class="text-uppercase font-weight-bolder">
+              {{ "field.name" | translate }} :
+              {{ rowData.fullName }}
+            </p>
+            <p class="text-uppercase font-weight-bolder">
+              {{ "field.phoneNumber" | translate }} :
+              {{ rowData.phoneNumber }}
+            </p>
+            <p class="text-uppercase font-weight-bolder">
+              {{ "field.email" | translate }} : {{ rowData.email }}
+            </p>
+          </div>
+          <form [formGroup]="form" (ngSubmit)="resetPassword()">
+            <div class="row my-5">
+              <div class="col-md-12 col-sm-12">
+                <label class="form-label">{{
+                  "field.password" | translate
+                }}</label>
+                <input
+                  type="text"
+                  formControlName="password"
+                  class="form-control form-control-solid"
+                  placeholder="{{ 'field.password' | translate }}"
+                />
+                <div
+                  *ngIf="
+                    !form.get('password').valid &&
+                    (form.get('password').dirty || form.get('password').touched)
+                  "
+                  class="text text-danger"
+                >
+                  <p *ngIf="form.get('password').hasError('required')">
+                    {{ "_.required" | translate }}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="row my-5">
-          <div class="col-md-4 col-sm-12 mx-auto text-center">
-            <button
-              type="submit"
-              class="btn btn-primary btn-sm text-uppercase font-weight-bolder"
-            >
-              {{ "action.save" | translate }}
-              <i class="far fa-save mx-2"></i>
-            </button>
-          </div>
+            <div class="row my-5">
+              <div class="col-md-4 col-sm-12 mx-auto text-center">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-sm text-uppercase font-weight-bolder"
+                >
+                  {{ "action.save" | translate }}
+                  <i class="far fa-save mx-2"></i>
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
       </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>
+</div>

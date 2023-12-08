@@ -1,0 +1,194 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.giftCards" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md-3 col-sm-12 text-center">
+          <label class="form-label d-block">{{
+            "banner.bannerImage" | translate
+          }}</label>
+          <!--begin::Image input-->
+          <div
+            class="image-input image-input-empty"
+            data-kt-image-input="true"
+            style="background-image: url(/assets/media/avatars/blank.png)"
+          >
+            <!--begin::Image preview wrapper-->
+            <img
+              [src]="form.get('backgroundImage').value"
+              class="image-input-wrapper w-125px h-125px"
+              (click)="viewImage()"
+            />
+            <img-viewer
+              #imgViewer
+              [img]="form.get('backgroundImage').value"
+            ></img-viewer>
+            <!--end::Image preview wrapper-->
+            <label
+              *ngIf="mode != 'View'"
+              class="btn btn-backgroundImage btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+              data-kt-image-input-action="change"
+              data-bs-toggle="tooltip"
+              data-bs-dismiss="click"
+              title="Change avatar"
+            >
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input
+                type="file"
+                name="avatar"
+                (change)="handleInputChange($event)"
+                accept=".png, .jpg, .jpeg"
+              />
+            </label>
+          </div>
+          <!--end::Image input-->
+          <div
+            *ngIf="
+              !form.get('backgroundImage').valid &&
+              (form.get('backgroundImage').dirty ||
+                form.get('backgroundImage').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('backgroundImage').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.title" | translate }}</label>
+          <input
+            type="text"
+            formControlName="title"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.title' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('title').valid &&
+              (form.get('title').dirty || form.get('title').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('title').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('title').hasError('pattern')">
+              {{ "_.only_en" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.title" | translate }} ع</label>
+          <input
+            type="text"
+            formControlName="titleAr"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.title' | translate }} ع"
+          />
+          <div
+            *ngIf="
+              !form.get('titleAr').valid &&
+              (form.get('titleAr').dirty || form.get('titleAr').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('titleAr').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="form.get('titleAr').hasError('pattern')">
+              {{ "_.only_ar" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "cardValue" | translate }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="cardValue"
+            class="form-control form-control-solid"
+            placeholder="{{ 'cardValue' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('cardValue').valid &&
+              (form.get('cardValue').dirty || form.get('cardValue').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('cardValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "field.activation" | translate }}</p>
+          <div class="row">
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="true"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.active" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="false"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.not_active" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              !form.get('isActive').valid &&
+              (form.get('isActive').dirty || form.get('isActive').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('isActive').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

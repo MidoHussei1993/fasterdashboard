@@ -1,9 +1,4 @@
 <div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">
-      <span class="mx-2"> {{ "app.name" | translate }} </span>
-    </h3>
-  </div>
   <div class="card-body">
     <form [formGroup]="pricesForm" (ngSubmit)="UpdatePrices()">
       <div class="row my-5">
@@ -52,7 +47,9 @@
       </div>
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "app.transportKMPrice" | translate }} </label>
+          <label class="form-label">
+            {{ "app.transportKMPrice" | translate }}
+          </label>
           <input
             type="text"
             formControlName="transportKMPrice"
@@ -73,7 +70,9 @@
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{ "app.transportCounterPrice" | translate }}</label>
+          <label class="form-label">{{
+            "app.transportCounterPrice" | translate
+          }}</label>
           <input
             type="text"
             formControlName="transportCounterPrice"
@@ -88,7 +87,11 @@
             "
             class="text text-danger"
           >
-            <p *ngIf="pricesForm.get('transportCounterPrice').hasError('required')">
+            <p
+              *ngIf="
+                pricesForm.get('transportCounterPrice').hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
@@ -97,7 +100,9 @@
 
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "app.deliveryRangePrice" | translate }} </label>
+          <label class="form-label">
+            {{ "app.deliveryRangePrice" | translate }}
+          </label>
           <input
             type="number"
             formControlName="deliveryRangePrice"
@@ -113,16 +118,20 @@
             "
             class="text text-danger"
           >
-            <p *ngIf="pricesForm.get('deliveryRangePrice').hasError('required')">
+            <p
+              *ngIf="pricesForm.get('deliveryRangePrice').hasError('required')"
+            >
               {{ "_.required" | translate }}
             </p>
             <p *ngIf="pricesForm.get('deliveryRangePrice').hasError('min')">
-              {{ "_.min" | translate:{value:4} }}
+              {{ "_.min" | translate : { value: 4 } }}
             </p>
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{ "app.transportRangePrice" | translate }}</label>
+          <label class="form-label">{{
+            "app.transportRangePrice" | translate
+          }}</label>
           <input
             type="number"
             formControlName="transportRangePrice"
@@ -138,19 +147,23 @@
             "
             class="text text-danger"
           >
-          <p *ngIf="pricesForm.get('transportRangePrice').hasError('required')">
-            {{ "_.required" | translate }}
-          </p>
-          <p *ngIf="pricesForm.get('transportRangePrice').hasError('min')">
-            {{ "_.min" | translate:{value:4} }}
-          </p>
+            <p
+              *ngIf="pricesForm.get('transportRangePrice').hasError('required')"
+            >
+              {{ "_.required" | translate }}
+            </p>
+            <p *ngIf="pricesForm.get('transportRangePrice').hasError('min')">
+              {{ "_.min" | translate : { value: 4 } }}
+            </p>
           </div>
         </div>
       </div>
 
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "app.deliveryCancelFee" | translate }} </label>
+          <label class="form-label">
+            {{ "app.deliveryCancelFee" | translate }}
+          </label>
           <input
             type="number"
             formControlName="deliveryCancelFee"
@@ -171,7 +184,9 @@
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{ "app.transportCancelFee" | translate }}</label>
+          <label class="form-label">{{
+            "app.transportCancelFee" | translate
+          }}</label>
           <input
             type="number"
             formControlName="transportCancelFee"
@@ -186,14 +201,14 @@
             "
             class="text text-danger"
           >
-            <p *ngIf="pricesForm.get('transportCancelFee').hasError('required')">
+            <p
+              *ngIf="pricesForm.get('transportCancelFee').hasError('required')"
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
       </div>
-
-     
 
       <div class="row my-5">
         <div class="col-md-4 col-sm-12 mx-auto text-center">
@@ -347,10 +362,12 @@
         </div>
       </div>
 
-       <!-- ---------------------------------------------------------------- -->
-       <div class="row my-5">
+      <!-- ---------------------------------------------------------------- -->
+      <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "field.deliveryTrainingLink" | translate }} </label>
+          <label class="form-label">
+            {{ "field.deliveryTrainingLink" | translate }}
+          </label>
           <input
             type="text"
             formControlName="deliveryTrainingLink"
@@ -361,17 +378,23 @@
             *ngIf="
               !socialMediaForm.get('deliveryTrainingLink').valid &&
               (socialMediaForm.get('deliveryTrainingLink').dirty ||
-              socialMediaForm.get('deliveryTrainingLink').touched)
+                socialMediaForm.get('deliveryTrainingLink').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="socialMediaForm.get('deliveryTrainingLink').hasError('required')">
+            <p
+              *ngIf="
+                socialMediaForm.get('deliveryTrainingLink').hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{ "field.deliveryTrainingLinkAr" | translate }}</label>
+          <label class="form-label">{{
+            "field.deliveryTrainingLinkAr" | translate
+          }}</label>
           <input
             type="text"
             formControlName="deliveryTrainingLinkAr"
@@ -382,11 +405,17 @@
             *ngIf="
               !socialMediaForm.get('deliveryTrainingLinkAr').valid &&
               (socialMediaForm.get('deliveryTrainingLinkAr').dirty ||
-              socialMediaForm.get('deliveryTrainingLinkAr').touched)
+                socialMediaForm.get('deliveryTrainingLinkAr').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="socialMediaForm.get('deliveryTrainingLinkAr').hasError('required')">
+            <p
+              *ngIf="
+                socialMediaForm
+                  .get('deliveryTrainingLinkAr')
+                  .hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
@@ -394,7 +423,9 @@
       </div>
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "field.transportTrainingLink" | translate }} </label>
+          <label class="form-label">
+            {{ "field.transportTrainingLink" | translate }}
+          </label>
           <input
             type="text"
             formControlName="transportTrainingLink"
@@ -405,17 +436,25 @@
             *ngIf="
               !socialMediaForm.get('transportTrainingLink').valid &&
               (socialMediaForm.get('transportTrainingLink').dirty ||
-              socialMediaForm.get('transportTrainingLink').touched)
+                socialMediaForm.get('transportTrainingLink').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="socialMediaForm.get('transportTrainingLink').hasError('required')">
+            <p
+              *ngIf="
+                socialMediaForm
+                  .get('transportTrainingLink')
+                  .hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{ "field.transportTrainingLinkAr" | translate }}</label>
+          <label class="form-label">{{
+            "field.transportTrainingLinkAr" | translate
+          }}</label>
           <input
             type="text"
             formControlName="transportTrainingLinkAr"
@@ -426,11 +465,17 @@
             *ngIf="
               !socialMediaForm.get('transportTrainingLinkAr').valid &&
               (socialMediaForm.get('transportTrainingLinkAr').dirty ||
-              socialMediaForm.get('transportTrainingLinkAr').touched)
+                socialMediaForm.get('transportTrainingLinkAr').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="socialMediaForm.get('transportTrainingLinkAr').hasError('required')">
+            <p
+              *ngIf="
+                socialMediaForm
+                  .get('transportTrainingLinkAr')
+                  .hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
@@ -473,9 +518,7 @@
           >
             <p
               *ngIf="
-                termPoliciesForm
-                  .get('termsAndPolicies')
-                  .hasError('required')
+                termPoliciesForm.get('termsAndPolicies').hasError('required')
               "
             >
               {{ "_.required" | translate }}
@@ -540,17 +583,15 @@
             "
             class="text text-danger"
           >
-            <p
-              *ngIf="
-                radiusForm.get('deliveryRadius').hasError('required')
-              "
-            >
+            <p *ngIf="radiusForm.get('deliveryRadius').hasError('required')">
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{ "app.transportRadius" | translate }}</label>
+          <label class="form-label">{{
+            "app.transportRadius" | translate
+          }}</label>
           <input
             type="number"
             min="0"
@@ -561,7 +602,8 @@
           <div
             *ngIf="
               !radiusForm.get('transportRadius').valid &&
-              (radiusForm.get('transportRadius').dirty || radiusForm.get('transportRadius').touched)
+              (radiusForm.get('transportRadius').dirty ||
+                radiusForm.get('transportRadius').touched)
             "
             class="text text-danger"
           >
@@ -571,7 +613,9 @@
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{ "app.distanceShopSearch" | translate }}</label>
+          <label class="form-label">{{
+            "app.distanceShopSearch" | translate
+          }}</label>
           <input
             type="number"
             min="0"
@@ -582,11 +626,14 @@
           <div
             *ngIf="
               !radiusForm.get('distanceShopSearch').valid &&
-              (radiusForm.get('distanceShopSearch').dirty || radiusForm.get('distanceShopSearch').touched)
+              (radiusForm.get('distanceShopSearch').dirty ||
+                radiusForm.get('distanceShopSearch').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="radiusForm.get('distanceShopSearch').hasError('required')">
+            <p
+              *ngIf="radiusForm.get('distanceShopSearch').hasError('required')"
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
@@ -651,7 +698,9 @@
           </div>
         </div>
         <div class="col-md-6 col-sm-12 mt-2">
-          <label class="form-label"> {{ "app.versionShop" | translate }} </label>
+          <label class="form-label">
+            {{ "app.versionShop" | translate }}
+          </label>
           <input
             type="text"
             formControlName="versionShop"
@@ -700,8 +749,7 @@
           <div
             *ngIf="
               !vatForm.get('vat').valid &&
-              (vatForm.get('vat').dirty ||
-              vatForm.get('vat').touched)
+              (vatForm.get('vat').dirty || vatForm.get('vat').touched)
             "
             class="text text-danger"
           >
@@ -729,7 +777,9 @@
     <form [formGroup]="schedulingform" (ngSubmit)="UpdateSchedulingInMinutes()">
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "app.schedulingInMinutes" | translate }} </label>
+          <label class="form-label">
+            {{ "app.schedulingInMinutes" | translate }}
+          </label>
           <input
             type="text"
             formControlName="schedulingInMinutes"
@@ -740,11 +790,15 @@
             *ngIf="
               !schedulingform.get('schedulingInMinutes').valid &&
               (schedulingform.get('schedulingInMinutes').dirty ||
-              schedulingform.get('schedulingInMinutes').touched)
+                schedulingform.get('schedulingInMinutes').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="schedulingform.get('schedulingInMinutes').hasError('required')">
+            <p
+              *ngIf="
+                schedulingform.get('schedulingInMinutes').hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
@@ -763,13 +817,14 @@
       </div>
     </form>
 
-
     <hr />
 
     <form [formGroup]="bonusForm" (ngSubmit)="UpdateBonusData()">
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "field.providerRegistrationBonus" | translate }} </label>
+          <label class="form-label">
+            {{ "field.providerRegistrationBonus" | translate }}
+          </label>
           <input
             type="number"
             formControlName="providerRegistrationBonus"
@@ -780,18 +835,24 @@
             *ngIf="
               !bonusForm.get('providerRegistrationBonus').valid &&
               (bonusForm.get('providerRegistrationBonus').dirty ||
-              bonusForm.get('providerRegistrationBonus').touched)
+                bonusForm.get('providerRegistrationBonus').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="bonusForm.get('providerRegistrationBonus').hasError('required')">
+            <p
+              *ngIf="
+                bonusForm.get('providerRegistrationBonus').hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
 
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "field.customerRegistrationBonus" | translate }} </label>
+          <label class="form-label">
+            {{ "field.customerRegistrationBonus" | translate }}
+          </label>
           <input
             type="number"
             formControlName="customerRegistrationBonus"
@@ -802,11 +863,95 @@
             *ngIf="
               !bonusForm.get('customerRegistrationBonus').valid &&
               (bonusForm.get('customerRegistrationBonus').dirty ||
-              bonusForm.get('customerRegistrationBonus').touched)
+                bonusForm.get('customerRegistrationBonus').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="bonusForm.get('customerRegistrationBonus').hasError('required')">
+            <p
+              *ngIf="
+                bonusForm.get('customerRegistrationBonus').hasError('required')
+              "
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-4 col-sm-12">
+          <label class="form-label"> {{ "field.providerOrderBonus" | translate }} </label>
+          <input
+            type="number"
+            formControlName="providerOrderBonus"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.providerOrderBonus' | translate }}"
+          />
+          <div
+            *ngIf="
+              !bonusForm.get('providerOrderBonus').valid &&
+              (bonusForm.get('providerOrderBonus').dirty ||
+              bonusForm.get('providerOrderBonus').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="bonusForm.get('providerOrderBonus').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">
+            {{ "providerReferrerBonus" | translate }}
+          </label>
+          <input
+            type="number"
+            formControlName="providerReferrerBonus"
+            class="form-control form-control-solid"
+            placeholder="{{ 'providerReferrerBonus' | translate }}"
+          />
+          <div
+            *ngIf="
+              !bonusForm.get('providerReferrerBonus').valid &&
+              (bonusForm.get('providerReferrerBonus').dirty ||
+                bonusForm.get('providerReferrerBonus').touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="
+                bonusForm.get('providerReferrerBonus').hasError('required')
+              "
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">
+            {{ "customerReferrerBonus" | translate }}
+          </label>
+          <input
+            type="number"
+            formControlName="customerReferrerBonus"
+            class="form-control form-control-solid"
+            placeholder="{{ 'customerReferrerBonus' | translate }}"
+          />
+          <div
+            *ngIf="
+              !bonusForm.get('customerReferrerBonus').valid &&
+              (bonusForm.get('customerReferrerBonus').dirty ||
+                bonusForm.get('customerReferrerBonus').touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="
+                bonusForm.get('customerReferrerBonus').hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
@@ -847,12 +992,13 @@
       </div>
     </form>
 
-
     <hr />
 
-    <form [formGroup]="providerReciveOneOrder" (ngSubmit)="UpdateProviderReciveOneOrder()">
+    <form
+      [formGroup]="providerReciveOneOrder"
+      (ngSubmit)="UpdateProviderReciveOneOrder()"
+    >
       <div class="row my-5">
-      
         <div class="col-md-6 col-sm-12">
           <p>{{ "field.isProviderReciveOneOrder" | translate }}</p>
           <div class="row">
@@ -888,11 +1034,18 @@
           <div
             *ngIf="
               !providerReciveOneOrder.get('isProviderReciveOneOrder').valid &&
-              (providerReciveOneOrder.get('isProviderReciveOneOrder').dirty || providerReciveOneOrder.get('isProviderReciveOneOrder').touched)
+              (providerReciveOneOrder.get('isProviderReciveOneOrder').dirty ||
+                providerReciveOneOrder.get('isProviderReciveOneOrder').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="providerReciveOneOrder.get('isProviderReciveOneOrder').hasError('required')">
+            <p
+              *ngIf="
+                providerReciveOneOrder
+                  .get('isProviderReciveOneOrder')
+                  .hasError('required')
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
@@ -912,12 +1065,16 @@
     </form>
 
     <hr />
-    
-    <form [formGroup]="LimitationOrderValue" (ngSubmit)="updateLimitationOrderValue()">
-     
+
+    <form
+      [formGroup]="LimitationOrderValue"
+      (ngSubmit)="updateLimitationOrderValue()"
+    >
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "field.minimumCashOrderValue" | translate }} </label>
+          <label class="form-label">
+            {{ "field.minimumCashOrderValue" | translate }}
+          </label>
           <input
             type="number"
             formControlName="minimumCashOrderValue"
@@ -928,18 +1085,26 @@
             *ngIf="
               !LimitationOrderValue.get('minimumCashOrderValue').valid &&
               (LimitationOrderValue.get('minimumCashOrderValue').dirty ||
-              LimitationOrderValue.get('minimumCashOrderValue').touched)
+                LimitationOrderValue.get('minimumCashOrderValue').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="LimitationOrderValue.get('minimumCashOrderValue').hasError('required')">
+            <p
+              *ngIf="
+                LimitationOrderValue.get('minimumCashOrderValue').hasError(
+                  'required'
+                )
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
 
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "field.minimumCreditOrderValue" | translate }} </label>
+          <label class="form-label">
+            {{ "field.minimumCreditOrderValue" | translate }}
+          </label>
           <input
             type="number"
             formControlName="minimumCreditOrderValue"
@@ -950,21 +1115,28 @@
             *ngIf="
               !LimitationOrderValue.get('minimumCreditOrderValue').valid &&
               (LimitationOrderValue.get('minimumCreditOrderValue').dirty ||
-              LimitationOrderValue.get('minimumCreditOrderValue').touched)
+                LimitationOrderValue.get('minimumCreditOrderValue').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="LimitationOrderValue.get('minimumCreditOrderValue').hasError('required')">
+            <p
+              *ngIf="
+                LimitationOrderValue.get('minimumCreditOrderValue').hasError(
+                  'required'
+                )
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
-
       </div>
 
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "field.maximumCashOrderValue" | translate }} </label>
+          <label class="form-label">
+            {{ "field.maximumCashOrderValue" | translate }}
+          </label>
           <input
             type="number"
             formControlName="maximumCashOrderValue"
@@ -975,18 +1147,26 @@
             *ngIf="
               !LimitationOrderValue.get('maximumCashOrderValue').valid &&
               (LimitationOrderValue.get('maximumCashOrderValue').dirty ||
-              LimitationOrderValue.get('maximumCashOrderValue').touched)
+                LimitationOrderValue.get('maximumCashOrderValue').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="LimitationOrderValue.get('maximumCashOrderValue').hasError('required')">
+            <p
+              *ngIf="
+                LimitationOrderValue.get('maximumCashOrderValue').hasError(
+                  'required'
+                )
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
 
         <div class="col-md-6 col-sm-12">
-          <label class="form-label"> {{ "field.maximumCreditOrderValue" | translate }} </label>
+          <label class="form-label">
+            {{ "field.maximumCreditOrderValue" | translate }}
+          </label>
           <input
             type="number"
             formControlName="maximumCreditOrderValue"
@@ -997,18 +1177,22 @@
             *ngIf="
               !LimitationOrderValue.get('maximumCreditOrderValue').valid &&
               (LimitationOrderValue.get('maximumCreditOrderValue').dirty ||
-              LimitationOrderValue.get('maximumCreditOrderValue').touched)
+                LimitationOrderValue.get('maximumCreditOrderValue').touched)
             "
             class="text text-danger"
           >
-            <p *ngIf="LimitationOrderValue.get('maximumCreditOrderValue').hasError('required')">
+            <p
+              *ngIf="
+                LimitationOrderValue.get('maximumCreditOrderValue').hasError(
+                  'required'
+                )
+              "
+            >
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
-
       </div>
-
 
       <div class="row my-5">
         <div class="col-md-4 col-sm-12 mx-auto text-center">
@@ -1022,6 +1206,50 @@
       </div>
     </form>
 
+    <hr />
 
+    <form [formGroup]="DispatchSystem" (ngSubmit)="UpdateDispatchSystem()">
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "dispatchSystem" | translate }}</label>
+          <select
+            formControlName="dispatchSystem"
+            class="form-select form-select-solid"
+          >
+            <option [ngValue]="null">
+              {{ "field.all" | translate }}
+            </option>
+            <option [value]="item.id" *ngFor="let item of DispatchSystemDDL">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !DispatchSystem.get('dispatchSystem').valid &&
+              (DispatchSystem.get('dispatchSystem').dirty ||
+                DispatchSystem.get('dispatchSystem').touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="DispatchSystem.get('dispatchSystem').hasError('required')"
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

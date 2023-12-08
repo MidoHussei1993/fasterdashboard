@@ -1,20 +1,18 @@
-<div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">{{ "menu.salary" | translate }}</h3>
-  </div>
+<div class="card shadow-sm">
   <div class="card-body">
-    <a class="btn btn-sm btn-primary mb-3" target="_blank" [routerLink]="'/salaries/create'">
+    <a
+      class="btn btn-sm btn-primary mb-3"
+      target="_blank"
+      [routerLink]="'/salaries/create'"
+    >
       <i class="fas fa-plus"></i>
       {{ "action.create" | translate }}
     </a>
-    <div class="card bg-secondary">
+    <div class="card bg-light">
       <div class="card-body">
-        <app-filter [filter]="filter"></app-filter>
-        <div class="row">
-          <div class="col-md-4 col-sm-12">
-            <label class="mb-2">
-              {{ "field.salaryType" | translate }}</label
-            >
+        <app-filter [filter]="filter">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <label class="mb-2"> {{ "field.salaryType" | translate }}</label>
             <select
               [(ngModel)]="filter.MotivationType"
               class="form-select form-select-solid"
@@ -27,10 +25,11 @@
               </option>
             </select>
           </div>
-        </div>
+        </app-filter>
       </div>
     </div>
     <app-table
+      [filter]="filter"
       [list]="motivationList"
       [titles]="titles"
       [properties]="properties"

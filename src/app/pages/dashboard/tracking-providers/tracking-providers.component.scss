@@ -1,0 +1,118 @@
+.users {
+  max-height: 700px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  li {
+    border-radius: 12px;
+    border-radius: 5px;
+    border: 1px solid #7470703d;
+    background-image: radial-gradient(
+        circle at 69% 86%,
+        rgba(165, 165, 165, 0.06) 0%,
+        rgba(165, 165, 165, 0.06) 25%,
+        rgba(193, 193, 193, 0.06) 25%,
+        rgba(193, 193, 193, 0.06) 50%,
+        rgba(221, 221, 221, 0.06) 50%,
+        rgba(221, 221, 221, 0.06) 75%,
+        rgba(249, 249, 249, 0.06) 75%,
+        rgba(249, 249, 249, 0.06) 100%
+      ),
+      radial-gradient(
+        circle at 49% 76%,
+        rgba(129, 129, 129, 0.06) 0%,
+        rgba(129, 129, 129, 0.06) 25%,
+        rgba(164, 164, 164, 0.06) 25%,
+        rgba(164, 164, 164, 0.06) 50%,
+        rgba(200, 200, 200, 0.06) 50%,
+        rgba(200, 200, 200, 0.06) 75%,
+        rgba(235, 235, 235, 0.06) 75%,
+        rgba(235, 235, 235, 0.06) 100%
+      ),
+      radial-gradient(
+        circle at 22% 64%,
+        rgba(173, 173, 173, 0.06) 0%,
+        rgba(173, 173, 173, 0.06) 25%,
+        rgba(119, 119, 119, 0.06) 25%,
+        rgba(119, 119, 119, 0.06) 50%,
+        rgba(64, 64, 64, 0.06) 50%,
+        rgba(64, 64, 64, 0.06) 75%,
+        rgba(10, 10, 10, 0.06) 75%,
+        rgba(10, 10, 10, 0.06) 100%
+      ),
+      linear-gradient(307deg, rgb(255, 255, 255), rgb(255, 255, 255));
+    // background-blend-mode: overlay, overlay, overlay, normal;
+    &:hover {
+      border: 2px solid #0a8fcd;
+      transition: all 1s;
+    }
+  }
+}
+
+.pac-card {
+  background-color: #fff;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  padding: 0 0.5em;
+  font: 400 18px Roboto, Arial, sans-serif;
+  overflow: hidden;
+  font-family: Roboto;
+  padding: 0;
+}
+
+#pac-container {
+  padding-bottom: 12px;
+  margin-right: 12px;
+}
+.pac-container {
+  top: 145px !important;
+  /* position: relative !important; */
+}
+
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
+
+.pac-controls label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+#title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+
+#target {
+  width: 345px;
+}
+
+.order-status-btn {
+  border-color: #d2cfcf !important;
+  &:hover {
+    background: #204692 !important;
+    color: white;
+    transition: all 0.4s;
+  }
+}

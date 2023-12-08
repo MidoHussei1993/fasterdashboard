@@ -258,15 +258,34 @@ export class ProviderService {
   }
 
   getDriversOpenRegistration(): Observable<any> {
-    return this.http.get<any>('https://faster-5dd74.firebaseio.com/Phone.json',{
-      headers:{
-        // 'Authorization':null
+    return this.http.get<any>(
+      'https://faster-5dd74.firebaseio.com/Phone.json',
+      {
+        headers: {
+          // 'Authorization':null
+        },
       }
-    });
+    );
   }
 
-  sendToken(id:string): Observable<any> {
+  sendToken(id: string): Observable<any> {
     return this.http.get<any>(API.sendToken(id));
   }
+  sendToMeLink(id: string): Observable<any> {
+    return this.http.get<any>(API.sendToMeLink(id));
+  }
 
+  getMapProviders(deliveryOrderStatusesEnums?: any[]): Observable<any> {
+    console.log(
+      '🚀 ~ file: provider.service.ts:279 ~ ProviderService ~ getMapProviders ~ deliveryOrderStatusesEnums:',
+      deliveryOrderStatusesEnums
+    );
+    return this.http.get<any>(API.getMapProviders, {
+      params: {
+        ...(deliveryOrderStatusesEnums && {
+          deliveryOrderStatusesEnums: deliveryOrderStatusesEnums,
+        }),
+      },
+    });
+  }
 }

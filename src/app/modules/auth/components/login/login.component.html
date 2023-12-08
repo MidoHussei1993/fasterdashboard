@@ -76,21 +76,17 @@
   <div class="text-center">
     <button
       type="submit"
-      id="kt_sign_in_submit"
+      [disabled]="isLoading"
       (click)="submit()"
       class="btn btn-lg btn-primary w-100 mb-5"
     >
-      <ng-container *ngIf="isLoading$ | async">
-        <span class="indicator-progress" [style.display]="'block'">
+        <span class="indicator-progress" [style.display]="'block'" *ngIf="isLoading">
           Please wait...
           <span
             class="spinner-border spinner-border-sm align-middle ms-2"
           ></span>
         </span>
-      </ng-container>
-      <ng-container (click)="submit()" *ngIf="!(isLoading$ | async)">
-        <span class="indicator-label">{{ "login.fasterLogin" | translate }}</span>
-      </ng-container>
+        <span class="indicator-label" *ngIf="!isLoading">{{ "login.fasterLogin" | translate }}</span>
     </button>
 
     <!-- begin::Separator  -->

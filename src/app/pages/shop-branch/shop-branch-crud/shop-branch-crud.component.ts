@@ -53,13 +53,12 @@ export class ShopBranchCrudComponent implements OnInit {
       descriptionLocation: [
         '',
         [
-          Validators.required,
-          Validators.pattern(Pattern.OnlyEnglishLettersAndSpace),
+          Validators.required
         ],
       ],
       descriptionLocationAr: [
         '',
-        [Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)],
+        [Validators.required],
       ],
       isActive: ['', [Validators.required]],
       shopId: ['', [Validators.required]],

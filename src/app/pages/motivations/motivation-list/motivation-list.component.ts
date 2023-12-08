@@ -9,6 +9,7 @@ import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { CustomerOrderBounsService } from '../../customer-bonus/services/customer-order-bouns.service';
 import { Motivation, MotivationFilter } from '../models';
 import { MotivationService } from '../services/motivation.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-motivation-list',
@@ -55,10 +56,12 @@ export class MotivationListComponent implements OnInit {
     private translate: TranslateService,
     private notify: NotifierService,
     private customerOrderBonusService: CustomerOrderBounsService,
+    private headerService: HeaderService,
     private excelService: ExcelService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.motivations'));
     this.currentLanguage = this.translate.currentLang;
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;

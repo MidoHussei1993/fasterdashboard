@@ -7,6 +7,7 @@ import { Pagination } from 'src/app/shared';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { CustomerWalletManualAdditionReport, TaxsReport } from '../../model';
 import { ReportsService } from '../../services/reports.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-customer-wallet-manual-addition',
@@ -50,10 +51,14 @@ export class CustomerWalletManualAdditionComponent implements OnInit {
     private excelService: ExcelService,
     private router: Router,
     private notifier: NotifierService,
+    private headerService: HeaderService,
     private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.walletManualAdditionCustomer')
+    );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getCustomerWalletManualAdditionReport();

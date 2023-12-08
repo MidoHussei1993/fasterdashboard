@@ -108,6 +108,7 @@ export class ProviderCrudComponent implements OnInit {
       stcPayPhoneNumber: [null],
       parentProviderId: [null],
       carInsuranceImage: [null],
+      driverDateOfBirth: [null],
     });
 
   
@@ -291,6 +292,7 @@ export class ProviderCrudComponent implements OnInit {
         (res: SingleItemResponse<ProviderIdentityItem>) => {
           this.spinner.hide();
           this.mainObject = { ...res.returnData, ...res.returnData.baseData };
+          this.mainObject.driverDateOfBirth = new Date(this.mainObject.driverDateOfBirth)
           this.from = new Date(res.returnData.createAt);
           this.to = new Date();
           // this.getProviderOrderRejectPercentage();

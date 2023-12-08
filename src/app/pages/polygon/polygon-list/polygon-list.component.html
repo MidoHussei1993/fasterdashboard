@@ -1,6 +1,5 @@
-<div class="card card-flush shadow-sm">
+<div class="card shadow-sm">
   <div class="card-header">
-    <h3 class="card-title">{{ "menu.polygon" | translate }}</h3>
     <div class="card-toolbar">
       <a class="btn btn-sm btn-primary mb-3" [routerLink]="'/polygon/create'">
         <i class="fas fa-plus"></i>
@@ -8,42 +7,41 @@
       </a>
     </div>
   </div>
-  <div class="card bg-secondary">
+  <div class="card bg-light">
     <div class="card-body">
-      <app-filter [filter]="filter"></app-filter>
-   <div class="row">
-    <div class="col-md-4 col-sm-12">
-      <p class="font-weight-bolder">
-        {{ "field.districtType" | translate }}
-      </p>
-      <select
-      [(ngModel)]="filter.polygonType"
-        class="form-select form-select-solid"
-      >
-        <option [value]="shop.id" *ngFor="let shop of polygonTypeList">
-          {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
-        </option>
-      </select>
-    </div>
-    <div class="col-md-4 col-sm-12">
-      <p class="font-weight-bolder">
-        {{ "field.serviceType" | translate }}
-      </p>
-      <select
-        [(ngModel)]="filter.orderType"
-        class="form-select form-select-solid"
-      >
- 
-        <option [value]="shop.id" *ngFor="let shop of orderTypeList">
-          {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
-        </option>
-      </select>
-    </div>
-   </div>
+      <app-filter [filter]="filter">
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <p class="font-weight-bolder">
+            {{ "field.districtType" | translate }}
+          </p>
+          <select
+            [(ngModel)]="filter.polygonType"
+            class="form-select form-select-solid"
+          >
+            <option [value]="shop.id" *ngFor="let shop of polygonTypeList">
+              {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+            </option>
+          </select>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <p class="font-weight-bolder">
+            {{ "field.serviceType" | translate }}
+          </p>
+          <select
+            [(ngModel)]="filter.orderType"
+            class="form-select form-select-solid"
+          >
+            <option [value]="shop.id" *ngFor="let shop of orderTypeList">
+              {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+            </option>
+          </select>
+        </div>
+      </app-filter>
     </div>
   </div>
   <div class="card-body">
     <app-table
+      [filter]="filter"
       [list]="list"
       [titles]="titles"
       [properties]="properties"

@@ -1,6 +1,5 @@
-<div class="card card-flush shadow-sm">
+<div class="card shadow-sm">
   <div class="card-header">
-    <h3 class="card-title">{{ "shop.shop" | translate }}</h3>
     <div class="card-toolbar" *ngIf="!isShopRoles">
       <a
         class="btn btn-sm btn-primary mt-1 shadow"
@@ -36,32 +35,40 @@
       >
         {{ "action.uploadshopModal" | translate }}
       </button>
+      <!-- <button
+      (click)="navigateToUpdateAllShopBranchesWorkTime()"
+      class="btn btn-sm btn-warning mt-1 mx-2 shadow"
+    >
+      {{ "action.updateAllshopBranchWorkTime" | translate }}
+    </button> -->
     </div>
   </div>
   <div class="card-body">
-    <div class="card bg-secondary" *ngIf="!isShopRoles">
+    <div class="card bg-light" *ngIf="!isShopRoles">
       <div class="card-body">
-        <app-filter [filter]="filter"></app-filter>
-        <div class="col-md-4 col-sm-12">
-          <p class="font-weight-bolder">
-            {{ "shop.shop_type" | translate }}
-          </p>
-          <select
-            (change)="filterShopList($event.target['value'])"
-            class="form-select form-select-solid"
-          >
-            <option [value]="''">
-              {{ "field.searchProviderType" | translate }}
-            </option>
-            <option [value]="shop.id" *ngFor="let shop of shopTypeList">
-              {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
-            </option>
-          </select>
-        </div>
+        <app-filter [filter]="filter">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <p class="font-weight-bolder">
+              {{ "shop.shop_type" | translate }}
+            </p>
+            <select
+              (change)="filterShopList($event.target['value'])"
+              class="form-select form-select-solid"
+            >
+              <option [value]="''">
+                {{ "field.searchProviderType" | translate }}
+              </option>
+              <option [value]="shop.id" *ngFor="let shop of shopTypeList">
+                {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+              </option>
+            </select>
+          </div>
+        </app-filter>
       </div>
     </div>
     <app-table
       [list]="shoplist"
+      [filter]="filter"
       [titles]="titles"
       [properties]="properties"
       [busyLoading]="busyLoading"
@@ -85,7 +92,6 @@
       [AnotherCheckTitelName]="'field.isPartner'"
       (changeAnotherCheck)="changePartnerStatus($event)"
       [showAnotherCheck]="true"
-
     ></app-table>
   </div>
 </div>

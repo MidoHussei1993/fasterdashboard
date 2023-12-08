@@ -101,6 +101,17 @@
             </label>
           </div>
           <!--end::Image input-->
+          <div
+            *ngIf="
+              !form.get('iqamaImage').valid &&
+              (form.get('iqamaImage').dirty || form.get('iqamaImage').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('iqamaImage').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
         </div>
 
         <div class="col-md-4 col-sm-12 text-center">
@@ -174,6 +185,36 @@
             </p>
           </div>
         </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label d-block">
+            {{ "field.driverDateOfBirth" | translate }}
+          </label>
+          <!-- <input
+            type="date"
+            formControlName="driverDateOfBirth"
+            class="form-control form-control-solid"
+            placeholder="driverDateOfBirth"
+          /> -->
+          <p-calendar
+            formControlName="driverDateOfBirth"
+            [showTime]="true"
+            dateFormat="dd.mm.yy"
+            hourFormat="12"
+          ></p-calendar>
+          <div
+            *ngIf="
+              !form.get('driverDateOfBirth').valid &&
+              (form.get('driverDateOfBirth').dirty ||
+                form.get('driverDateOfBirth').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('driverDateOfBirth').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
         <!-- <div class="col-md-6 col-sm-12">
                 <label class="form-label">{{ "global.userType" | translate }}</label>
                 <select
@@ -226,24 +267,23 @@
             </p>
           </div>
         </div>
-
         <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "global.providerNationalityId" | translate
+          }}</label>
+          <select
+            formControlName="providerNationalityId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="item.id" *ngFor="let item of nationalityList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+        </div>
+
+        <!-- <div class="col-md-6 col-sm-12">
           <p>{{ "field.gender" | translate }}</p>
           <div class="row">
-            <!-- <div class="col-4 mx-auto">
-                  <label class="form-check form-check-custom form-check-solid">
-                    <input
-                      class="form-check-input mx-2"
-                      type="radio"
-                      [value]="0"
-                      name="gender"
-                      formControlName="gender"
-                    />
-                    <span class="form-check-label">
-                      {{ "field.undefined" | translate }}
-                    </span>
-                  </label>
-                </div> -->
             <div class="col-4 mx-auto">
               <label class="form-check form-check-custom form-check-solid">
                 <input
@@ -284,11 +324,11 @@
               {{ "_.required" | translate }}
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="row my-5">
-        <div class="col-md-6 col-sm-12">
+        <!-- <div class="col-md-6 col-sm-12">
           <label class="form-label">{{ "city.name" | translate }}</label>
           <select
             formControlName="cityId"
@@ -298,7 +338,7 @@
               {{ currentLanguage == "en" ? item.name : item.nameAr }}
             </option>
           </select>
-          <!-- <div
+          <div
                   *ngIf="
                     !form.get('shopId').valid &&
                     (form.get('shopId').dirty || form.get('shopId').touched)
@@ -308,9 +348,9 @@
                   <p *ngIf="form.get('shopId').hasError('required')">
                     {{ "_.required" | translate }}
                   </p>
-                </div> -->
-        </div>
-        <div class="col-md-6 col-sm-12">
+                </div>
+        </div> -->
+        <!-- <div class="col-md-6 col-sm-12">
           <label class="form-label">{{
             "provider.registertype" | translate
           }}</label>
@@ -334,24 +374,10 @@
               {{ "_.required" | translate }}
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="row my-5">
-        <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{
-            "global.providerNationalityId" | translate
-          }}</label>
-          <select
-            formControlName="providerNationalityId"
-            class="form-select form-select-solid"
-          >
-            <option [value]="item.id" *ngFor="let item of nationalityList">
-              {{ currentLanguage == "en" ? item.name : item.nameAr }}
-            </option>
-          </select>
-        </div>
-
         <!-- <div class="col-md-6 col-sm-12">
               <label class="form-label">{{ "menu.vendor" | translate }}</label>
               <select
@@ -711,7 +737,17 @@
           <label class="form-label">{{
             "field.VehicleCompany" | translate
           }}</label>
-          <select
+          <p-dropdown
+            [options]="carModalList"
+            style="display: block"
+            [filter]="true"
+            [filterBy]="currentLanguage == 'en' ? 'name' : 'nameAr'"
+            [optionLabel]="currentLanguage == 'en' ? 'name' : 'nameAr'"
+            formControlName="carModelId"
+            optionValue="id"
+            (onChange)="getCarNameList()"
+          ></p-dropdown>
+          <!-- <select
             formControlName="carModelId"
             class="form-select form-select-solid"
             (change)="getCarNameList($event.target['value'])"
@@ -719,7 +755,7 @@
             <option [value]="item.id" *ngFor="let item of carModalList">
               {{ currentLanguage == "en" ? item.name : item.nameAr }}
             </option>
-          </select>
+          </select> -->
           <div
             *ngIf="
               !form.get('carModelId').valid &&
@@ -731,6 +767,18 @@
               {{ "_.required" | translate }}
             </p>
           </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "field.VehiclePlateNumber" | translate
+          }}</label>
+          <input
+            type="text"
+            formControlName="plateNumber"
+            class="form-control form-control-solid"
+            :placeholder="{{ 'field.VehiclePlateNumber' | translate }}"
+          />
         </div>
 
         <!-- <div class="col-md-6 col-sm-12">
@@ -777,8 +825,16 @@
           <label class="form-label">{{
             "field.VehicleModel" | translate
           }}</label>
-
-          <select
+          <p-dropdown
+            [options]="manufacturingYearList"
+            style="display: block"
+            [filter]="true"
+            [filterBy]="currentLanguage == 'en' ? 'name' : 'nameAr'"
+            [optionLabel]="currentLanguage == 'en' ? 'name' : 'nameAr'"
+            formControlName="manufacturingYearId"
+            optionValue="id"
+          ></p-dropdown>
+          <!-- <select
             formControlName="manufacturingYearId"
             class="form-select form-select-solid"
           >
@@ -788,7 +844,7 @@
             >
               {{ currentLanguage == "en" ? item.name : item.nameAr }}
             </option>
-          </select>
+          </select> -->
 
           <div
             *ngIf="
@@ -806,7 +862,7 @@
       </div>
 
       <div class="row my-5">
-        <div class="col-md-6 col-sm-12">
+        <!-- <div class="col-md-6 col-sm-12">
           <label class="form-label">{{ "field.color" | translate }}</label>
           <select
             formControlName="carColor"
@@ -816,7 +872,7 @@
               {{ currentLanguage == "en" ? item.name : item.nameAr }}
             </option>
           </select>
-          <!-- <div
+           <div
                   *ngIf="
                     !form.get('shopId').valid &&
                     (form.get('shopId').dirty || form.get('shopId').touched)
@@ -826,20 +882,8 @@
                   <p *ngIf="form.get('shopId').hasError('required')">
                     {{ "_.required" | translate }}
                   </p>
-                </div> -->
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{
-            "field.VehiclePlateNumber" | translate
-          }}</label>
-          <input
-            type="text"
-            formControlName="plateNumber"
-            class="form-control form-control-solid"
-            :placeholder="{{ 'field.VehiclePlateNumber' | translate }}"
-          />
-        </div>
+                </div> 
+        </div> -->
       </div>
 
       <div class="row my-5" *ngIf="mode != 'View'">

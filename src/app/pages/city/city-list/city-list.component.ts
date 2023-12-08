@@ -8,6 +8,8 @@ import { SharedServiceService } from '../../country/SharedService.service';
 import { City } from '../city.model';
 import { CityFilter } from '../cityFilter.model';
 import { AllCity } from './Cities.model';
+import { TranslateService } from '@ngx-translate/core';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-city-list',
@@ -41,10 +43,13 @@ export class CityListComponent implements OnInit {
   constructor(
     private router: Router,
     private sharedService: SharedServiceService,
+    private headerService: HeaderService,
+    private translate: TranslateService,
     private spinenr: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('city.name'));
     this.filter = new CityFilter();
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;

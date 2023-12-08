@@ -610,9 +610,7 @@ export class ReportsService {
     });
   }
 
-  getShopProfitReport(
-    filter: ShopProfitReportFilter
-  ): Observable<List<any>> {
+  getShopProfitReport(filter: ShopProfitReportFilter): Observable<List<any>> {
     return this.http.get<List<any>>(API.ShopProfitReport, {
       params: {
         ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
@@ -629,6 +627,57 @@ export class ReportsService {
         ...(filter.EndDate && {
           EndDate: String(moment(filter.EndDate).format('YYYY-MM-DD HH:mm:ss')),
         }),
+      },
+    });
+  }
+  DeliveryOrderStatistics(): Observable<List<any>> {
+    return this.http.get<List<any>>(API.DeliveryOrderStatistics);
+  }
+  NewOrdersReport(filter: any): Observable<List<any>> {
+    return this.http.get<List<any>>(API.NewOrdersReport, {
+      params: {
+        ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+        ...(filter.PageSize && { PageSize: filter.PageSize }),
+      },
+    });
+  }
+  AssignedOrdersReport(filter: any): Observable<List<any>> {
+    return this.http.get<List<any>>(API.AssignedOrdersReport, {
+      params: {
+        ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+        ...(filter.PageSize && { PageSize: filter.PageSize }),
+      },
+    });
+  }
+  OutForDeliveryOrdersReport(filter: any): Observable<List<any>> {
+    return this.http.get<List<any>>(API.OutForDeliveryOrdersReport, {
+      params: {
+        ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+        ...(filter.PageSize && { PageSize: filter.PageSize }),
+      },
+    });
+  }
+  DelayedNoDriverForOrdersReport(filter: any): Observable<List<any>> {
+    return this.http.get<List<any>>(API.DelayedNoDriverForOrdersReport, {
+      params: {
+        ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+        ...(filter.PageSize && { PageSize: filter.PageSize }),
+      },
+    });
+  }
+  DeliverdOrdersReport(filter: any): Observable<List<any>> {
+    return this.http.get<List<any>>(API.DeliverdOrdersReport, {
+      params: {
+        ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+        ...(filter.PageSize && { PageSize: filter.PageSize }),
+      },
+    });
+  }
+  NotPickedUpOrdersReport(filter: any): Observable<List<any>> {
+    return this.http.get<List<any>>(API.NotPickedUpOrdersReport, {
+      params: {
+        ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+        ...(filter.PageSize && { PageSize: filter.PageSize }),
       },
     });
   }

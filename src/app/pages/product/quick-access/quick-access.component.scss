@@ -1,0 +1,7 @@
+::ng-deep html[dir="rtl"] {
+  .p-panel .p-panel-icons-end {
+    order: 1 !important;
+    margin-right: auto !important;
+    margin-left: unset;
+  }
+}

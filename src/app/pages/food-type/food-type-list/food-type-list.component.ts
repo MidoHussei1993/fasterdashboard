@@ -9,6 +9,8 @@ import { ShopService } from '../../shop/services';
 import { FoodTypeFilter } from '../models/food-type-filter';
 import { FoodTypeShopService } from '../services/food-type-shop.service';
 import { FoodTypeService } from '../services/food-type.service';
+import { FoodTypeShopFilter } from '../models/food-type-shop-filter';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-food-type-list',
@@ -29,6 +31,7 @@ export class FoodTypeListComponent
     public spinner: NgxSpinnerService,
     public router: Router,
     private shopService: ShopService,
+    private headerService: HeaderService,
     private foodTypeShopService: FoodTypeShopService
   ) {
     super(foodTypeService, notifier, spinner, translate, route, router);
@@ -37,6 +40,7 @@ export class FoodTypeListComponent
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('menu.foodType'));
     this.navigateTo = 'food-type';
     this.filter = new FoodTypeFilter();
     this.filter.PageNumber = 1;
@@ -104,24 +108,9 @@ export class FoodTypeListComponent
       );
   }
 
-  deleteItem(item) {
-    this.spinner.show();
-    this.foodTypeShopService
-      .delete(item.id, +this.route.snapshot.queryParamMap.get('shopId'))
-      .subscribe(
-        (res: any) => {
-          this.getFoodTypesByShopId();
-          this.spinner.hide();
-        },
-        (err) => {
-          this.spinner.hide();
-        }
-      );
-  }
-
   navigateToCreateFoodShop() {
     if (this.isShopId)
-    return  this.router.navigateByUrl(
+      return this.router.navigateByUrl(
         `/food-type/create-food-shop?shopId=${this.route.snapshot.queryParamMap.get(
           'shopId'
         )}`

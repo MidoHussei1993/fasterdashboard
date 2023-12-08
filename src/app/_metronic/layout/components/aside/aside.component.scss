@@ -1,0 +1,26 @@
+h3 {
+  color: #ffffff;
+  text-shadow: 0 0 10px #1eff4e, 0 0 20px #1eff4e, 0 0 80px #1eff4e,
+    0 0 120px #1eff4e;
+  word-spacing: 1px;
+  font-size: 25px;
+  animation: animate 2s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -10,6 +10,7 @@ import { ProviderListComponent } from './provider-list/provider-list.component';
 import { ProviderNotesCrudComponent } from './provider-notes-crud/provider-notes-crud.component';
 import { ProviderNotesListComponent } from './provider-notes-list/provider-notes-list.component';
 import { ProviderOrdersComponent } from './provider-orders/provider-orders.component';
+import { TrackingProvidersComponent } from './tracking-providers/tracking-providers.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
       {
         path: 'drivers-open-registration',
         component: DriversOpenRegistrationComponent,
+      },
+      {
+        path: 'tracking',
+        component: TrackingProvidersComponent,
       },
     ],
   },

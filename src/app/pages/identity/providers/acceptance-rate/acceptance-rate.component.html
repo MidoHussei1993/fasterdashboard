@@ -1,85 +1,83 @@
 <div class="card">
-    <div class="card-body">
-        <div class="row my-5">
-            <div class="col-12">
-                <h3>
-                    {{ "field.AcceptanceRate" | translate }}
-                </h3>
-            </div>
-        </div>
-      <div class="row mb-5">
-        <div class="col-md-4 col-sm-12">
-          <label for="range" class="d-inline">
-            {{ "field.CreateAtFrom" | translate }}
-          </label>
-          <p-calendar
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="from"
-            [showTime]="true"
-            dateFormat="dd.mm.yy"
-            hourFormat="12"
-          ></p-calendar>
-        </div>
-        <div class="col-md-4 col-sm-12">
-          <label for="range" class="d-inline">
-            {{ "field.EndDate" | translate }}
-          </label>
-          <p-calendar
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="to"
-            [showTime]="true"
-            dateFormat="dd.mm.yy"
-            hourFormat="12"
-          ></p-calendar>
-        </div>
-        <div class="col-md-2 col-sm-12">
-          <button
-            type="button"
-            (click)="getProviderOrderRejectPercentage()"
-            class="btn btn-primary btn-sm btn-block mt-"
-          >
-            {{ "action.search" | translate }}
-          </button>
-        </div>
-        <div class="col-md-12 my-5" *ngIf="percentage">
-          <h3>
-            {{ "field.percentage" | translate }} : {{ percentage }}
-          </h3>
-        </div>
-
-        <div
-          class="card bg-secondary mt-5"
-          *ngIf="providerOrderRejectPercentage.length"
+  <div class="card-body">
+    <div class="row my-5">
+      <div class="col-12">
+        <h3>
+          {{ "field.AcceptanceRate" | translate }}
+        </h3>
+      </div>
+    </div>
+    <div class="row mb-5">
+      <div class="col-md-4 col-sm-12">
+        <label for="range" class="d-inline">
+          {{ "field.CreateAtFrom" | translate }}
+        </label>
+        <p-calendar
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="from"
+          [showTime]="true"
+          dateFormat="dd.mm.yy"
+          hourFormat="12"
+        ></p-calendar>
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <label for="range" class="d-inline">
+          {{ "field.EndDate" | translate }}
+        </label>
+        <p-calendar
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="to"
+          [showTime]="true"
+          dateFormat="dd.mm.yy"
+          hourFormat="12"
+        ></p-calendar>
+      </div>
+      <div class="col-md-2 col-sm-12">
+        <button
+          type="button"
+          (click)="getProviderOrderRejectPercentage()"
+          class="btn btn-primary btn-sm btn-block mt-"
         >
-          <div class="card-body">
-            <div class="col-md-12">
-              <app-echart
-                [width]="'100%'"
-                [type]="'pie'"
-                chartTitle="active Proider"
-                [data]="providerOrderRejectPercentage"
-              >
-              </app-echart>
-            </div>
+          {{ "action.search" | translate }}
+        </button>
+      </div>
+      <div class="col-md-12 my-5" *ngIf="percentage">
+        <h3>{{ "field.percentage" | translate }} : {{ percentage }}</h3>
+      </div>
+
+      <div
+        class="card bg-light mt-5"
+        *ngIf="providerOrderRejectPercentage.length"
+      >
+        <div class="card-body">
+          <div class="col-md-12">
+            <app-echart
+              [width]="'100%'"
+              [type]="'pie'"
+              chartTitle="active Proider"
+              [data]="providerOrderRejectPercentage"
+            >
+            </app-echart>
           </div>
         </div>
+      </div>
 
-        <div
-          class="card bg-secondary mt-5"
-          *ngIf="providerOrderRejectPercentageChart2.length"
-        >
-          <div class="card-body">
-            <div class="col-md-12">
-              <app-echart
-                [width]="'100%'"
-                [type]="'pie'"
-                chartTitle="active Proider"
-                [data]="providerOrderRejectPercentageChart2"
-              >
-              </app-echart>
-            </div>
+      <div
+        class="card bg-light mt-5"
+        *ngIf="providerOrderRejectPercentageChart2.length"
+      >
+        <div class="card-body">
+          <div class="col-md-12">
+            <app-echart
+              [width]="'100%'"
+              [type]="'pie'"
+              chartTitle="active Proider"
+              [data]="providerOrderRejectPercentageChart2"
+            >
+            </app-echart>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

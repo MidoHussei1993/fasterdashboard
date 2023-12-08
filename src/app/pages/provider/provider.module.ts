@@ -15,7 +15,7 @@ import { ProviderOrdersComponent } from './provider-orders/provider-orders.compo
 import { TabViewModule } from 'primeng/tabview';
 import { FilesComponent } from './files/files.component';
 import { DriversOpenRegistrationComponent } from './drivers-open-registration/drivers-open-registration.component';
-
+import { TrackingProvidersComponent } from './tracking-providers/tracking-providers.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { DriversOpenRegistrationComponent } from './drivers-open-registration/dr
     ProviderOrdersComponent,
     FilesComponent,
     DriversOpenRegistrationComponent,
+    TrackingProvidersComponent,
   ],
   imports: [
     CommonModule,
@@ -36,10 +37,8 @@ import { DriversOpenRegistrationComponent } from './drivers-open-registration/dr
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    TabViewModule
+    TabViewModule,
   ],
-  exports: [
-    ProviderNotesListComponent
-  ]
+  exports: [ProviderNotesListComponent, TrackingProvidersComponent],
 })
-export class ProviderModule { }
+export class ProviderModule {}

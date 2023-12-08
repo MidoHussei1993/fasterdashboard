@@ -11,4 +11,5 @@ export class CustomerWallet {
   actionUserPhone: string;
   actionUserId: string;
   moneyTransferImage: string;
+  paymentId: any;
 }

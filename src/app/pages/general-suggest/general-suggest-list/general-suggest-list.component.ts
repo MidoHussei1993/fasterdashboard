@@ -7,11 +7,12 @@ import { FormMode, List, Pagination, UserType } from 'src/app/shared';
 import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { GeneralSuggest, GeneralSuggestFilter } from '../models';
 import { GeneralSuggestService } from '../services';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-general-suggest-list',
   templateUrl: './general-suggest-list.component.html',
-  styleUrls: ['./general-suggest-list.component.scss']
+  styleUrls: ['./general-suggest-list.component.scss'],
 })
 export class GeneralSuggestListComponent implements OnInit {
   generalSuggestlist: GeneralSuggest[] = [];
@@ -21,36 +22,31 @@ export class GeneralSuggestListComponent implements OnInit {
     'generalSuggest.title',
     'field.sentFrom',
     'cobone.status',
- 
   ];
-  properties: string[] = [
-    'id',
-    'createAt',
-    'title',
-    'userTypeName',
-    'status',
-    
-  ];
+  properties: string[] = ['id', 'createAt', 'title', 'userTypeName', 'status'];
   filter: GeneralSuggestFilter;
   busyLoading: boolean = true;
   pagination: Pagination = new Pagination();
   public get formMode(): typeof FormMode {
     return FormMode;
   }
-  userTypeDropDown =  UserType;
+  userTypeDropDown = UserType;
 
-  
-    constructor(
+  constructor(
     private generalSuggestService: GeneralSuggestService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private swalService: SwalModalService,
     private notify: NotifierService,
     private translate: TranslateService,
+    private headerService: HeaderService,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.general_suggest')
+    );
     this.filter = new GeneralSuggestFilter();
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
@@ -117,31 +113,28 @@ export class GeneralSuggestListComponent implements OnInit {
     this.swalService.deleteConfirmation().then((res) => {
       if (res) {
         this.spinner.show();
-        this.generalSuggestService
-          .delete(row.id)
-          .subscribe(
-            (res) => {
-              const deletedIndex = this.generalSuggestlist.findIndex(
-                (item) => item.id == row.id
-              );
-              this.generalSuggestlist.splice(deletedIndex, 1);
-              this.spinner.hide();
-              this.notify.notify(
-                'success',
-                this.translate.instant('global.deleted')
-              );
-            },
-            (err) => {
-              this.spinner.hide();
-              this.notify.notify(
-                'error',
-                this.translate.instant('global.server_error')
-              );
-              console.log(err);
-            }
-          );
+        this.generalSuggestService.delete(row.id).subscribe(
+          (res) => {
+            const deletedIndex = this.generalSuggestlist.findIndex(
+              (item) => item.id == row.id
+            );
+            this.generalSuggestlist.splice(deletedIndex, 1);
+            this.spinner.hide();
+            this.notify.notify(
+              'success',
+              this.translate.instant('global.deleted')
+            );
+          },
+          (err) => {
+            this.spinner.hide();
+            this.notify.notify(
+              'error',
+              this.translate.instant('global.server_error')
+            );
+            console.log(err);
+          }
+        );
       }
     });
   }
-
 }

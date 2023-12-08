@@ -1,36 +1,29 @@
 <div class="card card-flush shadow-sm">
-    <div class="card-header">
-      <h3 class="card-title">
-        <span class="mx-2"> {{ "menu.bulkBranchWallet" | translate }} </span>
-      </h3>
-    </div>
-    <div class="card-body">
-      <a
-        class="btn btn-sm btn-success mt-1 mx-2 shadow"
-        href="https://api.faster.sa:5001/api/ShopBranchWallet/DownloadExcelSample"
-        download
-      >
-        {{ "action.downloadshop" | translate }}
-      </a>
-  
-      <div class="row mt-5">
-        <div class="col-md-6 col-sm-12 mx-auto">
-          <label class="form-label ">
-            {{ "action.downloadshop" | translate }}
-          </label>
-          <input
-            type="file"
-            (change)="file = $event"
-            class="form-control form-control-solid"
-            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-            placeholder="{{ 'action.downloadshop' | translate }}"
-          />
-        </div>
-  
-      
-  
-        <div class="text-center mt-5">
-          <button
+  <div class="card-body">
+    <a
+      class="btn btn-sm btn-success mt-1 mx-2 shadow"
+      href="https://api.faster.sa:5001/api/ShopBranchWallet/DownloadExcelSample"
+      download
+    >
+      {{ "action.downloadshop" | translate }}
+    </a>
+
+    <div class="row mt-5">
+      <div class="col-md-6 col-sm-12 mx-auto">
+        <label class="form-label">
+          {{ "action.downloadshop" | translate }}
+        </label>
+        <input
+          type="file"
+          (change)="file = $event"
+          class="form-control form-control-solid"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          placeholder="{{ 'action.downloadshop' | translate }}"
+        />
+      </div>
+
+      <div class="text-center mt-5">
+        <button
           type="button"
           [disabled]="!file"
           (click)="uploadToWalletDiscountByExcel()"
@@ -38,10 +31,7 @@
         >
           {{ "action.save" | translate }}
         </button>
-        </div>
-  
-    
       </div>
     </div>
   </div>
-  
+</div>

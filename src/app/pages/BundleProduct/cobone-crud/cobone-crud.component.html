@@ -1,78 +1,111 @@
 <section class="w-lg-800px bg-white rounded shadow-sm p-10 p-lg-15 mx-auto">
+  <div class="container">
+    <h1 class="text-center">{{ title }}</h1>
 
-    <div class="container">
-
-        <h1 class="text-center"> {{title}}</h1>
-
-        <div class="row justify-content-center mt-5 ">
-            <div class="col-md-12">
-
-                <!--begin::Form-->
-                <form class="form w-100" #myForm="ngForm" [formGroup]="CoboneForm " novalidate="novalidate" id="kt_login_signin_form" (ngSubmit)="submit()">
-
-                    <!-- begin::Alert error-->
-                    <ng-container *ngIf="hasError">
-                        <div class="mb-lg-15 alert alert-danger">
-                            <div class="alert-text font-weight-bold">
-                                Data Not Valid
-                            </div>
-                        </div>
-                    </ng-container>
-                    <!-- end::Alert error-->
-
-                    <!--begin::Form group-->
-                    <div class="fv-row mb-10">
-                        <label class="form-label fs-6 fw-bolder text-dark">Cobone </label>
-                        <input class="form-control form-control-lg form-control-solid" [ngModelOptions]="{standalone: true}" [(ngModel)]="cobone.coboneCode" type="text" name="coboneCode" autocomplete="off" />
-                    </div>
-
-                    <!--begin::Form group-->
-                    <div class="fv-row mb-10">
-                        <label class="form-label fs-6 fw-bolder text-dark">Expiry Date </label>
-                        <input class="form-control form-control-lg form-control-solid" [ngModelOptions]="{standalone: true}" [(ngModel)]="cobone.expiryDate" type="datetime-local" name="expiryDate" autocomplete="off" />
-                    </div>
-
-
-                    <div class="fv-row mb-10">
-                        <label class="form-label fs-6 fw-bolder text-dark">Amount</label>
-                        <input class="form-control form-control-lg form-control-solid" [ngModelOptions]="{standalone: true}" [(ngModel)]="cobone.amount" type="text" name="amount" autocomplete="off" />
-
-                    </div>
-                    <!--end::Form group-->
-
-                    <!--begin::Action-->
-                    <div class="text-center">
-                        <button type="submit" id="kt_sign_in_submit" (click)="submit()" class="btn btn-lg btn-primary w-100 mb-5 ">
-<ng-container *ngIf="isLoading$ | async">
-<span class="indicator-progress" [style.display]="'block'">
-Please wait...
-<span
-class="spinner-border spinner-border-sm align-middle ms-2"
-></span>
-</span>
-</ng-container>
-<ng-container  (click)="submit()"  *ngIf="!(isLoading$ | async)">
-<span class="indicator-label">Save Cobone </span>
-</ng-container>
-</button>
-
-
-                    </div>
-                    <!--end::Action-->
-                </form>
-                <!--end::Form-->
-
-                <ng-template #formError let-control="control" let-message="message" let-validation="validation">
-                    <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
-                        <div class="fv-plugins-message-container">
-                            <span role="alert">
-{{ message }}
-</span>
-                        </div>
-                    </ng-container>
-                </ng-template>
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-12">
+        <!--begin::Form-->
+        <form
+          class="form w-100"
+          #myForm="ngForm"
+          [formGroup]="CoboneForm"
+          novalidate="novalidate"
+          id="kt_login_signin_form"
+          (ngSubmit)="submit()"
+        >
+          <!-- begin::Alert error-->
+          <ng-container *ngIf="hasError">
+            <div class="mb-lg-15 alert alert-danger">
+              <div class="alert-text font-weight-bold">Data Not Valid</div>
             </div>
-        </div>
-    </div>
+          </ng-container>
+          <!-- end::Alert error-->
 
+          <!--begin::Form group-->
+          <div class="fv-row mb-10">
+            <label class="form-label fs-6 fw-bolder text-dark">Cobone </label>
+            <input
+              class="form-control form-control-lg form-control-solid"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="cobone.coboneCode"
+              type="text"
+              name="coboneCode"
+              autocomplete="off"
+            />
+          </div>
+
+          <!--begin::Form group-->
+          <div class="fv-row mb-10">
+            <label class="form-label fs-6 fw-bolder text-dark"
+              >Expiry Date
+            </label>
+            <input
+              class="form-control form-control-lg form-control-solid"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="cobone.expiryDate"
+              type="datetime-local"
+              name="expiryDate"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="fv-row mb-10">
+            <label class="form-label fs-6 fw-bolder text-dark">Amount</label>
+            <input
+              class="form-control form-control-lg form-control-solid"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="cobone.amount"
+              type="text"
+              name="amount"
+              autocomplete="off"
+            />
+          </div>
+          <!--end::Form group-->
+
+          <!--begin::Action-->
+          <div class="text-center">
+            <button
+              type="submit"
+              id="kt_sign_in_submit"
+              (click)="submit()"
+              class="btn btn-lg btn-primary w-100 mb-5"
+            >
+              <ng-container *ngIf="isLoading$ | async">
+                <span class="indicator-progress" [style.display]="'block'">
+                  Please wait...
+                  <span
+                    class="spinner-border spinner-border-sm align-middle ms-2"
+                  ></span>
+                </span>
+              </ng-container>
+              <ng-container (click)="submit()" *ngIf="!(isLoading$ | async)">
+                <span class="indicator-label">Save Cobone </span>
+              </ng-container>
+            </button>
+          </div>
+          <!--end::Action-->
+        </form>
+        <!--end::Form-->
+
+        <ng-template
+          #formError
+          let-control="control"
+          let-message="message"
+          let-validation="validation"
+        >
+          <ng-container
+            *ngIf="
+              control.hasError(validation) && (control.dirty || control.touched)
+            "
+          >
+            <div class="fv-plugins-message-container">
+              <span role="alert">
+                {{ message }}
+              </span>
+            </div>
+          </ng-container>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </section>

@@ -1,0 +1,21 @@
+<div class="card card-flush shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title  ">{{ "menu.productAvailability" | translate }}</h3>
+    </div>
+    <div class="card-body pt-0">
+      <app-table
+        [list]="list"
+        [titles]="titles"
+        [properties]="properties"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+        [showDelete]="false"
+        [showEdit]="false"
+        [showView]="false"
+        [showPagination]="false"
+        [showSearch]="false"
+      ></app-table>
+    </div>
+  </div>
+  

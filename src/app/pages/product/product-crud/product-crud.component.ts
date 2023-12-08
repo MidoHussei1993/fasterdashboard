@@ -60,6 +60,9 @@ export class ProductCrudComponent implements OnInit {
       categoryId: ['', [Validators.required]],
       isActive: ['', [Validators.required]],
       sort: [0],
+      deliverectCategoryId: [''],
+      deliverectMenuId: [''],
+
     });
 
     this.mode = this.route.snapshot.data.mode;

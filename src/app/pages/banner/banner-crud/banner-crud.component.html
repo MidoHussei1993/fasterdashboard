@@ -186,6 +186,33 @@
           </div>
         </div>
       </div>
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "shopTypeId" | translate }}</label>
+          <select
+            formControlName="shopTypeId"
+            class="form-select form-select-solid"
+          >
+            <!-- <option [ngValue]="null">
+              {{ "field.all" | translate }}
+            </option> -->
+            <option [value]="item.id" *ngFor="let item of shopTypeList">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('shopTypeId').valid &&
+              (form.get('shopTypeId').dirty || form.get('shopTypeId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('shopTypeId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div class="row my-5" *ngIf="mode != 'View'">
         <div class="col-md-4 col-sm-12 mx-auto text-center">

@@ -50,6 +50,7 @@ export class DeliveryOrderDetailsComponent implements OnInit {
   noteForm: FormGroup;
   providerMark: Marker[] = [];
   walletNotes: any[] = [];
+  additionalComponents: any[] = [];
   orderAmountPrice: number = 0;
   isShop: boolean = false;
 
@@ -184,22 +185,25 @@ export class DeliveryOrderDetailsComponent implements OnInit {
           this.spinner.hide();
           this.form.get('newStatusId').patchValue(res.deliveryOrder.statusId);
           this.busyLoading = false;
-          res.carts = res.carts.map((cart) => {
-            console.log(
-              '🚀 ~ file: delivery-order-details.component.ts:193 ~ DeliveryOrderDetailsComponent ~ res.carts=res.carts.map ~ cart.additionalComponents',
-              cart.additionalComponents
-            );
-            let arr = cart.additionalComponents.map(
-              ({ componentName, componentNameAr }) =>
-                this.currentLanguage == 'ar' ? componentNameAr : componentName
-            );
-            console.log(
-              '🚀 ~ file: delivery-order-details.component.ts:193 ~ DeliveryOrderDetailsComponent ~ res.carts=res.carts.map ~ cart.additionalComponents',
-              arr
-            );
+          // res.carts = res.carts.map((cart) => {
+          //     cart.additionalComponents
+          //   let arr = [];
+          //   if (cart.additionalComponents) {
+          //     arr = cart.additionalComponents.map(
+          //       ({ componentName, componentNameAr }) =>
+          //         this.currentLanguage == 'ar' ? componentNameAr : componentName
+          //     );
+          //   }
 
-            return cart;
-          });
+          //   return cart;
+          // });
+          this.additionalComponents = res.carts.map(
+            ({ additionalComponents }) => additionalComponents
+          );
+          console.log(
+            '🚀 ~ file: delivery-order-details.component.ts:203 ~ DeliveryOrderDetailsComponent ~ DeliveryOrderDetailsDataReport ~ this.additionalComponents:',
+            this.additionalComponents
+          );
           this.mainObject = res;
           this.locationList.push({
             lat: res.deliveryOrder.latitude,

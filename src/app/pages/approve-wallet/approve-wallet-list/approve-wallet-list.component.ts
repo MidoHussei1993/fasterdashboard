@@ -9,6 +9,7 @@ import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { ProviderWallet } from '../../provider-wallet/models';
 import { ProviderWalletService } from '../../provider-wallet/services';
 import { ApproveWalletFilter } from '../models';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-approve-wallet-list',
@@ -71,10 +72,14 @@ export class ApproveWalletListComponent implements OnInit {
     private router: Router,
     private swalService: SwalModalService,
     private translate: TranslateService,
+    private headerService: HeaderService,
     private notify: NotifierService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.approveTransaction')
+    );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getcustomerList();
@@ -188,16 +193,13 @@ export class ApproveWalletListComponent implements OnInit {
           }
         });
         break;
-        case 'navigateToCustomer':
+      case 'navigateToCustomer':
         const wallet = this.router.serializeUrl(
-          this.router.createUrlTree(
-            [`/identity/customers`],
-            {
-              queryParams: {
-                customerId: customer.event.customerId,
-              },
-            }
-          )
+          this.router.createUrlTree([`/identity/customers`], {
+            queryParams: {
+              customerId: customer.event.customerId,
+            },
+          })
         );
         window.open(wallet, '_blank');
         break;
@@ -211,7 +213,7 @@ export class ApproveWalletListComponent implements OnInit {
 
   getProviderList() {
     this.spinner.show();
-    console.log(this.providerFilter)
+    console.log(this.providerFilter);
     this.providerWalletService
       .GetWalletsAddjestmentsNotApproved(this.providerFilter)
       .subscribe(
@@ -256,7 +258,10 @@ export class ApproveWalletListComponent implements OnInit {
   }
 
   setProviderPageNumber(pageNumber: number) {
-    console.log("🚀 ~ file: approve-wallet-list.component.ts:259 ~ ApproveWalletListComponent ~ setProviderPageNumber ~ pageNumber", pageNumber)
+    console.log(
+      '🚀 ~ file: approve-wallet-list.component.ts:259 ~ ApproveWalletListComponent ~ setProviderPageNumber ~ pageNumber',
+      pageNumber
+    );
     if (pageNumber == this.providerFilter.PageNumber) return;
     this.providerFilter.PageNumber = pageNumber;
     this.getProviderList();
@@ -317,14 +322,11 @@ export class ApproveWalletListComponent implements OnInit {
         break;
       case 'navigateToProvider':
         const wallet = this.router.serializeUrl(
-          this.router.createUrlTree(
-            [`/identity/providers`],
-            {
-              queryParams: {
-                phoneNumber: customer.event.providerPhoneNumber,
-              },
-            }
-          )
+          this.router.createUrlTree([`/identity/providers`], {
+            queryParams: {
+              phoneNumber: customer.event.providerPhoneNumber,
+            },
+          })
         );
         window.open(wallet, '_blank');
         break;

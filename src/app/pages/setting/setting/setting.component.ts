@@ -5,6 +5,7 @@ import { NotifierService } from 'angular-notifier';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormMode } from 'src/app/shared';
 import { SettingService } from '../services/setting.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-setting',
@@ -23,6 +24,8 @@ export class SettingComponent implements OnInit {
   bonusForm: FormGroup;
   providerReciveOneOrder: FormGroup;
   LimitationOrderValue: FormGroup;
+  DispatchSystem: FormGroup;
+  DispatchSystemDDL: any[] = [];
   busyLoading: boolean = false;
   currentLanguage: string = '';
 
@@ -31,6 +34,7 @@ export class SettingComponent implements OnInit {
     private settingService: SettingService,
     private notifier: NotifierService,
     private translate: TranslateService,
+    private headerService: HeaderService,
     private spinner: NgxSpinnerService
   ) {
     this.pricesForm = this.formBuilder.group({
@@ -39,8 +43,8 @@ export class SettingComponent implements OnInit {
       counterPrice: ['', [Validators.required]],
       transportKMPrice: ['', [Validators.required]],
       transportCounterPrice: ['', [Validators.required]],
-      deliveryRangePrice: ['', [Validators.min(4),Validators.required]],
-      transportRangePrice: ['', [Validators.min(4),Validators.required]],
+      deliveryRangePrice: ['', [Validators.min(4), Validators.required]],
+      transportRangePrice: ['', [Validators.min(4), Validators.required]],
       deliveryCancelFee: ['', [Validators.required]],
       transportCancelFee: ['', [Validators.required]],
     });
@@ -84,13 +88,19 @@ export class SettingComponent implements OnInit {
     });
     this.bonusForm = this.formBuilder.group({
       id: [0],
-      providerRegistrationBonus: ['', [Validators.required]],
-      customerRegistrationBonus: ['', [Validators.required]],
-      // providerOrderBonus: ['', [Validators.required]],
+      providerRegistrationBonus: [0, [Validators.required]],
+      customerRegistrationBonus: [0, [Validators.required]],
+      providerReferrerBonus: [0, [Validators.required]],
+      customerReferrerBonus: [0, [Validators.required]],
     });
     this.providerReciveOneOrder = this.formBuilder.group({
       id: [0],
       isProviderReciveOneOrder: ['', [Validators.required]],
+    });
+
+    this.DispatchSystem = this.formBuilder.group({
+      id: [0],
+      dispatchSystem: ['', [Validators.required]],
     });
 
     this.LimitationOrderValue = this.formBuilder.group({
@@ -101,11 +111,11 @@ export class SettingComponent implements OnInit {
       maximumCreditOrderValue: [''],
     });
 
-
     this.currentLanguage = this.translate.currentLang;
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('app.name'));
     this.GetPrices();
     this.GetSocialMedia();
     this.GetTermsAndPolicies();
@@ -116,6 +126,8 @@ export class SettingComponent implements OnInit {
     this.GetBonusData();
     this.getProviderReciveOneOrder();
     this.getLimitationOrderValue();
+    this.getDispatchSystemDDL();
+    this.getDispatchSystem();
   }
 
   GetPrices() {
@@ -133,17 +145,54 @@ export class SettingComponent implements OnInit {
       }
     );
   }
+
+  getDispatchSystem() {
+    this.busyLoading = true;
+    this.spinner.show();
+    this.settingService.getDispatchSystem().subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.busyLoading = false;
+        this.DispatchSystem.patchValue(res);
+      },
+      (err) => {
+        this.spinner.show();
+        this.busyLoading = false;
+      }
+    );
+  }
+  getDispatchSystemDDL() {
+    this.busyLoading = true;
+    this.spinner.show();
+    this.settingService.getDispatchSystemDDL().subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.busyLoading = false;
+        this.DispatchSystemDDL = res.returnData;
+      },
+      (err) => {
+        this.spinner.show();
+        this.busyLoading = false;
+      }
+    );
+  }
   UpdatePrices() {
-    if(!this.pricesForm.valid) return;
+    if (!this.pricesForm.valid) return;
     let body = this.pricesForm.value;
     this.spinner.show();
-    this.settingService.UpdatePrices(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.settingService.UpdatePrices(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
   // -------------------------------------------------
   GetSocialMedia() {
@@ -162,16 +211,22 @@ export class SettingComponent implements OnInit {
     );
   }
   UpdateSocialMedia() {
-    if(!this.socialMediaForm.valid) return;
+    if (!this.socialMediaForm.valid) return;
     let body = this.socialMediaForm.value;
     this.spinner.show();
-    this.settingService.UpdateSocialMedia(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.settingService.UpdateSocialMedia(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
   // ---------------------------------
   GetTermsAndPolicies() {
@@ -190,16 +245,22 @@ export class SettingComponent implements OnInit {
     );
   }
   UpdateTermsAndPolicies() {
-    if(!this.termPoliciesForm.valid) return;
+    if (!this.termPoliciesForm.valid) return;
     let body = this.termPoliciesForm.value;
     this.spinner.show();
-    this.settingService.UpdateTermsAndPolicies(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.settingService.UpdateTermsAndPolicies(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
   // ---------------------------------------------
   GetVersion() {
@@ -218,16 +279,22 @@ export class SettingComponent implements OnInit {
     );
   }
   UpdateVersion() {
-    if(!this.versionForm.valid) return;
+    if (!this.versionForm.valid) return;
     let body = this.versionForm.value;
     this.spinner.show();
-    this.settingService.UpdateVersion(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.settingService.UpdateVersion(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
   //----------------Radius----------------------------
   GetRadius() {
@@ -246,16 +313,22 @@ export class SettingComponent implements OnInit {
     );
   }
   UpdateRadius() {
-    if(!this.radiusForm.valid) return;
+    if (!this.radiusForm.valid) return;
     let body = this.radiusForm.value;
     this.spinner.show();
-    this.settingService.UpdateRadius(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.settingService.UpdateRadius(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
 
   //----------------Vat----------------------------
@@ -275,16 +348,22 @@ export class SettingComponent implements OnInit {
     );
   }
   UpdateVat() {
-    if(!this.vatForm.valid) return;
+    if (!this.vatForm.valid) return;
     let body = this.vatForm.value;
     this.spinner.show();
-    this.settingService.UpdateVat(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.settingService.UpdateVat(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
   //----------------Vat----------------------------
   GetSchedulingInMinutes() {
@@ -303,19 +382,25 @@ export class SettingComponent implements OnInit {
     );
   }
   UpdateSchedulingInMinutes() {
-    if(!this.schedulingform.valid) return;
+    if (!this.schedulingform.valid) return;
     let body = this.schedulingform.value;
     this.spinner.show();
-    this.settingService.UpdateSchedulingInMinutes(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.settingService.UpdateSchedulingInMinutes(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
-   //----------------Bonus----------------------------
-   GetBonusData() {
+  //----------------Bonus----------------------------
+  GetBonusData() {
     this.busyLoading = true;
     this.spinner.show();
     this.settingService.GetBonusData().subscribe(
@@ -331,16 +416,22 @@ export class SettingComponent implements OnInit {
     );
   }
   UpdateBonusData() {
-    if(!this.bonusForm.valid) return;
+    if (!this.bonusForm.valid) return;
     let body = this.bonusForm.value;
     this.spinner.show();
-    this.settingService.UpdateBonusData(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.settingService.UpdateBonusData(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
   //----------------Bonus----------------------------
   getProviderReciveOneOrder() {
@@ -359,44 +450,77 @@ export class SettingComponent implements OnInit {
     );
   }
   UpdateProviderReciveOneOrder() {
-    if(!this.providerReciveOneOrder.valid) return;
+    if (!this.providerReciveOneOrder.valid) return;
     let body = this.providerReciveOneOrder.value;
     this.spinner.show();
-    this.settingService.UpdateProviderReciveOneOrder(body).subscribe(result => {
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.edited'))
-    },err=>{
-      this.spinner.hide();
-      this.notifier.notify('error',err)
-    })
+    this.settingService.UpdateProviderReciveOneOrder(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
   }
 
-    //----------------Bonus----------------------------
-    getLimitationOrderValue() {
-      this.busyLoading = true;
-      this.spinner.show();
-      this.settingService.getLimitationOrderValue().subscribe(
-        (res) => {
-          this.spinner.hide();
-          this.busyLoading = false;
-          this.LimitationOrderValue.patchValue(res);
-        },
-        (err) => {
-          this.spinner.show();
-          this.busyLoading = false;
-        }
-      );
-    }
-    updateLimitationOrderValue() {
-      if(!this.LimitationOrderValue.valid) return;
-      let body = this.LimitationOrderValue.value;
-      this.spinner.show();
-      this.settingService.updateLimitationOrderValue(body).subscribe(result => {
+  //----------------Bonus----------------------------
+  getLimitationOrderValue() {
+    this.busyLoading = true;
+    this.spinner.show();
+    this.settingService.getLimitationOrderValue().subscribe(
+      (res) => {
         this.spinner.hide();
-        this.notifier.notify('success',this.translate.instant('global.edited'))
-      },err=>{
+        this.busyLoading = false;
+        this.LimitationOrderValue.patchValue(res);
+      },
+      (err) => {
+        this.spinner.show();
+        this.busyLoading = false;
+      }
+    );
+  }
+  updateLimitationOrderValue() {
+    if (!this.LimitationOrderValue.valid) return;
+    let body = this.LimitationOrderValue.value;
+    this.spinner.show();
+    this.settingService.updateLimitationOrderValue(body).subscribe(
+      (result) => {
         this.spinner.hide();
-        this.notifier.notify('error',err)
-      })
-    }
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
+  }
+
+  //----------------Bonus----------------------------
+  UpdateDispatchSystem() {
+    if (!this.DispatchSystem.valid) return;
+    let body = this.DispatchSystem.value;
+    body.dispatchSystem = +body.dispatchSystem;
+    this.spinner.show();
+    this.settingService.UpdateDispatchSystem(body).subscribe(
+      (result) => {
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.edited')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        this.notifier.notify('error', err);
+      }
+    );
+  }
 }

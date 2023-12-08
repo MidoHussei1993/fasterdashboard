@@ -8,6 +8,7 @@ import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { Faqs } from '../../faqs/models';
 import { FasterWalletFilter } from '../models/faster-wallet.filter';
 import { FasterWalletService } from '../services/faster-wallet.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-faster-wallet-list',
@@ -51,10 +52,14 @@ export class FasterWalletListComponent implements OnInit {
     private router: Router,
     private swalService: SwalModalService,
     private translate: TranslateService,
+    private headerService: HeaderService,
     private notify: NotifierService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.FasterWallet')
+    );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getmainList();
@@ -76,14 +81,15 @@ export class FasterWalletListComponent implements OnInit {
     this.getmainList();
   }
 
-  getFasterWalletSum(){
+  getFasterWalletSum() {
     this.fasterWalletService.GetFasterWalletSum().subscribe(
       (res) => {
         this.total = res;
       },
       (err) => {
         console.log(err);
-      })
+      }
+    );
   }
 
   getmainList() {

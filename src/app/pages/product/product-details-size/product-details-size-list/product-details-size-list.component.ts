@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Pagination, FormMode } from 'src/app/shared';
@@ -13,7 +13,7 @@ import { ProductDetailsSizeService } from '../services';
   styleUrls: ['./product-details-size-list.component.scss']
 })
 export class ProductDetailsSizeListComponent implements OnInit {
-
+  @Input() productId: string
   productDetailsSizeList: ProductDetailsSizeList[] = [];
   titles: string[] = [
     'field.itemSizeName',
@@ -45,7 +45,7 @@ export class ProductDetailsSizeListComponent implements OnInit {
   getProductDetailsSizeList(){
     this.busyLoading = true;
     this.spinner.show();
-    this.productDetailsSizeService.get(this.activatedRoute.snapshot.params.detailsId).subscribe((res:any) =>{
+    this.productDetailsSizeService.get(this.activatedRoute.snapshot.params.detailsId ?this.activatedRoute.snapshot.params.detailsId:this.productId).subscribe((res:any) =>{
       this.spinner.hide();
       this.busyLoading = false;
       this.productDetailsSizeList = res;
@@ -73,14 +73,14 @@ export class ProductDetailsSizeListComponent implements OnInit {
 
 
   navigateToEdit(productDetailsSizeList:ProductDetailsSizeList){
-    this.router.navigate([`product/size-details/${this.activatedRoute.snapshot.params.detailsId}/edit/${productDetailsSizeList.id}`]);
+    this.router.navigate([`product/size-details/${this.activatedRoute.snapshot.params.detailsId?this.activatedRoute.snapshot.params.detailsId:this.productId}/edit/${productDetailsSizeList.id}`]);
   }
 
   navigateToView(productDetailsSizeList:ProductDetailsSizeList){
-    this.router.navigate([`product/size-details/${this.activatedRoute.snapshot.params.detailsId}/view/${productDetailsSizeList.id}`]);
+    this.router.navigate([`product/size-details/${this.activatedRoute.snapshot.params.detailsId?this.activatedRoute.snapshot.params.detailsId:this.productId}/view/${productDetailsSizeList.id}`]);
   }
 
   navigateToCreate(){
-    this.router.navigate([`product/size-details/${this.activatedRoute.snapshot.params.detailsId}/create`]);
+    this.router.navigate([`product/size-details/${this.activatedRoute.snapshot.params.detailsId?this.activatedRoute.snapshot.params.detailsId:this.productId}/create`]);
   }
 }

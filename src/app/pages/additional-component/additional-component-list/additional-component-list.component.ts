@@ -62,9 +62,9 @@ ngOnInit(): void {
 
 navigateTO(item: { event: any; type: string }) {
   switch (item.type) {
-    case 'productDetails':
+    case 'subAdditionalCopnentTilte':
       const create = this.router.serializeUrl(
-        this.router.createUrlTree([`/product/${item.event.productDetailsId}/details/list`])
+        this.router.createUrlTree([`/sub-additional-component-title/${item.event.id}`])
       );
       window.open(create, '_blank');
       break;

@@ -1,13 +1,11 @@
+.fa-arrow-circle-left {
+  color: #fff;
+  text-shadow: 0 0 5px #25d7fb, 0 0 10px #25d7fb, 0 0 15px #25d7fb,
+    0 0 20px #25d7fb, 0 0 25px #25d7fb, 0 0 30px #25d7fb;
+}
 
-
- .fa-arrow-circle-left{
-    color:#fff;
-    text-shadow:
-      0 0 5px #25d7fb,
-      0 0 10px #25d7fb,
-      0 0 15px #25d7fb,
-      0 0 20px #25d7fb,
-      0 0 25px #25d7fb,
-      0 0 30px #25d7fb
-      ;
- }
+h1 {
+  text-shadow: 0px 7px 6px rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+  color: var(--green-500);
+}

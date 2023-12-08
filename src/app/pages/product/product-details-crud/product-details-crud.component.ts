@@ -42,7 +42,11 @@ export class ProductDetailsCrudComponent implements OnInit {
       price: ['', [ Validators.required]],     
       lastPrice: ['', [ Validators.required]],     
       availableFromHour: [''],     
-      availableToHour: [''],     
+      availableToHour: [''],  
+      snoozeStart: [''],     
+      snoozeEnd: [''], 
+      deliverectProductId: [''],     
+      deliverectPLU: [''],     
     });
 
     this.mode = this.route.snapshot.data.mode;
@@ -66,7 +70,10 @@ export class ProductDetailsCrudComponent implements OnInit {
       this.spinner.hide();
       this.busyLoading = false;
       this.productComponent = res.productComponants;
+      res.snoozeStart = new Date(res.snoozeStart);
+      res.snoozeEnd = new Date(res.snoozeEnd);
       this.form.patchValue(res)
+
     },err => {
     this.spinner.show();
       this.busyLoading = false;

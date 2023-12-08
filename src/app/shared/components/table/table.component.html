@@ -1,67 +1,45 @@
-<form [formGroup]="form">
-  <div class="row mb-1 mt-2 d-flex justify-content-between">
-    <div class="col-md-3 col-sm-12">
-      <div
-        class="alert alert-primary mt-4 text-center"
-        role="alert"
-        *ngIf="pagination.totalItemCount"
-      >
-        <strong>
-          {{ "field.total" | translate }} : {{ pagination.totalItemCount }}
-        </strong>
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-12 d-flex justify-content-end my-4">
-      <button
-        type="button"
-        class="btn btn-outline btn-outline-dashed btn-outline-info btn-active-light-info mt-1"
-        *ngIf="isdownloadAll"
-        (click)="downloadAllData()"
-      >
-        <i class="fas fa-download"></i>
-        {{ "action.downloadAll" | translate }}
-      </button>
-      <!-- <button type="button" class="btn btn-dark btn-block mx-2 btn-sm mt-1" *ngIf="list.length"
-        (click)="downloadAsExcelFile()">
-         <i class="fas fa-download"></i>
-         {{'action.download'|translate }}
-       </button> -->
-      <button
-        *ngIf="showSearch"
-        type="button"
-        class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary mx-2"
-        (click)="searchValue()"
-      >
-        <i class="fas fa-search text-primary"></i>
-        {{ "action.search" | translate }}
-      </button>
-      <button
-        *ngIf="showSearch"
-        type="button"
-        class="btn btn-outline btn-outline-dashed btn-outline-danger btn-active-light-danger"
-        (click)="reset()"
-      >
-        <i class="far fa-trash-alt text-danger"></i>
-        {{ "action.reset" | translate }}
-      </button>
-      <button
-      type="button"
+<!-- <button type="button" class="btn btn-dark btn-block mx-2 btn-sm mt-1" *ngIf="list.length"
+  (click)="downloadAsExcelFile()">
+   <i class="fas fa-download"></i>
+   {{'action.download'|translate }}
+ </button> -->
+
+<div class="row mt-2">
+  <div class="mb-2 d-flex justify-content-end">
+    <p-button
       title="{{ 'field.refresh' | translate }}"
-      class="mx-2 btn text-dark"
       *ngIf="isReload"
       (click)="Reload()"
-    >
-    <i class="fas fa-sync-alt"></i>
-    </button>
-    </div>
+      icon="pi pi-refresh"
+      styleClass="p-button-rounded p-button-primary  p-button-outlined mx-1"
+    ></p-button>
+    <p-button
+      title="{{ 'action.downloadAll' | translate }}"
+      *ngIf="isdownloadAll"
+      (click)="downloadAllData()"
+      icon="pi pi-save"
+      styleClass="p-button-rounded p-button-secondary  p-button-outlined mx-1"
+    ></p-button>
+    <p-button
+      title="{{ 'action.search' | translate }}"
+      *ngIf="showSearch"
+      (click)="searchValue()"
+      icon="pi pi-search"
+      styleClass="p-button-rounded p-button-success  p-button-outlined mx-1"
+    ></p-button>
+    <p-button
+      title="{{ 'action.reset' | translate }}"
+      *ngIf="showSearch"
+      (click)="reset()"
+      icon="pi pi-trash"
+      styleClass="p-button-rounded p-button-danger  p-button-outlined mx-1"
+    ></p-button>
   </div>
-</form>
-<div class="row">
-  <div class="table-responsive">
+  <div class="">
     <table
       class="table table-hover table-rounded table-striped border gy-7 gs-7"
     >
-      <thead>
+      <thead class="text-dark" style="background: #d0e1fd">
         <tr class="">
           <th class="text-cetner" *ngIf="pagination.pageNumber">#</th>
           <th *ngFor="let title of titles" class="text-center">
@@ -73,7 +51,12 @@
           <th *ngIf="showActivation" class="text-center">
             {{ "field.activation" | translate }}
           </th>
-          <th *ngIf="(showDelete || showEdit || showView || addActions) && hideActions" class="text-center">
+          <th
+            *ngIf="
+              (showDelete || showEdit || showView || addActions) && hideActions
+            "
+            class="text-center"
+          >
             {{ "action.actions" | translate }}
           </th>
         </tr>
@@ -85,9 +68,12 @@
           [attr.data-change-color]="item.changeColour ? true : false"
           [attr.data-partner]="item.isPartner == true ? true : ''"
           [attr.data-not-partner]="item.isPartner == false ? false : ''"
+          [pTooltip]="getObjectData(item)"
+          tooltipPosition="left"
+          [escape]="false"
         >
           <td
-            class="text-center font-weight-bolder"
+            class="text-center font-weight-bolder px-2"
             *ngIf="pagination.pageNumber"
           >
             <h5>
@@ -96,10 +82,19 @@
               </strong>
             </h5>
           </td>
-          <td *ngFor="let prop of properties" class="text-center">
+          <td
+            [attr.data-prop]="prop"
+            [attr.data-value]="item[prop]"
+            *ngFor="let prop of properties"
+            class="text-center"
+          >
             <img
+              [data-prop]="item[prop]"
               [src]="item[prop]"
-              *ngIf="prop == 'moneyTransferImage' && item[prop] != null"
+              *ngIf="
+                (prop == 'moneyTransferImage' || prop == 'backgroundImage') &&
+                item[prop] != null
+              "
               width="75"
               height="75"
               (click)="viewImage(item[prop])"
@@ -108,21 +103,27 @@
             <span
               *ngIf="
                 prop == 'createAt' ||
+                prop == 'createdAt' ||
                 prop == 'bookingDate' ||
                 prop == 'startAt' ||
                 prop == 'lastLogin' ||
+                prop == 'expiryDate' ||
                 prop == 'endAt'
               "
             >
-              {{ item[prop] | date: "MMM d, y - h:mm a" }}
+              {{ item[prop] | date : "MMM d, y - h:mm a" }}
             </span>
             <span
+              backgroundImage
               *ngIf="
                 prop != 'createAt' &&
+                prop != 'createdAt' &&
                 prop != 'bookingDate' &&
                 prop != 'startAt' &&
                 prop != 'moneyTransferImage' &&
+                prop != 'backgroundImage' &&
                 prop != 'lastLogin' &&
+                prop != 'expiryDate' &&
                 prop != 'endAt'
               "
             >
@@ -135,8 +136,9 @@
             >
               <input
                 class="form-check-input mx-auto"
+                [disabled]="disabledCheckBox"
                 type="checkbox"
-                :value="true"
+                [value]="true"
                 [(ngModel)]="item[AnotherCheckPropName]"
                 (ngModelChange)="changeAnotherCheckCol(i)"
               />
@@ -147,6 +149,7 @@
               class="form-check form-check-sm form-check-custom form-check-solid"
             >
               <input
+                [disabled]="disabledCheckBox"
                 class="form-check-input mx-auto"
                 type="checkbox"
                 :value="true"
@@ -156,8 +159,10 @@
             </label>
           </td>
           <td
-            class="text-center d-flex justify-content-center"
-            *ngIf="(showDelete || showEdit || showView || addActions) && hideActions"
+            class="text-center d-flex justify-content-center align-items-center"
+            *ngIf="
+              (showDelete || showEdit || showView || addActions) && hideActions
+            "
           >
             <i
               title="{{ 'View' | translate }}"
@@ -177,14 +182,19 @@
               *ngIf="showDelete"
               (click)="Delete(item)"
             ></i>
-            <span *ngIf="addActions">
-              <i
-                title="{{ action.title | translate }}"
-                [class]="action.icon"
-                class="las customAction"
-                *ngFor="let action of actionList"
-                (click)="EmitAaction(item, action)"
-              ></i>
+            <span *ngIf="addActions" style="position: relative">
+              <p-button
+                title="{{ 'field.refresh' | translate }}"
+                (click)="menu.toggle($event)"
+                icon="pi pi-bars"
+                styleClass="p-button-rounded p-button-info p-button-text"
+              ></p-button>
+              <p-menu
+                #menu
+                [model]="actionList"
+                [popup]="true"
+                (click)="EmitAaction($event, item)"
+              ></p-menu>
             </span>
           </td>
         </tr>
@@ -192,8 +202,8 @@
     </table>
   </div>
 </div>
-<div class="row" *ngIf="showPagination">
-  <div class="col-2 text-right">
+<div class="d-flex justify-content-between" *ngIf="showPagination">
+  <div class="p-2 text-right">
     <select
       [disabled]="busyLoading"
       class="form-select form-select-solid"
@@ -207,7 +217,7 @@
 
     <!--end::Page Number-->
   </div>
-  <div class="col-10">
+  <div class="p-2">
     <ul class="pagination">
       <li
         class="page-item previous disabled"
@@ -244,6 +254,14 @@
         </a>
       </li>
     </ul>
+  </div>
+  <div class="p-2 mx-3">
+    <p *ngIf="pagination.pageSize" class="font-weight-bolder">
+      <strong>
+        {{ pagination.pageSize * pagination.pageNumber }} -
+        {{ pagination.totalItemCount }}
+      </strong>
+    </p>
   </div>
 </div>
 <img-viewer #imgViewer></img-viewer>

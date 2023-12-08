@@ -15,6 +15,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { IActionLTable, Marker } from 'src/app/shared/components';
 import { ShopBranchWalletService } from '../../wallet/services/shop-branch-wallet.service';
 import { isShop } from 'src/app/util/access-storge';
+import { ShopBranchWorkTimeService } from '../../shop-branch-work-time/services';
+import { ExcelService } from 'src/app/shared/services/excel.service';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-shop-branch-list',
@@ -23,36 +26,27 @@ import { isShop } from 'src/app/util/access-storge';
 })
 export class ShopBranchListComponent implements OnInit {
   @ViewChild('addToWallet', { static: false }) addToWallet;
+  @ViewChild('updateAllShopBranchesWorkTimeModal', { static: false })
+  updateAllShopBranchesWorkTimeModal;
 
   shoplist: ShopBranch[] = [];
   titles: string[] = [
     'shop.shop_name',
     'field.descriptionLocation',
-    // 'shop_branch.description_Location',
-    // 'shop_branch.description_Location',
-    // 'global.type',
-    // 'global.type',
     'global.full_name',
-    // 'global.user_name',
     'global.phone_number',
     'field.email',
-    // 'global.user_type',
   ];
   properties: string[] = [
     'shopName',
     'descriptionLocation',
-    // 'descriptionLocation',
-    // 'descriptionLocationAr',
-    // 'type',
-    // 'typeAr',
     'fullName',
-    // 'userName',
     'phoneNumber',
     'email',
-    // 'userType',
   ];
   @ViewChild('resetPass', { static: false }) resetPass;
   form: FormGroup;
+  updateAllShopBranchesWorkTimeForm: FormGroup;
   rowData: ShopBranch = new ShopBranch();
 
   filter: ShopBranchFilter;
@@ -74,6 +68,15 @@ export class ShopBranchListComponent implements OnInit {
   currentShopId: number;
 
   currentWalletAmount: number;
+  days = [
+    { name: 'Sunday', value: 1 },
+    { name: 'Saturday', value: 2 },
+    { name: 'Monday', value: 3 },
+    { name: 'Tuesday', value: 4 },
+    { name: 'Wednesday', value: 5 },
+    { name: 'Thursday', value: 6 },
+    { name: 'Friday', value: 7 },
+  ];
 
   constructor(
     private shopBranchService: ShopBranchService,
@@ -85,6 +88,9 @@ export class ShopBranchListComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private identityService: IdentityService,
+    private shopBranchWorkTimeService: ShopBranchWorkTimeService,
+    private excelService: ExcelService,
+    private headerService: HeaderService,
     private shopBranchWalletService: ShopBranchWalletService
   ) {
     this.currentLanguage = this.translate.currentLang;
@@ -92,9 +98,20 @@ export class ShopBranchListComponent implements OnInit {
       userId: ['', Validators.required],
       password: ['', Validators.required],
     });
+    this.updateAllShopBranchesWorkTimeForm = this.formBuilder.group({
+      day: ['', [Validators.required]],
+      firstShiftFromHour: ['', [Validators.required]],
+      firstShiftToHour: ['', [Validators.required]],
+      secondShiftFromHour: [''],
+      secondShiftToHour: [''],
+    });
   }
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(this.translate.instant('shop_branch.name'));
+    if (this.activatedRoute.snapshot.queryParams.shopId) {
+      this.currentShopId = this.activatedRoute.snapshot.queryParams.shopId;
+    }
     let roles: any[] = JSON.parse(localStorage.getItem('roles'));
     this.showShopOrderReport =
       roles.includes('administrator') ||
@@ -226,6 +243,21 @@ export class ShopBranchListComponent implements OnInit {
         }
       );
   }
+  changeShopBranchBusy(index: number) {
+    console.log(index);
+    this.spinner.show();
+    this.shopBranchService
+      .BusyChange(String(this.shoplist[index].id))
+      .subscribe(
+        (res) => {
+          this.spinner.hide();
+          // this.getShopBranchList(this.filter);
+        },
+        (err) => {
+          this.spinner.hide();
+        }
+      );
+  }
   setPageSize(pageSize) {
     if (pageSize == this.filter.PageSize) return;
     this.filter.PageSize = pageSize;
@@ -310,6 +342,38 @@ export class ShopBranchListComponent implements OnInit {
       backdropClass: 'light-blue-backdrop',
     });
   }
+  openUpdateAllShopBranchesWorkTimeModal() {
+    this.modalService.open(this.updateAllShopBranchesWorkTimeModal, {
+      backdropClass: 'bg-light',
+      size: 'xl',
+    });
+  }
+
+  updateAllShopBranchesWorkTime() {
+    this.updateAllShopBranchesWorkTimeForm.markAllAsTouched();
+    if (!this.updateAllShopBranchesWorkTimeForm.valid) return;
+
+    let body = {
+      shopId: this.activatedRoute.snapshot.queryParams.shopId,
+      workTimes: [{ ...this.updateAllShopBranchesWorkTimeForm.value }],
+    };
+    this.shopBranchWorkTimeService.updateAllShopBranchsWorkTime(body).subscribe(
+      (result) => {
+        this.form.reset();
+        // this.form.get('id').patchValue(0);
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.created')
+        );
+        this.spinner.hide();
+        this.modalService.dismissAll();
+      },
+      (err) => {
+        this.notifier.notify('error', err);
+        this.spinner.hide();
+      }
+    );
+  }
   resetPassword() {
     this.form.markAsTouched();
     this.form.get('userId').patchValue(this.rowData.applicationUserId);
@@ -324,6 +388,22 @@ export class ShopBranchListComponent implements OnInit {
       (err) => {
         this.notifier.notify('error', err);
         this.spinner.hide();
+      }
+    );
+  }
+  downloadAll() {
+    let downloadFilter: any = this.filter;
+    downloadFilter.PageNumber = 1;
+    downloadFilter.PageSize = this.pagination.totalItemCount;
+    this.spinner.show();
+    this.shopBranchService.get(this.filter).subscribe(
+      (res: any) => {
+        this.spinner.hide();
+        this.excelService.exportAsExcelFile(res.data, 'data_file');
+      },
+      (err) => {
+        this.spinner.hide();
+        console.log(err);
       }
     );
   }

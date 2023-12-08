@@ -1,21 +1,29 @@
 <div class="card card-flush shadow-sm">
-    <div class="card-header">
-        <h3 class="card-title"> {{'reports.Companyprofits'|translate }} </h3>
-        <div class="card-toolbar">
-
-            <button printTitle="{{'reports.Companyprofits'|translate }}  " [useExistingCss]="true" printSectionId="print-section" type="button" class="btn btn-primary btn-print" ngxPrint><i class="fas fa-print mx-2"></i>{{'reports.print'|translate }}  </button>
-
-
-        </div>
+  <div class="card-header">
+    <h3 class="card-title">{{ "reports.Companyprofits" | translate }}</h3>
+    <div class="card-toolbar">
+      <!-- <button printTitle="{{'reports.Companyprofits'|translate }}  " [useExistingCss]="true" printSectionId="print-section" type="button" class="btn btn-primary btn-print" ngxPrint><i class="fas fa-print mx-2"></i>{{'reports.print'|translate }}  </button> -->
     </div>
-    <div class="card-body " id="print-section" *ngIf="isubscriptionsProfitList.length>0">
-
-        <div class="table-responsive">
-            <app-table [list]="isubscriptionsProfitList" [titles]="titles" [properties]="properties" [busyLoading]="busyLoading" [pagination]="pagination" (activetedPageSize)="setPageSize($event)" (activetedPageNumber)="setPageNumber($event)" [showView]="false" [showEdit]="false"
-                [showDelete]="false"></app-table>
-        </div>
-        <h2 class="p-5"> Total : {{CoboneReport.total}}</h2>
-
+  </div>
+  <div
+    class="card-body"
+    id="print-section"
+    *ngIf="isubscriptionsProfitList.length > 0"
+  >
+    <div class="table-responsive">
+      <app-table
+        [list]="isubscriptionsProfitList"
+        [titles]="titles"
+        [properties]="properties"
+        [busyLoading]="busyLoading"
+        [pagination]="pagination"
+        (activetedPageSize)="setPageSize($event)"
+        (activetedPageNumber)="setPageNumber($event)"
+        [showView]="false"
+        [showEdit]="false"
+        [showDelete]="false"
+      ></app-table>
     </div>
-
+    <h2 class="p-5">Total : {{ CoboneReport.total }}</h2>
+  </div>
 </div>

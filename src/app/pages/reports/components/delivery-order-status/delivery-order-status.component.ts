@@ -25,6 +25,7 @@ export class DeliveryOrderStatusComponent implements OnInit {
     'field.ShopName',
     'field.ShopNameAr',
     'field.coponeDiscount',
+    'shopBrancheDescriptionLocation',
   ];
   properties: string[] = [
     'createAt',
@@ -35,11 +36,15 @@ export class DeliveryOrderStatusComponent implements OnInit {
     'shopName',
     'shopNameAr',
     'coponeDiscount',
+    'shopBrancheDescriptionLocation',
   ];
   busyLoading: boolean = true;
   filter: DeliveryOrderFilter = new DeliveryOrderFilter();
   list: any[] = [];
   pagination: Pagination = new Pagination();
+
+  timeLeft: number = 60;
+  interval;
 
   constructor(
     private reportsService: ReportsService,
@@ -56,6 +61,18 @@ export class DeliveryOrderStatusComponent implements OnInit {
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
     this.getDeliveryOrdersReport();
+    this.startTimer();
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        this.timeLeft = 60;
+        this.getDeliveryOrdersReport();
+      }
+    }, 1000);
   }
 
   searchValue(): void {
@@ -110,7 +127,7 @@ export class DeliveryOrderStatusComponent implements OnInit {
       }
     );
   }
-  navigateToOrderDetails(event: OrderReport){
+  navigateToOrderDetails(event: OrderReport) {
     const viewOrder = this.router.serializeUrl(
       this.router.createUrlTree([`report/delivery-order/edit/${event.id}`])
     );
@@ -163,12 +180,14 @@ export class DeliveryOrderStatusComponent implements OnInit {
             );
           },
           (err) => {
-            console.log("🚀 ~ file: delivery-order-status.component.ts:158 ~ DeliveryOrderStatusComponent ~ this.swalService.Confirmation ~ err", err)
+            console.log(
+              '🚀 ~ file: delivery-order-status.component.ts:158 ~ DeliveryOrderStatusComponent ~ this.swalService.Confirmation ~ err',
+              err
+            );
             this.spinner.hide();
           }
         );
       }
     });
   }
-
 }

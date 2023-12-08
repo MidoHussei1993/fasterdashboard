@@ -10,7 +10,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BundleProductComponent } from './bundle-product/bundle-product.component';
 import { ProductDetailsListComponent } from './product-details-list/product-details-list.component';
-
+import { ProductAvailabilityComponent } from './product-availability/product-availability.component';
+import {CalendarModule} from 'primeng/calendar';
+import { QuickAccessComponent } from './quick-access/quick-access.component';
+import { PanelModule } from 'primeng/panel';
+import { ProductDetailsSizeModule } from './product-details-size/product-details-size.module';
+import { ProductComponeModule } from './product-compone/product-compone.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +23,9 @@ import { ProductDetailsListComponent } from './product-details-list/product-deta
     ProductCrudComponent,
     ProductDetailsCrudComponent,
     BundleProductComponent,
-    ProductDetailsListComponent
+    ProductDetailsListComponent,
+    ProductAvailabilityComponent,
+    QuickAccessComponent
   ],
   imports: [
     CommonModule,
@@ -27,6 +34,13 @@ import { ProductDetailsListComponent } from './product-details-list/product-deta
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    CalendarModule,
+    PanelModule,
+    ProductDetailsSizeModule,
+    ProductComponeModule
+  ],
+  exports: [
+    ProductDetailsListComponent
   ]
 })
 export class ProductModule { }

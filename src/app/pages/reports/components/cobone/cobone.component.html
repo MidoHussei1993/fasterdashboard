@@ -1,15 +1,9 @@
-<div class="card card-flush shadow-sm">
-    <div class="card-header">
-        <h3 class="card-title">{{'reports.CoboneReport'|translate }}</h3>
-        <!-- <div class="card-toolbar">
+<div class="card shadow-sm">
+  <!-- <div class="card-toolbar">
             <button printTitle="Cobone Reports" [useExistingCss]="true" printSectionId="print-section" type="button" class="btn btn-primary btn-print" ngxPrint><i class="fas fa-print mx-2"></i>{{'reports.print'|translate }}</button>
         </div> -->
-    </div>
-    <div
-      class="card-body"
-    >
-      
-      <!-- <div class="card bg-secondary">
+  <div class="card-body">
+    <!-- <div class="card bg-light">
         <div class="card-body">
           <app-filter [filter]="filter"></app-filter>
           <div class="col-md-4 col-sm-12 mt-2">
@@ -28,26 +22,29 @@
           </div>
         </div>
       </div> -->
-  
-      <app-table
+
+    <app-table
       id="print-section"
-        [list]="CoboneReport"
-        [titles]="titles"
-        [properties]="properties"
-        [busyLoading]="busyLoading"
-        [pagination]="pagination"
-        (activetedPageSize)="setPageSize($event)"
-        (activetedPageNumber)="setPageNumber($event)"
-        [showDelete]="false"
-        [showSearch]="false"
-        [showEdit]="false"
-        [showView]="false"
-        [addActions]="true"
-        [actionList]="[
-          { title: 'reports.CoponeDeliveryDetailsReport', icon: 'fa-truck', type: 'product' }
-          ]"
-          (aciton)="navigateTO($event)"
-      ></app-table>
-    </div>
+      [list]="CoboneReport"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      [showDelete]="false"
+      [showSearch]="false"
+      [showEdit]="false"
+      [showView]="false"
+      [addActions]="true"
+      [actionList]="[
+        {
+          title: 'reports.CoponeDeliveryDetailsReport',
+          icon: 'fa-truck',
+          type: 'product'
+        }
+      ]"
+      (aciton)="navigateTO($event)"
+    ></app-table>
   </div>
-  
+</div>

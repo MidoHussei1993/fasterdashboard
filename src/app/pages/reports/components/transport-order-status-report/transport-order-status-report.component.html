@@ -1,16 +1,19 @@
 <div class="card card-flush shadow-sm">
-    <div class="card-header">
-        <h3 class="card-title">Transport Order Status Details Report</h3>
-        <div class="card-toolbar">
-
-            <button printTitle="Cobone Reports" [useExistingCss]="true" printSectionId="print-section" type="button" class="btn btn-primary btn-print" ngxPrint><i class="fas fa-print mx-2"></i>طباعة</button>
-
-
-        </div>
+  <div class="card-header">
+    <h3 class="card-title">Transport Order Status Details Report</h3>
+    <div class="card-toolbar">
+      <!-- <button printTitle="Cobone Reports" [useExistingCss]="true" printSectionId="print-section" type="button" class="btn btn-primary btn-print" ngxPrint><i class="fas fa-print mx-2"></i>طباعة</button> -->
     </div>
-    <div class="card-body " id="print-section" *ngIf="CoboneReport.length>0">
-
-        <app-table [list]="CoboneReport" [titles]="titles" [properties]="properties" [busyLoading]="busyLoading" [pagination]="pagination" (activetedPageSize)="setPageSize($event)" (activetedPageNumber)="setPageNumber($event)"></app-table>
-    </div>
-
+  </div>
+  <div class="card-body" id="print-section" *ngIf="CoboneReport.length > 0">
+    <app-table
+      [list]="CoboneReport"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+    ></app-table>
+  </div>
 </div>

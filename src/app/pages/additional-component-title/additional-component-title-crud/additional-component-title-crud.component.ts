@@ -46,6 +46,10 @@ export class AdditionalComponentTitleCrudComponent
       productDetailsId: [null, [Validators.required]],
       isActive: ['', [Validators.required]],
       isRequired: ['', [Validators.required]],
+      minOfSelect: [0],
+      deliverectPLU: [''],
+      deliverectModifierGroupId: [''],
+
     });
     this.mode = this.route.snapshot.data.mode;
     this.currentLanguage = this.translate.currentLang;

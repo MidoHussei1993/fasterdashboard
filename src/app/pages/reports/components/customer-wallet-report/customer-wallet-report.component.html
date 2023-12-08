@@ -1,156 +1,159 @@
 <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <h3 class="card-title my-3">{{ "menu.customerWalletReport" | translate }}</h3>
-     
-        <div class="card bg-secondary">
-            <div class="card-body">
-              <app-filter [filter]="filter"></app-filter>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 col-sm-12">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-sm mt-1"
-                  (click)="searchValue()"
-                >
-                  <i class="fas fa-search"></i>
-                  {{ "action.search" | translate }}
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-warning btn-sm mt-1 mx-2"
-                  (click)="resetSearch()"
-                >
-                  <i class="far fa-trash-alt"></i>
-                  {{ "action.reset" | translate }}
-                </button>
-                <button type="button" class="btn btn-dark btn-block mx-2 btn-sm mt-1" 
-                (click)="downloadAll()">
-                 <i class="fas fa-download"></i>
-                 {{'action.download'|translate }}
-               </button>
-              </div>
-          </div>
-        <div class="table-responsive mt-3">
-          <table
-            class="table table-hover table-rounded table-striped border gy-7 gs-7"
-          >
-            <thead>
-              <tr class="">
-                <th class="text-center">
-                  {{ "field.customerId" | translate }}
-                </th>
-                <th class="text-center">
-                    {{ "field.customerName" | translate }}
-                  </th>
-                  <th class="text-center">
-                    {{ "field.customerWalletSum" | translate }}
-                  </th>
-                <th class="text-center" colspan="2">
-               
-                  <div class="row">
-                      <div class="col-8">{{ "field.note" | translate }}</div>
-                      <div class="col-2">{{ "field.typeName" | translate }}</div>
-                      <div class="col-2">
-                          {{ "provider.operation_amount" | translate }}
-                      </div>
-                  </div>
-                  
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of walletReportList; let i = index">
-                <td class="text-center">
-                    {{ item.customerId }}
-                  </td>
-                  <td class="text-center">
-                    {{ item.customerName }}
-                  </td>
-                  <td class="text-center">
-                    {{ item.walletSum }}
-                  </td>
-                <td class="text-center">
-  
-                  <div class="row border-bottom border-warning" *ngFor="let walletTransactions of item.walletTransactions; let l = index">
-                    <div class="col-8">
-                        {{walletTransactions.note}}
-                    </div>
-                    <div class="col-2">
-                      <span *ngIf="walletTransactions.type == 1">
-                        {{ "action.Withdrawal" | translate }}
-                      </span>
-                      <span *ngIf="walletTransactions.type == 2">
-                        {{ "action.deposit" | translate }}
-                      </span>
-                  </div>
-                    <div class="col-2">
-                        {{walletTransactions.amount}}
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+  <div class="card-body">
+    <div class="row">
+      <div class="card bg-light">
+        <div class="card-body">
+          <app-filter [filter]="filter"></app-filter>
         </div>
       </div>
-      <div class="row" *ngIf="walletReportList.length">
-        <div class="col-2 text-right">
-          <select
-            [disabled]="busyLoading"
-            class="form-select form-select-solid"
-            (input)="setPageSize($event.target['value'])"
-            [(ngModel)]="filter.PageSize"
+      <div class="row">
+        <div class="col-md-4 col-sm-12">
+          <button
+            type="button"
+            class="btn btn-primary btn-sm mt-1"
+            (click)="searchValue()"
           >
-            <option [ngValue]="rowsNum" *ngFor="let rowsNum of rowsNumber">
-              {{ rowsNum }}
-            </option>
-          </select>
-  
-          <!--end::Page Number-->
+            <i class="fas fa-search"></i>
+            {{ "action.search" | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-warning btn-sm mt-1 mx-2"
+            (click)="resetSearch()"
+          >
+            <i class="far fa-trash-alt"></i>
+            {{ "action.reset" | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-dark btn-block mx-2 btn-sm mt-1"
+            (click)="downloadAll()"
+          >
+            <i class="fas fa-download"></i>
+            {{ "action.download" | translate }}
+          </button>
         </div>
-        <div class="col-10">
-          <ul class="pagination">
-            <li
-              class="page-item previous disabled"
-              (click)="setPageNumber(active - 1)"
-              *ngIf="pagination.totalPagesCount > 1 && active > 1"
-            >
-              <span class="page-link text-dark font-weight-bolder">
-                {{ "global.previous" | translate }}
-              </span>
-            </li>
-            <li
-              class="page-item"
-              [ngClass]="{ active: item + 1 == active }"
-              *ngFor="
-                let item of pagination.totalPagesCount | demoNumber;
-                let i = index
-              "
-              (click)="setPageNumber(item + 1)"
-            >
-              <a class="page-link">
-                {{ item + 1 }}
-              </a>
-            </li>
-  
-            <li
-              class="page-item next"
-              (click)="setPageNumber(active + 1)"
-              *ngIf="
-                pagination.totalPagesCount > 1 &&
-                active < pagination.totalPagesCount
-              "
-            >
-              <a class="page-link text-dark font-weight-bolder">
-                {{ "global.next" | translate }}
-              </a>
-            </li>
-          </ul>
-        </div>
+      </div>
+      <div class="table-responsive mt-3">
+        <table
+          class="table table-hover table-rounded table-striped border gy-7 gs-7"
+        >
+          <thead>
+            <tr class="">
+              <th class="text-center">
+                {{ "field.customerId" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.customerName" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.customerWalletSum" | translate }}
+              </th>
+              <th class="text-center" colspan="2">
+                <div class="row">
+                  <div class="col-8">{{ "field.note" | translate }}</div>
+                  <div class="col-2">{{ "field.typeName" | translate }}</div>
+                  <div class="col-2">
+                    {{ "provider.operation_amount" | translate }}
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of walletReportList; let i = index">
+              <td class="text-center">
+                {{ item.customerId }}
+              </td>
+              <td class="text-center">
+                {{ item.customerName }}
+              </td>
+              <td class="text-center">
+                {{ item.walletSum }}
+              </td>
+              <td class="text-center">
+                <div
+                  class="row border-bottom border-warning"
+                  *ngFor="
+                    let walletTransactions of item.walletTransactions;
+                    let l = index
+                  "
+                >
+                  <div class="col-8">
+                    {{ walletTransactions.note }}
+                  </div>
+                  <div class="col-2">
+                    <span *ngIf="walletTransactions.type == 1">
+                      {{ "action.Withdrawal" | translate }}
+                    </span>
+                    <span *ngIf="walletTransactions.type == 2">
+                      {{ "action.deposit" | translate }}
+                    </span>
+                  </div>
+                  <div class="col-2">
+                    {{ walletTransactions.amount }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row" *ngIf="walletReportList.length">
+      <div class="col-2 text-right">
+        <select
+          [disabled]="busyLoading"
+          class="form-select form-select-solid"
+          (input)="setPageSize($event.target['value'])"
+          [(ngModel)]="filter.PageSize"
+        >
+          <option [ngValue]="rowsNum" *ngFor="let rowsNum of rowsNumber">
+            {{ rowsNum }}
+          </option>
+        </select>
+
+        <!--end::Page Number-->
+      </div>
+      <div class="col-10">
+        <ul class="pagination">
+          <li
+            class="page-item previous disabled"
+            (click)="setPageNumber(active - 1)"
+            *ngIf="pagination.totalPagesCount > 1 && active > 1"
+          >
+            <span class="page-link text-dark font-weight-bolder">
+              {{ "global.previous" | translate }}
+            </span>
+          </li>
+          <li
+            class="page-item"
+            [ngClass]="{ active: item + 1 == active }"
+            *ngFor="
+              let item of pagination.totalPagesCount | demoNumber;
+              let i = index
+            "
+            (click)="setPageNumber(item + 1)"
+          >
+            <a class="page-link">
+              {{ item + 1 }}
+            </a>
+          </li>
+
+          <li
+            class="page-item next"
+            (click)="setPageNumber(active + 1)"
+            *ngIf="
+              pagination.totalPagesCount > 1 &&
+              active < pagination.totalPagesCount
+            "
+          >
+            <a class="page-link text-dark font-weight-bolder">
+              {{ "global.next" | translate }}
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
-  
+</div>

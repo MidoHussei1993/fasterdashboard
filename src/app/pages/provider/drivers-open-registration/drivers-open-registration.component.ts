@@ -5,6 +5,7 @@ import { NotifierService } from 'angular-notifier';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { ProviderService } from '../services';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: 'app-drivers-open-registration',
@@ -13,14 +14,8 @@ import { ProviderService } from '../services';
 })
 export class DriversOpenRegistrationComponent implements OnInit {
   list: any[] = [];
-  titles: string[] = [
-    'field.Date',
-    'field.PhoneNumber',
-  ];
-  properties: string[] = [
-    'dataTime',
-    'phone',
-  ];
+  titles: string[] = ['field.Date', 'field.PhoneNumber'];
+  properties: string[] = ['dataTime', 'phone'];
 
   constructor(
     private providerService: ProviderService,
@@ -28,21 +23,28 @@ export class DriversOpenRegistrationComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private notifier: NotifierService,
+    private headerService: HeaderService,
     private excelService: ExcelService
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setPageTitle(
+      this.translate.instant('menu.driversOpenRegistration')
+    );
     this.getProviderList();
   }
 
   getProviderList() {
     this.spinner.show();
     this.providerService.getDriversOpenRegistration().subscribe(
-      (res:{}) => {
+      (res: {}) => {
         console.log(Object.values(res));
         this.spinner.hide();
         this.list = Object.values(res);
-        console.log("🚀 ~ file: drivers-open-registration.component.ts ~ line 58 ~ DriversOpenRegistrationComponent ~ getProviderList ~ this.list", this.list)
+        console.log(
+          '🚀 ~ file: drivers-open-registration.component.ts ~ line 58 ~ DriversOpenRegistrationComponent ~ getProviderList ~ this.list',
+          this.list
+        );
       },
       (err) => {
         this.spinner.hide();

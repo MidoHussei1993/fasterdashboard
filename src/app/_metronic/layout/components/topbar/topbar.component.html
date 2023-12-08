@@ -16,7 +16,7 @@
 </div>
 
 <!-- NOTIFICATIONS -->
-<!-- <div class="d-flex align-items-center" [ngClass]="toolbarButtonMarginClass">
+<div class="d-flex align-items-center" [ngClass]="toolbarButtonMarginClass">
   <div
     class="btn btn-icon btn-active-light-primary position-relative"
     [ngClass]="toolbarButtonHeightClass"
@@ -25,19 +25,23 @@
     data-kt-menu-placement="bottom-end"
     data-kt-menu-flip="bottom"
   >
-    <span
+    <span class="text-danger h6">
+      {{ notificationList.length }}
+    </span>
+    <i class="fas fa-bell"></i>
+    <!-- <span
       [inlineSVG]="'./assets/media/icons/duotune/general/gen022.svg'"
       class="svg-icon"
       [ngClass]="toolbarButtonIconSizeClass"
-    ></span>
+    ></span> -->
   </div>
   <app-notifications-inner></app-notifications-inner>
-</div> -->
+</div>
 
 <!-- CHAT -->
 <!-- <div class="d-flex align-items-center" [ngClass]="toolbarButtonMarginClass"> -->
-  <!-- begin::Menu wrapper -->
-  <!-- <div
+<!-- begin::Menu wrapper -->
+<!-- <div
     class="btn btn-icon btn-active-light-primary position-relative"
     [ngClass]="toolbarButtonHeightClass"
     id="kt_drawer_chat_toggle"
@@ -61,7 +65,7 @@
       "
     ></span>
   </div> -->
-  <!-- end::Menu wrapper -->
+<!-- end::Menu wrapper -->
 <!-- </div> -->
 
 <!-- Quick links -->
@@ -103,6 +107,12 @@
   <!-- end::Toggle  -->
   <app-user-inner></app-user-inner>
 </div>
+<i
+  keyDown
+  class="fas fa-arrow-circle-left mt-3 pointer mx-2"
+  (click)="backPage()"
+  style="font-size: 23px"
+></i>
 <!-- end::User -->
 
 <ng-container *ngIf="headerLeft === 'menu'">
@@ -111,13 +121,7 @@
     title="Show header menu"
   >
     <div
-      class="
-        btn btn-icon btn-active-light-primary
-        w-30px
-        h-30px
-        w-md-40px
-        h-md-40px
-      "
+      class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
       id="kt_header_menu_mobile_toggle"
     >
       <span

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { RoleGuard } from '../core/Auth/Guards';
+import { AddShopBranchesWorkTimeComponent } from './shop-branch-work-time/add-shop-branches-work-time/add-shop-branches-work-time.component';
 
 const Routing: Routes = [
   {
@@ -87,6 +88,13 @@ const Routing: Routes = [
       import(
         '../pages/shop-branch-work-time/shop-branch-work-time.module'
       ).then((m) => m.ShopBranchWorkTimeModule),
+    data: {
+      role: ['administrator'],
+    },
+  },
+  {
+    path: 'shop-branchs-work-time',
+    component: AddShopBranchesWorkTimeComponent,
     data: {
       role: ['administrator'],
     },
@@ -415,6 +423,42 @@ const Routing: Routes = [
       import('./fixed-shop-amount/fixed-shop-amount.module').then(
         (m) => m.FixedShopAmountModule
       ),
+    data: {
+      role: ['administrator'],
+    },
+  },
+  {
+    path: 'moyaser',
+    loadChildren: () =>
+      import('./moyaser/moyaser.module').then((m) => m.MoyaserModule),
+    data: {
+      role: ['administrator'],
+    },
+  },
+  {
+    path: 'sub-additional-component/:id',
+    loadChildren: () =>
+      import('./sub-additional-component/sub-additional-component.module').then(
+        (m) => m.SubAdditionalComponentModule
+      ),
+    data: {
+      role: ['administrator'],
+    },
+  },
+  {
+    path: 'sub-additional-component-title/:id',
+    loadChildren: () =>
+      import(
+        './sub-additional-component-title/sub-additional-component-title.module'
+      ).then((m) => m.SubAdditionalComponentTitleModule),
+    data: {
+      role: ['administrator'],
+    },
+  },
+  {
+    path: 'gift-card',
+    loadChildren: () =>
+      import('./gift-cards/gift-cards.module').then((m) => m.GiftCardsModule),
     data: {
       role: ['administrator'],
     },

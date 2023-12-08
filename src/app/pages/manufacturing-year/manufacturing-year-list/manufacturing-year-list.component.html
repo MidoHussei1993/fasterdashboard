@@ -1,21 +1,19 @@
 <div class="card card-flush shadow-sm">
-  <div class="card-header">
-    <h3 class="card-title">{{ "car.manufacturingYear" | translate }}</h3>
-  </div>
   <div class="card-body">
     <a
       class="btn btn-sm btn-primary mb-3"
       [routerLink]="'/manufacturing-year/create'"
     >
-    <i class="fas fa-plus"></i>
+      <i class="fas fa-plus"></i>
       {{ "action.create" | translate }}
     </a>
-    <div class="card bg-secondary">
+    <div class="card bg-light">
       <div class="card-body">
         <app-filter [filter]="filter"></app-filter>
       </div>
     </div>
     <app-table
+      [filter]="filter"
       [list]="ManufacturingYearList"
       [titles]="titles"
       [properties]="properties"

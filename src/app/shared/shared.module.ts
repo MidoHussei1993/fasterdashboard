@@ -13,12 +13,16 @@ import { EchartComponent } from './components/echart/echart.component';
 import { ImgViewerComponent } from './components/img-viewer/img-viewer.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { ExcelService } from './services/excel.service';
-import {CalendarModule} from 'primeng/calendar';
+import { CalendarModule } from 'primeng/calendar';
 import { ListComponent } from './components/list/list.component';
 import { PolygonMapComponent } from './components/polygon-map/polygon-map.component';
-import { NgxPrintModule } from 'ngx-print';
+// import { NgxPrintModule } from 'ngx-print';
 import { KeyboardDirective } from './directives/keyboard.directive';
-
+import { PaginatorModule } from 'primeng/paginator';
+import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 
 const Component = [
   TableComponent,
@@ -27,31 +31,27 @@ const Component = [
   ImgViewerComponent,
   FilterComponent,
   EchartComponent,
-  PolygonMapComponent
-]
-const Pipes= [
-  DemoNumberPipe
-]
+  PolygonMapComponent,
+];
+const Pipes = [DemoNumberPipe];
 
-const directives = [
-  KeyboardDirective,
-]
+const directives = [KeyboardDirective];
 @NgModule({
-  declarations: [
-    ...Component,
-    ...Pipes,
-    ...directives,
-    ListComponent,
-  ],
+  declarations: [...Component, ...Pipes, ...directives, ListComponent],
   imports: [
     RouterModule,
     CommonModule,
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPrintModule,
+    // NgxPrintModule,
     GoogleMapsModule,
     CalendarModule,
+    PaginatorModule,
+    MenubarModule,
+    ButtonModule,
+    TooltipModule,
+    MenuModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
@@ -63,7 +63,7 @@ const directives = [
     CommonModule,
     ...Component,
     ...Pipes,
-    ...directives
-  ]
+    ...directives,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

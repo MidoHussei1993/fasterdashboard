@@ -327,10 +327,31 @@ export class DeliveryOrderComponent implements OnInit, OnDestroy {
       case 'SendOrderToTookan':
         this.sendOrderToTookan(order.event.id);
         break;
+      case 'sendOrederToLive':
+        this.sendOrderToLyve(order.event.id);
+        break;
 
       default:
         break;
     }
+  }
+
+  sendOrderToLyve(id: number) {
+    this.spinner.show();
+    this.deliveryOrderService.sendOrderToLyve(id).subscribe(
+      (res) => {
+        this.spinner.hide();
+        if (res.errorMessage) {
+          this.notifier.notify('error', res.errorMessage);
+        }
+        if (res.isSucceeded) {
+          this.notifier.notify('success', res.returnData);
+        }
+      },
+      (err) => {
+        this.spinner.hide();
+      }
+    );
   }
 
   downloadAll() {

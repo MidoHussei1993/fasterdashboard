@@ -125,10 +125,6 @@ export class DeliveryOrderDetailsComponent implements OnInit {
       .sendOrderToLyve(+this.route.snapshot.params.id)
       .subscribe(
         (res) => {
-          console.log(
-            '🚀 ~ file: delivery-order-details.component.ts:128 ~ DeliveryOrderDetailsComponent ~ sendOrderToLyve ~ res:',
-            res
-          );
           this.spinner.hide();
           if (res.errorMessage) {
             this.notifier.notify('error', res.errorMessage);

@@ -113,6 +113,12 @@
           icon: 'fa-shopping-cart',
           type: 'shopCartData',
           hide: !isVender && !isShop
+        },
+         {
+          title: 'sendOrederToLive',
+          icon: 'fa-paper-plane',
+          type: 'sendOrederToLive',
+          hide: !isVender && !isShop
         }
       ]"
       (aciton)="navigateTO($event)"

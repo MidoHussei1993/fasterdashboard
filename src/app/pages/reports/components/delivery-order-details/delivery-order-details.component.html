@@ -31,21 +31,24 @@
         {{ "field.orderType" | translate }} : Delivery 📦
       </h3>
     </div>
-    <div class="col-3" *ngIf="mode == 'Edit' && !isShop">
+    <div class="col-3 " style="text-align: end;">
       <button
+       *ngIf="mode == 'Edit' && !isShop"
         type="button"
         (click)="orderAmountPrice = 0; openModal('orderAmountPriceModal')"
         class="btn btn-danger btn-sm mt-3 mx-2"
       >
         {{ "field.confirmAmount" | translate }}
       </button>
-      <button
-        type="button"
-        (click)="openModal('stateModel')"
-        class="btn btn-dark btn-sm mt-3"
-      >
-        {{ "action.changeStatus" | translate }}
-      </button>
+      <button *ngIf="mode == 'Edit' && !isShop" type="button" (click)="openModal('stateModel')"
+      class="btn btn-dark btn-sm mt-3">
+      {{ "action.changeStatus" | translate }}
+    </button>
+    <button  type="button"  (click)="sendOrderToLyve()"
+      class="btn btn-primary btn-sm mt-3 mx-2">
+      {{ "sendOrederToLive" | translate }}
+    </button>
+
     </div>
   </div>
   <div class="card-body">
@@ -190,6 +193,10 @@
           <h6 class="text-uppercase font-weight-bolder">
             {{ "field.providerNote" | translate }} :
             {{ mainObject.deliveryOrder.providerRateNote }}
+          </h6>
+          <h6 class="text-uppercase font-weight-bolder">
+            {{ "field.driverMobile" | translate }} :
+            {{ mainObject.deliveryOrder.providerPhoneNumber }}
           </h6>
           <div class="d-flex">
             <div class="p-2">

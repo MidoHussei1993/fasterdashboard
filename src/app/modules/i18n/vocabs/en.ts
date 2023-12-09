@@ -860,5 +860,6 @@ export const locale = {
     refundAmount: 'Refund Amount',
     faster: 'FASTER',
     shopBrancheDescriptionLocation: 'Location Description',
+    sendOrederToLive: 'Send oreder to Lyve',
   },
 };

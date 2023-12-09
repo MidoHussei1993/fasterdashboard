@@ -858,5 +858,6 @@ export const locale = {
     refundAmount: 'مبلغ الاسترجاع',
     shopBrancheDescriptionLocation: 'وصف الموقع',
     faster: ' فاستر',
+    sendOrederToLive: 'ارسال الطلب الي لايف',
   },
 };

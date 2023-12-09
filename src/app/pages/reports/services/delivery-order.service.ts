@@ -17,14 +17,21 @@ export class DeliveryOrderService {
   UpdateNote(model: any): Observable<any> {
     return this.http.post<any>(API.UpdateNote, model);
   }
-  GetNearProviderToOrder(orderId: any,radius:string): Observable<any> {
-    return this.http.get<any>(API.GetNearProviderToOrder(orderId,radius));
+  GetNearProviderToOrder(orderId: any, radius: string): Observable<any> {
+    return this.http.get<any>(API.GetNearProviderToOrder(orderId, radius));
   }
-  manualAssignment(orderId: any,price:string,providerUserId): Observable<any> {
-    return this.http.post<any>(API.manualAssignment(orderId,price, providerUserId),{});
+  manualAssignment(
+    orderId: any,
+    price: string,
+    providerUserId
+  ): Observable<any> {
+    return this.http.post<any>(
+      API.manualAssignment(orderId, price, providerUserId),
+      {}
+    );
   }
-  ChangeOrderAmountPrice(orderId: any,price:string): Observable<any> {
-    return this.http.get<any>(API.ChangeOrderAmountPrice(orderId,price));
+  ChangeOrderAmountPrice(orderId: any, price: string): Observable<any> {
+    return this.http.get<any>(API.ChangeOrderAmountPrice(orderId, price));
   }
 
   getOrderCart(id: number): Observable<any> {
@@ -32,10 +39,14 @@ export class DeliveryOrderService {
   }
 
   acceptOrder(id: number): Observable<any> {
-    return this.http.post<any>(API.acceptOrder(id),{});
+    return this.http.post<any>(API.acceptOrder(id), {});
   }
 
   rejectOrder(id: number): Observable<any> {
-    return this.http.post<any>(API.rejectOrder(id),{});
+    return this.http.post<any>(API.rejectOrder(id), {});
+  }
+
+  sendOrderToLyve(id: number): Observable<any> {
+    return this.http.post<any>(API.SendOrderToLyve(id), {});
   }
 }

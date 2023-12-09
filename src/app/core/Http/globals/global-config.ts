@@ -597,6 +597,8 @@ export class END_POINTS {
       FasterAPI + `/DeliveryOrder/acceptOrder/${orderId}`,
     rejectOrder: (orderId: any): string =>
       FasterAPI + `/DeliveryOrder/rejectOrder/${orderId}`,
+    SendOrderToLyve: (orderId: any): string =>
+      FasterAPI + `/Lyve/SendOrderToLyve/${orderId}`,
   };
 
   public static LoggerService = {

@@ -43,6 +43,7 @@ export class CoboneCrudComponent implements OnInit {
       limitation: ['', [Validators.required]],
       numberOfUse: [1, [Validators.required, Validators.min(1)]],
       note: [''],
+      maxPercentageValue: [],
       coboneType: [''],
     });
     this.mode = this.route.snapshot.data.mode;

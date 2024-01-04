@@ -31,6 +31,7 @@ export class ShopListComponent implements OnInit {
     'global.full_name',
     'global.type',
     'global.type',
+    'isPartnerPostPay',
     // 'global.user_type',
   ];
   properties: string[] = [
@@ -40,6 +41,7 @@ export class ShopListComponent implements OnInit {
     'fullName',
     'type',
     'typeAr',
+    'isPartnerPostPay',
     // 'userType',
   ];
   @ViewChild('addToWallet', { static: false }) addToWallet;
@@ -231,7 +233,18 @@ export class ShopListComponent implements OnInit {
       (res: List<Shop>) => {
         this.spinner.hide();
         this.busyLoading = false;
-        this.shoplist = res.data;
+        this.shoplist = res.data.map((item: any) => {
+          if (item.isPartnerPostPay) {
+            item.isPartnerPostPay = this.translate.instant('action.yes');
+          } else {
+            item.isPartnerPostPay = this.translate.instant('action.no');
+          }
+          return item;
+        });
+        console.log(
+          '🚀 ~ file: shop-list.component.ts:244 ~ ShopListComponent ~ this.shoplist=res.data.map ~ this.shoplist:',
+          this.shoplist
+        );
         delete res.data;
         this.pagination = { ...res };
       },

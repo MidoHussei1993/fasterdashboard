@@ -177,18 +177,15 @@
           </p>
           </div>
         </div>
+       
+      </div>
+      <div class="row my-4">
         <div class="col-md-6 col-sm-12">
           <p>{{ "field.activation" | translate }}</p>
           <div class="row">
             <div class="col-4 mx-auto">
               <label class="form-check form-check-custom form-check-solid">
-                <input
-                  class="form-check-input mx-2"
-                  type="radio"
-                  [value]="true"
-                  name="isActive"
-                  formControlName="isActive"
-                />
+                <input class="form-check-input mx-2" type="radio" [value]="true" name="isActive" formControlName="isActive" />
                 <span class="form-check-label">
                   {{ "field.active" | translate }}
                 </span>
@@ -196,33 +193,38 @@
             </div>
             <div class="col-4 mx-auto">
               <label class="form-check form-check-custom form-check-solid">
-                <input
-                  class="form-check-input mx-2"
-                  type="radio"
-                  [value]="false"
-                  name="isActive"
-                  formControlName="isActive"
-                />
+                <input class="form-check-input mx-2" type="radio" [value]="false" name="isActive" formControlName="isActive" />
                 <span class="form-check-label">
                   {{ "field.not_active" | translate }}
                 </span>
               </label>
             </div>
           </div>
-          <div
-            *ngIf="
-              !form.get('isActive').valid &&
-              (form.get('isActive').dirty || form.get('isActive').touched)
-            "
-            class="text text-danger"
-          >
+          <div *ngIf="
+                      !form.get('isActive').valid &&
+                      (form.get('isActive').dirty || form.get('isActive').touched)
+                    " class="text text-danger">
             <p *ngIf="form.get('isActive').hasError('required')">
               {{ "_.required" | translate }}
             </p>
           </div>
         </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{
+            "maxPercentageValue" | translate
+            }}</label>
+          <input type="number" formControlName="maxPercentageValue" class="form-control form-control-solid"
+            placeholder="{{ 'maxPercentageValue' | translate }}" />
+          <div *ngIf="
+                              !form.get('maxPercentageValue').valid &&
+                              (form.get('maxPercentageValue').dirty || form.get('maxPercentageValue').touched)
+                            " class="text text-danger">
+            <p *ngIf="form.get('maxPercentageValue').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
       </div>
-
       <div class="row my-5">
         <div class="col-md-10 mx-auto col-sm-12">
           <label class="form-label">{{ "field.note" | translate }}</label>

@@ -109,13 +109,10 @@ export class CreateProviderComponent implements OnInit {
       venderId: [null],
       refrealCode: [null],
       bankName: [null],
-      iBanNumber: [null, [Validators.pattern(Pattern.saudiaIbanNumber)]],
-      stcPayPhoneNumber: [
-        null,
-        [Validators.pattern(Pattern.saudiMobileNumbers)],
-      ],
+      iBanNumber: [null],
+      stcPayPhoneNumber: [null],
       carInsuranceImage: [null],
-      driverDateOfBirth: ['', [Validators.required]],
+      driverDateOfBirth: [''],
     });
 
     let a = {

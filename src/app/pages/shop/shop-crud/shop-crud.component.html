@@ -558,13 +558,7 @@
           <div class="row">
             <div class="col-md-3 col-sm-6">
               <label class="form-check form-check-custom form-check-solid">
-                <input
-                  class="form-check-input mx-2"
-                  type="radio"
-                  [value]="true"
-                  name="isPartner"
-                  formControlName="isPartner"
-                />
+                <input class="form-check-input mx-2" type="radio" [value]="true" name="isPartner" formControlName="isPartner" />
                 <span class="form-check-label">
                   {{ "action.yes" | translate }}
                 </span>
@@ -572,27 +566,49 @@
             </div>
             <div class="col-md-3 col-sm-6">
               <label class="form-check form-check-custom form-check-solid">
-                <input
-                  class="form-check-input mx-2"
-                  type="radio"
-                  [value]="false"
-                  name="isPartner"
-                  formControlName="isPartner"
-                />
+                <input class="form-check-input mx-2" type="radio" [value]="false" name="isPartner"
+                  formControlName="isPartner" />
                 <span class="form-check-label">
                   {{ "action.no" | translate }}
                 </span>
               </label>
             </div>
           </div>
-          <div
-            *ngIf="
-              !form.get('isPartner').valid &&
-              (form.get('isPartner').dirty || form.get('isPartner').touched)
-            "
-            class="text text-danger"
-          >
+          <div *ngIf="
+                      !form.get('isPartner').valid &&
+                      (form.get('isPartner').dirty || form.get('isPartner').touched)
+                    " class="text text-danger">
             <p *ngIf="form.get('isPartner').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <p>{{ "isPartnerPostPay" | translate }}</p>
+          <div class="row">
+            <div class="col-md-3 col-sm-6">
+              <label class="form-check form-check-custom form-check-solid">
+                <input class="form-check-input mx-2" type="radio" [value]="true" name="isPartnerPostPay" formControlName="isPartnerPostPay" />
+                <span class="form-check-label">
+                  {{ "action.yes" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <label class="form-check form-check-custom form-check-solid">
+                <input class="form-check-input mx-2" type="radio" [value]="false" name="isPartnerPostPay"
+                  formControlName="isPartnerPostPay" />
+                <span class="form-check-label">
+                  {{ "action.no" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div *ngIf="
+                      !form.get('isPartnerPostPay').valid &&
+                      (form.get('isPartnerPostPay').dirty || form.get('isPartnerPostPay').touched)
+                    " class="text text-danger">
+            <p *ngIf="form.get('isPartnerPostPay').hasError('required')">
               {{ "_.required" | translate }}
             </p>
           </div>

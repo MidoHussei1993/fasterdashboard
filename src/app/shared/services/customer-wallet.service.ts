@@ -81,4 +81,10 @@ export class CustomerWalletService {
     formData.append('file', file);
     return this.http.post<any>(API.uploadTransferImage, formData);
   }
+  RejectRefund(walletId: number): Observable<any> {
+    return this.http.post<any>(API.RejectRefund(walletId), {});
+  }
+  RefundAmountRequest(walletId: number): Observable<any> {
+    return this.http.post<any>(API.RefundAmountRequest(walletId), {});
+  }
 }

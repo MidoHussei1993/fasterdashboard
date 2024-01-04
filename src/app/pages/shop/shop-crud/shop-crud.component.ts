@@ -66,6 +66,7 @@ export class ShopCrudComponent implements OnInit {
       ],
       avatar: ['', Validators.required],
       isPartner: [true, Validators.required],
+      isPartnerPostPay: [true, Validators.required],
       percentageFromOrder: [null],
       staticDeliveryAmount: [null],
       email: ['', [Validators.required, Validators.email]],

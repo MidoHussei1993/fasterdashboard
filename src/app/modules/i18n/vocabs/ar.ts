@@ -125,6 +125,8 @@ export const locale = {
       giftCards: ' كروت الهدايا',
       actifityLog: 'سجل النشاط',
       giftCardsReport: ' تقرير كروت الهدايا',
+      openOrders: ' الطلبات المفتوحة',
+      closedOrder: ' الطلبات المغلقة',
     },
     action: {
       addToWallet: 'اضف الي المحفظة',
@@ -859,5 +861,9 @@ export const locale = {
     shopBrancheDescriptionLocation: 'وصف الموقع',
     faster: ' فاستر',
     sendOrederToLive: 'ارسال الطلب الي لايف',
+    isPartnerPostPay: 'شريك لي Post pay',
+    maxPercentageValue: 'الحد الأقصى لقيمة النسبة ',
+    openOrders: ' الطلبات المفتوحة',
+    closedOrder: ' الطلبات المغلقة',
   },
 };

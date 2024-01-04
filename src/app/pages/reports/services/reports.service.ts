@@ -337,6 +337,70 @@ export class ReportsService {
       },
     });
   }
+  OpenDeliveryOrderDataListReport(
+    filter: OrderReportFilter
+  ): Observable<List<OrderReport>> {
+    return this.http.get<List<OrderReport>>(
+      API.OpenDeliveryOrderDataListReport,
+      {
+        params: {
+          ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+          ...(filter.PageSize && { PageSize: filter.PageSize }),
+          ...(filter.Id && { Id: filter.Id }),
+          ...(filter.ShopId && { ShopId: filter.ShopId }),
+          ...(filter.PayTypeId && { PayTypeId: filter.PayTypeId }),
+          ...(filter.StatusId && { StatusId: filter.StatusId }),
+          ...(filter.VendorId && { VendorId: filter.VendorId }),
+          ...(filter.CustomerId && { CustomerId: filter.CustomerId }),
+          ...(filter.CustomerPhone && { CustomerPhone: filter.CustomerPhone }),
+          ...(filter.ProviderPhone && { ProviderPhone: filter.ProviderPhone }),
+          ...(filter.ProviderId && { ProviderId: filter.ProviderId }),
+          ...(filter.StartDate && {
+            StartDate: String(
+              moment(filter.StartDate).format('YYYY-MM-DD HH:mm:ss')
+            ),
+          }),
+          ...(filter.EndDate && {
+            EndDate: String(
+              moment(filter.EndDate).format('YYYY-MM-DD HH:mm:ss')
+            ),
+          }),
+        },
+      }
+    );
+  }
+  ClosedDeliveryOrderDataListReport(
+    filter: OrderReportFilter
+  ): Observable<List<OrderReport>> {
+    return this.http.get<List<OrderReport>>(
+      API.ClosedDeliveryOrderDataListReport,
+      {
+        params: {
+          ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+          ...(filter.PageSize && { PageSize: filter.PageSize }),
+          ...(filter.Id && { Id: filter.Id }),
+          ...(filter.ShopId && { ShopId: filter.ShopId }),
+          ...(filter.PayTypeId && { PayTypeId: filter.PayTypeId }),
+          ...(filter.StatusId && { StatusId: filter.StatusId }),
+          ...(filter.VendorId && { VendorId: filter.VendorId }),
+          ...(filter.CustomerId && { CustomerId: filter.CustomerId }),
+          ...(filter.CustomerPhone && { CustomerPhone: filter.CustomerPhone }),
+          ...(filter.ProviderPhone && { ProviderPhone: filter.ProviderPhone }),
+          ...(filter.ProviderId && { ProviderId: filter.ProviderId }),
+          ...(filter.StartDate && {
+            StartDate: String(
+              moment(filter.StartDate).format('YYYY-MM-DD HH:mm:ss')
+            ),
+          }),
+          ...(filter.EndDate && {
+            EndDate: String(
+              moment(filter.EndDate).format('YYYY-MM-DD HH:mm:ss')
+            ),
+          }),
+        },
+      }
+    );
+  }
 
   DeliveryOrderDetailsDataReport(id): Observable<OrderReport> {
     return this.http.get<OrderReport>(API.DeliveryOrderDetailsDataReport(id));

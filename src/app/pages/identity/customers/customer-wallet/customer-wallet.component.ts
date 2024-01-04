@@ -273,12 +273,8 @@ export class CustomerWalletComponent implements OnInit {
           .then((res) => {
             if (res) {
               this.spinner.show();
-              this.moyaserService
-                .refundPayment({
-                  paymentId: item.event.paymentId,
-                  customerId: item.event.customerId,
-                  amount: item.event.amount,
-                })
+              this.customerWalletService
+                .RefundAmountRequest(item.event.id)
                 .subscribe(
                   (res) => {
                     this.spinner.hide();

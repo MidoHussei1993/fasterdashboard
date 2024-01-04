@@ -33,6 +33,8 @@ import { ShopProfitComponent } from './components/shop-profit/shop-profit.compon
 // import { NgxPrintModule } from 'ngx-print';
 import { AllReportComponent } from './all-report/all-report.component';
 import { GiftCardTypesSendSearchComponent } from './components/gift-card-types-send-search/gift-card-types-send-search.component';
+import { OpenDeliveryOrderComponent } from './components/open-delivery-order/open-delivery-order.component';
+import { ClosedDeliveryOrderComponent } from './components/closed-delivery-order/closed-delivery-order.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { GiftCardTypesSendSearchComponent } from './components/gift-card-types-s
     AddedFromPaymentComponent,
     ShopProfitComponent,
     AllReportComponent,
+    OpenDeliveryOrderComponent,
+    ClosedDeliveryOrderComponent,
   ],
   imports: [
     CommonModule,

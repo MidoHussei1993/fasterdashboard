@@ -252,6 +252,11 @@ export class END_POINTS {
     notApprove: (id: number) =>
       FasterAPI + `/CustomerWallet/notApproveWalletAddjestment/${id}`,
     uploadTransferImage: FasterAPI + '/CustomerWallet/uploadTransferImage',
+    RefundRequestSearch: FasterAPI + '/CustomerWallet/RefundRequestSearch',
+    RejectRefund: (id: number) =>
+      FasterAPI + `/CustomerWallet/RejectRefund/${id}`,
+    RefundAmountRequest: (id: number) =>
+      FasterAPI + `/CustomerWallet/RefundAmountRequest/${id}`,
   };
 
   // report
@@ -304,6 +309,10 @@ export class END_POINTS {
       FasterAPI + '/Report/DelayedNoDriverForOrdersReport',
     DeliverdOrdersReport: FasterAPI + '/Report/DeliverdOrdersReport',
     NotPickedUpOrdersReport: FasterAPI + '/Report/NotPickedUpOrdersReport',
+    OpenDeliveryOrderDataListReport:
+      FasterAPI + '/Report/OpenDeliveryOrderDataListReport',
+    ClosedDeliveryOrderDataListReport:
+      FasterAPI + '/Report/ClosedDeliveryOrderDataListReport',
   };
 
   public static Banner = {

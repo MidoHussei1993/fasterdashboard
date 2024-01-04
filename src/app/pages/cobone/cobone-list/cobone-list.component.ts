@@ -24,6 +24,7 @@ export class CoboneListComponent implements OnInit {
     'field.ExpiryDateTo',
     'field.ShopName',
     'field.customerLimit',
+    'maxPercentageValue',
     'field.coboneStatus',
   ];
   properties: string[] = [
@@ -34,6 +35,7 @@ export class CoboneListComponent implements OnInit {
     'expiryDate',
     'shopName',
     'numberOfUse',
+    'maxPercentageValue',
     'work',
   ];
   filter: CoboneFilter;

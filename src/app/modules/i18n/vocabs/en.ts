@@ -126,6 +126,8 @@ export const locale = {
       giftCards: ' Gift Cards',
       actifityLog: 'Actifity Log',
       giftCardsReport: 'Gift Cards Report',
+      openOrders: 'Open orders',
+      closedOrder: 'Cloa orders',
     },
     action: {
       addToWallet: 'Add To Wallet',
@@ -861,5 +863,9 @@ export const locale = {
     faster: 'FASTER',
     shopBrancheDescriptionLocation: 'Location Description',
     sendOrederToLive: 'Send oreder to Lyve',
+    isPartnerPostPay: 'Is partner post pay',
+    maxPercentageValue: 'Max percentage value',
+    openOrders: 'Open orders',
+    closedOrder: 'Cloa orders',
   },
 };

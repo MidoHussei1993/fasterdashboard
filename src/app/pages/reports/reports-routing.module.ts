@@ -27,6 +27,9 @@ import { WalletManualAdditionComponent } from './components/wallet-manual-additi
 import { WorkTimeComponent } from './components/work-time/work-time.component';
 import { AllReportComponent } from './all-report/all-report.component';
 import { GiftCardTypesSendSearchComponent } from './components/gift-card-types-send-search/gift-card-types-send-search.component';
+import { OpenDeliveryOrderComponent } from './components/open-delivery-order/open-delivery-order.component';
+import { CloneVisitor } from '@angular/compiler/src/i18n/i18n_ast';
+import { ClosedDeliveryOrderComponent } from './components/closed-delivery-order/closed-delivery-order.component';
 
 const routes: Routes = [
   {
@@ -40,6 +43,14 @@ const routes: Routes = [
   {
     path: 'delivery-order',
     component: DeliveryOrderComponent,
+  },
+  {
+    path: 'open-delivery-order',
+    component: OpenDeliveryOrderComponent,
+  },
+  {
+    path: 'closed-delivery-order',
+    component: ClosedDeliveryOrderComponent,
   },
   {
     path: 'delivery-order/edit/:id',

@@ -95,6 +95,14 @@ export class SidebaritemsService {
           link: '/report/delivery-order',
         },
         {
+          title: 'openOrders',
+          link: '/report/open-delivery-order',
+        },
+        {
+          title: 'closedOrder',
+          link: '/report/closed-delivery-order',
+        },
+        {
           title: 'general_suggest',
           link: '/general-suggest',
           childern: [],
@@ -126,6 +134,7 @@ export class SidebaritemsService {
           title: 'providers',
           link: '/identity/providers',
           childern: [],
+          role: ['administrator', 'administrator'],
         },
         {
           title: 'vendor',

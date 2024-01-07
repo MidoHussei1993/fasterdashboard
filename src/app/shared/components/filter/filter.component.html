@@ -1,3 +1,12 @@
+<!-- <p-panel
+  header=" {{ 'filter' | translate }}"
+  [toggleable]="true"
+  [collapsed]="true"
+  class="my-2"
+>
+  
+</p-panel> -->
+
 <div class="row">
   <h3>
     {{ "filter" | translate }}
@@ -43,6 +52,7 @@
         (input)="modelChangeFn($event, item)"
         type="text"
         [name]="item"
+        style="border-radius: 26px"
         [(ngModel)]="filter[item]"
         class="form-control"
         placeholder="{{ 'field.' + item | translate }}"
@@ -53,7 +63,11 @@
 
   <div class="col-md-4 col-sm-12 mt-2" *ngIf="isActiviationFilter">
     <p>{{ "field.activation" | translate }}</p>
-    <select [(ngModel)]="filter.IsActive" class="form-select form-select-solid">
+    <select
+      [(ngModel)]="filter.IsActive"
+      class="form-select form-select-solid"
+      style="border-radius: 26px; background: white"
+    >
       <option [ngValue]="null">
         {{ "field.all" | translate }}
       </option>

@@ -174,6 +174,10 @@ export class SidebaritemsService {
           link: '/identity/customers',
         },
         {
+          title: 'RefundRequestSearch',
+          link: '/identity/refund-request-search',
+        },
+        {
           title: 'customerOrderBonus',
           link: '/customer-orders-bonus',
         },

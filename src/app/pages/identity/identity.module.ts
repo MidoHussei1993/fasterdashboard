@@ -18,14 +18,13 @@ import { UserCrudComponent } from './users/user-crud/user-crud.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CustomerNoteComponent } from './customers/customer-note/customer-note.component';
 import { CustomerWalletComponent } from './customers/customer-wallet/customer-wallet.component';
-import {TabViewModule} from 'primeng/tabview';
-import {CalendarModule} from 'primeng/calendar';
+import { TabViewModule } from 'primeng/tabview';
+import { CalendarModule } from 'primeng/calendar';
 import { PriviledgeComponent } from './users/priviledge/priviledge.component';
 import { AcceptanceRateComponent } from './providers/acceptance-rate/acceptance-rate.component';
 import { ProviderModule } from '../provider/provider.module';
 import { CustomerAdressesComponent } from './customer-adresses/customer-adresses.component';
-
-
+import { RefundRequestSearchComponent } from './refund-request-search/refund-request-search.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +42,8 @@ import { CustomerAdressesComponent } from './customer-adresses/customer-adresses
     CustomerWalletComponent,
     PriviledgeComponent,
     AcceptanceRateComponent,
-    CustomerAdressesComponent
+    CustomerAdressesComponent,
+    RefundRequestSearchComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +55,7 @@ import { CustomerAdressesComponent } from './customer-adresses/customer-adresses
     NgxEchartsModule,
     TabViewModule,
     CalendarModule,
-    ProviderModule
-  ]
+    ProviderModule,
+  ],
 })
-export class IdentityModule { }
+export class IdentityModule {}

@@ -1,0 +1,43 @@
+<div class="card shadow-sm">
+  <!-- <div class="card-header">
+    <h3 class="card-title">{{ "menu.additionalComponent" | translate }}</h3>
+  </div> -->
+  <div class="card-body">
+    <div class="card">
+      <div class="card-body">
+        <app-filter [filter]="filter"></app-filter>
+      </div>
+    </div>
+
+    <app-table
+      [filter]="filter"
+      [list]="list"
+      [titles]="titles"
+      [properties]="properties"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      (delete)="deleteItem($event)"
+      [showDelete]="false"
+      [showEdit]="false"
+      [showView]="false"
+      [showSearch]="true"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [addActions]="true"
+      [actionList]="[
+        {
+          title: 'acceptRequest',
+          icon: 'fa-check-circle  text-success',
+          type: 'acceptRequest'
+        },
+        {
+          title: 'cancelRequest',
+          icon: 'fa-window-close text-danger',
+          type: 'cancelRequest'
+        }
+      ]"
+      (aciton)="fireAction($event)"
+    ></app-table>
+  </div>
+</div>

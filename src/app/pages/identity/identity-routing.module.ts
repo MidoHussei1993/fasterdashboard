@@ -16,6 +16,7 @@ import { CustomerWalletComponent } from './customers/customer-wallet/customer-wa
 import { PriviledgeComponent } from './users/priviledge/priviledge.component';
 import { AcceptanceRateComponent } from './providers/acceptance-rate/acceptance-rate.component';
 import { CustomerAdressesComponent } from './customer-adresses/customer-adresses.component';
+import { RefundRequestSearchComponent } from './refund-request-search/refund-request-search.component';
 
 const routes: Routes = [
   {
@@ -33,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'users/priviledge/:id',
-        component: PriviledgeComponent ,
+        component: PriviledgeComponent,
         data: { mode: FormMode.View },
       },
       {
@@ -98,6 +99,10 @@ const routes: Routes = [
       {
         path: 'customer-adresses',
         component: CustomerAdressesComponent,
+      },
+      {
+        path: 'refund-request-search',
+        component: RefundRequestSearchComponent,
       },
     ],
   },

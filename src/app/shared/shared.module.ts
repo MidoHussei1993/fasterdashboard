@@ -23,6 +23,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
+import { PanelModule } from 'primeng/panel';
 
 const Component = [
   TableComponent,
@@ -52,6 +53,7 @@ const directives = [KeyboardDirective];
     ButtonModule,
     TooltipModule,
     MenuModule,
+    PanelModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),

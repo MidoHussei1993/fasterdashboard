@@ -4,7 +4,12 @@ import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { END_POINTS } from 'src/app/core/Http/globals/global-config';
 import { ApproveWalletFilter } from 'src/app/pages/approve-wallet/models';
-import { CustomerWallet, CustomerWalletFilter, List } from '../models';
+import {
+  CustomerWallet,
+  CustomerWalletFilter,
+  List,
+  RefundRequestSearchFilter,
+} from '../models';
 
 const API = END_POINTS.CustomerWallet;
 
@@ -54,6 +59,26 @@ export class CustomerWalletService {
         ...(filter.PageSize && { PageSize: filter.PageSize }),
         ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
         ...(filter.Type && { Type: filter.Type }),
+        ...(filter.CreateAtFrom && {
+          CreateAtFrom: String(
+            moment(filter.CreateAtFrom).format('YYYY-MM-DD HH:mm:ss')
+          ),
+        }),
+        ...(filter.CreateAtTo && {
+          CreateAtTo: String(
+            moment(filter.CreateAtTo).format('YYYY-MM-DD HH:mm:ss')
+          ),
+        }),
+      },
+    });
+  }
+  getRefundRequestSearch(filter: RefundRequestSearchFilter): Observable<any> {
+    return this.http.get<any>(API.RefundRequestSearch, {
+      params: {
+        ...(filter.PageSize && { PageSize: filter.PageSize }),
+        ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+        ...(filter.Type && { Type: filter.Type }),
+        ...(filter.Note && { Note: filter.Note }),
         ...(filter.CreateAtFrom && {
           CreateAtFrom: String(
             moment(filter.CreateAtFrom).format('YYYY-MM-DD HH:mm:ss')

@@ -1,0 +1,10 @@
+::ng-deep .p-calendar .p-inputtext {
+  border-radius: 26px;
+}
+
+::ng-deep html[dir="rtl"] {
+  .p-panel .p-panel-icons-end {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+}

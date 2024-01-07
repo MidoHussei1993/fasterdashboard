@@ -128,6 +128,7 @@ export const locale = {
       giftCardsReport: 'Gift Cards Report',
       openOrders: 'Open orders',
       closedOrder: 'Cloa orders',
+      RefundRequestSearch: 'Customer refund requests',
     },
     action: {
       addToWallet: 'Add To Wallet',
@@ -867,5 +868,8 @@ export const locale = {
     maxPercentageValue: 'Max percentage value',
     openOrders: 'Open orders',
     closedOrder: 'Cloa orders',
+    cancelRequest: 'Cancel request',
+    acceptRequest: 'Accept request',
+    isApprovedByAdmin: 'Is approved by admin',
   },
 };

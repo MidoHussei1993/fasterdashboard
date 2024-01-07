@@ -127,6 +127,7 @@ export const locale = {
       giftCardsReport: ' تقرير كروت الهدايا',
       openOrders: ' الطلبات المفتوحة',
       closedOrder: ' الطلبات المغلقة',
+      RefundRequestSearch: 'طلبات استرجاع المبالغ للعملاء',
     },
     action: {
       addToWallet: 'اضف الي المحفظة',
@@ -849,7 +850,7 @@ export const locale = {
     shopTypeId: 'نوع المحل',
     cardValue: 'قيمة الكارت',
     sort: 'الترتيب',
-    filter: 'الفلتر',
+    filter: 'خيارات البحث',
     providerReferrerBonus: 'مكافأة إحالة السائق',
     isUsed: ' تم الاستخدام',
     customerReferrerBonus: 'مكافأة إحالة العميل',
@@ -865,5 +866,8 @@ export const locale = {
     maxPercentageValue: 'الحد الأقصى لقيمة النسبة ',
     openOrders: ' الطلبات المفتوحة',
     closedOrder: ' الطلبات المغلقة',
+    cancelRequest: 'الغاء الطلب',
+    acceptRequest: 'الموافقة علي الطلب',
+    isApprovedByAdmin: 'تمت الموافقة عليه بواسطة المدير',
   },
 };

@@ -51,7 +51,10 @@
     </button>
   </div>
 </div>
-<app-trackingx-providers class="mx-2"></app-trackingx-providers>
+<app-trackingx-providers
+  class="mx-2"
+  *ngIf="!isVender"
+></app-trackingx-providers>
 <div class="row mx-2">
   <div class="col-md-6 col-sm-12">
     <div class="card">

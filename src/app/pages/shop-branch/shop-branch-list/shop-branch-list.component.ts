@@ -36,6 +36,7 @@ export class ShopBranchListComponent implements OnInit {
     'global.full_name',
     'global.phone_number',
     'field.email',
+    'feedusId',
   ];
   properties: string[] = [
     'shopName',
@@ -43,6 +44,7 @@ export class ShopBranchListComponent implements OnInit {
     'fullName',
     'phoneNumber',
     'email',
+    'feedusId',
   ];
   @ViewChild('resetPass', { static: false }) resetPass;
   form: FormGroup;

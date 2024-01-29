@@ -129,6 +129,7 @@ export const locale = {
       openOrders: 'Open orders',
       closedOrder: 'Cloa orders',
       RefundRequestSearch: 'Customer refund requests',
+      providerAmountRequests: 'Provider amount requests',
     },
     action: {
       addToWallet: 'Add To Wallet',
@@ -870,6 +871,12 @@ export const locale = {
     closedOrder: 'Cloa orders',
     cancelRequest: 'Cancel request',
     acceptRequest: 'Accept request',
+    amount: 'Amount',
+    actionUserName: 'Action user name',
+    actionUserPhone: 'Action user Phone',
+    isTransferred: ' Transferred',
     isApprovedByAdmin: 'Is approved by admin',
+    makeProviderAmountRequest: 'Make provider amount request',
+    AmountRequest: 'Amount request',
   },
 };

@@ -86,81 +86,101 @@ export class SidebaritemsService {
       ],
     },
     {
-      role: ['administrator'],
+      role: ['administrator', 'vender'],
       icon: 'general/gen017',
       menuTitle: 'ops_logistics',
       childern: [
         {
           title: 'DeliveryOrderDataReport',
           link: '/report/delivery-order',
+          role: ['administrator'],
+        },
+        {
+          title: 'providerAmountRequests',
+          link: '/providers/amount-request',
+          role: ['administrator'],
         },
         {
           title: 'openOrders',
           link: '/report/open-delivery-order',
+          role: ['administrator'],
         },
         {
           title: 'closedOrder',
           link: '/report/closed-delivery-order',
+          role: ['administrator'],
         },
         {
           title: 'general_suggest',
           link: '/general-suggest',
           childern: [],
+          role: ['administrator'],
         },
         {
           title: 'walletManualAddition',
           link: '/report/wallet-manual-addition',
+          role: ['administrator'],
         },
         {
           title: 'motivations',
           link: '/motivation',
           childern: [],
+          role: ['administrator'],
         },
         {
           title: 'salary',
           link: '/salaries',
           childern: [],
+          role: ['administrator'],
         },
         {
           title: 'providerWalletReport',
           link: '/report/provider-wallet',
+          role: ['administrator'],
         },
         {
           title: 'DriversTransfers',
           link: '/providers/files',
           childern: [],
+          role: ['administrator'],
         },
         {
           title: 'providers',
           link: '/identity/providers',
           childern: [],
-          role: ['administrator', 'administrator'],
+          role: ['administrator', 'vender'],
         },
         {
           title: 'vendor',
           link: '/vendor',
           childern: [],
+          role: ['administrator'],
         },
         {
           title: 'driversOpenRegistration',
           link: '/providers/drivers-open-registration',
           childern: [],
+          role: ['administrator'],
         },
         {
           title: 'carName',
           link: '/car-name',
+          role: ['administrator'],
         },
         {
           title: 'carModel',
           link: '/car-model',
+          role: ['administrator'],
         },
         {
           title: 'manufacturingYear',
           link: '/manufacturing-year',
+          role: ['administrator'],
         },
         {
           title: 'moyaser',
           link: '/moyaser',
+          role: ['administrator'],
         },
       ],
     },

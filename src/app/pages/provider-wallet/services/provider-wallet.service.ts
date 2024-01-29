@@ -5,7 +5,11 @@ import { Observable } from 'rxjs';
 import { END_POINTS } from 'src/app/core/Http/globals/global-config';
 import { List } from 'src/app/shared';
 import { ApproveWalletFilter } from '../../approve-wallet/models';
-import { ProviderWallet, ProviderWalletFilter } from '../models';
+import {
+  ProviderAmountRequestFilter,
+  ProviderWallet,
+  ProviderWalletFilter,
+} from '../models';
 
 const API = END_POINTS.ProviderWallet;
 
@@ -96,5 +100,40 @@ export class ProviderWalletService {
 
   getWalletNotesDDL(): Observable<any> {
     return this.http.get<any>(API.GetWalletNotesDDL);
+  }
+
+  GetProviderAmountRequests(
+    filter: ProviderAmountRequestFilter
+  ): Observable<List<any>> {
+    return this.http.get<List<any>>(API.GetProviderAmountRequests, {
+      params: {
+        ...(filter.PageSize && { PageSize: filter.PageSize }),
+        ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
+        ...(filter.ProviderId && { ProviderId: filter.ProviderId }),
+        ...(filter.hasOwnProperty('IsTransferred') &&
+          filter.IsTransferred != null && {
+            IsTransferred: filter.IsTransferred,
+          }),
+        ...(filter.CreateAtFrom && {
+          CreateAtFrom: String(
+            moment(filter.CreateAtFrom).format('YYYY-MM-DD HH:mm:ss')
+          ),
+        }),
+        ...(filter.CreateAtTo && {
+          CreateAtTo: String(
+            moment(filter.CreateAtTo).format('YYYY-MM-DD HH:mm:ss')
+          ),
+        }),
+      },
+    });
+  }
+  AcceptProviderAmountRequest(id: number): Observable<any> {
+    return this.http.post<any>(API.AcceptProviderAmountRequest(id), {});
+  }
+  RejectProviderAmountRequest(id: number): Observable<any> {
+    return this.http.post<any>(API.RejectProviderAmountRequest(id), {});
+  }
+  MakeProviderAmountRequest(body: any): Observable<any> {
+    return this.http.post<any>(API.MakeProviderAmountRequest, body);
   }
 }

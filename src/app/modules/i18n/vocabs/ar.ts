@@ -128,6 +128,7 @@ export const locale = {
       openOrders: ' الطلبات المفتوحة',
       closedOrder: ' الطلبات المغلقة',
       RefundRequestSearch: 'طلبات استرجاع المبالغ للعملاء',
+      providerAmountRequests: 'طلبات السحوبات',
     },
     action: {
       addToWallet: 'اضف الي المحفظة',
@@ -868,6 +869,12 @@ export const locale = {
     closedOrder: ' الطلبات المغلقة',
     cancelRequest: 'الغاء الطلب',
     acceptRequest: 'الموافقة علي الطلب',
+    amount: 'المبلغ',
+    actionUserName: 'اسم مستخدم الإجراء',
+    actionUserPhone: 'هاتف مستخدم الإجراء',
+    isTransferred: 'تم التحويل',
     isApprovedByAdmin: 'تمت الموافقة عليه بواسطة المدير',
+    makeProviderAmountRequest: 'طلب سحب مبلغ',
+    AmountRequest: ' سحب المبلغ',
   },
 };

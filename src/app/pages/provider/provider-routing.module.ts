@@ -11,6 +11,7 @@ import { ProviderNotesCrudComponent } from './provider-notes-crud/provider-notes
 import { ProviderNotesListComponent } from './provider-notes-list/provider-notes-list.component';
 import { ProviderOrdersComponent } from './provider-orders/provider-orders.component';
 import { TrackingProvidersComponent } from './tracking-providers/tracking-providers.component';
+import { AmountRequestsComponent } from './amount-requests/amount-requests.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
       {
         path: 'tracking',
         component: TrackingProvidersComponent,
+      },
+      {
+        path: 'amount-request',
+        component: AmountRequestsComponent,
       },
     ],
   },

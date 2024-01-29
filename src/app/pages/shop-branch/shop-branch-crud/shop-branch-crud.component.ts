@@ -50,16 +50,8 @@ export class ShopBranchCrudComponent implements OnInit {
       id: [0],
       latitude: ['', [Validators.required]],
       longitude: ['', [Validators.required]],
-      descriptionLocation: [
-        '',
-        [
-          Validators.required
-        ],
-      ],
-      descriptionLocationAr: [
-        '',
-        [Validators.required],
-      ],
+      descriptionLocation: ['', [Validators.required]],
+      descriptionLocationAr: ['', [Validators.required]],
       isActive: ['', [Validators.required]],
       shopId: ['', [Validators.required]],
       cityId: ['', [Validators.required]],
@@ -68,6 +60,7 @@ export class ShopBranchCrudComponent implements OnInit {
       userType: [1],
       identificationNumber: [''],
       deliverectChannelId: [''],
+      feedusId: [null],
     });
 
     this.mode = this.route.snapshot.data.mode;

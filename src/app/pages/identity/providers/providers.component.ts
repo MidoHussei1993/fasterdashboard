@@ -21,6 +21,7 @@ import { VendorService } from '../../vendor/services/vendor.service';
 import { IdentityFilter, ProviderIdentity } from '../models';
 import { IdentityService, IList } from '../services/identity.service';
 import { HeaderService } from 'src/app/core/services/header.service';
+import { ProviderWalletService } from '../../provider-wallet/services';
 
 @Component({
   selector: 'app-providers',
@@ -30,6 +31,8 @@ import { HeaderService } from 'src/app/core/services/header.service';
 export class ProvidersComponent implements OnInit {
   @ViewChild('resetPass', { static: false }) resetPass;
   @ViewChild('subscription', { static: false }) subscription;
+  @ViewChild('makeProviderAmountRequest', { static: false })
+  makeProviderAmountRequest;
   @ViewChild('renewsubscriptionModal', { static: false })
   renewsubscriptionModal;
   providerList: ProviderList[] = [];
@@ -78,8 +81,8 @@ export class ProvidersComponent implements OnInit {
   vendorList: Dropdown[] = [];
   nationalityList: Dropdown[] = [];
   cityList: Dropdown[] = [];
-
   renewObject: any = {};
+  currentProvider: any = {};
 
   constructor(
     private identityService: IdentityService,
@@ -96,6 +99,7 @@ export class ProvidersComponent implements OnInit {
     private vendorService: VendorService,
     private cityService: CityService,
     private headerService: HeaderService,
+    private providerWalletService: ProviderWalletService,
     private activatedRoute: ActivatedRoute
   ) {
     this.currentLanguage = this.translate.currentLang;
@@ -178,6 +182,11 @@ export class ProvidersComponent implements OnInit {
           title: 'sendToMeLink',
           icon: 'fa-external-link-alt',
           type: 'sendToMeLink',
+        },
+        {
+          title: 'makeProviderAmountRequest',
+          icon: 'fa-hand-holding-usd text-warning',
+          type: 'makeProviderAmountRequest',
         },
       ];
     }
@@ -353,6 +362,12 @@ export class ProvidersComponent implements OnInit {
         break;
       case 'sendToMeLink':
         this.sendToken(provider);
+        break;
+      case 'makeProviderAmountRequest':
+        this.currentProvider = { ...provider.event };
+        this.modalService.open(this.makeProviderAmountRequest, {
+          size: 'lg',
+        });
         break;
 
       default:
@@ -603,6 +618,28 @@ export class ProvidersComponent implements OnInit {
           this.renewObject = {};
         },
         (err) => {
+          this.spinner.hide();
+        }
+      );
+  }
+  MakeProviderAmountRequest() {
+    this.spinner.show();
+    this.providerWalletService
+      .MakeProviderAmountRequest({
+        providerId: this.currentProvider.id,
+        amount: this.currentProvider.amount,
+      })
+      .subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.modalService.dismissAll();
+          this.notifier.notify(
+            'success',
+            this.translate.instant('action.done')
+          );
+        },
+        (err) => {
+          this.modalService.dismissAll();
           this.spinner.hide();
         }
       );

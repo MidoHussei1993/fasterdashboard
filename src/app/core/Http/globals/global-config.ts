@@ -1,5 +1,5 @@
-// export const BaseURL = 'http://api.faster.sa:5005';
-export const BaseURL = 'https://api.faster.sa:5001';
+export const BaseURL = 'http://api.faster.sa:5005';
+// export const BaseURL = 'https://api.faster.sa:5001';
 
 export const FasterAPI = BaseURL + '/api';
 
@@ -238,6 +238,14 @@ export class END_POINTS {
       FasterAPI + `/ProvidersWallet/notApproveWalletAddjestment/${id}`,
     WalletDiscountByExcel: FasterAPI + '/ProvidersWallet/WalletDiscountByExcel',
     GetWalletNotesDDL: FasterAPI + '/ProvidersWallet/GetWalletNotesDDL',
+    GetProviderAmountRequests:
+      FasterAPI + '/ProvidersWallet/GetProviderAmountRequests',
+    AcceptProviderAmountRequest: (id: number) =>
+      FasterAPI + `/ProvidersWallet/AcceptProviderAmountRequest/${id}`,
+    RejectProviderAmountRequest: (id: number) =>
+      FasterAPI + `/ProvidersWallet/RejectProviderAmountRequest/${id}`,
+    MakeProviderAmountRequest:
+      FasterAPI + '/ProvidersWallet/MakeProviderAmountRequest',
   };
 
   public static CustomerWallet = {

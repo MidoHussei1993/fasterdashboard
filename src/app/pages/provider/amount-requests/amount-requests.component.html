@@ -1,0 +1,49 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="card bg-light">
+      <div class="card-body">
+        <app-filter [filter]="filter">
+          <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+            <p>{{ "field.statusName" | translate }}</p>
+            <select
+              [(ngModel)]="filter.IsTransferred"
+              class="form-select form-select-solid"
+            >
+              <option [ngValue]="null">طلبات السحب</option>
+              <option [ngValue]="true">تم التحويل</option>
+              <option [ngValue]="false">مرفوضة</option>
+            </select>
+          </div>
+        </app-filter>
+      </div>
+    </div>
+    <app-table
+      [list]="list"
+      [titles]="titles"
+      [properties]="properties"
+      [pagination]="pagination"
+      [showView]="false"
+      [showDelete]="false"
+      [showEdit]="false"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      [showSearch]="true"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [addActions]="true"
+      [actionList]="[
+        {
+          title: 'action.approved',
+          icon: 'fa-check text-success',
+          type: 'accept'
+        },
+        {
+          title: 'action.notapproved',
+          icon: 'fa-times text-danger',
+          type: 'reject'
+        }
+      ]"
+      (aciton)="navigateTO($event)"
+    ></app-table>
+  </div>
+</div>

@@ -35,14 +35,16 @@
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">ع {{
-            "shop_branch.description_Location" | translate
-          }}</label>
+          <label class="form-label"
+            >ع {{ "shop_branch.description_Location" | translate }}</label
+          >
           <input
             type="text"
             formControlName="descriptionLocationAr"
             class="form-control form-control-solid"
-            :placeholder="ع {{ 'shop_branch.description_Location' | translate }}"
+            :placeholder="ع {{
+              'shop_branch.description_Location' | translate
+            }}"
           />
           <div
             *ngIf="
@@ -224,7 +226,8 @@
           <div
             *ngIf="
               !form.get('identificationNumber').valid &&
-              (form.get('identificationNumber').dirty || form.get('identificationNumber').touched)
+              (form.get('identificationNumber').dirty ||
+                form.get('identificationNumber').touched)
             "
             class="text text-danger"
           >
@@ -249,7 +252,8 @@
           <div
             *ngIf="
               !form.get('deliverectChannelId').valid &&
-              (form.get('deliverectChannelId').dirty || form.get('deliverectChannelId').touched)
+              (form.get('deliverectChannelId').dirty ||
+                form.get('deliverectChannelId').touched)
             "
             class="text text-danger"
           >
@@ -258,13 +262,31 @@
             </p>
           </div>
         </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label"> feedusId </label>
+          <input
+            type="text"
+            formControlName="feedusId"
+            class="form-control form-control-solid"
+            placeholder="feedusId"
+          />
+          <div
+            *ngIf="
+              !form.get('feedusId').valid &&
+              (form.get('feedusId').dirty || form.get('feedusId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('feedusId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
       </div>
 
       <div class="row my-5">
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{
-            "field.latitude" | translate
-          }}</label>
+          <label class="form-label">{{ "field.latitude" | translate }}</label>
           <input
             type="number"
             (input)="setMarkerLocation('latitude')"
@@ -285,9 +307,7 @@
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
-          <label class="form-label">{{
-            "field.longitude" | translate
-          }}</label>
+          <label class="form-label">{{ "field.longitude" | translate }}</label>
           <input
             type="number"
             (input)="setMarkerLocation('longitude')"
@@ -307,9 +327,7 @@
             </p>
           </div>
         </div>
-        
       </div>
-
 
       <div class="row my-5">
         <div class="col-md-6 col-sm-12" *ngIf="this.mode == 'View'">
@@ -337,32 +355,30 @@
         </div>
       </div>
 
-
       <div class="row mt-5 border py-3">
         <h4 class="mb-4">
-          {{'field.branchSearch' | translate }}
+          {{ "field.branchSearch" | translate }}
         </h4>
         <div class="col-md-4 col-sm-12">
           <input
             type="text"
             [(ngModel)]="shopName"
-            [ngModelOptions]="{standalone: true}"
+            [ngModelOptions]="{ standalone: true }"
             class="form-control form-control-solid"
             :placeholder="{{ 'shop.shop' | translate }}"
           />
         </div>
         <div class="col-md-2">
           <button
-          (click)="getBranchesByGoogle()"
-          type="button"
-          class="btn btn-primary btn-block btn-hover-scale"
-        >
-          {{ "action.search" | translate }}
-        </button>
+            (click)="getBranchesByGoogle()"
+            type="button"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.search" | translate }}
+          </button>
         </div>
       </div>
       <div class="row mt-5">
-        
         <p class="lead">
           {{ "field.Locate_loacation" | translate }}
         </p>

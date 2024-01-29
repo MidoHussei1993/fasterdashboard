@@ -16,6 +16,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { FilesComponent } from './files/files.component';
 import { DriversOpenRegistrationComponent } from './drivers-open-registration/drivers-open-registration.component';
 import { TrackingProvidersComponent } from './tracking-providers/tracking-providers.component';
+import { AmountRequestsComponent } from './amount-requests/amount-requests.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TrackingProvidersComponent } from './tracking-providers/tracking-provid
     FilesComponent,
     DriversOpenRegistrationComponent,
     TrackingProvidersComponent,
+    AmountRequestsComponent,
   ],
   imports: [
     CommonModule,

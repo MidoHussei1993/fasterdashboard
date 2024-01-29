@@ -13,7 +13,7 @@ import { ReportsService } from '../reports/services/reports.service';
 import { SettingService } from '../setting/services/setting.service';
 import { ShopService } from '../shop/services';
 import { HeaderService } from 'src/app/core/services/header.service';
-import { isShop } from 'src/app/util/access-storge';
+import { isShop, isVender } from 'src/app/util/access-storge';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   driverType: string = '';
   isAdmin: boolean = false;
   seliveryOrderStatistics: any = {};
+  isVender: boolean = false;
 
   constructor(
     private reportsService: ReportsService,
@@ -50,6 +51,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isVender = isVender();
     this.isShop = isShop();
     this.headerService.setPageTitle(this.translate.instant('faster'));
     let u1 = new SpeechSynthesisUtterance('Hi');

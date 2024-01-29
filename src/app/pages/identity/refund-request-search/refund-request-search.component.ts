@@ -34,6 +34,7 @@ export class RefundRequestSearchComponent
       'field.Date',
       'field.customerName',
       'field.CustomerPhone',
+      'amount',
       'isApprovedByAdmin',
       'field.note',
     ];
@@ -41,6 +42,7 @@ export class RefundRequestSearchComponent
       'createAt',
       'customerName',
       'customerPhoneNumber',
+      'amount',
       'isApprovedByAdmin',
       'note',
     ];

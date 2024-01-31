@@ -32,6 +32,7 @@ export class ShopListComponent implements OnInit {
     'global.type',
     'global.type',
     'isPartnerPostPay',
+    'feedusId',
     // 'global.user_type',
   ];
   properties: string[] = [
@@ -42,6 +43,7 @@ export class ShopListComponent implements OnInit {
     'type',
     'typeAr',
     'isPartnerPostPay',
+    'feedusId',
     // 'userType',
   ];
   @ViewChild('addToWallet', { static: false }) addToWallet;

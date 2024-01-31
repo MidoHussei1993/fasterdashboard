@@ -36,6 +36,7 @@ export class AmountRequestsComponent
       'actionUserName',
       'actionUserPhone',
       'isTransferred',
+      'amount',
     ];
     this.properties = [
       'createAt',
@@ -44,6 +45,7 @@ export class AmountRequestsComponent
       'actionUserName',
       'actionUserPhone',
       'isTransferred',
+      'amount',
     ];
   }
 

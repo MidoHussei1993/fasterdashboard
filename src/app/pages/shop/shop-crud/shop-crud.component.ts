@@ -97,6 +97,7 @@ export class ShopCrudComponent implements OnInit {
       deliverectAccountId: ['', []],
       MinimumCreditOrderValue: [null, [Validators.required]],
       MaximumCreditOrderValue: [null, [Validators.required]],
+      feedusId: [null],
     });
 
     this.mode = this.route.snapshot.data.mode;

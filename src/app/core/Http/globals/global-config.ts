@@ -1,5 +1,5 @@
-export const BaseURL = 'http://api.faster.sa:5005';
-// export const BaseURL = 'https://api.faster.sa:5001';
+// export const BaseURL = 'http://api.faster.sa:5005';
+export const BaseURL = 'https://api.faster.sa:5001';
 
 export const FasterAPI = BaseURL + '/api';
 
@@ -715,12 +715,13 @@ export class END_POINTS {
     ChangeActivation: FasterAPI + `/AdditionalComponentTitle/changeActivation`,
     GetDDL: FasterAPI + `/AdditionalComponentTitle/GetDDL`,
   };
-
+  
   public static additionalComponent = {
     search: FasterAPI + '/AdditionalComponent' + OperationEnum.SEARCH,
     getById: FasterAPI + '/AdditionalComponent' + OperationEnum.GET_BY_ID,
     add: FasterAPI + '/AdditionalComponent' + OperationEnum.ADD,
     update: FasterAPI + '/AdditionalComponent' + OperationEnum.UPDATE,
+    ChangeActivation: FasterAPI + `/AdditionalComponent/changeActivation`,
     delete: (id: number): string =>
       FasterAPI + '/AdditionalComponent' + OperationEnum.DELETE + id,
   };

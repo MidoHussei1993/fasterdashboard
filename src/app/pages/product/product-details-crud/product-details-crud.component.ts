@@ -47,6 +47,7 @@ export class ProductDetailsCrudComponent implements OnInit {
       snoozeEnd: [''], 
       deliverectProductId: [''],     
       deliverectPLU: [''],     
+      sort: [0],
     });
 
     this.mode = this.route.snapshot.data.mode;

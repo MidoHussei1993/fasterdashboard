@@ -369,6 +369,27 @@
           />
   
         </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "field.priority" | translate }}</label>
+          <input
+            type="number"
+            min="0"
+            formControlName="sort"
+            class="form-control form-control-solid"
+            placeholder="{{ 'field.priority' | translate }}"
+          />
+          <div
+            *ngIf="
+              !form.get('sort').valid &&
+              (form.get('sort').dirty || form.get('sort').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('sort').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
   
       </div>
 

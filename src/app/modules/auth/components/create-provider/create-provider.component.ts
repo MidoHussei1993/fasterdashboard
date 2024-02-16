@@ -287,13 +287,13 @@ export class CreateProviderComponent implements OnInit {
   submit() {
     this.form.markAllAsTouched();
     if (!this.form.valid) return;
-    if (
-      this.form.controls.phoneNumber.value !=
-      this.form.controls.stcPayPhoneNumber.value
-    ) {
-      this.notifier.notify('error', this.translate.instant('_.phoneSTC'));
-      return;
-    }
+    // if (
+    //   this.form.controls.phoneNumber.value !=
+    //   this.form.controls.stcPayPhoneNumber.value
+    // ) {
+    //   this.notifier.notify('error', this.translate.instant('_.phoneSTC'));
+    //   return;
+    // }
     if (this.mode === FormMode.Create) {
       this.create();
     }

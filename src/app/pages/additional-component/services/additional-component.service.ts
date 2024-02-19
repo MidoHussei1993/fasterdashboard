@@ -52,4 +52,11 @@ export class AdditionalComponentService {
   delete(id: number): Observable<any> {
     return this.http.delete<any>(API.delete(id));
   }
+  ChangeActivation(id: any): Observable<any> {
+    return this.http.post<any>(API.ChangeActivation,{},{
+      params:{
+        AdditionalComponentId:id
+      }
+    });
+  }
 }

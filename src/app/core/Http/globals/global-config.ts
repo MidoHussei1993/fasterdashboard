@@ -1,5 +1,5 @@
-// export const BaseURL = 'http://api.faster.sa:5005';
-export const BaseURL = 'https://api.faster.sa:5001';
+export const BaseURL = 'http://api.faster.sa:5005';
+// export const BaseURL = 'https://api.faster.sa:5001';
 
 export const FasterAPI = BaseURL + '/api';
 

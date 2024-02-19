@@ -8,6 +8,7 @@ import { SwalModalService } from 'src/app/shared/services/swal-modal.service';
 import { ProductAdditionalOption } from '../../models';
 import { ProductService } from '../../services';
 import { ProductAdditionalOptionService } from '../services';
+import { AdditionalComponentService } from 'src/app/pages/additional-component/services/additional-component.service';
 
 @Component({
   selector: 'app-product-additional-options-list',
@@ -32,6 +33,7 @@ export class ProductAdditionalOptionsListComponent implements OnInit {
     private productAdditionalOptionService: ProductAdditionalOptionService,
     private notify: NotifierService,
     private translate: TranslateService,
+    private additionalComponentService: AdditionalComponentService,
     private spinner: NgxSpinnerService
   ) {}
 
@@ -63,7 +65,7 @@ export class ProductAdditionalOptionsListComponent implements OnInit {
   changeActivation(index: number) {
     console.log(index);
     this.spinner.show();
-    this.productAdditionalOptionService.changeActivation(this.productAdditionalOptionList[index].productAdditionalOptionsId)
+    this.additionalComponentService.ChangeActivation(this.productAdditionalOptionList[index].id)
       .subscribe(
         (res) => {
           this.spinner.hide();

@@ -1,0 +1,55 @@
+<div class="card card-flush shadow-sm">
+  <div class="card-body">
+    <table
+      class="table table-hover table-rounded table-striped border gy-7 gs-7"
+    >
+      <thead>
+        <tr>
+          <th *ngFor="let title of titles" class="text-center">
+            {{ title | translate }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of list; let i = index">
+          <th class="text-center">
+            <h5 class="d-inline">
+              {{ item.day }}
+            </h5>
+          </th>
+          <td class="bg-success">
+            <input
+              type="time"
+              class="form-control"
+              [(ngModel)]="item.fromHour"
+            />
+          </td>
+          <td class="bg-success">
+            <input type="time" class="form-control" [(ngModel)]="item.toHour" />
+          </td>
+          <td class="bg-primary">
+            <input
+              type="time"
+              class="form-control"
+              [(ngModel)]="item.secondShiftFromHour"
+            />
+          </td>
+          <td class="bg-primary">
+            <input
+              type="time"
+              class="form-control"
+              [(ngModel)]="item.secondShiftToHour"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row justify-content-end">
+      <div class="col-lg-2 col-md-3 col-sm-12">
+        <button (click)="save()" class="btn btn-primary d-block w-100 btn-sm">
+          {{ "action.save" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

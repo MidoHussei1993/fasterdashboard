@@ -17,6 +17,7 @@ import { PriviledgeComponent } from './users/priviledge/priviledge.component';
 import { AcceptanceRateComponent } from './providers/acceptance-rate/acceptance-rate.component';
 import { CustomerAdressesComponent } from './customer-adresses/customer-adresses.component';
 import { RefundRequestSearchComponent } from './refund-request-search/refund-request-search.component';
+import { ApplicationWorkTimeListComponent } from './application-work-time-list/application-work-time-list.component';
 
 const routes: Routes = [
   {
@@ -103,6 +104,10 @@ const routes: Routes = [
       {
         path: 'refund-request-search',
         component: RefundRequestSearchComponent,
+      },
+      {
+        path: 'application-work-time-list',
+        component: ApplicationWorkTimeListComponent,
       },
     ],
   },

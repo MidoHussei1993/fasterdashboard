@@ -14,20 +14,20 @@ import { ProductBranchService } from '../services/product-branch.service';
 @Component({
   selector: 'app-product-branch-crud',
   templateUrl: './product-branch-crud.component.html',
-  styleUrls: ['./product-branch-crud.component.scss']
+  styleUrls: ['./product-branch-crud.component.scss'],
 })
 export class ProductBranchCrudComponent implements OnInit {
   mode: FormMode;
   form: FormGroup;
-  busyLoading:boolean = false;
-  currentLanguage:string = '';
+  busyLoading: boolean = false;
+  currentLanguage: string = '';
   shopBranchList: any[] = [];
   busyLoadingShopBranch: boolean = false;
   productList: any[] = [];
   busyLoadingProduct: boolean = false;
   shoptList: Dropdown[] = [];
   busyLoadingshop: boolean = false;
-
+  shopId = null;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -35,18 +35,15 @@ export class ProductBranchCrudComponent implements OnInit {
     private productBranchService: ProductBranchService,
     private notifier: NotifierService,
     private translate: TranslateService,
-    private spinner:NgxSpinnerService ,
+    private spinner: NgxSpinnerService,
     private productService: ProductService,
-    private shopService: ShopService,
-
-
-  ) { 
+    private shopService: ShopService
+  ) {
     this.form = this.formBuilder.group({
       id: [0],
-      isActive: ['', [ Validators.required]],
-      productId: ['', [ Validators.required]],
-      shopBranchId: ['', [ Validators.required]],
-     
+      isActive: ['', [Validators.required]],
+      productId: ['', [Validators.required]],
+      shopBranchId: ['', [Validators.required]],
     });
 
     this.mode = this.route.snapshot.data.mode;
@@ -59,46 +56,63 @@ export class ProductBranchCrudComponent implements OnInit {
 
   ngOnInit(): void {
     this.getShopList();
+    if (this.route.snapshot.queryParams.shopId) {
+      this.shopId = +this.route.snapshot.queryParams.shopId;
+      this.getDropDowns(+this.route.snapshot.queryParams.shopId);
+    }
+    if (this.route.snapshot.queryParams.ShopBranchId) {
+      this.form
+        .get('shopBranchId')
+        .patchValue(+this.route.snapshot.queryParams.ShopBranchId);
+    }
   }
-  getShopList(){
+  getShopList() {
     this.busyLoadingshop = true;
-    this.shopService.getDropdown().subscribe((res:any) =>{
-      this.busyLoadingshop = false;
-      this.shoptList = res
-    }, err =>{
-      console.log(err);
-      this.busyLoadingshop = false;
-    })
+    this.shopService.getDropdown().subscribe(
+      (res: any) => {
+        this.busyLoadingshop = false;
+        this.shoptList = res;
+      },
+      (err) => {
+        console.log(err);
+        this.busyLoadingshop = false;
+      }
+    );
   }
 
-  getDropDowns(id){
+  getDropDowns(id) {
     this.getShopBranchList(id);
     this.getProductsDDLByShopId(id);
   }
-  getShopBranchList(shopId){
+  getShopBranchList(shopId) {
     // console.log(id)
     this.shopBranchList = [];
     this.busyLoadingShopBranch = true;
-    this.productBranchService.getShopBranchDDL(shopId).subscribe((res:any) =>{
-      this.busyLoadingShopBranch = false;
-      this.shopBranchList = res.returnData
-    }, err =>{
-      console.log(err);
-      this.busyLoadingShopBranch = false;
-    })
+    this.productBranchService.getShopBranchDDL(shopId).subscribe(
+      (res: any) => {
+        this.busyLoadingShopBranch = false;
+        this.shopBranchList = res.returnData;
+      },
+      (err) => {
+        console.log(err);
+        this.busyLoadingShopBranch = false;
+      }
+    );
   }
-  getProductsDDLByShopId(shopId){
+  getProductsDDLByShopId(shopId) {
     this.productList = [];
     this.busyLoadingProduct = true;
-    this.productService.getProductsDDLByShopId(shopId).subscribe((res:Dropdown[]) =>{
-      this.busyLoadingProduct = false;
-      this.productList = res
-    }, err =>{
-      console.log(err);
-      this.busyLoadingProduct = false;
-    })
+    this.productService.getProductsDDLByShopId(shopId).subscribe(
+      (res: Dropdown[]) => {
+        this.busyLoadingProduct = false;
+        this.productList = res;
+      },
+      (err) => {
+        console.log(err);
+        this.busyLoadingProduct = false;
+      }
+    );
   }
-
 
   // getProductBranchById(){
   //   this.busyLoading = true;
@@ -115,8 +129,8 @@ export class ProductBranchCrudComponent implements OnInit {
 
   submit() {
     this.form.markAllAsTouched();
-    if(!this.form.valid) return;
-    console.log(this.form)
+    if (!this.form.valid) return;
+    console.log(this.form);
     if (this.mode === FormMode.Create) {
       this.create();
     }
@@ -124,14 +138,20 @@ export class ProductBranchCrudComponent implements OnInit {
   create() {
     let body = this.form.value;
     this.spinner.show();
-    this.productBranchService.create(body).subscribe(result => {
-      this.form.reset();
-      this.form.get('id').patchValue(0);
-      this.spinner.hide();
-      this.notifier.notify('success',this.translate.instant('global.created'))
-    },err=>{
-      this.spinner.hide();
-      // this.notifier.notify('error',err)
-    })
+    this.productBranchService.create(body).subscribe(
+      (result) => {
+        this.form.reset();
+        this.form.get('id').patchValue(0);
+        this.spinner.hide();
+        this.notifier.notify(
+          'success',
+          this.translate.instant('global.created')
+        );
+      },
+      (err) => {
+        this.spinner.hide();
+        // this.notifier.notify('error',err)
+      }
+    );
   }
 }

@@ -16,6 +16,12 @@ export class SidebaritemsService {
 
       childern: [
         {
+          title: 'ApplicationWorkTimes',
+          link: '/identity/application-work-time-list',
+          childern: [],
+          role: ['administrator'],
+        },
+        {
           title: 'users',
           link: '/identity/users',
           childern: [],

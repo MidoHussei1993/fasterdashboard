@@ -25,6 +25,8 @@ import { AcceptanceRateComponent } from './providers/acceptance-rate/acceptance-
 import { ProviderModule } from '../provider/provider.module';
 import { CustomerAdressesComponent } from './customer-adresses/customer-adresses.component';
 import { RefundRequestSearchComponent } from './refund-request-search/refund-request-search.component';
+import { ApplicationWorkTimeListComponent } from './application-work-time-list/application-work-time-list.component';
+import { ApplicationWorkTimeCrudComponent } from './application-work-time-crud/application-work-time-crud.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { RefundRequestSearchComponent } from './refund-request-search/refund-req
     AcceptanceRateComponent,
     CustomerAdressesComponent,
     RefundRequestSearchComponent,
+    ApplicationWorkTimeListComponent,
+    ApplicationWorkTimeCrudComponent,
   ],
   imports: [
     CommonModule,

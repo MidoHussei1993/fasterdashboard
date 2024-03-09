@@ -21,7 +21,7 @@ export class ListComponent<ListType, FilterType extends Filter> {
     PageNumber: null,
     PageSize: null,
   };
-  navigateTo: string = "";
+  navigateTo: string = '';
 
   searchValue(): void {
     this.getList();
@@ -38,16 +38,20 @@ export class ListComponent<ListType, FilterType extends Filter> {
   //     this.getList();
   //   }
 
-  getList() {
-    console.log('get list of items')
+  getList(cb?: Function) {
+    console.log('get list of items');
     this.spinner.show();
     this.mainService.get(this.filter).subscribe(
       (res: any) => {
-        console.log(res)
+        console.log(res);
         this.spinner.hide();
-        this.list = res.data;
-        delete res.data
-        this.pagination = res;
+        if (cb && typeof cb == 'function') {
+          cb(res);
+        } else {
+          this.list = res.data;
+          delete res.data;
+          this.pagination = res;
+        }
       },
       (err) => {
         console.log(err);

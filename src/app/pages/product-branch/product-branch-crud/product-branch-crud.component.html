@@ -1,145 +1,155 @@
 <div class="card card-flush shadow-sm">
-    <div class="card-header">
-      <h3 class="card-title">
-        <span> {{ mode | translate }} - </span>
-        <span class="mx-2"> {{ "menu.branchProduct" | translate }} </span>
-      </h3>
-    </div>
-    <div class="card-body">
-      <form [formGroup]="form" (ngSubmit)="submit()">
-    
-        <div class="row my-5">
-         
-            <div class="col-md-12 col-sm-12">
-              <label class="form-label">{{ "menu.Shop" | translate }}</label>
-              <select
-                (change)="getDropDowns($event.target['value'])"
-                class="form-select form-select-solid"
-              >
-                <option [value]="shop.id" *ngFor="let shop of shoptList">
-                  {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
-                </option>
-              </select>
-              <div
-                *ngIf="
-                  !form.get('shopBranchId').valid &&
-                  (form.get('shopBranchId').dirty || form.get('shopBranchId').touched)
-                "
-                class="text text-danger"
-              >
-                <p *ngIf="form.get('shopBranchId').hasError('required')">
-                  {{ "_.required" | translate }}
-                </p>
-              </div>
-            </div>
-            
-          </div>
-          <div class="row my-5">
-            <div class="col-md-6 col-sm-12">
-              <label class="form-label">{{ "menu.products" | translate }}</label>
-              <select
-                formControlName="productId"
-                class="form-select form-select-solid"
-              >
-                <option [value]="product.id" *ngFor="let product of productList">
-                  {{ currentLanguage == "en" ? product.productName : product.productNameAr }}
-                </option>
-              </select>
-              <div
-                *ngIf="
-                  !form.get('productId').valid &&
-                  (form.get('productId').dirty || form.get('productId').touched)
-                "
-                class="text text-danger"
-              >
-                <p *ngIf="form.get('productId').hasError('required')">
-                  {{ "_.required" | translate }}
-                </p>
-              </div>
-            </div>
-              <div class="col-md-6 col-sm-12">
-                <label class="form-label">{{ "menu.Shop_Branch" | translate }}</label>
-                <select
-                  formControlName="shopBranchId"
-                  class="form-select form-select-solid"
-                >
-                  <option [value]="shopBranch.id" *ngFor="let shopBranch of shopBranchList">
-                    {{ currentLanguage == "en" ? shopBranch.descriptionLocation : shopBranch.descriptionLocationAr }}
-                  </option>
-                </select>
-                <div
-                  *ngIf="
-                    !form.get('shopBranchId').valid &&
-                    (form.get('shopBranchId').dirty || form.get('shopBranchId').touched)
-                  "
-                  class="text text-danger"
-                >
-                  <p *ngIf="form.get('shopBranchId').hasError('required')">
-                    {{ "_.required" | translate }}
-                  </p>
-                </div>
-              </div>
-              
-            </div>
-
-         <div class="row my-5">
-            <p>{{ "field.activation" | translate }}</p>
-            <div class="col-md-6 col-sm-12">
-              <div class="row">
-                <div class="col-4 mx-auto">
-                  <label class="form-check form-check-custom form-check-solid">
-                    <input
-                      class="form-check-input mx-2"
-                      type="radio"
-                      [value]="true"
-                      name="isActive"
-                      formControlName="isActive"
-                    />
-                    <span class="form-check-label">
-                      {{ "field.active" | translate }}
-                    </span>
-                  </label>
-                </div>
-                <div class="col-4 mx-auto">
-                  <label class="form-check form-check-custom form-check-solid">
-                    <input
-                      class="form-check-input mx-2"
-                      type="radio"
-                      [value]="false"
-                      name="isActive"
-                      formControlName="isActive"
-                    />
-                    <span class="form-check-label">
-                      {{ "field.not_active" | translate }}
-                    </span>
-                  </label>
-                </div>
-              </div>
-              <div
-                *ngIf="
-                  !form.get('isActive').valid &&
-                  (form.get('isActive').dirty || form.get('isActive').touched)
-                "
-                class="text text-danger"
-              >
-                <p *ngIf="form.get('isActive').hasError('required')">
-                  {{ "_.required" | translate }}
-                </p>
-              </div>
-            </div>
-          </div>
-  
-        <div class="row my-5" *ngIf="mode != 'View'">
-          <div class="col-md-4 col-sm-12 mx-auto text-center">
-            <button
-              type="submit"
-              class="btn btn-primary btn-block btn-hover-scale"
-            >
-              {{ "action.save" | translate }}
-            </button>
+  <div class="card-header">
+    <h3 class="card-title">
+      <span> {{ mode | translate }} - </span>
+      <span class="mx-2"> {{ "menu.branchProduct" | translate }} </span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row my-5">
+        <div class="col-md-12 col-sm-12">
+          <label class="form-label">{{ "menu.Shop" | translate }}</label>
+          <select
+            (change)="getDropDowns($event.target['value'])"
+            [(ngModel)]="shopId"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-select form-select-solid"
+          >
+            <option [value]="shop.id" *ngFor="let shop of shoptList">
+              {{ currentLanguage == "en" ? shop.name : shop.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('shopBranchId').valid &&
+              (form.get('shopBranchId').dirty ||
+                form.get('shopBranchId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('shopBranchId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+      <div class="row my-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "menu.products" | translate }}</label>
+          <select
+            formControlName="productId"
+            class="form-select form-select-solid"
+          >
+            <option [value]="product.id" *ngFor="let product of productList">
+              {{
+                currentLanguage == "en"
+                  ? product.productName
+                  : product.productNameAr
+              }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('productId').valid &&
+              (form.get('productId').dirty || form.get('productId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('productId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "menu.Shop_Branch" | translate }}</label>
+          <select
+            formControlName="shopBranchId"
+            class="form-select form-select-solid"
+          >
+            <option
+              [value]="shopBranch.id"
+              *ngFor="let shopBranch of shopBranchList"
+            >
+              {{
+                currentLanguage == "en"
+                  ? shopBranch.descriptionLocation
+                  : shopBranch.descriptionLocationAr
+              }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !form.get('shopBranchId').valid &&
+              (form.get('shopBranchId').dirty ||
+                form.get('shopBranchId').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('shopBranchId').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <p>{{ "field.activation" | translate }}</p>
+        <div class="col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="true"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.active" | translate }}
+                </span>
+              </label>
+            </div>
+            <div class="col-4 mx-auto">
+              <label class="form-check form-check-custom form-check-solid">
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  [value]="false"
+                  name="isActive"
+                  formControlName="isActive"
+                />
+                <span class="form-check-label">
+                  {{ "field.not_active" | translate }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              !form.get('isActive').valid &&
+              (form.get('isActive').dirty || form.get('isActive').touched)
+            "
+            class="text text-danger"
+          >
+            <p *ngIf="form.get('isActive').hasError('required')">
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-5" *ngIf="mode != 'View'">
+        <div class="col-md-4 col-sm-12 mx-auto text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block btn-hover-scale"
+          >
+            {{ "action.save" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
-  
+</div>

@@ -13,6 +13,7 @@ export const locale = {
       login: 'تاكد من ادخال اسم مستخدم وكلمة سر صحيحية',
     },
     menu: {
+      ApplicationWorkTimes: 'أوقات عمل التطبيق',
       wallet: 'محفظة السائقين',
       Regions: 'المناطق',
       City: 'المدينة',
@@ -876,5 +877,12 @@ export const locale = {
     isApprovedByAdmin: 'تمت الموافقة عليه بواسطة المدير',
     makeProviderAmountRequest: 'طلب سحب مبلغ',
     AmountRequest: ' سحب المبلغ',
+    RefundOfThePaidOrderValue: 'استرجاع قيمة الطلب المدفوعة',
+    ProductsAvailableInTheProduct: 'المنتجات المتوفرة في المنتج',
+    ApplicationWorkTimes: 'أوقات عمل التطبيق',
+    firstShiftStartAt: 'الشيفت الأول يبدا في',
+    firstShiftEndAt: 'الشيفت الأول ينتهي في',
+    secondShiftStartAt: 'الشفت الثاني يبدا في',
+    secondShiftEndAt: 'الشفت الثاني ينتهي في',
   },
 };

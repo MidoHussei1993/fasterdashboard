@@ -31,24 +31,30 @@
         {{ "field.orderType" | translate }} : Delivery 📦
       </h3>
     </div>
-    <div class="col-3 " style="text-align: end;">
+    <div class="col-3" style="text-align: end">
       <button
-       *ngIf="mode == 'Edit' && !isShop"
+        *ngIf="mode == 'Edit' && !isShop"
         type="button"
         (click)="orderAmountPrice = 0; openModal('orderAmountPriceModal')"
         class="btn btn-danger btn-sm mt-3 mx-2"
       >
         {{ "field.confirmAmount" | translate }}
       </button>
-      <button *ngIf="mode == 'Edit' && !isShop" type="button" (click)="openModal('stateModel')"
-      class="btn btn-dark btn-sm mt-3">
-      {{ "action.changeStatus" | translate }}
-    </button>
-    <button  type="button"  (click)="sendOrderToLyve()"
-      class="btn btn-primary btn-sm mt-3 mx-2">
-      {{ "sendOrederToLive" | translate }}
-    </button>
-
+      <button
+        *ngIf="mode == 'Edit' && !isShop"
+        type="button"
+        (click)="openModal('stateModel')"
+        class="btn btn-dark btn-sm mt-3"
+      >
+        {{ "action.changeStatus" | translate }}
+      </button>
+      <button
+        type="button"
+        (click)="RefundAmountRequestByOrderId()"
+        class="btn btn-primary btn-sm mt-3 mx-2"
+      >
+        {{ "RefundOfThePaidOrderValue" | translate }}
+      </button>
     </div>
   </div>
   <div class="card-body">

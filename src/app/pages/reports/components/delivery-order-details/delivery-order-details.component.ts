@@ -119,18 +119,20 @@ export class DeliveryOrderDetailsComponent implements OnInit {
     );
   }
 
-  sendOrderToLyve() {
+  RefundAmountRequestByOrderId() {
     this.spinner.show();
-    this.deliveryOrderService
-      .sendOrderToLyve(+this.route.snapshot.params.id)
+    this.customerWalletService
+      .RefundAmountRequestByOrderId(+this.route.snapshot.params.id)
       .subscribe(
         (res) => {
           this.spinner.hide();
-          if (res.errorMessage) {
-            this.notifier.notify('error', res.errorMessage);
-          }
-          if (res.isSucceeded) {
-            this.notifier.notify('success', res.returnData);
+          if (res) {
+            if (res.errorMessage) {
+              this.notifier.notify('error', res.errorMessage);
+            }
+            if (res.isSucceeded) {
+              this.notifier.notify('success', res.returnData);
+            }
           }
         },
         (err) => {

@@ -1,5 +1,5 @@
-export const BaseURL = 'http://api.faster.sa:5005';
-// export const BaseURL = 'https://api.faster.sa:5001';
+// export const BaseURL = 'http://api.faster.sa:5005';
+export const BaseURL = 'https://api.faster.sa:5001';
 
 export const FasterAPI = BaseURL + '/api';
 
@@ -265,6 +265,8 @@ export class END_POINTS {
       FasterAPI + `/CustomerWallet/RejectRefund/${id}`,
     RefundAmountRequest: (id: number) =>
       FasterAPI + `/CustomerWallet/RefundAmountRequest/${id}`,
+    RefundAmountRequestByOrderId: (orderId: number) =>
+      FasterAPI + `/CustomerWallet/RefundAmountRequestByOrderId/${orderId}`,
   };
 
   // report
@@ -715,7 +717,7 @@ export class END_POINTS {
     ChangeActivation: FasterAPI + `/AdditionalComponentTitle/changeActivation`,
     GetDDL: FasterAPI + `/AdditionalComponentTitle/GetDDL`,
   };
-  
+
   public static additionalComponent = {
     search: FasterAPI + '/AdditionalComponent' + OperationEnum.SEARCH,
     getById: FasterAPI + '/AdditionalComponent' + OperationEnum.GET_BY_ID,
@@ -814,5 +816,10 @@ export class END_POINTS {
     GetGiftCardTypesSendSearch: FasterAPI + '/GiftCard/GetGiftCardSendSearch',
     ChangeActivation: (id: string) =>
       FasterAPI + `/GiftCard/changeActivation/${id}`,
+  };
+
+  public static ApplicationWorkTime = {
+    get: FasterAPI + '/ApplicationWorkTime/GetAll',
+    Update: FasterAPI + '/ApplicationWorkTime/Update',
   };
 }

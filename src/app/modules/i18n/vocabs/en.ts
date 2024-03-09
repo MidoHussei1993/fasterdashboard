@@ -13,6 +13,7 @@ export const locale = {
       login: 'make sure to enter correct username and password',
     },
     menu: {
+      ApplicationWorkTimes: 'Application Work Times',
       wallet: 'Driver Wallet',
       Regions: 'Regions',
       City: 'City',
@@ -878,5 +879,12 @@ export const locale = {
     isApprovedByAdmin: 'Is approved by admin',
     makeProviderAmountRequest: 'Make provider amount request',
     AmountRequest: 'Amount request',
+    RefundOfThePaidOrderValue: 'Refund of the paid order value',
+    ProductsAvailableInTheProduct: 'Products available in the product',
+    ApplicationWorkTimes: 'Application Work Times',
+    firstShiftStartAt: 'First Shift Start At',
+    firstShiftEndAt: 'First Shift End At',
+    secondShiftStartAt: 'Second Shift Start At',
+    secondShiftEndAt: 'Second Shift End At',
   },
 };

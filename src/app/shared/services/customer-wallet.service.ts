@@ -112,4 +112,7 @@ export class CustomerWalletService {
   RefundAmountRequest(walletId: number): Observable<any> {
     return this.http.post<any>(API.RefundAmountRequest(walletId), {});
   }
+  RefundAmountRequestByOrderId(orderId: number): Observable<any> {
+    return this.http.post<any>(API.RefundAmountRequestByOrderId(orderId), {});
+  }
 }

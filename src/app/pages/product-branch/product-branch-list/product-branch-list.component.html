@@ -1,12 +1,9 @@
 <div class="card shadow-sm">
   <div class="card-body">
-    <a
-      class="btn btn-sm btn-primary mb-3"
-      [routerLink]="'/branch-product/create'"
-    >
+    <button class="btn btn-sm btn-primary mb-3" (click)="navigateToCreate()">
       <i class="fas fa-plus"></i>
       {{ "action.create" | translate }}
-    </a>
+    </button>
     <div class="card bg-light">
       <div class="card-body">
         <app-filter [filter]="filter"></app-filter>

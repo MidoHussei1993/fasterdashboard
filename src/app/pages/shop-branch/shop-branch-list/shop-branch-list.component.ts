@@ -133,7 +133,7 @@ export class ShopBranchListComponent implements OnInit {
         type: 'product',
       },
       {
-        title: 'menu.branchProduct',
+        title: 'ProductsAvailableInTheProduct',
         icon: 'fa-code-branch',
         type: 'productBranch',
       },
@@ -295,7 +295,7 @@ export class ShopBranchListComponent implements OnInit {
         break;
       case 'productBranch':
         this.router.navigateByUrl(
-          `branch-product?ShopBranchId=${shopBranch.event.id}`
+          `branch-product?shopId=${shopBranch.event.shopId}&ShopBranchId=${shopBranch.event.id}`
         );
         break;
       case 'shop':

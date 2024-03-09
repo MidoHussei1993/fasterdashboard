@@ -38,12 +38,13 @@ export class ProductBranchListComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private headerService: HeaderService,
     private translate: TranslateService,
+    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.headerService.setPageTitle(
-      this.translate.instant('menu.branchProduct')
+      this.translate.instant('ProductsAvailableInTheProduct')
     );
     this.filter.PageNumber = 1;
     this.filter.PageSize = 10;
@@ -52,6 +53,11 @@ export class ProductBranchListComponent implements OnInit {
 
   searchValue(): void {
     this.getProductBranchList();
+  }
+  navigateToCreate() {
+    this.router.navigateByUrl(
+      `/branch-product/create?shopId=${this.activatedRoute.snapshot.queryParams.shopId}&ShopBranchId=${this.activatedRoute.snapshot.queryParams.ShopBranchId}`
+    );
   }
   resetfilter() {
     let pagePagination = {

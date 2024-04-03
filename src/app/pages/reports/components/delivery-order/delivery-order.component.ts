@@ -110,7 +110,7 @@ export class DeliveryOrderComponent implements OnInit, OnDestroy {
       this.translate.instant('menu.DeliveryOrderDataReport')
     );
     this.isVender = isVender();
-    this.filter = new OrderReportFilter();
+    this.filter = new OrderReportFilter(null);
     if (isVender()) {
       delete this.filter.CustomerId;
       delete this.filter.ShopId;
@@ -330,6 +330,9 @@ export class DeliveryOrderComponent implements OnInit, OnDestroy {
       case 'sendOrederToLive':
         this.sendOrderToLyve(order.event.id);
         break;
+      case 'reDispatchOrder':
+        this.ReDispatchOrder(order.event.id);
+        break;
 
       default:
         break;
@@ -436,5 +439,27 @@ export class DeliveryOrderComponent implements OnInit, OnDestroy {
         );
       }
     });
+  }
+
+  ReDispatchOrder(id: any): void {
+    this.swalService
+      .Confirmation('reDispatchOrderMsg', '', 'reDispatch')
+      .then((res) => {
+        if (res) {
+          this.spinner.show();
+          this.deliveryOrderService.ReDispatchOrder(id).subscribe(
+            (res) => {
+              this.spinner.hide();
+              this.notifier.notify(
+                'success',
+                this.translate.instant('action.done')
+              );
+            },
+            (err) => {
+              this.spinner.hide();
+            }
+          );
+        }
+      });
   }
 }

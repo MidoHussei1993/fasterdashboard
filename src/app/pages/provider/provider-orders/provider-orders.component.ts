@@ -13,7 +13,7 @@ import { ReportsService } from '../../reports/services/reports.service';
 @Component({
   selector: 'app-provider-orders',
   templateUrl: './provider-orders.component.html',
-  styleUrls: ['./provider-orders.component.scss']
+  styleUrls: ['./provider-orders.component.scss'],
 })
 export class ProviderOrdersComponent implements OnInit {
   deliveryOrderlist: OrderReport[] = [];
@@ -65,10 +65,10 @@ export class ProviderOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentLanguage = this.translate.currentLang;
-    this.filter = new OrderReportFilter();
+    this.filter = new OrderReportFilter(null);
     this.filter.PageNumber = 1;
     this.filter.PageSize = 50;
-    this.transportFilter = new OrderReportFilter();
+    this.transportFilter = new OrderReportFilter(null);
     this.transportFilter.PageNumber = 1;
     this.transportFilter.PageSize = 50;
     this.DeliveryOrderDataReport(this.filter);
@@ -216,8 +216,6 @@ export class ProviderOrdersComponent implements OnInit {
   transportFilter: OrderReportFilter;
   transportPagination: Pagination = new Pagination();
   transportActiveTab: string = 'created';
-
-
 
   getTransportOrderStatusDDL(): void {
     this.orderStatusService.TransportOrderStatusDDL().subscribe(

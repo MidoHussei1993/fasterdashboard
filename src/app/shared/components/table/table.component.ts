@@ -67,6 +67,27 @@ export class TableComponent implements OnInit {
     return this._allowDay;
   }
   @Input() set actionList(value: IActionLTable[]) {
+    if (this.showDelete) {
+      value.unshift({
+        title: 'Delete',
+        icon: 'fas fa-trash-alt text-danger',
+        type: 'deleteRow',
+      });
+    }
+    if (this.showView) {
+      value.unshift({
+        title: 'View',
+        icon: 'far fa-eye text-primary',
+        type: 'viewRow',
+      });
+    }
+    if (this.showEdit) {
+      value.unshift({
+        title: 'Edit',
+        icon: 'far fa-edit text-warning',
+        type: 'EditRow',
+      });
+    }
     this._allowDay = value.filter((action) => {
       action.label = this.translateService.instant(action.title);
       action.icon = 'fas mx-2 ' + action.icon;
@@ -171,6 +192,20 @@ export class TableComponent implements OnInit {
   EmitAaction(event: any, item: any): void {
     console.log(this.currentAction);
     console.log(...arguments);
+    switch (this.currentAction.type) {
+      case 'EditRow':
+        this.Edit(item);
+        break;
+      case 'deleteRow':
+        this.Delete(item);
+        break;
+      case 'viewRow':
+        this.View(item);
+        break;
+
+      default:
+        break;
+    }
     if (this.currentAction.link) {
       const URL = this.router.serializeUrl(
         this.router.createUrlTree([

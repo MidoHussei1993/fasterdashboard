@@ -114,10 +114,16 @@
           type: 'shopCartData',
           hide: !isVender && !isShop
         },
-         {
+        {
           title: 'sendOrederToLive',
           icon: 'fa-paper-plane',
           type: 'sendOrederToLive',
+          hide: !isVender && !isShop
+        },
+        {
+          title: 'reDispatchOrder',
+          icon: 'fa-redo-alt text-warning',
+          type: 'reDispatchOrder',
           hide: !isVender && !isShop
         }
       ]"

@@ -150,9 +150,9 @@ export class OpenDeliveryOrderComponent implements OnInit {
       this.filter.ProviderId =
         this.activatedRoute.snapshot.queryParams.providerId;
     }
-    let today = new Date();
-    today.setHours(0, 0, 0, 0);
-    this.filter.StartDate = today;
+    // let today = new Date();
+    // today.setHours(0, 0, 0, 0);
+    // this.filter.StartDate = today;
     this.DeliveryOrderDataReport();
     this.getStatusDropdown();
     this.GetPaymentTypesDDL();

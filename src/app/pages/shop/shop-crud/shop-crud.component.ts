@@ -56,13 +56,16 @@ export class ShopCrudComponent implements OnInit {
       shopDescription: [
         '',
         [
-          Validators.required,
+          // Validators.required,
           Validators.pattern(Pattern.OnlyEnglishLettersAndSpace),
         ],
       ],
       shopDescriptionAr: [
         '',
-        [Validators.required, Validators.pattern(Pattern.OnlyArabicLetters)],
+        [
+          // Validators.required,
+          Validators.pattern(Pattern.OnlyArabicLetters),
+        ],
       ],
       avatar: ['', Validators.required],
       isPartner: [true, Validators.required],

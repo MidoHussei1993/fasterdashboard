@@ -49,4 +49,8 @@ export class DeliveryOrderService {
   sendOrderToLyve(id: number): Observable<any> {
     return this.http.post<any>(API.SendOrderToLyve(id), {});
   }
+
+  ReDispatchOrder(id: number): Observable<any> {
+    return this.http.post<any>(API.ReDispatchOrder(id), {});
+  }
 }

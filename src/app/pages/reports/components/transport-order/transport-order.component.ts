@@ -13,7 +13,7 @@ import { ReportsService } from '../../services/reports.service';
 @Component({
   selector: 'app-transport-order',
   templateUrl: './transport-order.component.html',
-  styleUrls: ['./transport-order.component.scss']
+  styleUrls: ['./transport-order.component.scss'],
 })
 export class TransportOrderComponent implements OnInit {
   transportOrderList: OrderReport[] = [];
@@ -28,18 +28,18 @@ export class TransportOrderComponent implements OnInit {
     'cobone.status',
     'field.payTypeName',
     'field.orderType',
-     'field.orderAmount',
+    'field.orderAmount',
     // 'field.total',
   ];
   properties: string[] = [
-    "id",
-    "bookingDate",
+    'id',
+    'bookingDate',
     'createAt',
-    "customerName",
+    'customerName',
     // "providerId",
-    "providerName",
-    "hasOffers",
-    "statusName",
+    'providerName',
+    'hasOffers',
+    'statusName',
     'payTypeName',
     'typeName',
     'orderAmount',
@@ -64,19 +64,18 @@ export class TransportOrderComponent implements OnInit {
     private identityService: IdentityService,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
-    private excelService:ExcelService,
+    private excelService: ExcelService,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.currentLanguage = this.translate.currentLang;
-    this.filter = new OrderReportFilter();
+    this.filter = new OrderReportFilter(null);
     this.filter.PageNumber = 1;
     this.filter.PageSize = 50;
     let today = new Date();
-    today.setHours(0,0,0,0); 
-    this.filter.StartDate = today
+    today.setHours(0, 0, 0, 0);
+    this.filter.StartDate = today;
     this.getTransportOrderDataReport(this.filter);
     this.getStatusDropdown();
     this.GetPaymentTypesDDL();
@@ -92,7 +91,7 @@ export class TransportOrderComponent implements OnInit {
   }
   GetPaymentTypesDDL(): void {
     this.identityService.GetPaymentTypesDDL().subscribe(
-      (res:any) => {
+      (res: any) => {
         this.payTypeList = res.returnData;
       },
       (err) => {}
@@ -116,24 +115,27 @@ export class TransportOrderComponent implements OnInit {
   getTransportOrderDataReport(filter: OrderReportFilter) {
     this.busyLoading = true;
     this.spinner.show();
-    this.reportServices.TransportOrderDataReport(filter).subscribe((res: List<OrderReport>) => {
-      this.busyLoading = false;
-      this.spinner.hide();
-      this.transportOrderList = res.data.map((item: any) =>{
-        if (item.hasOffers) {
-          item.hasOffers = this.translate.instant('action.yes')
-        }else{
-          item.hasOffers = this.translate.instant('action.no')
-        }
-        return item
-      });
-      delete res.data;
-      this.pagination = { ...res }
-    }, err => {
-      console.log(err);
-      this.spinner.hide();
-      this.busyLoading = false;
-    })
+    this.reportServices.TransportOrderDataReport(filter).subscribe(
+      (res: List<OrderReport>) => {
+        this.busyLoading = false;
+        this.spinner.hide();
+        this.transportOrderList = res.data.map((item: any) => {
+          if (item.hasOffers) {
+            item.hasOffers = this.translate.instant('action.yes');
+          } else {
+            item.hasOffers = this.translate.instant('action.no');
+          }
+          return item;
+        });
+        delete res.data;
+        this.pagination = { ...res };
+      },
+      (err) => {
+        console.log(err);
+        this.spinner.hide();
+        this.busyLoading = false;
+      }
+    );
   }
   setPageSize(pageSize) {
     if (pageSize == this.filter.PageSize) return;
@@ -147,24 +149,30 @@ export class TransportOrderComponent implements OnInit {
     this.getTransportOrderDataReport(this.filter);
   }
 
-  navigateToEdit(orderReport: OrderReport){
+  navigateToEdit(orderReport: OrderReport) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/report/transport-order/edit/${orderReport.id}`]
-      , { queryParams: { statusId: orderReport.statusId} })
+      this.router.createUrlTree(
+        [`/report/transport-order/edit/${orderReport.id}`],
+        { queryParams: { statusId: orderReport.statusId } }
+      )
     );
     window.open(url, '_blank');
   }
-  navigateToView(orderReport: OrderReport){
+  navigateToView(orderReport: OrderReport) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/report/transport-order/details/${orderReport.id}`])
+      this.router.createUrlTree([
+        `/report/transport-order/details/${orderReport.id}`,
+      ])
     );
     window.open(url, '_blank');
   }
 
-  navigateTO( order: { event: any; type: string }) {
+  navigateTO(order: { event: any; type: string }) {
     switch (order.type) {
       case 'assignProvider':
-        this.router.navigateByUrl(`providers/near-delivery-provider/${order.event.id}?shopBranchLatitude=${order.event.orderLatitude}&shopBranchLongitude=${order.event.orderLongitude}`);
+        this.router.navigateByUrl(
+          `providers/near-delivery-provider/${order.event.id}?shopBranchLatitude=${order.event.orderLatitude}&shopBranchLongitude=${order.event.orderLongitude}`
+        );
         break;
 
       default:
@@ -172,27 +180,26 @@ export class TransportOrderComponent implements OnInit {
     }
   }
 
-  downloadAll(){
-    let downloadFilter : any = this.filter;
+  downloadAll() {
+    let downloadFilter: any = this.filter;
     downloadFilter.PageNumber = 1;
     downloadFilter.PageSize = this.pagination.totalItemCount;
     this.reportServices.TransportOrderDataReport(downloadFilter).subscribe(
       (res: List<OrderReport>) => {
         this.spinner.hide();
-        let data = res.data.map((item:any) =>{
-          if(item.statusId != 10 && item.statusId != 11){
-            item.orderAmount = 0
-            item.orderVat = 0
+        let data = res.data.map((item: any) => {
+          if (item.statusId != 10 && item.statusId != 11) {
+            item.orderAmount = 0;
+            item.orderVat = 0;
           }
-          return item
-        })
+          return item;
+        });
         this.excelService.exportAsExcelFile(data, 'data_file');
       },
       (err) => {
         this.spinner.hide();
         console.log(err);
       }
-    )
+    );
   }
-
 }

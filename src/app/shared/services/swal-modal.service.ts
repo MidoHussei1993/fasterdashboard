@@ -38,7 +38,11 @@ export class SwalModalService {
     });
   }
 
-  async Confirmation(title: string = 'action.sure', text?): Promise<boolean> {
+  async Confirmation(
+    title: string = 'action.sure',
+    text?,
+    acceptButtonText?: string
+  ): Promise<boolean> {
     return await Swal.fire({
       title: this.translate.instant(title),
       ...(text && { html: text }),
@@ -46,7 +50,9 @@ export class SwalModalService {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: this.translate.instant('action.yes'),
+      confirmButtonText: this.translate.instant(
+        acceptButtonText ? acceptButtonText : 'action.yes'
+      ),
       cancelButtonText: this.translate.instant('action.no'),
     }).then((result) => {
       return result.isConfirmed;

@@ -108,7 +108,7 @@ export class ClosedDeliveryOrderComponent implements OnInit {
   ngOnInit(): void {
     this.headerService.setPageTitle(this.translate.instant('menu.closedOrder'));
     this.isVender = isVender();
-    this.filter = new OrderReportFilter();
+    this.filter = new OrderReportFilter(null);
     if (isVender()) {
       delete this.filter.CustomerId;
       delete this.filter.ShopId;

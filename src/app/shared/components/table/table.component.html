@@ -164,7 +164,7 @@
               (showDelete || showEdit || showView || addActions) && hideActions
             "
           >
-            <i
+            <!-- <i
               title="{{ 'View' | translate }}"
               class="lar la-eye"
               *ngIf="showView"
@@ -181,7 +181,7 @@
               class="las la-trash-alt"
               *ngIf="showDelete"
               (click)="Delete(item)"
-            ></i>
+            ></i> -->
             <span *ngIf="addActions" style="position: relative">
               <p-button
                 title="{{ 'field.refresh' | translate }}"

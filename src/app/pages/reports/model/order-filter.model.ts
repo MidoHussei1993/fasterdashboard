@@ -1,7 +1,9 @@
 export class OrderReportFilter {
-  constructor() {
+  constructor(startdata?: any) {
     this.Id = null;
-    this.StartDate = null;
+    if (startdata === null) {
+      this.StartDate = null;
+    }
     this.EndDate = null;
     this.ShopId = null;
     this.ProviderId = null;

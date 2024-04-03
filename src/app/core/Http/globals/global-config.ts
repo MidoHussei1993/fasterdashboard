@@ -1,5 +1,5 @@
-// export const BaseURL = 'http://api.faster.sa:5005';
-export const BaseURL = 'https://api.faster.sa:5001';
+export const BaseURL = 'http://api.faster.sa:5005';
+// export const BaseURL = 'https://api.faster.sa:5001';
 
 export const FasterAPI = BaseURL + '/api';
 
@@ -616,6 +616,8 @@ export class END_POINTS {
       FasterAPI + `/DeliveryOrder/acceptOrder/${orderId}`,
     rejectOrder: (orderId: any): string =>
       FasterAPI + `/DeliveryOrder/rejectOrder/${orderId}`,
+    ReDispatchOrder: (orderId: any): string =>
+      FasterAPI + `/DeliveryOrder/ReDispatchOrder/${orderId}`,
     SendOrderToLyve: (orderId: any): string =>
       FasterAPI + `/Lyve/SendOrderToLyve/${orderId}`,
   };

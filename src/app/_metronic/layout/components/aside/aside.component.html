@@ -1,13 +1,17 @@
 <!-- begin::Brand -->
-<div class="aside-logo flex-column-auto align-items-center" id="kt_aside_logo">
+<div
+  class="aside-logo flex-column-auto align-items-center pt-5"
+  id="kt_aside_logo"
+>
   <!-- begin::Logo -->
   <ng-container *ngIf="asideTheme === 'dark'">
     <a routerLink="/dashboard">
       <img
         alt="Logo"
-        width="192px"
-        class="h-50px logo"
-        src="./assets/images/Faster-Logo-PNG.png"
+        width="230px"
+        class="logo mt-3"
+        height="111px"
+        src="./assets/images/image 15.png"
       />
       <!-- <h3 class="d-inline pt-2">
         {{ "faster" | translate }}
@@ -37,10 +41,10 @@
       data-kt-toggle-target="body"
       data-kt-toggle-name="aside-minimize"
     >
-      <span
+      <!-- <span
         [inlineSVG]="'./assets/media/icons/duotune/arrows/arr079.svg'"
         class="svg-icon svg-icon-1 rotate-180"
-      ></span>
+      ></span> -->
     </div>
   </ng-container>
   <!-- end::Aside toggler -->
@@ -65,7 +69,10 @@
       data-kt-menu="true"
       class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
     >
-      <app-aside-menu id="asideMenu"></app-aside-menu>
+      <app-aside-menu
+        id="asideMenu"
+        style="padding-inline: 10px"
+      ></app-aside-menu>
     </div>
   </div>
 </div>

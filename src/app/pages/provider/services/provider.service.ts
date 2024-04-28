@@ -275,17 +275,24 @@ export class ProviderService {
     return this.http.get<any>(API.sendToMeLink(id));
   }
 
-  getMapProviders(deliveryOrderStatusesEnums?: any[]): Observable<any> {
+  getMapProviders(
+    status: string,
+    deliveryOrderStatusesEnums?: any[]
+  ): Observable<any> {
     console.log(
       '🚀 ~ file: provider.service.ts:279 ~ ProviderService ~ getMapProviders ~ deliveryOrderStatusesEnums:',
       deliveryOrderStatusesEnums
     );
-    return this.http.get<any>(API.getMapProviders, {
+    return this.http.get<any>(API.getMapProviders(status), {
       params: {
         ...(deliveryOrderStatusesEnums && {
           deliveryOrderStatusesEnums: deliveryOrderStatusesEnums,
         }),
       },
     });
+  }
+
+  getProvidersStatuesDDL(): Observable<any> {
+    return this.http.get<any>(API.getProvidersStatuesDDL);
   }
 }

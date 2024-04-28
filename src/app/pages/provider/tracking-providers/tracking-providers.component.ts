@@ -176,7 +176,7 @@ export class TrackingProvidersComponent implements OnInit {
 
   getMapProviders() {
     this.spinner.show();
-    this.providerService.getMapProviders().subscribe(
+    this.providerService.getMapProviders('0').subscribe(
       (res) => {
         this.mapInit();
         console.log(

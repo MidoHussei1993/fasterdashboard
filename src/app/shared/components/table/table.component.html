@@ -42,8 +42,33 @@
       <thead class="text-dark" style="background: #d0e1fd">
         <tr class="">
           <th class="text-cetner" *ngIf="pagination.pageNumber">#</th>
-          <th *ngFor="let title of titles" class="text-center">
-            {{ title | translate }}
+          <th
+            *ngFor="let title of titles; let i = index"
+            class="text-center property-title"
+          >
+            <i
+              class="fa fa-caret-up pointer px-1"
+              [ngClass]="{
+                'text-success':
+                  sortedProperty.title == title &&
+                  sortedProperty.sortType == 'up'
+              }"
+              (click)="sortData('up', i, title)"
+              aria-hidden="true"
+            ></i>
+            <i
+              [ngClass]="{
+                'text-success':
+                  sortedProperty.title == title &&
+                  sortedProperty.sortType == 'down'
+              }"
+              (click)="sortData('down', i, title)"
+              class="fa fa-caret-down pointer px-1"
+              aria-hidden="true"
+            ></i>
+            <span>
+              {{ title | translate }}
+            </span>
           </th>
           <th *ngIf="showAnotherCheck" class="text-center">
             {{ AnotherCheckTitelName | translate }}

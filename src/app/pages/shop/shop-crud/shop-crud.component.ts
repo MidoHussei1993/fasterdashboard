@@ -95,11 +95,11 @@ export class ShopCrudComponent implements OnInit {
       shopIBAN: ['', []],
       shopBankName: ['', []],
       headerImage: ['', []],
-      minimumOrderValue: ['', [Validators.required]],
-      maximumOrderValue: ['', [Validators.required]],
+      minimumOrderValue: [0, [Validators.required]],
+      maximumOrderValue: [0, [Validators.required]],
       deliverectAccountId: ['', []],
-      MinimumCreditOrderValue: [null, [Validators.required]],
-      MaximumCreditOrderValue: [null, [Validators.required]],
+      MinimumCreditOrderValue: [0, [Validators.required]],
+      MaximumCreditOrderValue: [0, [Validators.required]],
       feedusId: [null],
     });
 

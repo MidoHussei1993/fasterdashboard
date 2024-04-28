@@ -127,6 +127,11 @@ export class TableComponent implements OnInit {
 
   active: number = 1;
   form: FormGroup;
+  sortedProperty = {
+    propertyName: '',
+    sortType: '',
+    title: '',
+  };
   constructor(
     private formBuilder: FormBuilder,
     private excelService: ExcelService,
@@ -250,5 +255,38 @@ export class TableComponent implements OnInit {
       (prop) => `<span class="pb-1 d-block ">${prop} : ${item[prop]}</span>`
     );
     return els.join('');
+  }
+  sortData(sortType: 'up' | 'down' = 'up', index: number, title) {
+    try {
+      const sortingProperty = this.properties[index];
+      this.sortedProperty.propertyName = sortingProperty;
+      this.sortedProperty.title = title;
+      this.sortedProperty.sortType = sortType;
+      if (sortType === 'up') {
+        const clonedData = [
+          ...this.list.sort((a, b) =>
+            b[sortingProperty] > a[sortingProperty]
+              ? 1
+              : a[sortingProperty] > b[sortingProperty]
+              ? -1
+              : 0
+          ),
+        ];
+        this.list = clonedData;
+      } else if (sortType === 'down') {
+        const clonedData = [
+          ...this.list.sort((a, b) =>
+            a[sortingProperty] > b[sortingProperty]
+              ? 1
+              : b[sortingProperty] > a[sortingProperty]
+              ? -1
+              : 0
+          ),
+        ];
+        this.list = clonedData;
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

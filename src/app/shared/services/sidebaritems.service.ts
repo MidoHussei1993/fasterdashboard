@@ -215,14 +215,17 @@ export class SidebaritemsService {
       menuTitle: 'reports',
       childern: [
         {
-          title: 'Cobone_Report',
+          title: 'Cobone',
           link: '/cobone-report',
         },
         {
           title: 'DriversAcceptanceRateReport',
           link: '/providers/acceptance-report',
         },
-
+        {
+          title: 'walletManualAdditionCustomer',
+          link: '/report/customer-wallet-manual-addition',
+        },
         {
           title: 'providerWalletReport',
           link: '/report/provider-wallet',
@@ -250,10 +253,6 @@ export class SidebaritemsService {
         {
           title: 'providersWorkingTimeReport',
           link: '/report/providers-working-time',
-        },
-        {
-          title: 'walletManualAdditionCustomer',
-          link: '/report/customer-wallet-manual-addition',
         },
         {
           title: 'Sub_report',

@@ -313,6 +313,7 @@ export class ReportsService {
   DeliveryOrderDataReport(
     filter: OrderReportFilter
   ): Observable<List<OrderReport>> {
+    console.log('🚀 ~ ReportsService ~ filter:', filter);
     return this.http.get<List<OrderReport>>(API.DeliveryOrderDataReport, {
       params: {
         ...(filter.PageNumber && { PageNumber: filter.PageNumber }),
@@ -320,7 +321,9 @@ export class ReportsService {
         ...(filter.Id && { Id: filter.Id }),
         ...(filter.ShopId && { ShopId: filter.ShopId }),
         ...(filter.PayTypeId && { PayTypeId: filter.PayTypeId }),
-        ...(filter.StatusId && { StatusId: filter.StatusId }),
+        ...((filter.StatusId || filter.StatusId == 0) && {
+          StatusId: filter.StatusId,
+        }),
         ...(filter.VendorId && { VendorId: filter.VendorId }),
         ...(filter.CustomerId && { CustomerId: filter.CustomerId }),
         ...(filter.CustomerPhone && { CustomerPhone: filter.CustomerPhone }),

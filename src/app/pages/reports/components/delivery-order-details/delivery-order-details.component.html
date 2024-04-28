@@ -387,7 +387,7 @@
           </div>
 
           <p
-            class="neon-red text-uppercase font-weight-bolder h2 text-danger font-weight-bolder bg-dark my-4"
+            class="neon-red my-3 text-uppercase font-weight-bolder h2 text-danger font-weight-bolder bg-dark my-4"
           >
             {{ "field.note" | translate }} :
             {{ mainObject.deliveryOrder.note }}
@@ -453,7 +453,7 @@
             </tbody>
           </table>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="additionalComponents.length">
           <h3 class="mt-3 mb-2">
             {{ "menu.additionalComponent" | translate }}
           </h3>
@@ -462,7 +462,7 @@
               class="card bg-light"
               *ngFor="let item of additionalComponents"
             >
-              <div class="card-body py-2">
+              <div class="card-body py-2" *ngIf="item.length">
                 <div class="col-12">
                   <div class="card my-2" *ngFor="let nested of item">
                     <div class="card-body py-2">

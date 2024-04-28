@@ -1,32 +1,38 @@
 <div class="card shadow-sm">
-    <div class="card-body">
-        <div class="card bg-light">
-            <div class="card-body">
-                <app-filter [filter]="filter">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <label class="form-label">{{ "cobone.status" | translate }}</label>
-                        <select [(ngModel)]="filter.StatusId" class="form-select form-select-solid">
-                            <option [ngValue]="null">
-                                {{ "field.all" | translate }}
-                            </option>
-                            <option [value]="state.id" *ngFor="let state of statusList">
-                                {{ currentLanguage == "en" ? state.name : state.nameAr }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="isShop == false">
-                        <label class="form-label">{{
-                            "field.payTypeName" | translate
-                            }}</label>
-                        <select [(ngModel)]="filter.PayTypeId" class="form-select form-select-solid">
-                            <option [value]="type.id" *ngFor="let type of payTypeList">
-                                {{ currentLanguage == "en" ? type.name : type.nameAr }}
-                            </option>
-                        </select>
-                    </div>
-                </app-filter>
-                <div class="row">
-                    <!-- <div class="col-lg-3 col-md-6col-sm-12">
+  <div class="card-body">
+    <div class="card bg-light">
+      <div class="card-body">
+        <app-filter [filter]="filter">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <label class="form-label">{{ "cobone.status" | translate }}</label>
+            <select
+              [(ngModel)]="filter.StatusId"
+              class="form-select form-select-solid"
+            >
+              <option [ngValue]="null">
+                {{ "field.all" | translate }}
+              </option>
+              <option [value]="state.id" *ngFor="let state of statusList">
+                {{ currentLanguage == "en" ? state.name : state.nameAr }}
+              </option>
+            </select>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="isShop == false">
+            <label class="form-label">{{
+              "field.payTypeName" | translate
+            }}</label>
+            <select
+              [(ngModel)]="filter.PayTypeId"
+              class="form-select form-select-solid"
+            >
+              <option [value]="type.id" *ngFor="let type of payTypeList">
+                {{ currentLanguage == "en" ? type.name : type.nameAr }}
+              </option>
+            </select>
+          </div>
+        </app-filter>
+        <div class="row">
+          <!-- <div class="col-lg-3 col-md-6col-sm-12">
             <label class="form-label">{{ "field.VendorId" | translate }}</label>
             <select
               [(ngModel)]="filter.VendorId"
@@ -37,24 +43,41 @@
               </option>
             </select>
           </div> -->
-                </div>
-            </div>
         </div>
-        <div class="row mt-2">
-            <div class="col-lg-2 mx-auto col-md-6 col-sm-12">
-                <div class="alert alert-warning" role="alert">
-                    <strong>
-                        {{ timeLeft }}
-                    </strong>
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-lg-2 mx-auto col-md-6 col-sm-12">
+        <div class="alert alert-warning" role="alert">
+          <strong>
+            {{ timeLeft }}
+          </strong>
         </div>
-        <app-table [filter]="filter" [list]="deliveryOrderlist" [titles]="titles" [properties]="properties"
-            [busyLoading]="busyLoading" [pagination]="pagination" (activetedPageSize)="setPageSize($event)"
-            (activetedPageNumber)="setPageNumber($event)" [showDelete]="false" (edit)="navigateToEdit($event)"
-            (view)="navigateToView($event)" [showSearch]="true" (search)="searchValue()" (resetFilter)="resetfilter()"
-            [isdownloadAll]="!isVender && !isShop" [hideActions]="!isShop" (export)="downloadAll()" [addActions]="true"
-            [isReload]="true" (reload)="timeLeft = 0" [showEdit]="!isVender && !isShop" [actionList]="[
+      </div>
+    </div>
+    <app-table
+      [filter]="filter"
+      [list]="deliveryOrderlist"
+      [titles]="titles"
+      [properties]="properties"
+      [busyLoading]="busyLoading"
+      [pagination]="pagination"
+      (activetedPageSize)="setPageSize($event)"
+      (activetedPageNumber)="setPageNumber($event)"
+      [showDelete]="false"
+      (edit)="navigateToEdit($event)"
+      (view)="navigateToView($event)"
+      [showSearch]="true"
+      (search)="searchValue()"
+      (resetFilter)="resetfilter()"
+      [isdownloadAll]="!isVender && !isShop"
+      [hideActions]="!isShop"
+      (export)="downloadAll()"
+      [addActions]="true"
+      [isReload]="true"
+      (reload)="timeLeft = 0"
+      [showEdit]="!isVender && !isShop"
+      [actionList]="[
         {
           title: 'field.manualAssignment',
           icon: 'fa-car text-danger',
@@ -91,24 +114,30 @@
           type: 'shopCartData',
           hide: !isVender && !isShop
         },
-         {
+        {
           title: 'sendOrederToLive',
           icon: 'fa-paper-plane',
           type: 'sendOrederToLive',
           hide: !isVender && !isShop
         }
-      ]" (aciton)="navigateTO($event)"></app-table>
-    </div>
+      ]"
+      (aciton)="navigateTO($event)"
+    ></app-table>
+  </div>
 </div>
 
 <ng-template #orderCard let-modal>
-    <div class="modal-body" style="direction: ltr" id="print-section">
-        <div class="d-flex justify-content-between mx-4">
-            <div class="p-2">
-                <img src="assets/images/icons/faster-icon.png" width="200" alt="fasterIcon" />
-            </div>
-            <div class="p-2">
-                <!-- <button
+  <div class="modal-body" style="direction: ltr" id="print-section">
+    <div class="d-flex justify-content-between mx-4">
+      <div class="p-2">
+        <img
+          src="assets/images/Faster-Logo-PNG.png"
+          width="200"
+          alt="fasterIcon"
+        />
+      </div>
+      <div class="p-2">
+        <!-- <button
           type="button"
           class="btn btn-primary"
           [useExistingCss]="true"
@@ -122,134 +151,152 @@
             title="{{ 'reports.print' | translate }}"
           ></i>
         </button> -->
-            </div>
-        </div>
-        <div class="d-flex justify-content-between mx-4">
-            <div class="p-2">
-                <h3 class="text-center display-6">Invoice #</h3>
-            </div>
-            <div class="p-2">
-                <p class="h2 text-dark">
-                    {{ orderCardDetails.id }}
-                </p>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between mx-4">
-            <div class="p-2">
-                <p class="lead text-dark">
-                    {{ orderCardDetails.shopName }}
-                </p>
-                <p class="lead text-dark">
-                    {{ orderCardDetails.shopBranchDescriptionLocation }}
-                </p>
-            </div>
-            <div class="p-2">
-                <p class="lead text-dark">
-                    {{ orderCardDetails.createAt | date : "MMM d, y - h:mm a" }}
-                </p>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="table-responsive" style="direction: rtl">
-                <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
-                    <thead>
-                        <tr class="text-dark">
-                            <th class="text-center">
-                                {{ "product.image" | translate }}
-                            </th>
-                            <th class="text-center">
-                                {{ "field.Product" | translate }}
-                            </th>
-                            <th class="text-center">
-                                {{ "field.ProductAr" | translate }}
-                            </th>
-                            <th class="text-center">
-                                {{ "field.quantity" | translate }}
-                            </th>
-                            <th class="text-center">
-                                {{ "field.price" | translate }}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of orderCardDetails.carts; let i = index" class="slideDown">
-                            <td class="text-center text-dark">
-                                <img [src]="item.productDetailsSize.productDetails.coverImage" width="75" height="75"
-                                    style="border-radius: 50%" />
-                            </td>
-                            <td class="text-center text-dark font-weight-bolder">
-                                {{ item.productDetailsSize.productDetails.title }}
-                            </td>
-                            <td class="text-center text-dark font-weight-bolder">
-                                {{ item.productDetailsSize.productDetails.titleAr }}
-                            </td>
-                            <td class="text-center text-dark font-weight-bolder">
-                                {{ item.quantity }}
-                            </td>
-                            <td class="text-center text-dark font-weight-bolder">
-                                {{ item.price }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="d-flex justify-content-between mx-4">
+      <div class="p-2">
+        <h3 class="text-center display-6">Invoice #</h3>
+      </div>
+      <div class="p-2">
+        <p class="h2 text-dark">
+          {{ orderCardDetails.id }}
+        </p>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between mx-4">
+      <div class="p-2">
+        <p class="lead text-dark">
+          {{ orderCardDetails.shopName }}
+        </p>
+        <p class="lead text-dark">
+          {{ orderCardDetails.shopBranchDescriptionLocation }}
+        </p>
+      </div>
+      <div class="p-2">
+        <p class="lead text-dark">
+          {{ orderCardDetails.createAt | date : "MMM d, y - h:mm a" }}
+        </p>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="table-responsive" style="direction: rtl">
+        <table
+          class="table table-hover table-rounded table-striped border gy-7 gs-7"
+        >
+          <thead>
+            <tr class="text-dark">
+              <th class="text-center">
+                {{ "product.image" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.Product" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.ProductAr" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.quantity" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.price" | translate }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of orderCardDetails.carts; let i = index"
+              class="slideDown"
+            >
+              <td class="text-center text-dark">
+                <img
+                  [src]="item.productDetailsSize.productDetails.coverImage"
+                  width="75"
+                  height="75"
+                  style="border-radius: 50%"
+                />
+              </td>
+              <td class="text-center text-dark font-weight-bolder">
+                {{ item.productDetailsSize.productDetails.title }}
+              </td>
+              <td class="text-center text-dark font-weight-bolder">
+                {{ item.productDetailsSize.productDetails.titleAr }}
+              </td>
+              <td class="text-center text-dark font-weight-bolder">
+                {{ item.quantity }}
+              </td>
+              <td class="text-center text-dark font-weight-bolder">
+                {{ item.price }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #shopCartData let-modal>
-    <div class="modal-body" style="direction: ltr" id="print-section">
-        <div class="row">
-            <div class="col-sm-12">
-                <h3 class="text-center font-weight-bolder my-3">
-                    {{ "field.shopCartData" | translate }}
-                </h3>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="table-responsive" style="direction: rtl">
-                <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
-                    <thead>
-                        <tr class="text-dark">
-                            <th class="text-center">
-                                {{ "product.image" | translate }}
-                            </th>
-                            <th class="text-center">
-                                {{ "field.Product" | translate }}
-                            </th>
-                            <th class="text-center">
-                                {{ "field.ProductAr" | translate }}
-                            </th>
-                            <th class="text-center">
-                                {{ "field.quantity" | translate }}
-                            </th>
-                            <th class="text-center">
-                                {{ "field.price" | translate }}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of orderCardDetails.carts; let i = index" class="slideDown">
-                            <td class="text-center">
-                                <img [src]="item.productDetailsSize.productDetails.coverImage" width="75" height="75"
-                                    style="border-radius: 50%" />
-                            </td>
-                            <td class="text-center font-weight-bolder text-dark">
-                                {{ item.productDetailsSize.productDetails.title }}
-                            </td>
-                            <td class="text-center font-weight-bolder text-dark">
-                                {{ item.productDetailsSize.productDetails.titleAr }}
-                            </td>
-                            <td class="text-center font-weight-bolder text-dark">
-                                {{ item.quantity }}
-                            </td>
-                            <td class="text-center font-weight-bolder text-dark">
-                                {{ item.price }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  <div class="modal-body" style="direction: ltr" id="print-section">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center font-weight-bolder my-3">
+          {{ "field.shopCartData" | translate }}
+        </h3>
+      </div>
     </div>
+    <div class="row mt-2">
+      <div class="table-responsive" style="direction: rtl">
+        <table
+          class="table table-hover table-rounded table-striped border gy-7 gs-7"
+        >
+          <thead>
+            <tr class="text-dark">
+              <th class="text-center">
+                {{ "product.image" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.Product" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.ProductAr" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.quantity" | translate }}
+              </th>
+              <th class="text-center">
+                {{ "field.price" | translate }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of orderCardDetails.carts; let i = index"
+              class="slideDown"
+            >
+              <td class="text-center">
+                <img
+                  [src]="item.productDetailsSize.productDetails.coverImage"
+                  width="75"
+                  height="75"
+                  style="border-radius: 50%"
+                />
+              </td>
+              <td class="text-center font-weight-bolder text-dark">
+                {{ item.productDetailsSize.productDetails.title }}
+              </td>
+              <td class="text-center font-weight-bolder text-dark">
+                {{ item.productDetailsSize.productDetails.titleAr }}
+              </td>
+              <td class="text-center font-weight-bolder text-dark">
+                {{ item.quantity }}
+              </td>
+              <td class="text-center font-weight-bolder text-dark">
+                {{ item.price }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </ng-template>

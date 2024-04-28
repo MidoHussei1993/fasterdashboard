@@ -91,12 +91,12 @@ td {
   i {
     font-size: 30px;
   }
-  padding: 9px 4px !important;
+  padding: 9px 1px !important;
   vertical-align: middle;
 }
 th {
   padding: 9px 4px !important;
-  font-size: 15px;
+  font-size: 13px;
   vertical-align: middle;
 }
 
@@ -127,7 +127,7 @@ tr[data-not-partner="false"] {
   position: absolute;
   top: 45px;
   right: -117px;
-  z-index: 12;
+  z-index: 120;
 }
 ::ng-deep .p-menu .p-menuitem {
   background: white;
@@ -168,6 +168,14 @@ table {
           color: #3b82f6;
         }
       }
+    }
+  }
+}
+.property-title {
+  i {
+    font-size: 20px;
+    &:hover {
+      color: #3b82f6;
     }
   }
 }

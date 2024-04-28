@@ -219,9 +219,9 @@ export class DeliveryOrderDetailsComponent implements OnInit {
 
           //   return cart;
           // });
-          this.additionalComponents = res.carts.map(
-            ({ additionalComponents }) => additionalComponents
-          );
+          this.additionalComponents = res.carts
+            .map(({ additionalComponents }) => additionalComponents)
+            .filter((item) => item.length);
           console.log(
             '🚀 ~ file: delivery-order-details.component.ts:203 ~ DeliveryOrderDetailsComponent ~ DeliveryOrderDetailsDataReport ~ this.additionalComponents:',
             this.additionalComponents

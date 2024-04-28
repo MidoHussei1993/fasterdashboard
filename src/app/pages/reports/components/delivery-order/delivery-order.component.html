@@ -12,7 +12,7 @@
               <option [ngValue]="null">
                 {{ "field.all" | translate }}
               </option>
-              <option [value]="state.id" *ngFor="let state of statusList">
+              <option [ngValue]="state.id" *ngFor="let state of statusList">
                 {{ currentLanguage == "en" ? state.name : state.nameAr }}
               </option>
             </select>
@@ -137,7 +137,7 @@
     <div class="d-flex justify-content-between mx-4">
       <div class="p-2">
         <img
-          src="assets/images/icons/faster-icon.png"
+          src="assets/images/Faster-Logo-PNG.png"
           width="200"
           alt="fasterIcon"
         />

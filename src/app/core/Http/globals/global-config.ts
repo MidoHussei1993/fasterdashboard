@@ -1,5 +1,5 @@
-export const BaseURL = 'http://api.faster.sa:5005';
-// export const BaseURL = 'https://api.faster.sa:5001';
+// export const BaseURL = 'http://api.faster.sa:5005';
+export const BaseURL = 'https://api.faster.sa:5001';
 
 export const FasterAPI = BaseURL + '/api';
 
@@ -220,7 +220,11 @@ export class END_POINTS {
       FasterAPI + `/Provider/IntegrateToTookan/${ProviderId}`,
     sendToMeLink: (ProviderId: string) =>
       FasterAPI + `/Provider/IntegrateToTawseel/${ProviderId}`,
-    getMapProviders: FasterAPI + '/Provider/GetMapProviders',
+    getProvidersStatuesDDL: FasterAPI + '/Provider/GetProvidersStatuesDDL',
+    getProviderMapInfo: (userId: string) =>
+      FasterAPI + `/Provider/getProviderMapInfo/${userId}`,
+    getMapProviders: (statues: string) =>
+      FasterAPI + `/Provider/GetMapProviders/${statues}`,
   };
 
   public static ProviderWallet = {

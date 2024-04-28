@@ -9,6 +9,7 @@ import { HeaderService } from 'src/app/core/services/header.service';
 import { MapLoaderService } from 'src/app/shared/components/polygon-map/map.loader';
 import { ProviderService } from '../../provider/services';
 import { OrderStatusService } from 'src/app/shared/services/api/order-status.service';
+import { ReportsService } from '../../reports/services/reports.service';
 
 type Provider = {
   applicationUserId: string;
@@ -40,6 +41,9 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
   orderStatusList: any[] = [];
   currentLang: string = '';
   selectedOrderStatusId: any[] = [];
+  providersStatuesList: any[] = [];
+  report: any = {};
+  freeDrivers = false;
 
   constructor(
     private notifier: NotifierService,
@@ -48,7 +52,8 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
     private providerService: ProviderService,
     private headerService: HeaderService,
     private orderStatusService: OrderStatusService,
-    private orderDispatchService: OrderDispatchService
+    private orderDispatchService: OrderDispatchService,
+    private reportsService: ReportsService
   ) {}
 
   ngOnDestroy(): void {
@@ -57,27 +62,29 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentLang = this.translate.currentLang;
+    this.getProviderStatuesList();
+    this.getProviderCountsReport();
     // this.headerService.setPageTitle(this.translate.instant('menu.tracking'));
     this.getMapProviders();
     this.getDeliveryOrderStatusDDL();
-    this.providerInterval = setInterval(() => {
-      const selectedIds = this.orderStatusList
-        .filter((item) => item.isSelected == true)
-        .map(({ id }) => id);
-      this.providerService.getMapProviders(selectedIds).subscribe(
-        (res) => {
-          this.providers = res.returnData;
-          this.markers.forEach((marker) => {
-            marker.setMap(null);
-          });
-          this.markers = [];
-          this.providers.map((item) => {
-            this.addMarker(item);
-          });
-        },
-        (err) => {}
-      );
-    }, 10000);
+    // this.providerInterval = setInterval(() => {
+    //   const selectedIds = this.orderStatusList
+    //     .filter((item) => item.isSelected == true)
+    //     .map(({ id }) => id);
+    //   this.providerService.getMapProviders(selectedIds).subscribe(
+    //     (res) => {
+    //       this.providers = res.returnData;
+    //       this.markers.forEach((marker) => {
+    //         marker.setMap(null);
+    //       });
+    //       this.markers = [];
+    //       this.providers.map((item) => {
+    //         this.addMarker(item);
+    //       });
+    //     },
+    //     (err) => {}
+    //   );
+    // }, 10000);
     // this.connection = new signalR.HubConnectionBuilder()
     //   .configureLogging(signalR.LogLevel.Trace)
     //   .withUrl(`https://api.faster.sa:7090/providerHubs`, {
@@ -118,6 +125,29 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
       this.setMark(args[0], args[1], args[2]);
     });
   }
+  getProviderCountsReport(VendorId = null) {
+    this.reportsService.getProviderCountsReport(VendorId).subscribe(
+      (res: any) => {
+        this.report = res;
+      },
+      (err) => {}
+    );
+  }
+  getProviderStatuesList() {
+    this.providerService.getProvidersStatuesDDL().subscribe(
+      (res) => {
+        this.providersStatuesList = res.map((item) => {
+          item.isSelected = false;
+          item.icon = this.setIcon(item.name);
+          return item;
+        });
+        this.spinner.hide();
+      },
+      (err) => {
+        this.spinner.hide();
+      }
+    );
+  }
 
   getDeliveryOrderStatusDDL() {
     this.orderStatusService.DeliveryOrderStatusDDL().subscribe(
@@ -130,7 +160,6 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
           item.icon = this.setIcon(item.name);
           return item;
         });
-        this;
       },
       (err) => {}
     );
@@ -147,10 +176,10 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
       case 'Canceled From Customer':
         return 'http://maps.gstatic.com/mapfiles/ms2/micons/red.png';
         break;
-      case 'Canceled From Provider':
+      case 'Under preparing':
         return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
         break;
-      case 'Provider Reached Order':
+      case 'Ready for pickup':
         return 'http://maps.gstatic.com/mapfiles/ms2/micons/ltblue-dot.png';
         break;
       case 'Accepted Offer Price':
@@ -168,7 +197,7 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
       case 'Canceled From Shop':
         return 'http://maps.gstatic.com/mapfiles/ms2/micons/red-pushpin.png';
         break;
-      case 'Provider Finished':
+      case 'Pickup':
         return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
         break;
       case 'Shop Accepted':
@@ -189,7 +218,7 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
       case 'Order Prepared by Shop':
         return 'http://maps.gstatic.com/mapfiles/ms2/micons/pink-pushpin.png';
         break;
-      case 'Provider took the order':
+      case 'Arrive to customer':
         return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
         break;
       default:
@@ -256,8 +285,10 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
   }
 
   addMarker(provider: Provider | any) {
-    const driverOrderStatus = this.orderStatusList.filter(({id})=>id == provider.providerOrderStatues) 
-    const isSetIcon = !!driverOrderStatus.length
+    const driverOrderStatus = this.orderStatusList.filter(
+      ({ id }) => id == provider.providerOrderStatues
+    );
+    const isSetIcon = !!driverOrderStatus.length;
     try {
       this.markers.push(
         new google.maps.Marker({
@@ -265,7 +296,7 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
           map: this.map,
           title: provider.phoneNumber,
           label: provider.fullName,
-          ...(isSetIcon && {icon: this.setIcon(driverOrderStatus[0].name)})
+          ...(isSetIcon && { icon: this.setIcon(driverOrderStatus[0].name) }),
           // icon: this.setIcon(this.orderStatusList.filter(({id})=>id == provider.providerOrderStatues)[0].name),
           // animation: google.maps.Animation.DROP,
         })
@@ -277,23 +308,25 @@ export class TrackingxProvidersComponent implements OnInit, OnDestroy {
 
   getMapProviders() {
     this.spinner.show();
-    const selectedIds = this.orderStatusList
+    const selectedIds = this.providersStatuesList
       .filter((item) => item.isSelected == true)
       .map(({ id }) => id);
-    this.providerService.getMapProviders(selectedIds).subscribe(
-      (res) => {
-        this.mapInit();
-        console.log(
-          '🚀 ~ file: tracking-providers.component.ts:384 ~ TrackingProvidersComponent ~ getDeliveryProviders ~ res:',
-          res
-        );
-        this.providers = res.returnData;
-        this.spinner.hide();
-      },
-      (err) => {
-        this.spinner.hide();
-      }
-    );
+    this.providerService
+      .getMapProviders(this.freeDrivers ? '1' : '0', selectedIds)
+      .subscribe(
+        (res) => {
+          this.mapInit();
+          console.log(
+            '🚀 ~ file: tracking-providers.component.ts:384 ~ TrackingProvidersComponent ~ getDeliveryProviders ~ res:',
+            res
+          );
+          this.providers = res.returnData;
+          this.spinner.hide();
+        },
+        (err) => {
+          this.spinner.hide();
+        }
+      );
   }
   setMark(lng, lat, user) {
     console.log(

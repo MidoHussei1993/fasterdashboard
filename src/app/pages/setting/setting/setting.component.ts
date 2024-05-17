@@ -26,6 +26,7 @@ export class SettingComponent implements OnInit {
   LimitationOrderValue: FormGroup;
   DispatchSystem: FormGroup;
   DispatchSystemDDL: any[] = [];
+  paymentGateway: any[] = [];
   busyLoading: boolean = false;
   currentLanguage: string = '';
 
@@ -47,6 +48,7 @@ export class SettingComponent implements OnInit {
       transportRangePrice: ['', [Validators.min(4), Validators.required]],
       deliveryCancelFee: ['', [Validators.required]],
       transportCancelFee: ['', [Validators.required]],
+      paymentGatewaysEnum: [null, [Validators.required]],
     });
     this.socialMediaForm = this.formBuilder.group({
       id: [0],
@@ -127,6 +129,7 @@ export class SettingComponent implements OnInit {
     this.getProviderReciveOneOrder();
     this.getLimitationOrderValue();
     this.getDispatchSystemDDL();
+    this.getPaymentGatewaysDDL();
     this.getDispatchSystem();
   }
 
@@ -169,6 +172,21 @@ export class SettingComponent implements OnInit {
         this.spinner.hide();
         this.busyLoading = false;
         this.DispatchSystemDDL = res.returnData;
+      },
+      (err) => {
+        this.spinner.show();
+        this.busyLoading = false;
+      }
+    );
+  }
+  getPaymentGatewaysDDL() {
+    this.busyLoading = true;
+    this.spinner.show();
+    this.settingService.getPaymentGatewaysDDL().subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.busyLoading = false;
+        this.paymentGateway = res.returnData;
       },
       (err) => {
         this.spinner.show();

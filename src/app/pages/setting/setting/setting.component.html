@@ -208,6 +208,34 @@
             </p>
           </div>
         </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label">{{ "Payment Gateways" | translate }}</label>
+          <select
+            formControlName="paymentGatewaysEnum"
+            class="form-select form-select-solid"
+          >
+            <option [ngValue]="null">
+              {{ "field.all" | translate }}
+            </option>
+            <option [value]="item.id" *ngFor="let item of DispatchSystemDDL">
+              {{ currentLanguage == "en" ? item.name : item.nameAr }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              !pricesForm.get('paymentGatewaysEnum').valid &&
+              (pricesForm.get('paymentGatewaysEnum').dirty ||
+                pricesForm.get('paymentGatewaysEnum').touched)
+            "
+            class="text text-danger"
+          >
+            <p
+              *ngIf="pricesForm.get('paymentGatewaysEnum').hasError('required')"
+            >
+              {{ "_.required" | translate }}
+            </p>
+          </div>
+        </div>
       </div>
 
       <div class="row my-5">

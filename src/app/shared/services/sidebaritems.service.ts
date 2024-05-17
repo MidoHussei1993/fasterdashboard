@@ -34,12 +34,7 @@ export class SidebaritemsService {
           childern: [],
           role: ['administrator'],
         },
-        {
-          title: 'approveTransaction',
-          link: '/approve-wallet',
-          childern: [],
-          role: ['administrator'],
-        },
+
         {
           title: 'userActionTracking',
           link: '/app/user-action-tracking',
@@ -159,6 +154,12 @@ export class SidebaritemsService {
           link: '/providers/amount-request',
           role: ['administrator'],
         },
+        {
+          title: 'approveTransaction',
+          link: '/approve-wallet',
+          childern: [],
+          role: ['administrator'],
+        },
       ],
     },
     {
@@ -255,6 +256,10 @@ export class SidebaritemsService {
           link: '/report/providers-working-time',
         },
         {
+          title: 'customerWalletReport',
+          link: '/report/customer-wallet',
+        },
+        {
           title: 'Sub_report',
           link: '/cobone-report/SubScription',
         },
@@ -335,10 +340,7 @@ export class SidebaritemsService {
           childern: [],
           role: ['administrator'],
         },
-        {
-          title: 'customerWalletReport',
-          link: '/report/customer-wallet',
-        },
+
         {
           title: 'users',
           link: '/identity/users',

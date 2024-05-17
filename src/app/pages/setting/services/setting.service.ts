@@ -128,4 +128,8 @@ export class SettingService {
   getDispatchSystem(): Observable<any> {
     return this.http.get<any>(API.getDispatchSystem);
   }
+
+  getPaymentGatewaysDDL(): Observable<any> {
+    return this.http.get<any>(API.GetPaymentGatewaysDDL);
+  }
 }

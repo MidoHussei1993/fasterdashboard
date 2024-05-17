@@ -103,7 +103,7 @@ export const locale = {
       salary: 'Salaries',
       priviledges: 'Priviledges',
       userActionTracking: 'User Action Tracking',
-      approveTransaction: `Add the customer's wallet balance`,
+      approveTransaction: `the customers wallet balance`,
       FasterWallet: 'Faster Wallet',
       walletManualAddition: 'Wallet Manual Addition Report',
       customerLastLoginReport: ' last customer login',

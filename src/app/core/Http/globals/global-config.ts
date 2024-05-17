@@ -1,5 +1,5 @@
-// export const BaseURL = 'http://api.faster.sa:5005';
-export const BaseURL = 'https://api.faster.sa:5001';
+export const BaseURL = 'http://api.faster.sa:5005';
+// export const BaseURL = 'https://api.faster.sa:5001';
 
 export const FasterAPI = BaseURL + '/api';
 
@@ -404,6 +404,7 @@ export class END_POINTS {
     getDispatchSystemDDL: FasterAPI + '/App/getDispatchSystemDDL',
     UpdateDispatchSystem: FasterAPI + '/App/UpdateDispatchSystem',
     getDispatchSystem: FasterAPI + '/App/getDispatchSystem',
+    GetPaymentGatewaysDDL: FasterAPI + '/App/GetPaymentGatewaysDDL',
   };
 
   public static ItemSize = {

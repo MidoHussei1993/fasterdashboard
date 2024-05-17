@@ -13,6 +13,7 @@ import { ExcelService } from '../../services/excel.service';
 import { SwalModalService } from '../../services/swal-modal.service';
 import { ImgViewerComponent } from '../img-viewer/img-viewer.component';
 import { TranslateService } from '@ngx-translate/core';
+// import { gsap } from 'gsap';
 
 export interface IActionLTable {
   title: string;
@@ -67,27 +68,27 @@ export class TableComponent implements OnInit {
     return this._allowDay;
   }
   @Input() set actionList(value: IActionLTable[]) {
-    if (this.showDelete) {
-      value.unshift({
-        title: 'Delete',
-        icon: 'fas fa-trash-alt text-danger',
-        type: 'deleteRow',
-      });
-    }
-    if (this.showView) {
-      value.unshift({
-        title: 'View',
-        icon: 'far fa-eye text-primary',
-        type: 'viewRow',
-      });
-    }
-    if (this.showEdit) {
-      value.unshift({
-        title: 'Edit',
-        icon: 'far fa-edit text-warning',
-        type: 'EditRow',
-      });
-    }
+    // if (this.showDelete) {
+    //   value.unshift({
+    //     title: 'Delete',
+    //     icon: 'fas fa-trash-alt text-danger',
+    //     type: 'deleteRow',
+    //   });
+    // }
+    // if (this.showView) {
+    //   value.unshift({
+    //     title: 'View',
+    //     icon: 'far fa-eye text-primary',
+    //     type: 'viewRow',
+    //   });
+    // }
+    // if (this.showEdit) {
+    //   value.unshift({
+    //     title: 'Edit',
+    //     icon: 'far fa-edit text-warning',
+    //     type: 'EditRow',
+    //   });
+    // }
     this._allowDay = value.filter((action) => {
       action.label = this.translateService.instant(action.title);
       action.icon = 'fas mx-2 ' + action.icon;
@@ -144,7 +145,13 @@ export class TableComponent implements OnInit {
       search: ['', [Validators.required]],
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // gsap.to('td', {
+    //   duration: 1,
+    //   x: 100,
+    //   stagger: 0.1,
+    // });
+  }
 
   searchValue(): void {
     this.search.emit(this.form.get('search').value);
